@@ -124,7 +124,7 @@ $machinestates = [
     ],
   ],
 
-  ST_PLACE_FARMER => [
+  ST_PLACE_DWARF => [
     'name' => 'placeFarmer',
     'description' => clienttranslate('${actplayer} must place a person'),
     'descriptionmyturn' => clienttranslate('${you} must place a person'),
@@ -133,7 +133,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'type' => 'activeplayer',
     'action' => 'stAtomicAction',
-    'possibleactions' => ['actPlaceFarmer', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actPlaceDwarf', 'actPassOptionalAction', 'actRestart'],
     'transitions' => [],
   ],
 

@@ -155,7 +155,7 @@ trait DebugTrait
     Engine::setup([
       'childs' => [
         [
-          'state' => ST_PLACE_FARMER,
+          'state' => ST_PLACE_DWARF,
           'pId' => $pId,
           'mandatory' => true,
         ],

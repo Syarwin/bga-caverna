@@ -112,7 +112,7 @@ const ST_END_WORK_PHASE = 8;
 const ST_RESOLVE_STACK = 10;
 const ST_RESOLVE_CHOICE = 11;
 
-const ST_PLACE_FARMER = 20;
+const ST_PLACE_DWARF = 20;
 const ST_GAIN = 21;
 const ST_FENCING = 22;
 const ST_PAY = 23;
@@ -190,12 +190,14 @@ const POINTS_PROVIDER = 'PointsCategory';
  * Types of ressources
  */
 const WOOD = 'wood';
-const CLAY = 'clay';
-const REED = 'reed';
 const STONE = 'stone';
+const ORE = 'ore';
+const RUBY = 'ruby';
 const FOOD = 'food';
+const GOLD = 'gold';
 const GRAIN = 'grain';
 const VEGETABLE = 'vegetable';
+const RUBY = 'ruby';
 const SHEEP = 'sheep';
 const PIG = 'pig';
 const CATTLE = 'cattle';
@@ -204,9 +206,11 @@ const BEGGING = 'begging';
 
 const FIELD = 'field';
 
-const RESOURCES = [WOOD, CLAY, REED, STONE, FOOD, GRAIN, VEGETABLE, SHEEP, PIG, CATTLE, BEGGING];
+const RESOURCES = [WOOD, STONE, ORE, RUBY, FOOD, GOLD, GRAIN, VEGETABLE, SHEEP, PIG, CATTLE, BEGGING];
 const ANIMALS = [SHEEP, PIG, CATTLE];
 const ROOMS = ['roomStone', 'roomClay', 'roomWood'];
+
+const TILE_CAVERN_TUNNEL = 'tileCavernTunnel';
 
 // State to differentiate chah beh oui !ildren from grown ups
 const ADULT = 0;
@@ -256,60 +260,27 @@ const SCORING_CATEGORIES = [
 const NO_COST = ['trades' => [['max' => 1]]];
 
 /*
- *
- * Action card constant
- *
- */
-const CONSTRUCT = 'CONSTRUCT';
-const STABLES = 'STABLES';
-const FIRSTPLAYER = 'FIRSTPLAYER';
-const GRAINSEEDS = 'GRAINSEEDS';
-const FARMLAND = 'FARMLAND';
-const LESSONS = 'LESSONS';
-const DAYLABORER = 'DAYLABORER';
-const CLAYPIT = 'CLAYPIT';
-const FOREST = 'FOREST';
-const REEDBANK = 'REEDBANK';
-const FISHING = 'FISHING';
-const GROVE = 'GROVE';
-const RESOURCEMARKET = 'RESOURCEMARKET';
-const HOLLOW = 'HOLLOW';
-const LESSONS3 = 'LESSONS3';
-const COPSE = 'COPSE';
-const RESOURCEMARKET4 = 'RESOURCEMARKET4';
-const HOLLOW4 = 'HOLLOW4';
-const LESSONS4 = 'LESSONS4';
-const TRAVELINGPLAYERS = 'TRAVELINGPLAYERS';
-const FENCING = 'FENCING';
-const SHEEPMARKET = 'SHEEPMARKET';
-const SOW = 'SOW';
-const BAKE = 'BAKE';
-const IMPROVEMENT = 'IMPROVEMENT';
-const WISHCHILDREN = 'WISHCHILDREN';
-const WESTERNQUARRY = 'WESTERNQUARRY';
-const RENOVATION = 'RENOVATION';
-const PIGMARKET = 'PIGMARKET';
-const VEGETABLESEEDS = 'VEGETABLESEEDS';
-const CATTLEMARKET = 'CATTLEMARKET';
-const EASTERNQUARRY = 'EASTERNQUARRY';
-const URGENTWISHCHILDREN = 'URGENTWISHCHILDREN';
-const PLOW = 'PLOW';
-const RESOURCEMARKETADD = 'RESOURCEMARKETADD';
-
-/*
  * Atomic action
  */
-const COLLECT = 'COLLECT';
-const GAIN = 'GAIN';
-const PAY = 'PAY';
-const REORGANIZE = 'REORGANIZE';
-const EXCHANGE = 'EXCHANGE';
-const PLACE_FARMER = 'PLACE_FARMER';
 const ACTIVATE_BUILDING = 'ACTIVATE_BUILDING';
-const SPECIAL_EFFECT = 'SPECIAL_EFFECT';
-const RECEIVE = 'RECEIVE';
-const REAP = 'REAP';
+const COLLECT = 'COLLECT';
+const CONSTRUCT = 'CONSTRUCT';
+const EXCHANGE = 'EXCHANGE';
+const EXPEDITION = 'EXPEDITION';
+const FENCING = 'FENCING';
+const GAIN = 'GAIN';
+const IMITATION = 'IMITATION';
+const PAY = 'PAY';
+const PLACE_DWARF = 'PLACE_DWARF';
 const PLACE_FUTURE_MEEPLES = 'PLACE_FUTURE_MEEPLES';
+const PLOW = 'PLOW';
+const REAP = 'REAP';
+const RECEIVE = 'RECEIVE';
+const REORGANIZE = 'REORGANIZE';
+const SOW = 'SOW';
+const SPECIAL_EFFECT = 'SPECIAL_EFFECT';
+const STABLES = 'STABLES';
+const URGENTWISHCHILDREN = 'URGENTWISHCHILDREN';
 
 /** ExtraDatas**/
 const BONUS_VP = 'bonusVP';
@@ -317,16 +288,6 @@ const BONUS_VP = 'bonusVP';
 /******************
  ****** STATS ******
  ******************/
-const STAT_MAX_WOOD = 200;
-const STAT_MAX_CLAY = 201;
-const STAT_MAX_STONE = 202;
-const STAT_MAX_REED = 203;
-const STAT_MAX_GRAIN = 204;
-const STAT_MAX_VEGETABLE = 205;
-const STAT_MAX_SHEEP = 206;
-const STAT_MAX_PIG = 207;
-const STAT_MAX_CATTLE = 208;
-
 const STAT_POSITION = 10;
 const STAT_SCORE_FIELDS = 11;
 const STAT_SCORE_PASTURES = 12;
@@ -348,9 +309,9 @@ const STAT_FIRST_PLAYER = 30;
 const STAT_PLACED_FARMER = 31;
 
 const STAT_WOOD_FROM_BOARD = 35;
-const STAT_CLAY_FROM_BOARD = 36;
-const STAT_STONE_FROM_BOARD = 37;
-const STAT_REED_FROM_BOARD = 38;
+const STAT_STONE_FROM_BOARD = 36;
+const STAT_ORE_FROM_BOARD = 37;
+const STAT_RUBY_FROM_BOARD = 38;
 const STAT_GRAIN_FROM_BOARD = 39;
 const STAT_VEGETABLE_FROM_BOARD = 40;
 const STAT_FOOD_FROM_BOARD = 41;
@@ -359,9 +320,9 @@ const STAT_PIG_FROM_BOARD = 43;
 const STAT_CATTLE_FROM_BOARD = 44;
 
 const STAT_WOOD_FROM_CARDS = 45;
-const STAT_CLAY_FROM_CARDS = 46;
-const STAT_STONE_FROM_CARDS = 47;
-const STAT_REED_FROM_CARDS = 48;
+const STAT_STONE_FROM_CARDS = 46;
+const STAT_ORE_FROM_CARDS = 46;
+const STAT_RUBY_FROM_CARDS = 48;
 const STAT_GRAIN_FROM_CARDS = 49;
 const STAT_VEGETABLE_FROM_CARDS = 50;
 const STAT_FOOD_FROM_CARDS = 51;
@@ -380,9 +341,9 @@ const STAT_SHEEP_CONVERTED = 61;
 const STAT_PIG_CONVERTED = 62;
 const STAT_CATTLE_CONVERTED = 63;
 const STAT_STONE_CONVERTED = 64;
-const STAT_CLAY_CONVERTED = 65;
-const STAT_REED_CONVERTED = 66;
-const STAT_WOOD_CONVERTED = 67;
+const STAT_WOOD_CONVERTED = 65;
+const STAT_ORE_CONVERTED = 66;
+const STAT_RUBY_CONVERTED = 67;
 
 const STAT_FOOD_FROM_GRAIN = 68;
 const STAT_FOOD_FROM_VEGETABLE = 69;
@@ -390,8 +351,8 @@ const STAT_FOOD_FROM_SHEEP = 70;
 const STAT_FOOD_FROM_PIG = 71;
 const STAT_FOOD_FROM_CATTLE = 72;
 const STAT_FOOD_FROM_STONE = 73;
-const STAT_FOOD_FROM_CLAY = 74;
-const STAT_FOOD_FROM_REED = 75;
+const STAT_FOOD_FROM_ORE = 74;
+const STAT_FOOD_FROM_RUBY = 75;
 const STAT_FOOD_FROM_WOOD = 76;
 const STAT_BEGGING_FROM_CARDS = 77;
 

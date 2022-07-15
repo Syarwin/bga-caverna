@@ -127,19 +127,19 @@ $stats_type = [
       'name' => totranslate('Amount of wood earned from the board'),
       'type' => 'int',
     ],
-    'boardClay' => [
-      'id' => STAT_CLAY_FROM_BOARD,
-      'name' => totranslate('Amount of clay earned from the board'),
-      'type' => 'int',
-    ],
     'boardStone' => [
       'id' => STAT_STONE_FROM_BOARD,
       'name' => totranslate('Amount of stone earned from the board'),
       'type' => 'int',
     ],
-    'boardReed' => [
-      'id' => STAT_REED_FROM_BOARD,
-      'name' => totranslate('Amount of reed earned from the board'),
+    'boardOre' => [
+      'id' => STAT_ORE_FROM_BOARD,
+      'name' => totranslate('Amount of ore earned from the board'),
+      'type' => 'int',
+    ],
+    'boardRuby' => [
+      'id' => STAT_RUBY_FROM_BOARD,
+      'name' => totranslate('Amount of ruby earned from the board'),
       'type' => 'int',
     ],
     'boardGrain' => [
@@ -178,19 +178,19 @@ $stats_type = [
       'name' => totranslate('Amount of wood earned from cards'),
       'type' => 'int',
     ],
-    'cardsClay' => [
-      'id' => STAT_CLAY_FROM_CARDS,
-      'name' => totranslate('Amount of clay earned from cards'),
-      'type' => 'int',
-    ],
     'cardsStone' => [
       'id' => STAT_STONE_FROM_CARDS,
       'name' => totranslate('Amount of stone earned from cards'),
       'type' => 'int',
     ],
-    'cardsReed' => [
-      'id' => STAT_REED_FROM_CARDS,
-      'name' => totranslate('Amount of reed earned from cards'),
+    'cardsOre' => [
+      'id' => STAT_ORE_FROM_CARDS,
+      'name' => totranslate('Amount of ore earned from cards'),
+      'type' => 'int',
+    ],
+    'cardsRuby' => [
+      'id' => STAT_RUBY_FROM_CARDS,
+      'name' => totranslate('Amount of ruby earned from cards'),
       'type' => 'int',
     ],
     'cardsGrain' => [
@@ -278,19 +278,19 @@ $stats_type = [
       'name' => totranslate('Number of stone converted in food'),
       'type' => 'int',
     ],
-    'convertedClay' => [
-      'id' => STAT_CLAY_CONVERTED,
-      'name' => totranslate('Number of clay converted in food'),
-      'type' => 'int',
-    ],
-    'convertedReed' => [
-      'id' => STAT_REED_CONVERTED,
-      'name' => totranslate('Number of reed converted in food'),
-      'type' => 'int',
-    ],
     'convertedWood' => [
       'id' => STAT_WOOD_CONVERTED,
       'name' => totranslate('Number of wood converted in food'),
+      'type' => 'int',
+    ],
+    'convertedOre' => [
+      'id' => STAT_ORE_CONVERTED,
+      'name' => totranslate('Number of ore converted in food'),
+      'type' => 'int',
+    ],
+    'convertedRuby' => [
+      'id' => STAT_RUBY_CONVERTED,
+      'name' => totranslate('Number of ruby converted in food'),
       'type' => 'int',
     ],
     //
@@ -324,19 +324,19 @@ $stats_type = [
       'name' => totranslate('Number of food from stone'),
       'type' => 'int',
     ],
-    'clayToFood' => [
-      'id' => STAT_FOOD_FROM_CLAY,
-      'name' => totranslate('Number of food from clay'),
-      'type' => 'int',
-    ],
-    'reedToFood' => [
-      'id' => STAT_FOOD_FROM_REED,
-      'name' => totranslate('Number of food from reed'),
-      'type' => 'int',
-    ],
     'woodToFood' => [
       'id' => STAT_FOOD_FROM_WOOD,
       'name' => totranslate('Number of food from wood'),
+      'type' => 'int',
+    ],
+    'oreToFood' => [
+      'id' => STAT_FOOD_FROM_ORE,
+      'name' => totranslate('Number of food from ore'),
+      'type' => 'int',
+    ],
+    'rubyToFood' => [
+      'id' => STAT_FOOD_FROM_RUBY,
+      'name' => totranslate('Number of food from ruby'),
       'type' => 'int',
     ],
 

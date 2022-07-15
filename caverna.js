@@ -403,8 +403,8 @@ define([
       /************************
        **** ATOMIC ACTIONS *****
        ************************/
-      onEnteringStatePlaceFarmer(args) {
-        this.promptActionCard(args.cards, (cId) => this.takeAtomicAction('actPlaceFarmer', [cId]), args.allCards);
+      onEnteringStatePlaceDwarf(args) {
+        this.promptActionCard(args.cards, (cId) => this.takeAtomicAction('actPlaceDwarf', [cId]), args.allCards);
       },
 
       onEnteringStateFencing(args) {

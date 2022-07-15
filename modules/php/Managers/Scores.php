@@ -229,7 +229,7 @@ class Scores extends \CAV\Helpers\DB_Manager
   protected function computeAuxScore($player)
   {
     $aux = 0;
-    foreach ([WOOD, CLAY, STONE, REED] as $res) {
+    foreach ([WOOD, STONE, ORE] as $res) {
       $aux += $player->countReserveResource($res);
     }
     self::DB()->update(['player_score_aux' => $aux], $player->getId());

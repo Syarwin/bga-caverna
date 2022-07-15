@@ -25,11 +25,6 @@ class Meeples extends \CAV\Helpers\Pieces
     ];
   }
 
-  public static $renovationCost = [
-    'roomWood' => ['multiple' => CLAY, 'once' => REED, 'next' => 'roomClay'],
-    'roomClay' => ['multiple' => STONE, 'once' => REED, 'next' => 'roomStone'],
-  ];
-
   public static function getUiData()
   {
     return self::getSelectQuery()

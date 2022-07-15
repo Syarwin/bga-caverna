@@ -10,7 +10,7 @@ use CAV\Core\Engine;
 use CAV\Core\Globals;
 use CAV\Core\Stats;
 
-class PlaceFarmer extends \CAV\Models\Action
+class PlaceDwarf extends \CAV\Models\Action
 {
   public function __construct($row)
   {
@@ -20,7 +20,7 @@ class PlaceFarmer extends \CAV\Models\Action
 
   public function getState()
   {
-    return ST_PLACE_FARMER;
+    return ST_PLACE_DWARF;
   }
 
   public function isDoable($player, $ignoreResources = false)
@@ -31,7 +31,7 @@ class PlaceFarmer extends \CAV\Models\Action
   /**
    * Compute the selectable actions cards/space for active player
    */
-  function argsPlaceFarmer()
+  function argsPlaceDwarf()
   {
     $player = Players::getActive();
     $cards = ActionCards::getVisible($player);
@@ -58,12 +58,12 @@ class PlaceFarmer extends \CAV\Models\Action
    * Place the farmer on a card/space and activate the corresponding card
    *   to update the flow tree
    */
-  function actPlaceFarmer($cardId)
+  function actPlaceDwarf($cardId)
   {
-    self::checkAction('actPlaceFarmer');
+    self::checkAction('actPlaceDwarf');
     $player = Players::getActive();
 
-    $cards = self::argsPlaceFarmer()['cards'];
+    $cards = self::argsPlaceDwarf()['cards'];
     if (!\in_array($cardId, $cards)) {
       throw new \BgaUserException(clienttranslate('You cannot place a person here'));
     }
@@ -85,11 +85,11 @@ class PlaceFarmer extends \CAV\Models\Action
     Stats::incPlacedDwarves($player);
 
     // Are there cards triggered by the placement ?
-    $this->checkListeners('PlaceFarmer', $player, $eventData);
+    $this->checkListeners('PlaceDwarf', $player, $eventData);
 
     // Activate action card
     $flow = $card->getFlow($player);
-    $this->checkModifiers('computePlaceFarmerFlow', $flow, 'flow', $player, $eventData);
+    $this->checkModifiers('computePlaceDwarfFlow', $flow, 'flow', $player, $eventData);
 
     // D101 side effect
     if (!$card->hasAccumulation() && Meeples::getResourcesOnCard($cardId)->count() > 0) {

@@ -103,11 +103,11 @@ class action_caverna extends APP_GameAction
     self::ajaxResponse();
   }
 
-  public function actPlaceFarmer()
+  public function actPlaceDwarf()
   {
     self::setAjaxMode();
     $cId = self::getArg('cId', AT_alphanum, true);
-    $result = $this->game->actPlaceFarmer($cId);
+    $result = $this->game->actPlaceDwarf($cId);
     self::ajaxResponse();
   }
 

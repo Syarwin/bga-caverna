@@ -477,13 +477,13 @@ class PlayerCard extends AbstractCard
   protected function isActionCardEvent($event, $actionCardType, $playerConstraint = 'player', $immediately = false)
   {
     return $event['type'] == 'action' &&
-      $event['action'] == 'PlaceFarmer' &&
+      $event['action'] == 'PlaceDwarf' &&
       ($event['actionCardType'] ?? null) == $actionCardType &&
       (is_null($playerConstraint) ||
         ($playerConstraint == 'player' && $this->pId == $event['pId']) ||
         ($playerConstraint == 'opponent' && $this->pId != $event['pId'])) &&
-      ((!$immediately && $event['method'] == 'PlaceFarmer') ||
-        ($immediately && $event['method'] == 'ImmediatelyAfterPlaceFarmer'));
+      ((!$immediately && $event['method'] == 'PlaceDwarf') ||
+        ($immediately && $event['method'] == 'ImmediatelyAfterPlaceDwarf'));
   }
 
   protected function isActionCardTurnEvent($event, $turns, $playerConstraint = 'player', $immediately = false)

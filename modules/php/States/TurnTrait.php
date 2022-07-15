@@ -210,7 +210,7 @@ trait TurnTrait
     Buildings::applyEffects($player, 'resetFlags', $args);
 
     $node = [
-      'action' => PLACE_FARMER,
+      'action' => PLACE_DWARF,
       'pId' => $player->getId(),
     ];
     if (!$player->hasFarmerAvailable() && $player->hasAdoptiveAvailable()) {
@@ -218,7 +218,7 @@ trait TurnTrait
       $node = $card->getStartOfRoundChoice($player);
     }
 
-    // Inserting leaf PLACE_FARMER
+    // Inserting leaf PLACE_DWARF
     Engine::setup($node, ['order' => 'labor']);
     Engine::proceed();
   }

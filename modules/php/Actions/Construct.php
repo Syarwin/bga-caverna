@@ -24,11 +24,7 @@ class Construct extends \CAV\Models\Action
   public function getCosts($player)
   {
     $roomType = $player->getRoomType();
-    $constructCost = [
-      'roomWood' => Utils::formatCost([REED => 2, WOOD => 5]),
-      'roomClay' => Utils::formatCost([REED => 2, CLAY => 5]),
-      'roomStone' => Utils::formatCost([REED => 2, STONE => 5]),
-    ];
+    $constructCost = [];
     $costs = $constructCost[$roomType];
     $costs = $this->getCtxArgs()['costs'] ?? $costs;
     $this->checkCostModifiers($costs, $player, ['type' => $roomType]);
@@ -72,7 +68,7 @@ class Construct extends \CAV\Models\Action
     if (count($rooms) > $this->getMaxBuildableRooms($player)) {
       throw new \BgaVisibleSystemException('You can\'t build that many rooms with your resources');
     }
-    
+
     // Record amount of rooms prior to building (A21)
     $oldRoomCount = $player->countRooms();
 
