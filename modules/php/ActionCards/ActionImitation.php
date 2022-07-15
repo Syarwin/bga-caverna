@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Cards\ActionCards;
+namespace CAV\ActionCards;
 
 class ActionImitation extends \CAV\Models\ActionCard
 {

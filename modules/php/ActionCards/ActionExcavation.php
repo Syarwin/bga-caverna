@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Cards\ActionCards;
+namespace CAV\ActionCards;
 
 class ActionExcavation extends \CAV\Models\ActionCard
 {
@@ -26,7 +26,7 @@ class ActionExcavation extends \CAV\Models\ActionCard
 
     $this->accumulation = [STONE => 1];
     $this->flow = [
-      'type' => SEQ_NODE,
+      'type' => NODE_SEQ,
       'childs' => [
         ['action' => COLLECT],
         [

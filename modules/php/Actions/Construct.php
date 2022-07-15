@@ -25,7 +25,7 @@ class Construct extends \CAV\Models\Action
   {
     $roomType = $player->getRoomType();
     $constructCost = [];
-    $costs = $constructCost[$roomType];
+    $costs = $constructCost[$roomType] ?? [];
     $costs = $this->getCtxArgs()['costs'] ?? $costs;
     $this->checkCostModifiers($costs, $player, ['type' => $roomType]);
     return $costs;

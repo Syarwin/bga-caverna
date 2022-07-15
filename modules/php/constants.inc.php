@@ -197,7 +197,6 @@ const FOOD = 'food';
 const GOLD = 'gold';
 const GRAIN = 'grain';
 const VEGETABLE = 'vegetable';
-const RUBY = 'ruby';
 const SHEEP = 'sheep';
 const PIG = 'pig';
 const CATTLE = 'cattle';
@@ -211,6 +210,7 @@ const ANIMALS = [SHEEP, PIG, CATTLE];
 const ROOMS = ['roomStone', 'roomClay', 'roomWood'];
 
 const TILE_CAVERN_TUNNEL = 'tileCavernTunnel';
+const TILE_CAVERN_CAVERN = 'tileCavernCavern';
 
 // State to differentiate chah beh oui !ildren from grown ups
 const ADULT = 0;
@@ -268,8 +268,9 @@ const CONSTRUCT = 'CONSTRUCT';
 const EXCHANGE = 'EXCHANGE';
 const EXPEDITION = 'EXPEDITION';
 const FENCING = 'FENCING';
+const FIRSTPLAYER = 'FIRST_PLAYER';
 const GAIN = 'GAIN';
-const IMITATION = 'IMITATION';
+const IMITATE = 'IMITATE';
 const PAY = 'PAY';
 const PLACE_DWARF = 'PLACE_DWARF';
 const PLACE_FUTURE_MEEPLES = 'PLACE_FUTURE_MEEPLES';
@@ -280,7 +281,7 @@ const REORGANIZE = 'REORGANIZE';
 const SOW = 'SOW';
 const SPECIAL_EFFECT = 'SPECIAL_EFFECT';
 const STABLES = 'STABLES';
-const URGENTWISHCHILDREN = 'URGENTWISHCHILDREN';
+const WISHCHILDREN = 'WISH_CHILDREN';
 
 /** ExtraDatas**/
 const BONUS_VP = 'bonusVP';
@@ -321,7 +322,7 @@ const STAT_CATTLE_FROM_BOARD = 44;
 
 const STAT_WOOD_FROM_CARDS = 45;
 const STAT_STONE_FROM_CARDS = 46;
-const STAT_ORE_FROM_CARDS = 46;
+const STAT_ORE_FROM_CARDS = 47;
 const STAT_RUBY_FROM_CARDS = 48;
 const STAT_GRAIN_FROM_CARDS = 49;
 const STAT_VEGETABLE_FROM_CARDS = 50;

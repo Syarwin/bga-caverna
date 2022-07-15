@@ -8,8 +8,8 @@ use CAV\Helpers\Utils;
 
 class Buildings extends \CAV\Helpers\Pieces
 {
-  protected static $table = 'cards';
-  protected static $prefix = 'card_';
+  protected static $table = 'buildings';
+  protected static $prefix = 'building_';
   protected static $customFields = ['player_id', 'extra_datas'];
   protected static $autoIncrement = false;
 
@@ -109,7 +109,6 @@ class Buildings extends \CAV\Helpers\Pieces
   {
     return self::getSelectQuery()
       ->wherePlayer($pId)
-      ->where('card_location', '<>', 'passing')
       ->get();
   }
 

@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Cards\ActionCards;
+namespace CAV\ActionCards;
 
 class ActionFirstPlayer extends \CAV\Models\ActionCard
 {

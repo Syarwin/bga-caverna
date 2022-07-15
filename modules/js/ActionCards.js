@@ -205,10 +205,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     promptActionCard(cards, callback, allCards = []) {
       if (this.isFastMode()) return;
 
-      allCards.forEach((cId) => dojo.addClass(cId, 'unselectable'));
-      cards.forEach((cId) => {
-        this.onClick(cId, () => callback(cId));
-      });
+      // allCards.forEach((cId) => dojo.addClass(cId, 'unselectable'));
+      // cards.forEach((cId) => {
+      //   this.onClick(cId, () => callback(cId));
+      // });
     },
   });
 });

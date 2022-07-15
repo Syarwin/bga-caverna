@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Cards\ActionCards;
+namespace CAV\ActionCards;
 
 class ActionExcavation4 extends \CAV\Models\ActionCard
 {
@@ -23,11 +23,11 @@ class ActionExcavation4 extends \CAV\Models\ActionCard
         'You have to place the twin tile adjacent to an already occupied Mountain space, i.e. you have to extend your cave system.'
       ),
     ];
-    $this->players = [1, 2, 3];
+    $this->players = [4, 5, 6, 7];
 
     $this->accumulation = [STONE => [2, 1]];
     $this->flow = [
-      'type' => SEQ_NODE,
+      'type' => NODE_SEQ,
       'childs' => [
         ['action' => COLLECT],
         [

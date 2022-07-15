@@ -11,65 +11,57 @@ use CAV\Helpers\Utils;
  * Action cards for all
  */
 
-class ActionCard extends \CAV\Models\AbstractCard
+class ActionCard extends \CAV\Helpers\DB_Model
 {
+  protected $table = 'cards';
+  protected $primary = 'card_id';
+  protected $attributes = [
+    'id' => ['card_id', 'int'],
+    'location' => 'card_location',
+    'state' => ['card_state', 'int'],
+    'extraDatas' => ['extra_datas', 'obj'],
+  ];
+
   /*
    * STATIC INFORMATIONS
    *  they are overwritten by children
    */
-  protected $type = ACTION;
+  protected $staticAttributes = ['name', 'tooltip', 'text'];
+  protected $name = '';
+  protected $tooltip = [];
+  protected $desc = []; // UI
+  protected $text = []; // Text of the card, needed for front
   protected $actionCardType = null; // Useful to declare Hollow4 as an Hollow action
   protected $stage = 0;
   protected $accumulation = []; // Array of resource => amount
-  protected $desc = []; // UI
-  protected $tooltipDesc = null; // UI
-  protected $size = 'm'; // UI
   protected $container = 'central'; // UI
-  protected $accumulate = ''; // UI
-
   // Constraints
   protected $players = null; // Players requirements => null if none, integer if only one, array otherwise
-  protected $isAdditional = false;
-  protected $isBeginner = false; // Will ONLY be there on the beginner variant
-  protected $isNotBeginner = false; // Will NOT be there on the beginner variant
 
-  /*
-   * DYNAMIC INFORMATIONS
-   */
-  protected $visible = false;
-
-  public function __construct($row)
-  {
-    parent::__construct($row);
-    if ($row != null) {
-      $this->visible = $row['location'] == 'board'; // TODO
-    }
-  }
 
   public function jsonSerialize()
   {
-    $data = parent::jsonSerialize();
-    $data['component'] = $this->isBoardComponent();
-    $data['container'] = $this->container;
-    $data['desc'] = $this->desc;
-    $data['tooltipDesc'] = $this->tooltipDesc ?? $this->desc;
-    $data['size'] = $this->size;
-    $data['accumulate'] = $this->accumulate;
+    return [
+      'id' => $this->id,
+      'name' => $this->name,
+      'location' => $this->location,
+      'state' => $this->state,
+      'tooltip' => $this->tooltip,
 
-    return $data;
+      'component' => $this->isBoardComponent(),
+      // 'desc' => $this->desc,
+      // 'container' => $this->container,
+    ];
+  }
+
+  public function isSupported($players, $options)
+  {
+    return ($this->players == null || in_array(count($players), $this->players));
   }
 
   public function getActionCardType()
   {
     return $this->actionCardType ?? substr($this->id, 6);
-  }
-
-  public function isSupported($players, $options)
-  {
-    return ($this->players == null || in_array(count($players), $this->players)) &&
-      (!$this->isAdditional || $options[OPTION_ADDITIONAL_SPACES] == OPTION_ADDITIONAL_SPACES_ENABLED) &&
-      (!$this->isBeginner || $options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER) &&
-      (!$this->isNotBeginner || $options[OPTION_COMPETITIVE_LEVEL] != OPTION_COMPETITIVE_BEGINNER);
   }
 
   public function getInitialLocation()
@@ -111,35 +103,31 @@ class ActionCard extends \CAV\Models\AbstractCard
     $ids = [];
     if ($this->hasAccumulation()) {
       foreach ($this->accumulation as $resource => $amount) {
+        if(is_array($amount)){
+          $n = Meeples::getResourcesOnCard(self::getId())->count();
+          $amount = $n == 0? $amount[0] : $amount[1];
+        }
         $ids = array_merge($ids, Meeples::createResourceOnCard($resource, self::getId(), $amount));
       }
     }
     return $ids;
   }
-  
+
   public function canBePlayed($player, $onlyCheckSpecificPlayer = null, $ignoreResources = false)
   {
     // What cards should we check ?
     $actionList = [$this->id];
-    if ($this->isAdditional) {
-      $actionList = array_merge($actionList, [
-        'ActionResourceMarketAdd',
-        'ActionCopseAdd',
-        'ActionAnimalMarketAdd',
-        'ActionWishChildrenAdd',
-      ]);
-    }
 
-    // Is there a farmer here ?
+    // Is there a dwarf here ?
     foreach ($actionList as $action) {
-      $farmers = Dwarves::getOnCard($action);
-      if ($farmers->count() > 0 && $onlyCheckSpecificPlayer == null) {
+      $dwarves = Dwarves::getOnCard($action);
+      if ($dwarves->count() > 0 && $onlyCheckSpecificPlayer == null) {
         return false;
       }
 
-      $pIds = $farmers
-        ->map(function ($farmer) {
-          return $farmer['pId'];
+      $pIds = $dwarves
+        ->map(function ($dwarf) {
+          return $dwarf['pId'];
         })
         ->toArray();
       if (in_array($onlyCheckSpecificPlayer, $pIds)) {

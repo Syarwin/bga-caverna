@@ -213,10 +213,10 @@ trait TurnTrait
       'action' => PLACE_DWARF,
       'pId' => $player->getId(),
     ];
-    if (!$player->hasFarmerAvailable() && $player->hasAdoptiveAvailable()) {
-      $card = Buildings::get('A92_AdoptiveParents');
-      $node = $card->getStartOfRoundChoice($player);
-    }
+    // if (!$player->hasFarmerAvailable() && $player->hasAdoptiveAvailable()) {
+    //   $card = Buildings::get('A92_AdoptiveParents');
+    //   $node = $card->getStartOfRoundChoice($player);
+    // }
 
     // Inserting leaf PLACE_DWARF
     Engine::setup($node, ['order' => 'labor']);

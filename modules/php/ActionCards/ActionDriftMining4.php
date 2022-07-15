@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Cards\ActionCards;
+namespace CAV\ActionCards;
 
 class ActionDriftMining4 extends \CAV\Models\ActionCard
 {
@@ -27,7 +27,7 @@ class ActionDriftMining4 extends \CAV\Models\ActionCard
 
     $this->accumulation = [STONE => 2];
     $this->flow = [
-      'type' => SEQ_NODE,
+      'type' => NODE_SEQ,
       'childs' => [
         ['action' => COLLECT],
         [

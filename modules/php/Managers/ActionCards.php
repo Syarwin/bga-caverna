@@ -11,86 +11,52 @@ class ActionCards extends \CAV\Helpers\Pieces
 {
   protected static $table = 'cards';
   protected static $prefix = 'card_';
-  protected static $customFields = ['player_id', 'extra_datas'];
+  protected static $customFields = ['extra_datas'];
+  protected static $autoremovePrefix = false;
   protected static $autoIncrement = false;
 
   protected static function cast($card)
   {
-    $className = '\CAV\Cards\Actions\\' . $card['id'];
+    $className = '\CAV\ActionCards\\' . $card['card_id'];
     return new $className($card);
   }
 
   protected static $actionCards = [
-    'CattleMarket',
-    'ClayPit',
-    'Copse',
-    'Cultivation',
-    'DayLaborer',
-    'EasternQuarry',
-    'FarmExpansion',
-    'Farmland',
-    'FarmRedevelopment',
-    'Fencing',
-    'Fishing',
-    'Forest',
-    'ForestSolo',
-    'GrainSeeds',
-    'GrainUtilization',
-    'Grove',
-    'Hollow4',
-    'Hollow',
-    'HouseRedevelopment',
-    'HouseRedevelopmentBeginner',
-    'Lessons3',
-    'Lessons4',
-    'Lessons',
-    'MajorImprovement',
-    'MajorImprovementBeginner',
-    'MeetingPlace',
-    'MeetingPlaceBeginner',
-    'MeetingPlaceSolo',
-    'MeetingPlaceSoloBeginner',
-    'PigMarket',
-    'ReedBank',
-    'ResourceMarket4',
-    'ResourceMarket',
-    'SheepMarket',
-    'SideJob',
-    'TravelingPlayers',
-    'UrgentWishChildren',
-    'VegetableSeeds',
-    'WesternQuarry',
-    'WishChildren',
-    'WishChildrenBeginner',
-    // Additional tile
-    'ResourceMarketAdd',
-    'CopseAdd',
-    'AnimalMarketAdd',
-    'WishChildrenAdd',
+    'DriftMining',
+    'DriftMining4',
+    'Excavation',
+    'Excavation4',
+    'FirstPlayer',
+    'FirstPlayer4',
+    'Imitation',
+    'Logging',
+    'Logging4',
+    'Supplies',
+    'Supplies4',
   ];
 
   /* Creation of the cards */
   public static function setupNewGame($players, $options)
   {
     $cards = [];
-    // $turn = 1;
-    // foreach (self::$actionCards as $class) {
-    //   $className = '\CAV\Cards\Actions\Action' . $class;
-    //   $card = new $className(null);
-    //
-    //   // Check number of players and options constraints
-    //   if (!$card->isSupported($players, $options)) {
-    //     continue;
-    //   }
-    //
-    //   $cards[] = [
-    //     'id' => $card->getId(),
-    //     'location' => $card->getInitialLocation(),
-    //     'state' => $card->getInitialLocation() == 'board' ? 1 : 0,
-    //   ];
-    // }
-    //
-    // self::create($cards, null);
+    foreach (self::$actionCards as $class) {
+      $className = '\CAV\ActionCards\Action' . $class;
+      $card = new $className(null);
+
+      // Check number of players and options constraints
+      if (!$card->isSupported($players, $options)) {
+        continue;
+      }
+
+      $cards[] = [
+        'id' => $card->getId(),
+        'location' => $card->getInitialLocation(),
+        'state' => $card->getInitialLocation() == 'board' ? 1 : 0,
+      ];
+    }
+
+    self::create($cards, null);
+
     //
     // for ($i = 1; $i <= 6; $i++) {
     //   self::shuffle('deck_' . $i);
@@ -100,13 +66,6 @@ class ActionCards extends \CAV\Helpers\Pieces
     //     $turn++;
     //   }
     // }
-  }
-
-  public static function getInLocation($location, $state = null, $orderBy = null)
-  {
-    return parent::getInLocationQ($location, $state, $orderBy)
-      ->where('card_id', 'LIKE', 'Action%')
-      ->get();
   }
 
   public static function getVisible($player = null)

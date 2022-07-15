@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Cards\ActionCards;
+namespace CAV\ActionCards;
 
 class ActionLogging extends \CAV\Models\ActionCard
 {
@@ -18,7 +18,7 @@ class ActionLogging extends \CAV\Models\ActionCard
 
     $this->accumulation = [WOOD => [1, 3]];
     $this->flow = [
-      'type' => SEQ_NODE,
+      'type' => NODE_SEQ,
       'childs' => [
         ['action' => COLLECT],
         [

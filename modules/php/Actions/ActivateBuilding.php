@@ -8,7 +8,7 @@ use CAV\Core\Engine;
 use CAV\Core\Globals;
 use CAV\Helpers\Utils;
 
-class ActivateCard extends \CAV\Models\Action
+class ActivateBuilding extends \CAV\Models\Action
 {
   public function getState()
   {

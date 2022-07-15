@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Cards\ActionCards;
+namespace CAV\ActionCards;
 
 class ActionLogging4 extends \CAV\Models\ActionCard
 {
@@ -14,11 +14,11 @@ class ActionLogging4 extends \CAV\Models\ActionCard
       ),
       clienttranslate('Afterwards, you may undertake a Level 1 expedition if your Dwarf has a Weapon.'),
     ];
-    $this->players = [1, 2, 3];
+    $this->players = [4, 5, 6, 7];
 
     $this->accumulation = [WOOD => 3];
     $this->flow = [
-      'type' => SEQ_NODE,
+      'type' => NODE_SEQ,
       'childs' => [
         ['action' => COLLECT],
         [

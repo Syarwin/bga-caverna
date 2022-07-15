@@ -125,7 +125,7 @@ $machinestates = [
   ],
 
   ST_PLACE_DWARF => [
-    'name' => 'placeFarmer',
+    'name' => 'placeDwarf',
     'description' => clienttranslate('${actplayer} must place a person'),
     'descriptionmyturn' => clienttranslate('${you} must place a person'),
     'descriptionskippable' => clienttranslate('${actplayer} may place a person'),

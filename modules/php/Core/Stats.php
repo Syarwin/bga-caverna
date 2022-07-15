@@ -179,49 +179,6 @@ class Stats extends \CAV\Helpers\DB_Manager
     }
     return null;
   }
-
-  /*********************
-   ***** CARD STATS *****
-   *********************/
-  public static function setNextCard($pId, $cardCode, $draftTurn)
-  {
-    for ($i = 1; $i <= 14; $i++) {
-      $name = 'getCard' . $i;
-      $s = self::$name($pId);
-      if ($s == 0) {
-        $name = 'setCard' . $i;
-        self::$name($pId, $cardCode + 2048 * $draftTurn);
-        return;
-      }
-    }
-  }
-
-  public static function setCardPlayed($pId, $cardCode, $turn)
-  {
-    for ($i = 1; $i <= 14; $i++) {
-      $name = 'getCard' . $i;
-      $s = (int) self::$name($pId);
-      $t = $s % 2048;
-      if ($t == $cardCode) {
-        $name = 'setCard' . $i;
-        self::$name($pId, $s + ($turn * 2048 * 16));
-        return;
-      }
-    }
-  }
-
-  public static function setNextDiscardedCard($pId, $code)
-  {
-    for ($i = 1; $i <= 6; $i++) {
-      $name = 'getCardDiscarded' . $i;
-      $s = self::$name($pId);
-      if ($s == 0) {
-        $name = 'setCardDiscarded' . $i;
-        self::$name($pId, $code);
-        return;
-      }
-    }
-  }
 }
 
 ?>

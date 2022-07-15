@@ -26,7 +26,6 @@ class Actions
     SOW => 'Sow',
     STABLES => 'Stables',
     SPECIAL_EFFECT => 'SpecialEffect',
-    RENOVATION => 'Renovation',
     WISHCHILDREN => 'WishChildren',
   ];
 

@@ -25,6 +25,7 @@ trait SetupTrait
     Stats::checkExistence();
 
     $this->setGameStateInitialValue('logging', false);
+    $this->activeNextPlayer();
   }
 
   /**

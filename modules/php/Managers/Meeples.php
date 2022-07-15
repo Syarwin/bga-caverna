@@ -271,7 +271,6 @@ class Meeples extends \CAV\Helpers\Pieces
     ];
 
     $ids = self::create($meeples);
-    self::updateMaxima();
     return $ids;
   }
 
@@ -444,20 +443,5 @@ public function getNextSheep()
       ->where('type', $type);
 
     return $query->get()->count();
-  }
-
-
-  public function updateMaxima()
-  {
-    $types = [WOOD, CLAY, REED, STONE, GRAIN, VEGETABLE, SHEEP, PIG, CATTLE];
-    foreach($types as $type){
-      $name = "get".ucfirst($type).'Max';
-      $v = Stats::$name();
-      $c = self::getFilteredQuery(null, null, $type)->count();
-      if($c > $v){
-        $name = "set".ucfirst($type).'Max';
-        Stats::$name($c);
-      }
-    }
   }
 }
