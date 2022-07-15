@@ -1,13 +1,13 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-use AGR\Managers\Players;
-use AGR\Managers\Meeples;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Helpers\UserException;
+use CAV\Managers\Players;
+use CAV\Managers\Meeples;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Helpers\UserException;
 
-class Renovation extends \AGR\Models\Action
+class Renovation extends \CAV\Models\Action
 {
   public function __construct($row)
   {

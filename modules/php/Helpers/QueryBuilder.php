@@ -1,5 +1,5 @@
 <?php
-namespace AGR\Helpers;
+namespace CAV\Helpers;
 
 class QueryBuilder extends \APP_DbObject
 {

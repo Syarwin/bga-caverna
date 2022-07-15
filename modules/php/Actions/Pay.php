@@ -1,14 +1,14 @@
 <?php
-namespace AGR\Actions;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Game;
-use AGR\Managers\Players;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\Meeples;
-use AGR\Helpers\Utils;
+namespace CAV\Actions;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Game;
+use CAV\Managers\Players;
+use CAV\Managers\Buildings;
+use CAV\Managers\Meeples;
+use CAV\Helpers\Utils;
 
-class Pay extends \AGR\Models\Action
+class Pay extends \CAV\Models\Action
 {
   public function getState()
   {
@@ -73,11 +73,11 @@ class Pay extends \AGR\Models\Action
     foreach ($combinations as &$combination) {
       unset($combination['nb']);
       if (isset($combination['card'])) {
-        $cardNames[$combination['card']] = PlayerCards::get($combination['card'])->getName();
+        $cardNames[$combination['card']] = Buildings::get($combination['card'])->getName();
       }
 
       foreach ($combination['sources'] ?? [] as $cardId) {
-        $cardNames[$cardId] = PlayerCards::get($cardId)->getName();
+        $cardNames[$cardId] = Buildings::get($cardId)->getName();
       }
     }
 
@@ -122,7 +122,7 @@ class Pay extends \AGR\Models\Action
     $player = Players::getActive();
     if (isset($cost['card'])) {
       // Paying by returning a card
-      $card = PlayerCards::get($cost['card']);
+      $card = Buildings::get($cost['card']);
       $card->returnToBoard();
       Notifications::payWithCard($player, $card, $args['source']);
     } elseif (isset($this->getCtxArgs()['to'])) {

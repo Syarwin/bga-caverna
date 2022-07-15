@@ -1,10 +1,10 @@
 <?php
-namespace AGR\Models;
-use AGR\Core\Engine;
-use AGR\Core\Game;
-use AGR\Core\Globals;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\Players;
+namespace CAV\Models;
+use CAV\Core\Engine;
+use CAV\Core\Game;
+use CAV\Core\Globals;
+use CAV\Managers\Buildings;
+use CAV\Managers\Players;
 
 /*
  * Action: base class to handle atomic action
@@ -100,7 +100,7 @@ class Action
   public function checkBeforeEffects($player, $args = [])
   {
     $args = array_merge($args, ['ctx' => $this->ctx]);
-    return !PlayerCards::applyEffects($player, 'Before' . $this->getClassName(), $args, 'or');
+    return !Buildings::applyEffects($player, 'Before' . $this->getClassName(), $args, 'or');
   }
 */
 
@@ -116,7 +116,7 @@ class Action
       $args
     );
 
-    $reaction = PlayerCards::getReaction($event);
+    $reaction = Buildings::getReaction($event);
     if (!is_null($reaction)) {
       Engine::insertAsChild($reaction);
     }
@@ -135,7 +135,7 @@ class Action
   {
     $args[$name] = $data;
     $args['actionCardId'] = $this->ctx != null ? $this->ctx->getCardId() : null;
-    PlayerCards::applyEffects($player, $method, $args);
+    Buildings::applyEffects($player, $method, $args);
     $data = $args[$name];
   }
 

@@ -1,11 +1,11 @@
 <?php
-namespace AGR\Core;
-use AGR\Managers\Players;
+namespace CAV\Core;
+use CAV\Managers\Players;
 
 /*
  * Statistics
  */
-class Stats extends \AGR\Helpers\DB_Manager
+class Stats extends \CAV\Helpers\DB_Manager
 {
   protected static $table = 'stats';
   protected static $primary = 'stats_id';

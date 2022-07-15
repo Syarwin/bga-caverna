@@ -1,15 +1,15 @@
 <?php
-namespace AGR\States;
-use AGR\Core\Globals;
-use AGR\Managers\Players;
-use AGR\Managers\Meeples;
-use AGR\Managers\Fences;
-use AGR\Managers\Actions;
-use AGR\Managers\PlayerCards;
-use AGR\Core\Engine;
-use AGR\Core\Game;
-use AGR\Models\PlayerBoard;
-use AGR\Core\Notifications;
+namespace CAV\States;
+use CAV\Core\Globals;
+use CAV\Managers\Players;
+use CAV\Managers\Meeples;
+use CAV\Managers\Fences;
+use CAV\Managers\Actions;
+use CAV\Managers\Buildings;
+use CAV\Core\Engine;
+use CAV\Core\Game;
+use CAV\Models\PlayerBoard;
+use CAV\Core\Notifications;
 
 trait ActionTrait
 {
@@ -37,7 +37,7 @@ trait ActionTrait
 
     $sourceId = $node->getSourceId() ?? null;
     if(!isset($args['source']) && !is_null($sourceId)){
-      $args['source'] = PlayerCards::get($sourceId)->getName();
+      $args['source'] = Buildings::get($sourceId)->getName();
     }
 
     return $args;
@@ -55,7 +55,7 @@ trait ActionTrait
     $player = Players::getActive();
 
     // Anytime cards
-    $listeningCards = PlayerCards::getReaction(
+    $listeningCards = Buildings::getReaction(
       [
         'type' => 'anytime',
         'method' => 'atAnytime',

@@ -1,12 +1,12 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-use AGR\Helpers\Utils;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\Players;
-use AGR\Core\Stats;
+use CAV\Helpers\Utils;
+use CAV\Managers\Buildings;
+use CAV\Managers\Players;
+use CAV\Core\Stats;
 
-class Occupation extends \AGR\Models\Action
+class Occupation extends \CAV\Models\Action
 {
   public function __construct($row)
   {
@@ -35,7 +35,7 @@ class Occupation extends \AGR\Models\Action
 
   public function getAvailableCards()
   {
-    return PlayerCards::getAvailables(OCCUPATION);
+    return Buildings::getAvailables(OCCUPATION);
   }
 
   public function getBuyableCards($player, $ignoreResources = false)

@@ -4,14 +4,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   const HAND_CARDS = 108;
 
   return declare('caverna.cards', null, {
-    setupPlayerCards() {
+    setupBuildings() {
       // Create an overlay for card animations
       dojo.place("<div id='card-overlay'></div>", 'ebd-body');
       dojo.connect($('card-overlay'), 'click', () => this.zoomOffCard());
 
       this.setupMajorsImprovements();
       this.setupHandModal();
-      this.updatePlayerCards();
+      this.updateBuildings();
       this.updateHandContainer();
 
       if (!this.isSpectator) {
@@ -68,7 +68,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       }
     },
 
-    updatePlayerCards() {
+    updateBuildings() {
       // This function is refreshUI compatible
       let cardIds = this.gamedatas.playerCards.map((card) => {
         this.loadSaveCard(card);

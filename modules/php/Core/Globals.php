@@ -1,11 +1,11 @@
 <?php
-namespace AGR\Core;
+namespace CAV\Core;
 
-use AGR\Core\Game;
+use CAV\Core\Game;
 /*
  * Globals
  */
-class Globals extends \AGR\Helpers\DB_Manager
+class Globals extends \CAV\Helpers\DB_Manager
 {
   protected static $initialized = false;
   protected static $variables = [
@@ -20,29 +20,18 @@ class Globals extends \AGR\Helpers\DB_Manager
     'skippedPlayers' => 'obj',
     'exchangeFlags' => 'obj',
 
-    'obtainedResourcesDuringWork' => 'obj',
-
     'gameSeed' => 'str',
 
     // Game options
     'solo' => 'bool',
-    'beginner' => 'bool',
-    'banlist' => 'bool',
-    'additional' => 'bool',
     'liveScoring' => 'bool',
-    'draftMode' => 'int',
     'turn' => 'int',
     'lastRevealed' => 'str',
-    'draftTurn' => 'int',
     'firstPlayer' => 'int',
-    'deckA' => 'bool',
-    'deckB' => 'bool',
-    'adoptiveChild' => 'int', // deprecated
 
     'passHarvest' => 'obj',
     'skipHarvest' => 'obj',
     'workPhase' => 'bool',
-    'd115' => 'obj',
   ];
 
   protected static $table = 'global_variables';
@@ -166,16 +155,8 @@ class Globals extends \AGR\Helpers\DB_Manager
   public static function setupNewGame($players, $options)
   {
     self::setSolo(count($players) == 1);
-    self::setBeginner($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER);
-    self::setBanlist($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BANLIST);
-    self::setAdditional($options[OPTION_ADDITIONAL_SPACES] == OPTION_ADDITIONAL_SPACES_ENABLED);
-    self::setDraftMode($options[OPTION_DRAFT] ?? 0);
     self::setLiveScoring($options[OPTION_SCORING] == OPTION_SCORING_ENABLED);
-    self::setDeckA(isset($options[OPTION_DECK_A]) && $options[OPTION_DECK_A] == OPTION_DECK_ENABLED);
-    self::setDeckB(isset($options[OPTION_DECK_B]) && $options[OPTION_DECK_B] == OPTION_DECK_ENABLED);
     self::setTurn(0);
-    self::setDraftTurn(0);
     self::setFirstPlayer(Game::get()->getNextPlayerTable()[0]);
-    // self::setFirstPlayer(\array_rand($players));
   }
 }

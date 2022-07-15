@@ -1,6 +1,6 @@
 <?php
-namespace AGR\Helpers;
-use \AGR\Core\Game;
+namespace CAV\Helpers;
+use \CAV\Core\Game;
 
 class DB_Manager extends \APP_DbObject
 {

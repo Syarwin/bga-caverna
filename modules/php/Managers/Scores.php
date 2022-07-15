@@ -1,21 +1,21 @@
 <?php
-namespace AGR\Managers;
-use AGR\Core\Globals;
-use AGR\Core\Stats;
-use AGR\Core\Notifications;
-use AGR\Managers\PlayerCards;
+namespace CAV\Managers;
+use CAV\Core\Globals;
+use CAV\Core\Stats;
+use CAV\Core\Notifications;
+use CAV\Managers\Buildings;
 
 /*
  * Scores manager : allows to easily update/notify scores
  *   -> could have been inside Players.php but better structure this way
  */
-class Scores extends \AGR\Helpers\DB_Manager
+class Scores extends \CAV\Helpers\DB_Manager
 {
   protected static $table = 'player';
   protected static $primary = 'player_id';
   protected static function cast($row)
   {
-    return new \AGR\Models\Player($row);
+    return new \CAV\Models\Player($row);
   }
 
   /*
@@ -201,6 +201,8 @@ class Scores extends \AGR\Helpers\DB_Manager
    */
   public function computePlayer($player)
   {
+    return; // TODO
+
     self::computeFields($player);
     self::computePastures($player);
 
@@ -216,7 +218,7 @@ class Scores extends \AGR\Helpers\DB_Manager
 
     self::computeRooms($player);
 
-    self::computeFarmers($player);
+    self::computeDwarves($player);
 
     self::computeCards($player);
     self::computeBeggings($player);
@@ -343,7 +345,7 @@ class Scores extends \AGR\Helpers\DB_Manager
   {
     $n = count($player->board()->getFreeZones());
     if ($player->hasPlayedCard('D132_HideFarmer')) {
-      $card = PlayerCards::get('D132_HideFarmer');
+      $card = Buildings::get('D132_HideFarmer');
       $n -= $card->getExtraDatas('hiddenSpaces') ?? 0;
     }
 
@@ -400,13 +402,13 @@ class Scores extends \AGR\Helpers\DB_Manager
     Stats::setScoreStoneRooms($player, $scoreStone);
   }
 
-  protected function computeFarmers($player)
+  protected function computeDwarves($player)
   {
-    $n = $player->countFarmers();
+    $n = $player->countDwarves();
     $score = 3 * $n;
     $desc = self::getQtyDesc($player, $n, $score, clienttranslate('person'), clienttranslate('people'));
     self::addEntry($player, SCORING_FARMERS, $score, $desc, $n);
-    Stats::setScoreFarmers($player, $score);
+    Stats::setScoreDwarves($player, $score);
   }
 
   protected function computeCards($player)
@@ -423,7 +425,7 @@ class Scores extends \AGR\Helpers\DB_Manager
   protected function computeC135($player, $score)
   {
     if ($player->hasPlayedCard('C135_Constable')) {
-      PlayerCards::get('C135_Constable')->computeSpecialScore($score);
+      Buildings::get('C135_Constable')->computeSpecialScore($score);
     }
   }
 

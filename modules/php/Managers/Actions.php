@@ -1,6 +1,6 @@
 <?php
-namespace AGR\Managers;
-use AGR\Core\Game;
+namespace CAV\Managers;
+use CAV\Core\Game;
 
 /* Class to manage all the cards for Agricola */
 
@@ -23,7 +23,7 @@ class Actions
     EXCHANGE => 'Exchange',
     PLACE_FARMER => 'PlaceFarmer',
     OCCUPATION => 'Occupation',
-    ACTIVATE_CARD => 'ActivateCard',
+    ACTIVATE_BUILDING => 'ActivateCard',
     SPECIAL_EFFECT => 'SpecialEffect',
     RECEIVE => 'Receive',
     REAP => 'Reap',
@@ -35,7 +35,7 @@ class Actions
     if (!\array_key_exists($actionId, self::$classes)) {
       throw new \BgaVisibleSystemException('Trying to get an atomic action not defined in Actions.php : ' . $actionId);
     }
-    $name = '\AGR\Actions\\' . self::$classes[$actionId];
+    $name = '\CAV\Actions\\' . self::$classes[$actionId];
     return new $name($ctx);
   }
 
@@ -64,7 +64,7 @@ class Actions
       'isDoable' => $res,
       'ctx' => $ctx,
     ];
-    PlayerCards::applyEffects($player, 'isDoable', $args);
+    Buildings::applyEffects($player, 'isDoable', $args);
     return $args['isDoable'];
   }
 

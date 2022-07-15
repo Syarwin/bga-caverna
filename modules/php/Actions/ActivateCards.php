@@ -1,12 +1,12 @@
 <?php
-namespace AGR\Actions;
-use AGR\Managers\Meeples;
-use AGR\Managers\Players;
-use AGR\Managers\ActionCards;
-use AGR\Core\Notifications;
-use AGR\Helpers\Utils;
+namespace CAV\Actions;
+use CAV\Managers\Meeples;
+use CAV\Managers\Players;
+use CAV\Managers\ActionCards;
+use CAV\Core\Notifications;
+use CAV\Helpers\Utils;
 
-class ActivateCards extends \AGR\Models\Action
+class ActivateCards extends \CAV\Models\Action
 {
   public function getState()
   {

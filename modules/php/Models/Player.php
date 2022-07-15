@@ -1,109 +1,81 @@
 <?php
-namespace AGR\Models;
-use AGR\Managers\Farmers;
-use AGR\Managers\Actions;
-use AGR\Managers\Meeples;
-use AGR\Managers\Fences;
-use AGR\Managers\PlayerCards;
-use AGR\Core\Engine;
-use AGR\Core\Globals;
-use AGR\Core\Notifications;
-use AGR\Core\Preferences;
-use AGR\Actions\Pay;
-use AGR\Actions\Reorganize;
-use AGR\Helpers\Utils;
+namespace CAV\Models;
+use CAV\Managers\Dwarves;
+use CAV\Managers\Actions;
+use CAV\Managers\Meeples;
+use CAV\Managers\Fences;
+use CAV\Managers\Buildings;
+use CAV\Core\Engine;
+use CAV\Core\Globals;
+use CAV\Core\Notifications;
+use CAV\Core\Preferences;
+use CAV\Actions\Pay;
+use CAV\Actions\Reorganize;
+use CAV\Helpers\Utils;
 
 /*
  * Player: all utility functions concerning a player
  */
 
-class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
+class Player extends \CAV\Helpers\DB_Model
 {
-  protected static $table = 'player';
-  protected static $primary = 'player_id';
+  protected $table = 'player';
+  protected $primary = 'player_id';
+  protected $attributes = [
+    'id' => ['player_id', 'int'],
+    'no' => ['player_no', 'int'],
+    'name' => 'player_name',
+    'color' => 'player_color',
+    'eliminated' => 'player_eliminated',
+    'score' => ['player_score', 'int'],
+    'scoreAux' => ['player_score_aux', 'int'],
+    'zombie' => 'player_zombie',
+  ];
 
-  protected $id;
-  protected $no; // natural order
-  protected $name; // player name
-  protected $color;
-  protected $eliminated = false;
-  protected $score = 0;
-  protected $zombie = false;
-  protected $board = null;
-
-  public function __construct($row)
+  public function jsonSerialize($currentPlayerId = null)
   {
-    if ($row != null) {
-      $this->id = (int) $row['player_id'];
-      $this->no = (int) $row['player_no'];
-      $this->name = $row['player_name'];
-      $this->color = $row['player_color'];
-      $this->eliminated = $row['player_eliminated'] == 1;
-      $this->score = $row['player_score'];
-      $this->zombie = $row['player_zombie'] == 1;
-    }
-  }
-
-  /*
-   * Getters
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
-  public function getNo()
-  {
-    return $this->no;
-  }
-  public function getName()
-  {
-    return $this->name;
-  }
-  public function getColor()
-  {
-    return $this->color;
-  }
-  public function isEliminated()
-  {
-    return $this->eliminated;
-  }
-  public function isZombie()
-  {
-    return $this->zombie;
+    $data = parent::jsonSerialize();
+    $current = $this->id == $currentPlayerId;
+    return $data;
   }
 
   public function getPref($prefId)
   {
     return Preferences::get($this->id, $prefId);
   }
-  
-  public function setPref($prefId, $value)
+
+  public function getStat($name)
   {
-    Preferences::set($this->id, $prefId, $value);
+    $name = 'get' . \ucfirst($name);
+    return Stats::$name($this->id);
   }
 
-  public function jsonSerialize($currentPlayerId = null)
-  {
-    $current = $this->id == $currentPlayerId;
-    $data = [
-      'id' => $this->id,
-      'eliminated' => $this->eliminated,
-      'no' => $this->no,
-      'name' => $this->getName(),
-      'color' => $this->color,
-      'score' => $this->score,
-      'resources' => [],
-      'board' => $this->board()->getUiData(),
-      'hand' => $current ? $this->getHand()->ui() : [],
-      'harvestCost' => $this->getHarvestCost(),
-    ];
 
-    foreach (RESOURCES as $resource) {
-      $data['resources'][$resource] = $this->countReserveResource($resource);
-    }
 
-    return $data;
-  }
+
+  // UNCHECKED
+  // public function jsonSerialize($currentPlayerId = null)
+  // {
+  //   $current = $this->id == $currentPlayerId;
+  //   $data = [
+  //     'id' => $this->id,
+  //     'eliminated' => $this->eliminated,
+  //     'no' => $this->no,
+  //     'name' => $this->getName(),
+  //     'color' => $this->color,
+  //     'score' => $this->score,
+  //     'resources' => [],
+  //     'board' => $this->board()->getUiData(),
+  //     'hand' => $current ? $this->getHand()->ui() : [],
+  //     'harvestCost' => $this->getHarvestCost(),
+  //   ];
+  //
+  //   foreach (RESOURCES as $resource) {
+  //     $data['resources'][$resource] = $this->countReserveResource($resource);
+  //   }
+  //
+  //   return $data;
+  // }
 
   public function board()
   {
@@ -198,7 +170,7 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
 
   public function getCards($type = null, $playedOnly = false)
   {
-    return PlayerCards::getOfPlayer($this->id)->filter(function ($card) use ($type, $playedOnly) {
+    return Buildings::getOfPlayer($this->id)->filter(function ($card) use ($type, $playedOnly) {
       return ($type == null || $card->getType() == $type) && (!$playedOnly || $card->isPlayed());
     });
   }
@@ -212,7 +184,7 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
 
   public function getHand($type = null)
   {
-    return PlayerCards::getOfPlayer($this->id)->filter(function ($card) use ($type) {
+    return Buildings::getOfPlayer($this->id)->filter(function ($card) use ($type) {
       return ($type == null || $card->getType() == $type) && !$card->isPlayed();
     });
   }
@@ -437,42 +409,42 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
   /**************************
    ****** FARMERS SUGAR ******
    **************************/
-  public function getAllFarmers()
+  public function getAllDwarves()
   {
-    return Farmers::getAllOfPlayer($this->id);
+    return Dwarves::getAllOfPlayer($this->id);
   }
 
   public function hasFarmerAvailable()
   {
-    return Farmers::hasAvailable($this->id);
+    return Dwarves::hasAvailable($this->id);
   }
 
   public function hasAdoptiveAvailable()
   {
     return $this->hasPlayedCard('A92_AdoptiveParents') &&
-      Farmers::hasChildren($this->id) &&
+      Dwarves::hasChildren($this->id) &&
       !in_array($this->id, Globals::getSkippedPlayers());
   }
 
   // TODO : useful ??
   public function getNextFarmerAvailable()
   {
-    return Farmers::getNextAvailable($this->id);
+    return Dwarves::getNextAvailable($this->id);
   }
 
   public function moveNextFarmerAvailable($location, $coords = null)
   {
-    return Farmers::moveNextAvailable($this->id, $location, $coords);
+    return Dwarves::moveNextAvailable($this->id, $location, $coords);
   }
 
-  public function countFarmers($type = null)
+  public function countDwarves($type = null)
   {
-    return Farmers::count($this->id, $type);
+    return Dwarves::count($this->id, $type);
   }
 
   public function hasFarmerInReserve()
   {
-    return Farmers::hasInReserve($this->id);
+    return Dwarves::hasInReserve($this->id);
   }
 
   /**************************
@@ -481,7 +453,7 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
 
   public function growFamily($action, $location = 'card')
   {
-    $mId = Farmers::getNextInReserve($this->id)['id'];
+    $mId = Dwarves::getNextInReserve($this->id)['id'];
     if ($location == 'card') {
       Meeples::moveToCoords($mId, $action);
     } else {
@@ -518,9 +490,9 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
       ->count();
   }
 
-  public function returnHomeFarmers()
+  public function returnHomeDwarves()
   {
-    $farmers = self::getAllFarmers();
+    $farmers = self::getAllDwarves();
     $rooms = Meeples::getRooms($this->id);
     $caravan = false;
     if ($this->hasPlayedCard('B10_Caravan')) {
@@ -541,7 +513,7 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
     }
 
     // check if all farmers have been allocated. else we put in an existing room as they may have been born from urgent wish for children
-    foreach (self::getAllFarmers() as $farmer) {
+    foreach (self::getAllDwarves() as $farmer) {
       if ($farmer['location'] == 'board' || $farmer['location'] == 'B10_Caravan') {
         continue;
       }
@@ -558,7 +530,7 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
           continue 2;
         }
       }
-      
+
       foreach ($rooms as $room) {
         if ($this->countFarmerAtPos(['x' => $room['x'], 'y' => $room['y']]) == 2) {
           Meeples::moveToCoords($farmer['id'], 'board', [$room['x'], $room['y']]);
@@ -571,7 +543,7 @@ class Player extends \AGR\Helpers\DB_Manager implements \JsonSerializable
   public function getHarvestCost()
   {
     $mult = Globals::isSolo() ? 3 : 2;
-    return $this->countFarmers(ADULT) * $mult + $this->countFarmers(CHILD);
+    return $this->countDwarves(ADULT) * $mult + $this->countDwarves(CHILD);
   }
 
   public function breed($animalType = null, $source = null)

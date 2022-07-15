@@ -1,16 +1,16 @@
 <?php
-namespace AGR\Actions;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Game;
-use AGR\Core\Globals;
-use AGR\Managers\Players;
-use AGR\Managers\Meeples;
-use AGR\Helpers\Utils;
-use AGR\Core\Stats;
-use AGR\Helpers\UserException;
+namespace CAV\Actions;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Game;
+use CAV\Core\Globals;
+use CAV\Managers\Players;
+use CAV\Managers\Meeples;
+use CAV\Helpers\Utils;
+use CAV\Core\Stats;
+use CAV\Helpers\UserException;
 
-class Exchange extends \AGR\Models\Action
+class Exchange extends \CAV\Models\Action
 {
   public function getState()
   {

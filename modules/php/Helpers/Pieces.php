@@ -1,5 +1,5 @@
 <?php
-namespace AGR\Helpers;
+namespace CAV\Helpers;
 
 /*
  * This is a generic class to manage game pieces.
@@ -244,7 +244,6 @@ class Pieces extends DB_Manager
     if (!is_array($ids)) {
       $ids = [$ids];
     }
-//    $ids = array_unique($ids);
 
     self::checkIdArray($ids);
     if (empty($ids)) {
@@ -255,6 +254,7 @@ class Pieces extends DB_Manager
       ->whereIn(static::$prefix . 'id', $ids)
       ->get(false);
     if (count($result) != count($ids) && $raiseExceptionIfNotEnough) {
+      // throw new \feException(print_r(\debug_print_backtrace()));
       throw new \feException('Class Pieces: getMany, some pieces have not been found !' . json_encode($ids));
     }
 
@@ -333,7 +333,6 @@ class Pieces extends DB_Manager
     return self::getInLocation($location, $state, [static::$prefix . 'state', 'ASC']);
   }
 
-
   /**
    * Return number of pieces in specific location
    */
@@ -363,6 +362,9 @@ class Pieces extends DB_Manager
   {
     if (!is_array($ids)) {
       $ids = [$ids];
+    }
+    if (empty($ids)) {
+      return [];
     }
 
     self::checkLocation($location);
@@ -409,7 +411,7 @@ class Pieces extends DB_Manager
     $pieces = self::getTopOf($fromLocation, $nbr, false);
     $ids = $pieces->getIds();
     self::getUpdateQuery($ids, $toLocation, $state)->run();
-    $pieces = self::get($ids);
+    $pieces = self::getMany($ids);
 
     // No more pieces in deck & reshuffle is active => form another deck
     if (

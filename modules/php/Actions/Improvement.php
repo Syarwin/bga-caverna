@@ -1,11 +1,11 @@
 <?php
-namespace AGR\Actions;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\Players;
-use AGR\Helpers\Collection;
-use AGR\Core\Stats;
+namespace CAV\Actions;
+use CAV\Managers\Buildings;
+use CAV\Managers\Players;
+use CAV\Helpers\Collection;
+use CAV\Core\Stats;
 
-class Improvement extends \AGR\Models\Action
+class Improvement extends \CAV\Models\Action
 {
   public function __construct($row)
   {
@@ -45,7 +45,7 @@ class Improvement extends \AGR\Models\Action
     $cards = new Collection();
     $types = $this->getTypes();
     foreach ($types as $type) {
-      $cards = $cards->merge(PlayerCards::getAvailables($type));
+      $cards = $cards->merge(Buildings::getAvailables($type));
     }
     return $cards;
   }
@@ -63,8 +63,8 @@ class Improvement extends \AGR\Models\Action
     if ($player->hasPlayedCard('C27_Blueprint') && !in_array(MAJOR, $this->getTypes())) {
       $cardList = ['Major_Joinery', 'Major_Pottery', 'Major_Basket'];
       foreach ($cardList as $card) {
-        if (PlayerCards::get($card)->isBuyable($player, $ignoreResources, $args)) {
-          $buy[$card] = PlayerCards::get($card);
+        if (Buildings::get($card)->isBuyable($player, $ignoreResources, $args)) {
+          $buy[$card] = Buildings::get($card);
         }
       }
     }

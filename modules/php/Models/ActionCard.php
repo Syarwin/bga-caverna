@@ -1,17 +1,17 @@
 <?php
-namespace AGR\Models;
+namespace CAV\Models;
 
-use AGR\Managers\Meeples;
-use AGR\Managers\Farmers;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Helpers\Utils;
+use CAV\Managers\Meeples;
+use CAV\Managers\Dwarves;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Helpers\Utils;
 
 /*
  * Action cards for all
  */
 
-class ActionCard extends \AGR\Models\AbstractCard
+class ActionCard extends \CAV\Models\AbstractCard
 {
   /*
    * STATIC INFORMATIONS
@@ -132,7 +132,7 @@ class ActionCard extends \AGR\Models\AbstractCard
 
     // Is there a farmer here ?
     foreach ($actionList as $action) {
-      $farmers = Farmers::getOnCard($action);
+      $farmers = Dwarves::getOnCard($action);
       if ($farmers->count() > 0 && $onlyCheckSpecificPlayer == null) {
         return false;
       }

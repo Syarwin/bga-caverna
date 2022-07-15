@@ -1,21 +1,21 @@
 <?php
-namespace AGR\Managers;
-use AGR\Core\Game;
-use AGR\Core\Globals;
-use AGR\Core\Stats;
-use AGR\Helpers\Utils;
+namespace CAV\Managers;
+use CAV\Core\Game;
+use CAV\Core\Globals;
+use CAV\Core\Stats;
+use CAV\Helpers\Utils;
 
 /*
  * Players manager : allows to easily access players ...
  *  a player is an instance of Player class
  */
-class Players extends \AGR\Helpers\DB_Manager
+class Players extends \CAV\Helpers\DB_Manager
 {
   protected static $table = 'player';
   protected static $primary = 'player_id';
   protected static function cast($row)
   {
-    return new \AGR\Models\Player($row);
+    return new \CAV\Models\Player($row);
   }
 
   public function setupNewGame($players, $options)
@@ -94,7 +94,7 @@ class Players extends \AGR\Helpers\DB_Manager
     return self::DB()->count();
   }
 
-  public function countUnallocatedFarmers()
+  public function countUnallocatedDwarves()
   {
     // Get zombie players ids
     $zombies = self::getAll()
@@ -104,7 +104,7 @@ class Players extends \AGR\Helpers\DB_Manager
       ->getIds();
 
     // Filter out farmers of zombies
-    return Farmers::getAllAvailable()
+    return Dwarves::getAllAvailable()
       ->filter(function ($meeple) use ($zombies) {
         return !in_array($meeple['pId'], $zombies);
       })
@@ -114,7 +114,7 @@ class Players extends \AGR\Helpers\DB_Manager
   public function returnHome()
   {
     foreach (self::getAll() as $player) {
-      $player->returnHomeFarmers();
+      $player->returnHomeDwarves();
     }
   }
 

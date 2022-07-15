@@ -1,5 +1,5 @@
 <?php
-namespace AGR\Helpers;
+namespace CAV\Helpers;
 
 class Collection extends \ArrayObject
 {
@@ -19,10 +19,11 @@ class Collection extends \ArrayObject
     return isset($arr[0]) ? $arr[0] : null;
   }
 
-  public function last()
+  public function rand()
   {
-    $arr = $this->toArray();
-    return empty($arr) ? null : $arr[count($arr) - 1];
+    $arr = $this->getArrayCopy();
+    $key = array_rand($arr, 1);
+    return $arr[$key];
   }
 
   public function toArray()
@@ -42,7 +43,7 @@ class Collection extends \ArrayObject
 
   public function merge($arr)
   {
-    return new Collection(array_merge($this->toAssoc(), $arr->toAssoc()));
+    return new Collection($this->toAssoc() + $arr->toAssoc());
   }
 
   public function reduce($func, $init)
@@ -53,6 +54,16 @@ class Collection extends \ArrayObject
   public function filter($func)
   {
     return new Collection(array_filter($this->toAssoc(), $func));
+  }
+
+  public function limit($n)
+  {
+    return new Collection(array_slice($this->toAssoc(), 0, $n, true));
+  }
+
+  public function includes($t)
+  {
+    return in_array($t, $this->getArrayCopy());
   }
 
   public function ui()

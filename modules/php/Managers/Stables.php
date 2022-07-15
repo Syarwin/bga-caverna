@@ -1,5 +1,5 @@
 <?php
-namespace AGR\Managers;
+namespace CAV\Managers;
 
 /* Class to manage all the stables for Agricola */
 

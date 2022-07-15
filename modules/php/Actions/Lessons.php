@@ -1,6 +1,6 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-class Lessons extends \AGR\Models\Action
+class Lessons extends \CAV\Models\Action
 {
 }

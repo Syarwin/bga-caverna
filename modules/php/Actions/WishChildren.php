@@ -1,12 +1,12 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-use AGR\Core\Globals;
-use AGR\Managers\Players;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
+use CAV\Core\Globals;
+use CAV\Managers\Players;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
 
-class WishChildren extends \AGR\Models\Action
+class WishChildren extends \CAV\Models\Action
 {
   public function __construct($row)
   {
@@ -36,13 +36,13 @@ class WishChildren extends \AGR\Models\Action
       if (
         $player->hasPlayedCard('B10_Caravan') &&
         $c == 'freeRoom' &&
-        $player->countFarmers() >= $player->countRooms() + 1
+        $player->countDwarves() >= $player->countRooms() + 1
       ) {
         return false;
       } elseif (
         !$player->hasPlayedCard('B10_Caravan') &&
         $c == 'freeRoom' &&
-        $player->countFarmers() >= $player->countRooms()
+        $player->countDwarves() >= $player->countRooms()
       ) {
         return false;
       }
@@ -77,7 +77,7 @@ class WishChildren extends \AGR\Models\Action
     
     // Listeners for cards
     $eventData = [
-      'farmers' => $player->countFarmers(),
+      'farmers' => $player->countDwarves(),
     ];
     $this->checkAfterListeners($player, $eventData);
 

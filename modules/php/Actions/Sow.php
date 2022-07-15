@@ -1,11 +1,11 @@
 <?php
-namespace AGR\Actions;
-use AGR\Managers\Players;
-use AGR\Managers\Meeples;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
+namespace CAV\Actions;
+use CAV\Managers\Players;
+use CAV\Managers\Meeples;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
 
-class Sow extends \AGR\Models\Action
+class Sow extends \CAV\Models\Action
 {
   public function __construct($row)
   {

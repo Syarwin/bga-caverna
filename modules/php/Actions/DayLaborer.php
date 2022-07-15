@@ -1,6 +1,6 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-class DayLaborer extends \AGR\Models\Action
+class DayLaborer extends \CAV\Models\Action
 {
 }

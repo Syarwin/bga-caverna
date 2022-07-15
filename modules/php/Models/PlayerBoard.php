@@ -1,12 +1,12 @@
 <?php
-namespace AGR\Models;
-use AGR\Managers\Meeples;
-use AGR\Managers\Fences;
-use AGR\Managers\Stables;
-use AGR\Managers\Players;
-use AGR\Managers\PlayerCards;
-use AGR\Helpers\UserException;
-use AGR\Helpers\Utils;
+namespace CAV\Models;
+use CAV\Managers\Meeples;
+use CAV\Managers\Fences;
+use CAV\Managers\Stables;
+use CAV\Managers\Players;
+use CAV\Managers\Buildings;
+use CAV\Helpers\UserException;
+use CAV\Helpers\Utils;
 
 /*
  * PlayerBoard: all utility functions concerning a player board
@@ -79,7 +79,7 @@ class PlayerBoard
       $field['uid'] = $field['x'] . '_' . $field['y'];
       $this->grid[$field['x']][$field['y']] = $field;
     }
-    foreach (PlayerCards::getFieldCards($this->pId) as $card) {
+    foreach (Buildings::getFieldCards($this->pId) as $card) {
       $this->addFieldCard($card->getId(), $card->getFieldDetails());
     }
 
@@ -355,8 +355,8 @@ class PlayerBoard
       }
 
       // Check card constraint
-      if ($zone['type'] == 'card' && method_exists(PlayerCards::get($zone['card_id']), 'getInvalidAnimals')) {
-        $card = PlayerCards::get($zone['card_id']);
+      if ($zone['type'] == 'card' && method_exists(Buildings::get($zone['card_id']), 'getInvalidAnimals')) {
+        $card = Buildings::get($zone['card_id']);
         $animals = array_merge($animals, $card->getInvalidAnimals($zone, $raiseException));
       }
       // Check only one type of animal
@@ -548,7 +548,7 @@ class PlayerBoard
     $zones[] = [
       'type' => 'room',
       'capacity' => 1,
-      'locations' => array_map(['AGR\Models\PlayerBoard', 'extractPos'], $this->rooms),
+      'locations' => array_map(['CAV\Models\PlayerBoard', 'extractPos'], $this->rooms),
     ];
 
     // Add the unfenced stables
@@ -565,7 +565,7 @@ class PlayerBoard
 
     // Apply card effects
     $args['zones'] = $zones;
-    PlayerCards::applyEffects($this->player, 'ComputeDropZones', $args);
+    Buildings::applyEffects($this->player, 'ComputeDropZones', $args);
     return $args['zones'];
   }
 

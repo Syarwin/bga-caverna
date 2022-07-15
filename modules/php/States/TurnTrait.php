@@ -1,31 +1,31 @@
 <?php
-namespace AGR\States;
-use AGR\Core\Globals;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Stats;
-use AGR\Managers\Players;
-use AGR\Managers\ActionCards;
-use AGR\Managers\Meeples;
-use AGR\Managers\Farmers;
-use AGR\Managers\Scores;
-use AGR\Managers\Actions;
-use AGR\Managers\PlayerCards;
+namespace CAV\States;
+use CAV\Core\Globals;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Stats;
+use CAV\Managers\Players;
+use CAV\Managers\ActionCards;
+use CAV\Managers\Meeples;
+use CAV\Managers\Dwarves;
+use CAV\Managers\Scores;
+use CAV\Managers\Actions;
+use CAV\Managers\Buildings;
 
 trait TurnTrait
 {
   /**
    * State function when starting a turn
-   *  useful to intercept for some cards that happens at that moment
+   *  useful to intercept for some buildings that happens at that moment
    */
   function stBeforeStartOfTurn()
   {
     // 0) Make children grow up
-    $children = Farmers::growChildren();
-    if (!empty($children)) {
-      Notifications::growChildren($children);
-      Notifications::updateHarvestCosts();
-    }
+    // $children = Dwarves::growChildren();
+    // if (!empty($children)) {
+    //   Notifications::growChildren($children);
+    //   Notifications::updateHarvestCosts();
+    // }
 
     $skipped = Players::getAll()
       ->filter(function ($player) {
@@ -34,8 +34,8 @@ trait TurnTrait
       ->getIds();
     Globals::setSkippedPlayers($skipped);
 
-    // 1) Listen for cards BeforeStartOfTurn
-    $this->checkCardListeners('BeforeStartOfTurn', 'stPreparationRevealAction');
+    // 1) Listen for buildings BeforeStartOfTurn
+    $this->checkBuildingListeners('BeforeStartOfTurn', 'stPreparationRevealAction');
   }
 
   /**
@@ -47,17 +47,17 @@ trait TurnTrait
     Notifications::startNewTurn($turn);
 
     // Reveal new action card
-    $card = ActionCards::draw()->first();
-    Globals::setLastRevealed($card->getId());
-    Notifications::revealActionCard($card);
-    // Listen for cards AfterRevealAction
+    // $card = ActionCards::draw()->first();
+    // Globals::setLastRevealed($card->getId());
+    // Notifications::revealActionCard($card);
 
-    $this->checkCardListeners('AfterRevealAction', 'stPreparationListener');
+    // Listen for buildings AfterRevealAction
+    $this->checkBuildingListeners('AfterRevealAction', 'stPreparationListener');
   }
 
   function stPreparationListener()
   {
-    $this->checkCardListeners('Preparation', 'stPreparation');
+    $this->checkBuildingListeners('Preparation', 'stPreparation');
   }
 
   /**
@@ -76,20 +76,20 @@ trait TurnTrait
   }
 
   /*
-   *  c) Collect players' resources on action cards
+   *  c) Collect players' resources on action buildings
    */
   function stStartOfTurn()
   {
     $pId = Players::getActiveId();
     $turn = Globals::getTurn();
 
-    // Get triggered cards
+    // Get triggered buildings
     $event = [
       'type' => 'StartOfTurn',
       'method' => 'StartOfTurn',
       'pId' => $pId,
     ];
-    $reaction = PlayerCards::getReaction($event, false);
+    $reaction = Buildings::getReaction($event, false);
 
     // Get meeple to receive
     $resources = Meeples::getResourcesOnCard('turn_' . $turn, $pId);
@@ -105,7 +105,7 @@ trait TurnTrait
       }
       // Otherwise, 'x' refers to the card that needs to be triggered by that meeple
       else {
-        $card = PlayerCards::get($res['x']);
+        $card = Buildings::get($res['x']);
         $reaction['childs'][] = $card->getReceiveFlow($res);
       }
     }
@@ -150,13 +150,13 @@ trait TurnTrait
     $pId = Players::getActiveId();
     $turn = Globals::getTurn();
 
-    // Get triggered cards
+    // Get triggered buildings
     $event = [
       'type' => 'startOfWork',
       'method' => 'startOfWork',
       'pId' => $pId,
     ];
-    $reaction = PlayerCards::getReaction($event, false);
+    $reaction = Buildings::getReaction($event, false);
 
     if (empty($reaction['childs'])) {
       // No reaction => just go to next player
@@ -170,7 +170,6 @@ trait TurnTrait
 
   function stStartLaborDay()
   {
-    Globals::setObtainedResourcesDuringWork([]);
     Globals::setWorkPhase(true);
 
     // Change first player and start labor
@@ -208,14 +207,14 @@ trait TurnTrait
     self::giveExtraTime($player->getId());
 
     $args = [];
-    PlayerCards::applyEffects($player, 'resetFlags', $args);
+    Buildings::applyEffects($player, 'resetFlags', $args);
 
     $node = [
       'action' => PLACE_FARMER,
       'pId' => $player->getId(),
     ];
     if (!$player->hasFarmerAvailable() && $player->hasAdoptiveAvailable()) {
-      $card = PlayerCards::get('A92_AdoptiveParents');
+      $card = Buildings::get('A92_AdoptiveParents');
       $node = $card->getStartOfRoundChoice($player);
     }
 
@@ -327,24 +326,24 @@ trait TurnTrait
    ********************************/
   function stEndWorkPhase()
   {
-    // Listen for cards onEndWorkPhase
-    $this->checkCardListeners('EndWorkPhase', 'stStartReturnHome');
+    // Listen for buildings onEndWorkPhase
+    $this->checkBuildingListeners('EndWorkPhase', 'stStartReturnHome');
   }
 
   function stStartReturnHome()
   {
-    // Listen for cards onStartReturnHome
-    $this->checkCardListeners('StartReturnHome', 'stReturnHome');
+    // Listen for buildings onStartReturnHome
+    $this->checkBuildingListeners('StartReturnHome', 'stReturnHome');
   }
 
   function stReturnHome()
   {
     Players::returnHome();
-    Notifications::returnHome(Farmers::getAllAvailable());
+    Notifications::returnHome(Dwarves::getAllAvailable());
     Globals::setWorkPhase(false);
 
-    // Listen for cards onReturnHome
-    $this->checkCardListeners('ReturnHome', ST_PRE_END_OF_TURN);
+    // Listen for buildings onReturnHome
+    $this->checkBuildingListeners('ReturnHome', ST_PRE_END_OF_TURN);
   }
 
   function stPreEndOfTurn()
@@ -353,7 +352,7 @@ trait TurnTrait
     $turn = Globals::getTurn();
     $harvest = [4, 7, 9, 11, 13, 14];
     if (in_array($turn, $harvest)) {
-      $this->checkCardListeners('BeforeHarvest', ST_START_HARVEST);
+      $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
     } else {
       $this->gamestate->nextState('end');
     }
@@ -373,7 +372,7 @@ trait TurnTrait
 
     // Pig Breeder
     if (Globals::getTurn() == 12) {
-      $card = PlayerCards::getSingle('A165_PigBreeder', false);
+      $card = Buildings::getSingle('A165_PigBreeder', false);
       if ($card != null && $card->isPlayed()) {
         $player = $card->getPlayer();
         if ($player->breed(PIG, clienttranslate("Pig breeder's effect"))) {
@@ -400,12 +399,12 @@ trait TurnTrait
 
   function stPreEndOfGame()
   {
-    $this->checkCardListeners('BeforeEndOfGame', 'stLaunchEndOfGame');
+    $this->checkBuildingListeners('BeforeEndOfGame', 'stLaunchEndOfGame');
   }
 
   function stLaunchEndOfGame()
   {
-    foreach (PlayerCards::getAllCardsWithMethod('EndOfGame') as $card) {
+    foreach (Buildings::getAllBuildingsWithMethod('EndOfGame') as $card) {
       $card->onEndOfGame();
     }
     Globals::setTurn(15);

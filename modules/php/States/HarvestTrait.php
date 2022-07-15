@@ -1,15 +1,15 @@
 <?php
-namespace AGR\States;
-use AGR\Core\Globals;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Managers\Players;
-use AGR\Managers\ActionCards;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\Meeples;
-use AGR\Managers\Farmers;
-use AGR\Managers\Actions;
-use AGR\Helpers\Utils;
+namespace CAV\States;
+use CAV\Core\Globals;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Managers\Players;
+use CAV\Managers\ActionCards;
+use CAV\Managers\Buildings;
+use CAV\Managers\Meeples;
+use CAV\Managers\Dwarves;
+use CAV\Managers\Actions;
+use CAV\Helpers\Utils;
 
 trait HarvestTrait
 {
@@ -43,7 +43,7 @@ trait HarvestTrait
     Globals::setPassHarvest([]);
     Globals::setExchangeFlags([]);
 
-    $this->checkCardListeners('StartHarvest', 'stStartHarvestFieldPhase', [], HARVEST);
+    $this->checkBuildingListeners('StartHarvest', 'stStartHarvestFieldPhase', [], HARVEST);
   }
 
   /****************************
@@ -51,7 +51,7 @@ trait HarvestTrait
    ****************************/
   function stStartHarvestFieldPhase()
   {
-    $this->checkCardListeners('StartHarvestFieldPhase', 'stInitHarvestFieldPhase', [], HARVEST);
+    $this->checkBuildingListeners('StartHarvestFieldPhase', 'stInitHarvestFieldPhase', [], HARVEST);
   }
 
   function stInitHarvestFieldPhase()
@@ -72,7 +72,7 @@ trait HarvestTrait
       'method' => 'HarvestFieldPhase',
       'pId' => $player->getId(),
     ];
-    $reaction = PlayerCards::getReaction($event, false);
+    $reaction = Buildings::getReaction($event, false);
 
     // Insert default REAP node
     $crops = $player->board()->getHarvestCrops();
@@ -93,7 +93,7 @@ trait HarvestTrait
 
   function stEndHarvestFieldPhase()
   {
-    $this->checkCardListeners('EndHarvestFieldPhase', 'stStartHarvestFeedingPhase', [], \HARVEST);
+    $this->checkBuildingListeners('EndHarvestFieldPhase', 'stStartHarvestFeedingPhase', [], \HARVEST);
   }
 
   /****************************
@@ -107,7 +107,7 @@ trait HarvestTrait
 
   function stStartHarvestFeedingPhase()
   {
-    $this->checkCardListeners('StartHarvestFeedingPhase', 'stInitHarvestFeedingPhase', [], \HARVEST);
+    $this->checkBuildingListeners('StartHarvestFeedingPhase', 'stInitHarvestFeedingPhase', [], \HARVEST);
   }
 
   function stInitHarvestFeedingPhase()
@@ -127,7 +127,7 @@ trait HarvestTrait
       'method' => 'HarvestFeedingPhase',
       'pId' => $player->getId(),
     ];
-    $reaction = PlayerCards::getReaction($event, false);
+    $reaction = Buildings::getReaction($event, false);
 
     // Exchange node
     $costs = Utils::formatFee([FOOD => $player->getHarvestCost()]);
@@ -166,12 +166,12 @@ trait HarvestTrait
   // TODO : remove
   function stHarvestEndOfFeed()
   {
-    $this->checkCardListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);
+    $this->checkBuildingListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);
   }
 
   function stEndHarvestFeedingPhase()
   {
-    $this->checkCardListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);
+    $this->checkBuildingListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);
   }
 
   /****************************
@@ -222,6 +222,6 @@ trait HarvestTrait
    ****************************/
   function stHarvestEnd()
   {
-    $this->checkCardListeners('EndHarvest', ST_END_OF_TURN, [], \HARVEST);
+    $this->checkBuildingListeners('EndHarvest', ST_END_OF_TURN, [], \HARVEST);
   }
 }

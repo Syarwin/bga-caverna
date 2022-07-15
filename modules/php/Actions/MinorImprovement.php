@@ -1,7 +1,7 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-class MinorImprovement extends \AGR\Models\Action
+class MinorImprovement extends \CAV\Models\Action
 {
   public function __construct($row)
   {

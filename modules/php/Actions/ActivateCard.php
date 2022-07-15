@@ -1,29 +1,29 @@
 <?php
-namespace AGR\Actions;
-use AGR\Managers\Meeples;
-use AGR\Managers\Players;
-use AGR\Managers\PlayerCards;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Globals;
-use AGR\Helpers\Utils;
+namespace CAV\Actions;
+use CAV\Managers\Meeples;
+use CAV\Managers\Players;
+use CAV\Managers\Buildings;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Globals;
+use CAV\Helpers\Utils;
 
-class ActivateCard extends \AGR\Models\Action
+class ActivateCard extends \CAV\Models\Action
 {
   public function getState()
   {
-    return ST_ACTIVATE_CARD;
+    return ST_ACTIVATE_BUILDING;
   }
 
   public function getCard()
   {
-    return PlayerCards::get($this->getCtxArgs()['cardId']);
+    return Buildings::get($this->getCtxArgs()['cardId']);
   }
 
   public function getFlow($player)
   {
     return $this->getCard()->isPlayed()
-      ? PlayerCards::applyEffect(
+      ? Buildings::applyEffect(
         $this->getCard(),
         $player,
         $this->getCtxArgs()['event']['method'],

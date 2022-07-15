@@ -1,14 +1,14 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-use AGR\Managers\Players;
-use AGR\Managers\Meeples;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Globals;
-use AGR\Managers\PlayerCards;
+use CAV\Managers\Players;
+use CAV\Managers\Meeples;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Globals;
+use CAV\Managers\Buildings;
 
-class Reorganize extends \AGR\Models\Action
+class Reorganize extends \CAV\Models\Action
 {
   public function __construct($row)
   {
@@ -157,8 +157,8 @@ class Reorganize extends \AGR\Models\Action
       // Search zone of same animal type with an empty slot
       $sameFound = false;
       foreach ($zones as &$zone) {
-        if ($zone['type'] == 'card' && method_exists(PlayerCards::get($zone['card_id']), 'canAcceptAnimal')) {
-          if (PlayerCards::get($zone['card_id'])->canAcceptAnimal($zone, $meeple)) {
+        if ($zone['type'] == 'card' && method_exists(Buildings::get($zone['card_id']), 'canAcceptAnimal')) {
+          if (Buildings::get($zone['card_id'])->canAcceptAnimal($zone, $meeple)) {
             self::placeInZone($player, $meeple, $zone);
             $sameFound = true;
             break;

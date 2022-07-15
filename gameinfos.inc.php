@@ -5,16 +5,16 @@
 
 $gameinfos = [
   // Name of the game in English (will serve as the basis for translation)
-  'game_name' => 'Agricola',
+  'game_name' => 'Caverna',
 
   // Game designer (or game designers, separated by commas)
   'designer' => 'Uwe Rosenberg',
 
   // Game artist (or game artists, separated by commas)
-  'artist' => 'Klemens Franz',
+  'artist' => 'Javier González Cava, Klemens Franz',
 
   // Year of FIRST publication of this game. Can be negative.
-  'year' => 2007,
+  'year' => 2013,
 
   // Game publisher (use empty string if there is no publisher)
   'publisher' => 'Lookout Games',
@@ -26,10 +26,10 @@ $gameinfos = [
   'publisher_bgg_id' => 234,
 
   // Board game geek ID of the game
-  'bgg_id' => 200680,
+  'bgg_id' => 102794,
 
   // Players configuration that can be played (ex: 2 to 4 players)
-  'players' => [1, 2, 3, 4],
+  'players' => [1, 2, 3, 4, 5, 6, 7],
 
   // Suggest players to play with this number of players. Must be null if there is no such advice, or if there is only one possible player configuration.
   'suggest_player_number' => 4,
@@ -56,7 +56,7 @@ $gameinfos = [
   // Note: if you are NOT using any tie breaker, leave the empty string.
   //
   // Example: 'tie_breaker_description' => totranslate( "Number of remaining cards in hand" ),
-  'tie_breaker_description' => totranslate('Number of building resource remaining'),
+  'tie_breaker_description' => totranslate('TODO'),
 
   // If in the game, all losers are equal (no score to rank them or explicit in the rules that losers are not ranked between them), set this to true
   // The game end result will display "Winner" for the 1st player and "Loser" for all other players
@@ -89,6 +89,7 @@ $gameinfos = [
   'diplomacy' => 2,
 
   // Colors attributed to players
+  // TODO
   'player_colors' => ['ff0000', '008000', '72c3b1', '982fff', '7b7b7b'],
 
   // Favorite colors support : if set to "true", support attribution of favorite colors based on player's preferences (see reattributeColorsBasedOnPreferences PHP method)
@@ -121,7 +122,10 @@ $gameinfos = [
   // A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
   'presentation' => [
     totranslate(
-      'The 17th Century Was Not an Easy Time to be a Farmer. Players begin the game with two family members and can grow their families over the course of the game. This allows them more actions but remember you have to grow more food to feed your family as it grows! Feeding your family is a special kind of challenge and players will plant grain and vegetables while supplementing their food supply with sheep, wild boar and cattle. Guide your family to wealth, health and prosperity and you will win the game.'
+      'Caverna: The Cave Farmers is a worker-placement game at heart, with a focus on farming. In the game, you are the bearded leader of a small dwarf family that lives in a little cave in the mountains. You begin the game with a farmer and his spouse, and each member of the farming family represents an action that the player can take each turn. Together, you cultivate the forest in front of your cave and dig deeper into the mountain. You furnish the caves as dwellings for your offspring as well as working spaces for small enterprises.'
+    ),
+    totranslate(
+      'It\'s up to you how much ore you want to mine. You will need it to forge weapons that allow you to go on expeditions to gain bonus items and actions. While digging through the mountain, you may come across water sources and find ore and ruby mines that help you increase your wealth. Right in front of your cave, you can increase your wealth even further with agriculture: You can cut down the forest to sow fields and fence in pastures to hold your animals. You can also expand your family while running your ever-growing farm. In the end, the player with the most efficiently developed home board wins.'
     ),
   ],
 

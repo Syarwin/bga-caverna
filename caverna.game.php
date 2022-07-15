@@ -18,7 +18,7 @@
 
 $swdNamespaceAutoload = function ($class) {
   $classParts = explode('\\', $class);
-  if ($classParts[0] == 'AGR') {
+  if ($classParts[0] == 'CAV') {
     array_shift($classParts);
     $file = dirname(__FILE__) . '/modules/php/' . implode(DIRECTORY_SEPARATOR, $classParts) . '.php';
     if (file_exists($file)) {
@@ -32,24 +32,25 @@ spl_autoload_register($swdNamespaceAutoload, true, true);
 
 require_once APP_GAMEMODULE_PATH . 'module/table/table.game.php';
 
-use AGR\Managers\Meeples;
-use AGR\Managers\ActionCards;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\Players;
-use AGR\Managers\Scores;
-use AGR\Core\Globals;
-use AGR\Core\Preferences;
-use AGR\Core\Stats;
-use AGR\Core\Engine;
-use AGR\Managers\Fences;
+use CAV\Managers\Meeples;
+use CAV\Managers\ActionCards;
+use CAV\Managers\Buildings;
+use CAV\Managers\Players;
+use CAV\Managers\Scores;
+use CAV\Core\Globals;
+use CAV\Core\Preferences;
+use CAV\Core\Stats;
+use CAV\Core\Engine;
+use CAV\Managers\Fences;
+use CAV\Helpers\Log;
 
 class caverna extends Table
 {
-  use AGR\DebugTrait;
-  use AGR\States\DraftTrait;
-  use AGR\States\TurnTrait;
-  use AGR\States\ActionTrait;
-  use AGR\States\HarvestTrait;
+  use CAV\DebugTrait;
+  use CAV\States\SetupTrait;
+  use CAV\States\TurnTrait;
+  use CAV\States\ActionTrait;
+  use CAV\States\HarvestTrait;
 
   public static $instance = null;
   function __construct()
@@ -74,32 +75,6 @@ class caverna extends Table
   }
 
   /*
-   * setupNewGame:
-   */
-  protected function setupNewGame($players, $options = [])
-  {
-    if ($options[OPTION_COMPETITIVE_LEVEL] != OPTION_COMPETITIVE_BEGINNER) {
-      $options[OPTION_DECK_A] = OPTION_DECK_ENABLED;
-      $options[OPTION_DECK_B] = OPTION_DECK_ENABLED;
-
-      if ($options[OPTION_DECK_CD] == OPTION_DECK_ENABLED) {
-        $options[OPTION_DECK_C] = OPTION_DECK_ENABLED;
-        $options[OPTION_DECK_D] = OPTION_DECK_ENABLED;
-      }
-    }
-
-    Players::setupNewGame($players, $options);
-    Meeples::setupNewGame($players, $options);
-    Globals::setupNewGame($players, $options);
-    Preferences::setupNewGame($players, $this->player_preferences);
-    ActionCards::setupNewGame($players, $options);
-    PlayerCards::setupNewGame($players, $options);
-    Stats::checkExistence();
-
-    $this->setGameStateInitialValue('logging', false);
-  }
-
-  /*
    * getAllDatas:
    */
   public function getAllDatas()
@@ -109,28 +84,12 @@ class caverna extends Table
       'prefs' => Preferences::getUiData($pId),
       'players' => Players::getUiData($pId),
       'cards' => ActionCards::getUiData(),
-      'playerCards' => PlayerCards::getUiData(),
       'meeples' => Meeples::getUiData(),
       'scores' => Globals::isLiveScoring() ? Scores::compute() : null,
-      'canceledNotifIds' => AGR\Helpers\Log::getCanceledNotifIds(),
+      'canceledNotifIds' => Log::getCanceledNotifIds(),
 
       'turn' => Globals::getTurn(),
-      'isAdditional' => Globals::isAdditional(),
-      'isBeginner' => Globals::isBeginner(),
       'seed' => Globals::getTurn() == 15 ? Globals::getGameSeed() : false,
-
-      'engine' => Globals::getEngine(), // DEBUG : TODO remove
-
-      // Very special case to avoid notification size limit
-      'draft' =>
-        Globals::getDraftMode() != OPTION_DRAFT_FREE
-          ? []
-          : Players::get($pId)
-            ->getCards()
-            ->filter(function ($card) {
-              return in_array($card->getLocation(), ['draft', 'selection']);
-            })
-            ->toArray(),
     ];
   }
 
@@ -139,7 +98,7 @@ class caverna extends Table
    */
   function getGameProgression()
   {
-    return (Globals::getTurn() * 100) / 14;
+    return (Globals::getTurn() * 100) / 12;
   }
 
   function actChangePreference($pref, $value)
@@ -248,7 +207,7 @@ class caverna extends Table
    *  => this is achieved using custom turn order with an arg containing the eventType
    *  => the custom order will call the genericPlayerCheckListeners that will getReaction from cards if any
    */
-  public function checkCardListeners($typeEvent, $endCallback, $event = [], $order = null)
+  public function checkBuildingListeners($typeEvent, $endCallback, $event = [], $order = null)
   {
     $event['type'] = $typeEvent;
     $event['method'] = $typeEvent;
@@ -259,7 +218,7 @@ class caverna extends Table
   {
     $pId = Players::getActiveId();
     $event['pId'] = $pId;
-    $reaction = PlayerCards::getReaction($event);
+    $reaction = Buildings::getReaction($event);
 
     if (is_null($reaction)) {
       // No reaction => just go to next player
@@ -322,18 +281,6 @@ class caverna extends Table
    */
   public function upgradeTableDb($from_version)
   {
-    if ($from_version <= 2107011810) {
-      $sql = "UPDATE `DBPREFIX_cards` SET card_location = 'selection' WHERE card_location = 'hand' AND card_state = 1";
-      self::applyDbUpgradeToAllDB($sql);
-    }
-
-    if ($from_version <= 2109171326) {
-      $sql = "SELECT * FROM `global_variables` WHERE `name` = 'engine' AND `value` LIKE '%\"trigger\": 3%' ";
-      $row = self::getUniqueValueFromDB($sql);
-      $val = $row == null ? 'false' : 'true';
-      $sql = "INSERT INTO `DBPREFIX_global_variables` (`name`, `value`) VALUES ('harvest', '$val')";
-      self::applyDbUpgradeToAllDB($sql);
-    }
   }
 
   /////////////////////////////////////////////////////////////

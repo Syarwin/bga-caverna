@@ -1,8 +1,8 @@
 <?php
-namespace AGR\Core;
-use AGR\Managers\Players;
-use AGR\Helpers\Utils;
-use AGR\Core\Globals;
+namespace CAV\Core;
+use CAV\Managers\Players;
+use CAV\Helpers\Utils;
+use CAV\Core\Globals;
 
 class Notifications
 {
@@ -657,7 +657,7 @@ class Notifications
       $data['i18n'][] = 'card_name';
       $data['card_name'] = $data['card']->getName();
 
-      if ($data['card'] instanceof \AGR\Models\PlayerCard) {
+      if ($data['card'] instanceof \CAV\Models\PlayerCard) {
         $data['i18n'][] = 'card_type';
         $data['card_type'] = $data['card']->getTypeStr();
       }

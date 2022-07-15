@@ -1,6 +1,6 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-class ReedBank extends \AGR\Models\Action
+class ReedBank extends \CAV\Models\Action
 {
 }

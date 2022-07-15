@@ -1,13 +1,13 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-use AGR\Managers\Meeples;
-use AGR\Core\Globals;
-use AGR\Core\Engine;
-use AGR\Core\Notifications;
-use AGR\Managers\Players;
+use CAV\Managers\Meeples;
+use CAV\Core\Globals;
+use CAV\Core\Engine;
+use CAV\Core\Notifications;
+use CAV\Managers\Players;
 
-class FirstPlayer extends \AGR\Models\Action
+class FirstPlayer extends \CAV\Models\Action
 {
   public function getState()
   {

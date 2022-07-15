@@ -1,7 +1,7 @@
 <?php
-namespace AGR\Helpers;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\ActionCards;
+namespace CAV\Helpers;
+use CAV\Managers\Buildings;
+use CAV\Managers\ActionCards;
 
 abstract class Utils extends \APP_DbObject
 {
@@ -186,7 +186,7 @@ abstract class Utils extends \APP_DbObject
     if (strpos($id, '_') === false) {
       return ActionCards::get($id);
     } else {
-      return PlayerCards::get($id);
+      return Buildings::get($id);
     }
   }
 

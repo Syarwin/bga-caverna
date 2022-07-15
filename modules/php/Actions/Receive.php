@@ -1,15 +1,15 @@
 <?php
-namespace AGR\Actions;
-use AGR\Managers\Meeples;
-use AGR\Managers\Players;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Stats;
-use AGR\Helpers\Utils;
+namespace CAV\Actions;
+use CAV\Managers\Meeples;
+use CAV\Managers\Players;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Stats;
+use CAV\Helpers\Utils;
 
 // Receive goods that were put on an action card for future round
 // or move an existing meeple off a card or space and into the reserve
-class Receive extends \AGR\Models\Action
+class Receive extends \CAV\Models\Action
 {
   public function getState()
   {

@@ -105,7 +105,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         dojo.toggleClass('resources-bar-holder-' + player.id, 'active', this.prefs[PLAYER_RESOURCES].value == 1);
       });
       this.updatePlayerBoardDimensions();
-      this.updateFarmersPlayerCounters();
+      this.updateDwarvesPlayerCounters();
     },
 
     /**
@@ -162,7 +162,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         });
       });
       this.updateAnimalsPlayerCounters();
-      this.updateFarmersPlayerCounters();
+      this.updateDwarvesPlayerCounters();
       this.updatePlayersHarvestCosts();
     },
 
@@ -183,7 +183,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       }
     },
 
-    updateFarmersPlayerCounters() {
+    updateDwarvesPlayerCounters() {
       this.forEachPlayer((player) => {
         let boardWrapper = $(`board-wrapper-${player.id}`);
         let meeples = boardWrapper.querySelectorAll(`:not(.actionCard):not(.farmer-holder) > .meeple-farmer`);

@@ -1,13 +1,13 @@
 <?php
-namespace AGR\Actions;
-use AGR\Managers\Meeples;
-use AGR\Managers\Players;
-use AGR\Managers\PlayerCards;
-use AGR\Core\Notifications;
-use AGR\Core\Stats;
-use AGR\Helpers\Utils;
+namespace CAV\Actions;
+use CAV\Managers\Meeples;
+use CAV\Managers\Players;
+use CAV\Managers\Buildings;
+use CAV\Core\Notifications;
+use CAV\Core\Stats;
+use CAV\Helpers\Utils;
 
-class Gain extends \AGR\Models\Action
+class Gain extends \CAV\Models\Action
 {
   public function getState()
   {
@@ -53,7 +53,7 @@ class Gain extends \AGR\Models\Action
 
       // SCORE won't create real meeples but still need to be here in the log and with animation
       if ($resource == SCORE) {
-        $card = PlayerCards::get($cardId);
+        $card = Buildings::get($cardId);
         $card->incBonusScore($amount);
         for ($i = 0; $i < $amount; $i++) {
           $meeples[] = ['type' => SCORE, 'location' => $cardId, 'pId' => $player->getId(), 'destroy' => true];

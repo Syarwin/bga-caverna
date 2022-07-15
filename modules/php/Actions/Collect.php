@@ -1,13 +1,13 @@
 <?php
-namespace AGR\Actions;
-use AGR\Managers\Meeples;
-use AGR\Managers\Players;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Stats;
-use AGR\Helpers\Utils;
+namespace CAV\Actions;
+use CAV\Managers\Meeples;
+use CAV\Managers\Players;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Stats;
+use CAV\Helpers\Utils;
 
-class Collect extends \AGR\Models\Action
+class Collect extends \CAV\Models\Action
 {
   public function getState()
   {

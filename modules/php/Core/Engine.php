@@ -1,11 +1,11 @@
 <?php
-namespace AGR\Core;
-use AGR\Managers\Players;
-use AGR\Managers\Actions;
-use AGR\Managers\Scores;
-use AGR\Managers\PlayerCards;
-use AGR\Helpers\Log;
-use AGR\Helpers\QueryBuilder;
+namespace CAV\Core;
+use CAV\Managers\Players;
+use CAV\Managers\Actions;
+use CAV\Managers\Scores;
+use CAV\Managers\Buildings;
+use CAV\Helpers\Log;
+use CAV\Helpers\QueryBuilder;
 
 /*
  * Engine: a class that allows to handle complex flow
@@ -53,7 +53,7 @@ class Engine
       $childs[] = self::buildTree($child);
     }
 
-    $className = '\AGR\Core\Engine\\' . ucfirst($type) . 'Node';
+    $className = '\CAV\Core\Engine\\' . ucfirst($type) . 'Node';
     unset($t['childs']);
     return new $className($t, $childs);
   }
@@ -128,7 +128,7 @@ class Engine
       // Are there any "before" listener ? eg: Paper Maker
       if ($actionId != null && !($args['checkedBeforeAction'] ?? false)) {
         $action = Actions::get($actionId);
-        $reaction = PlayerCards::getReaction([
+        $reaction = Buildings::getReaction([
           'type' => 'action',
           'method' => 'before' . $action->getClassName(),
           'action' => $action->getClassName(),
@@ -242,8 +242,8 @@ class Engine
    */
   protected function ensureSeqRootNode()
   {
-    if (!self::$tree instanceof \AGR\Core\Engine\SeqNode) {
-      self::$tree = new \AGR\Core\Engine\SeqNode([], [self::$tree]);
+    if (!self::$tree instanceof \CAV\Core\Engine\SeqNode) {
+      self::$tree = new \CAV\Core\Engine\SeqNode([], [self::$tree]);
     }
   }
 

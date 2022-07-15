@@ -1,11 +1,11 @@
 <?php
-namespace AGR\Core;
-use AGR\Core\Game;
+namespace CAV\Core;
+use CAV\Core\Game;
 
 /*
  * User preferences
  */
-class Preferences extends \AGR\Helpers\DB_Manager
+class Preferences extends \CAV\Helpers\DB_Manager
 {
   protected static $table = 'user_preferences';
   protected static $primary = 'id';

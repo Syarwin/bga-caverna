@@ -1,14 +1,14 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-use AGR\Managers\Meeples;
-use AGR\Managers\Players;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Helpers\Utils;
-use AGR\Core\Stats;
+use CAV\Managers\Meeples;
+use CAV\Managers\Players;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Helpers\Utils;
+use CAV\Core\Stats;
 
-class Construct extends \AGR\Models\Action
+class Construct extends \CAV\Models\Action
 {
   public function __construct($row)
   {

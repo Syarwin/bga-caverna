@@ -152,39 +152,41 @@ define([
         dojo.place('<div id="page-title-left-ribbon" class="ribbon-effect"></div>', 'page-title');
         dojo.place('<div id="page-title-right-ribbon" class="ribbon-effect"></div>', 'page-title');
 
-        // Add Harvest Icons
-        [4, 7, 9, 11, 13, 14].forEach((turn) => {
-          if (turn >= gamedatas.turn) {
-            dojo.place(`<div id="harvest-${turn}" class="harvest-icon"></div>`, 'harvest-slot-' + turn);
-            this.addCustomTooltip('harvest-' + turn, _('Harvest will take place at the end of that turn'));
-          }
-        });
+        // // Add Harvest Icons
+        // [4, 7, 9, 11, 13, 14].forEach((turn) => {
+        //   if (turn >= gamedatas.turn) {
+        //     dojo.place(`<div id="harvest-${turn}" class="harvest-icon"></div>`, 'harvest-slot-' + turn);
+        //     this.addCustomTooltip('harvest-' + turn, _('Harvest will take place at the end of that turn'));
+        //   }
+        // });
+        //
+        // dojo.attr('game_play_area', 'data-additional', gamedatas.isAdditional ? 1 : 0);
+        // dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
+        // this.setupInfoPanel();
+        // this.setupScoresModal();
+        // this.setupActionCards();
+        // this.setupPlayers();
+        // this.setupBuildings();
+        // this.setupMeeples();
+        // this.setupAnimalsDropZones();
+        // this.updatePrefs();
+        // this.setCardScale(this._cardScale);
+        // this.setCardAnimationSpeed(this._cardAnimationSpeed);
+        // this.setCentralBoardScale(this._centralBoardScale);
+        // this.setPlayerBoardScale(this._playerBoardScale);
+        // if (gamedatas.seed != false) this.showSeed(gamedatas.seed);
 
-        dojo.attr('game_play_area', 'data-additional', gamedatas.isAdditional ? 1 : 0);
-        dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
-        this.setupInfoPanel();
-        this.setupScoresModal();
-        this.setupActionCards();
-        this.setupPlayers();
-        this.setupPlayerCards();
-        this.setupMeeples();
-        this.setupAnimalsDropZones();
-        this.updatePrefs();
-        this.setCardScale(this._cardScale);
-        this.setCardAnimationSpeed(this._cardAnimationSpeed);
-        this.setCentralBoardScale(this._centralBoardScale);
-        this.setPlayerBoardScale(this._playerBoardScale);
-        if (gamedatas.seed != false) this.showSeed(gamedatas.seed);
         this.inherited(arguments);
       },
 
       onLoadingComplete() {
-        if (localStorage.getItem('cavernaTour') != 1) {
-          if (!this.isReadOnly) this.showTour();
-        } else {
-          dojo.style('tour-slide-footer', 'display', 'none');
-          $('neverShowMe').checked = true;
-        }
+        // TODO
+        // if (localStorage.getItem('cavernaTour') != 1) {
+        //   if (!this.isReadOnly) this.showTour();
+        // } else {
+        //   dojo.style('tour-slide-footer', 'display', 'none');
+        //   $('neverShowMe').checked = true;
+        // }
 
         this.inherited(arguments);
       },
@@ -207,18 +209,18 @@ define([
       },
 
       onScreenWidthChange() {
-        if (this.prefs[HAND_CARDS].value != 0 && this.prefs[PLAYER_BOARDS].value == 1) {
-          dojo.style('player-boards', 'min-height', $('player-boards-left-column').offsetHeight + 'px');
-        }
-
-        dojo.toggleClass('player-boards', 'player-boards-right', this.prefs[PLAYER_BOARDS].value == 1);
-        if (this.prefs[PLAYER_BOARDS].value == 1) {
-          let gamePlaySize = $('game_play_area').offsetWidth;
-          let playerBoard = document.querySelector('.player-board-wrapper');
-          if (playerBoard == null) return;
-          let playerBoardSize = playerBoard.offsetWidth + playerBoard.offsetLeft;
-          dojo.toggleClass('player-boards', 'player-boards-right', playerBoardSize < gamePlaySize);
-        }
+        // if (this.prefs[HAND_CARDS].value != 0 && this.prefs[PLAYER_BOARDS].value == 1) {
+        //   dojo.style('player-boards', 'min-height', $('player-boards-left-column').offsetHeight + 'px');
+        // }
+        //
+        // dojo.toggleClass('player-boards', 'player-boards-right', this.prefs[PLAYER_BOARDS].value == 1);
+        // if (this.prefs[PLAYER_BOARDS].value == 1) {
+        //   let gamePlaySize = $('game_play_area').offsetWidth;
+        //   let playerBoard = document.querySelector('.player-board-wrapper');
+        //   if (playerBoard == null) return;
+        //   let playerBoardSize = playerBoard.offsetWidth + playerBoard.offsetLeft;
+        //   dojo.toggleClass('player-boards', 'player-boards-right', playerBoardSize < gamePlaySize);
+        // }
       },
 
       notif_clearTurn(n) {
@@ -233,7 +235,7 @@ define([
         });
         this.setupMeeples();
         this.setupAnimalsDropZones();
-        this.updatePlayerCards();
+        this.updateBuildings();
         this.updatePlayersCounters();
         this.updatePlayersScores();
       },
@@ -243,13 +245,6 @@ define([
         this.gamedatas.players[n.args.player_id].hand = n.args.hand;
         this.updateHandCards();
       },
-
-      onUpdateActionButtons(stateName, args) {
-        //        this.addPrimaryActionButton('test', 'test', () => this.testNotif());
-        this.inherited(arguments);
-      },
-
-      testNotif() {},
 
       notif_startHarvest(n) {
         debug('Notif: starting harvest', n);
@@ -289,7 +284,7 @@ define([
 
       onEnteringState(stateName, args) {
         debug('Entering state: ' + stateName, args);
-        if (this.isFastMode() && !['draftPlayers'].includes(stateName)) return;
+        if (this.isFastMode()) return;
 
         if (stateName == 'exchange' && args.args && args.args.automaticAction) {
           args.args.descSuffix = 'cook';
@@ -522,10 +517,10 @@ define([
         this.setupTour();
       },
 
-      updatePlayerOrdering() {
-        this.inherited(arguments);
-        dojo.place('player_board_config', 'player_boards', 'first');
-      },
+      // updatePlayerOrdering() {
+      //   this.inherited(arguments);
+      //   dojo.place('player_board_config', 'player_boards', 'first');
+      // },
 
       toggleSettings() {
         dojo.toggleClass('settings-controls-container', 'settingsControlsHidden');

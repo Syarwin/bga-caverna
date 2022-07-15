@@ -1,12 +1,12 @@
 <?php
-namespace AGR\Managers;
+namespace CAV\Managers;
 use caverna;
-use AGR\Core\Stats;
-use AGR\Helpers\UserException;
+use CAV\Core\Stats;
+use CAV\Helpers\UserException;
 
 /* Class to manage all the meeples for Agricola */
 
-class Meeples extends \AGR\Helpers\Pieces
+class Meeples extends \CAV\Helpers\Pieces
 {
   protected static $table = 'meeples';
   protected static $prefix = 'meeple_';
@@ -82,7 +82,7 @@ class Meeples extends \AGR\Helpers\Pieces
 
     self::create($meeples);
 
-    Farmers::setupNewGame($players, $options);
+    Dwarves::setupNewGame($players, $options);
   }
 
   /**

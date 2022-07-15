@@ -1,8 +1,8 @@
 <?php
-namespace AGR\Helpers;
-use AGR\Core\Game;
-use AGR\Core\Notifications;
-use AGR\Managers\Players;
+namespace CAV\Helpers;
+use CAV\Core\Game;
+use CAV\Core\Notifications;
+use CAV\Managers\Players;
 
 /**
  * Class that allows to log DB change: useful for undo feature
@@ -109,10 +109,6 @@ class Log extends \APP_DbObject
     // Notify
     $datas = Game::get()->getAllDatas();
     Notifications::refreshUI($datas);
-    foreach (Players::getAll() as $player) {
-      Notifications::refreshHand($player, $player->getHand()->ui());
-    }
-
     return $moveIds;
   }
 

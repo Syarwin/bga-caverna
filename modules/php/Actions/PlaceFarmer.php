@@ -1,16 +1,16 @@
 <?php
-namespace AGR\Actions;
+namespace CAV\Actions;
 
-use AGR\Managers\Players;
-use AGR\Managers\ActionCards;
-use AGR\Managers\PlayerCards;
-use AGR\Managers\Meeples;
-use AGR\Core\Notifications;
-use AGR\Core\Engine;
-use AGR\Core\Globals;
-use AGR\Core\Stats;
+use CAV\Managers\Players;
+use CAV\Managers\ActionCards;
+use CAV\Managers\Buildings;
+use CAV\Managers\Meeples;
+use CAV\Core\Notifications;
+use CAV\Core\Engine;
+use CAV\Core\Globals;
+use CAV\Core\Stats;
 
-class PlaceFarmer extends \AGR\Models\Action
+class PlaceFarmer extends \CAV\Models\Action
 {
   public function __construct($row)
   {
@@ -69,7 +69,7 @@ class PlaceFarmer extends \AGR\Models\Action
     }
 
     if (in_array($cardId, $player->getActionCards()->getIds())) {
-      $card = PlayerCards::get($cardId);
+      $card = Buildings::get($cardId);
     } else {
       $card = ActionCards::get($cardId);
     }
@@ -82,7 +82,7 @@ class PlaceFarmer extends \AGR\Models\Action
     // Place farmer
     $fId = $player->moveNextFarmerAvailable($cardId);
     Notifications::placeFarmer($player, $fId, $card, $this->ctx->getSource());
-    Stats::incPlacedFarmers($player);
+    Stats::incPlacedDwarves($player);
 
     // Are there cards triggered by the placement ?
     $this->checkListeners('PlaceFarmer', $player, $eventData);

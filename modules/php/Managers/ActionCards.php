@@ -1,13 +1,13 @@
 <?php
-namespace AGR\Managers;
+namespace CAV\Managers;
 
-use AGR\Core\Globals;
-use AGR\Core\Meeples;
+use CAV\Core\Globals;
+use CAV\Core\Meeples;
 // use caverna;
 
 /* Class to manage all the cards for Agricola */
 
-class ActionCards extends \AGR\Helpers\Pieces
+class ActionCards extends \CAV\Helpers\Pieces
 {
   protected static $table = 'cards';
   protected static $prefix = 'card_';
@@ -16,7 +16,7 @@ class ActionCards extends \AGR\Helpers\Pieces
 
   protected static function cast($card)
   {
-    $className = '\AGR\Cards\Actions\\' . $card['id'];
+    $className = '\CAV\Cards\Actions\\' . $card['id'];
     return new $className($card);
   }
 
@@ -73,33 +73,33 @@ class ActionCards extends \AGR\Helpers\Pieces
   public static function setupNewGame($players, $options)
   {
     $cards = [];
-    $turn = 1;
-    foreach (self::$actionCards as $class) {
-      $className = '\AGR\Cards\Actions\Action' . $class;
-      $card = new $className(null);
-
-      // Check number of players and options constraints
-      if (!$card->isSupported($players, $options)) {
-        continue;
-      }
-
-      $cards[] = [
-        'id' => $card->getId(),
-        'location' => $card->getInitialLocation(),
-        'state' => $card->getInitialLocation() == 'board' ? 1 : 0,
-      ];
-    }
-
-    self::create($cards, null);
-
-    for ($i = 1; $i <= 6; $i++) {
-      self::shuffle('deck_' . $i);
-
-      foreach (self::getInLocation('deck_' . $i, null, 'state') as $id => $card) {
-        self::move($card->getId(), 'turn_' . $turn);
-        $turn++;
-      }
-    }
+    // $turn = 1;
+    // foreach (self::$actionCards as $class) {
+    //   $className = '\CAV\Cards\Actions\Action' . $class;
+    //   $card = new $className(null);
+    //
+    //   // Check number of players and options constraints
+    //   if (!$card->isSupported($players, $options)) {
+    //     continue;
+    //   }
+    //
+    //   $cards[] = [
+    //     'id' => $card->getId(),
+    //     'location' => $card->getInitialLocation(),
+    //     'state' => $card->getInitialLocation() == 'board' ? 1 : 0,
+    //   ];
+    // }
+    //
+    // self::create($cards, null);
+    //
+    // for ($i = 1; $i <= 6; $i++) {
+    //   self::shuffle('deck_' . $i);
+    //
+    //   foreach (self::getInLocation('deck_' . $i, null, 'state') as $id => $card) {
+    //     self::move($card->getId(), 'turn_' . $turn);
+    //     $turn++;
+    //   }
+    // }
   }
 
   public static function getInLocation($location, $state = null, $orderBy = null)

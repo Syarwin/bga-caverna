@@ -102,7 +102,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this.updateAnimalsPlayerCounters(type);
         this.updateDropZonesStatus();
       } else if (type == 'farmer') {
-        this.updateFarmersPlayerCounters();
+        this.updateDwarvesPlayerCounters();
       }
     },
 
