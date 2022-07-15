@@ -1,14 +1,15 @@
 .player-board {
-  border: 1px solid transparent;
   background-image: url('img/action_frame_bg.jpg');
-  background-size: 100% 10px;
-  border-image-slice: 27 27 27 27;
-  border-image-width: 12px 12px 12px 12px;
+  background-size: 100% 40px;
+  border: 1px solid transparent;
+  border-image-slice: 68 164 68 154;
+  border-image-width: 34px 82px 34px 77px;
   border-image-outset: 0px 0px 0px 0px;
-  border-image-repeat: stretch stretch;
+  border-image-repeat: repeat repeat;
   border-image-source: url('img/action_frame_panel.png');
+  background-clip: content-box;
 
-  box-shadow: -1px 2px 5px black;
+  box-shadow: none;
   background-color: transparent !important;
   border-radius: 20px !important;
 
@@ -17,7 +18,7 @@
   }
 
   .player_board_inner {
-    padding: 3px 6px;
+    padding: 13px 10px;
 
     .player-name {
       position: relative;
@@ -217,7 +218,6 @@
       top: -30px;
       right: 8px;
     }
-
 
     .player-panel-resources,
     .player-panel-board-resources {

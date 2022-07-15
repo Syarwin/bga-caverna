@@ -37,46 +37,30 @@ class Meeples extends \CAV\Helpers\Pieces
   /* Creation of various meeples */
   public static function setupNewGame($players, $options)
   {
-    $player_order = caverna::get()->getNextPlayerTable();
-
-    // 1st player has 2 food
-    // other players have 3 foods
     $meeples = [];
-    if (count($players) > 1) {
-      $meeples[] = ['type' => FOOD, 'player_id' => $player_order[0], 'location' => 'reserve', 'nbr' => 2];
+    // 1st and 2 player has 1 food, third player has 2 food
+    // other players have 3 foods
+    $foodMap = [1, 1, 2, 3, 3, 3, 3, 3];
+    $order = Players::getTurnOrder();
+    foreach($order as $i => $pId){
+      $meeples[] = ['type' => FOOD, 'player_id' => $pId, 'location' => 'reserve', 'nbr' => $foodMap[$i]];
     }
-    $meeples[] = ['type' => 'firstPlayer', 'player_id' => $player_order[0], 'location' => 'reserve', 'nbr' => 1];
-    foreach ($players as $player_id => $player) {
-      if ($player_id !== $player_order[0]) {
-        $meeples[] = ['type' => FOOD, 'player_id' => $player_id, 'location' => 'reserve', 'nbr' => 3];
-      }
+    $meeples[] = ['type' => 'firstPlayer', 'player_id' => $order[0], 'location' => 'reserve', 'nbr' => 1];
 
-      // rooms
-      $meeples[] = [
-        'type' => 'roomWood',
-        'player_id' => $player_id,
-        'location' => 'board',
-        'x' => 1,
-        'y' => 3,
-        'nbr' => 1,
-      ];
-      $meeples[] = [
-        'type' => 'roomWood',
-        'player_id' => $player_id,
-        'location' => 'board',
-        'x' => 1,
-        'y' => 5,
-        'nbr' => 1,
-      ];
-
-      // fence
-      $meeples[] = ['type' => 'fence', 'player_id' => $player_id, 'location' => 'reserve', 'nbr' => 15];
-      // stables
-      $meeples[] = ['type' => 'stable', 'player_id' => $player_id, 'location' => 'reserve', 'nbr' => 4];
-    }
-
+    // foreach ($players as $pId => $player) {
+    //   // rooms TODO ?
+    //   // $meeples[] = [
+    //   //   'type' => 'roomWood',
+    //   //   'player_id' => $player_id,
+    //   //   'location' => 'board',
+    //   //   'x' => 1,
+    //   //   'y' => 3,
+    //   //   'nbr' => 1,
+    //   // ];
+    // }
     self::create($meeples);
 
+    Stables::setupNewGame($players, $options);
     Dwarves::setupNewGame($players, $options);
   }
 
@@ -182,6 +166,8 @@ class Meeples extends \CAV\Helpers\Pieces
    */
   public function getRoomType($pId)
   {
+    return null;
+    
     $roomsType = array_unique(
       self::getRooms($pId)
         ->map(function ($token) {

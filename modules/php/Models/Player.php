@@ -19,6 +19,7 @@ use CAV\Helpers\Utils;
 
 class Player extends \CAV\Helpers\DB_Model
 {
+  private $board = null;
   protected $table = 'player';
   protected $primary = 'player_id';
   protected $attributes = [

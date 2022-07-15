@@ -278,7 +278,6 @@ define([
         this._isHarvest = false;
         if (this._exchangeDialog) this._exchangeDialog.hide();
         if (this._showSeedDialog) this._showSeedDialog.destroy();
-        //this._majorsDialog.hide();
         this.inherited(arguments);
       },
 

@@ -200,12 +200,14 @@ const VEGETABLE = 'vegetable';
 const SHEEP = 'sheep';
 const PIG = 'pig';
 const CATTLE = 'cattle';
+const DOG = 'dog';
+const DONKEY = 'donkey';
 const SCORE = 'score';
 const BEGGING = 'begging';
 
 const FIELD = 'field';
 
-const RESOURCES = [WOOD, STONE, ORE, RUBY, FOOD, GOLD, GRAIN, VEGETABLE, SHEEP, PIG, CATTLE, BEGGING];
+const RESOURCES = [WOOD, STONE, ORE, RUBY, FOOD, GOLD, GRAIN, VEGETABLE, SHEEP, PIG, CATTLE, DOG, DONKEY, BEGGING];
 const ANIMALS = [SHEEP, PIG, CATTLE];
 const ROOMS = ['roomStone', 'roomClay', 'roomWood'];
 

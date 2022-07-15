@@ -8,6 +8,12 @@ class Stables extends Meeples
   /* Creation of various meeples */
   public static function setupNewGame($players, $options)
   {
+    $meeples = [];
+    foreach ($players as $pId => $player) {
+      $meeples[] = ['type' => 'stable', 'player_id' => $pId, 'location' => 'reserve', 'nbr' => 3];
+    }
+
+    self::create($meeples);
   }
 
   /* Partial query for a given player */
