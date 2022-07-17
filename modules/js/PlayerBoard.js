@@ -1,5 +1,5 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
-  const resources = ['wood', 'clay', 'reed', 'stone', 'grain', 'vegetable', 'food', 'sheep', 'pig', 'cattle'];
+  const resources = ['wood', 'stone', 'ore', 'ruby', 'grain', 'vegetable', 'food', 'sheep', 'pig', 'cattle', 'donkey', 'dog'];
 
   return declare('caverna.playerBoard', null, {
     getCell(pos, pId = null) {
@@ -37,6 +37,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this.tplResourceCounter(player, 'sheep') +
         this.tplResourceCounter(player, 'pig') +
         this.tplResourceCounter(player, 'cattle') +
+        this.tplResourceCounter(player, 'donkey') +
+        this.tplResourceCounter(player, 'dog') +
         `
           </div>
           <div id="resources-bar-holder-${player.id}" class="resources-bar-holder">

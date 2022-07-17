@@ -162,12 +162,12 @@ define([
         //
         // dojo.attr('game_play_area', 'data-additional', gamedatas.isAdditional ? 1 : 0);
         // dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
-        // this.setupInfoPanel();
+        this.setupInfoPanel();
         // this.setupScoresModal();
         // this.setupActionCards();
-        // this.setupPlayers();
+        this.setupPlayers();
         // this.setupBuildings();
-        // this.setupMeeples();
+        this.setupMeeples();
         // this.setupAnimalsDropZones();
         // this.updatePrefs();
         // this.setCardScale(this._cardScale);

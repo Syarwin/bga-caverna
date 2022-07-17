@@ -2,9 +2,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   const PLAYER_RESOURCES = 109;
   const RESOURCES = [
     'wood',
-    'clay',
     'stone',
-    'reed',
+    'ore',
+    'ruby',
     'grain',
     'vegetable',
     'food',
@@ -12,15 +12,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'sheep',
     'pig',
     'cattle',
+    'donkey',
+    'dog',
   ];
-  const PERSONAL_RESOURCES = ['farmer', 'fence', 'stable'];
+  const PERSONAL_RESOURCES = ['dwarf', 'stable'];
   const MAX_PERSONAL_RESOURCES = {
-    stable: 4,
-    farmer: 5,
-    fence: 15,
+    stable: 3,
+    dwarf: 5,
   };
   const ALL_RESOURCES = RESOURCES.concat(PERSONAL_RESOURCES);
-  const ANIMALS = ['sheep', 'pig', 'cattle'];
+  const ANIMALS = ['sheep', 'pig', 'cattle', 'donkey', 'dog'];
   const SCORE_CATEGORIES = [
     'fields',
     'pastures',
@@ -33,7 +34,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'stables',
     'clayRooms',
     'stoneRooms',
-    'farmers',
+    'dwarves',
     'beggings',
     'cards',
     'cardsBonus',
@@ -51,7 +52,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'stables',
     'clayRooms',
     'stoneRooms',
-    'farmers',
+    'dwarves',
     'beggings',
   ];
   const SCORE_MULTIPLE_ENTRIES = ['cards', 'cardsBonus'];
@@ -85,7 +86,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       this.setupPlayersCounters();
       this.setupPlayersScores();
-      this.updateResourceBarsPositions();
+      // TODO ?? this.updateResourceBarsPositions();
       dojo.attr('game_play_area', 'data-players', Object.keys(this.gamedatas.players).length);
     },
 
@@ -124,7 +125,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.updatePlayersCounters(false);
 
       // Setup baby counters
-      if (!this.isSpectator) {
+      // TODO
+      if (!this.isSpectator && false) {
         this._babyCounters = {};
         ANIMALS.forEach((res) => {
           let brother = $(`resource_${this.player_id}_${res}`);
@@ -186,10 +188,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     updateDwarvesPlayerCounters() {
       this.forEachPlayer((player) => {
         let boardWrapper = $(`board-wrapper-${player.id}`);
-        let meeples = boardWrapper.querySelectorAll(`:not(.actionCard):not(.farmer-holder) > .meeple-farmer`);
-        let caravanMeeples = boardWrapper.querySelectorAll(`[data-id='B10_Caravan'] .meeple-farmer`);
+        let meeples = boardWrapper.querySelectorAll(`:not(.actionCard):not(.dwarf-holder) > .meeple-dwarf`);
+        let caravanMeeples = boardWrapper.querySelectorAll(`[data-id='B10_Caravan'] .meeple-dwarf`);
 
-        dojo.attr(`board_resource_${player.id}_farmer`, 'data-n', meeples.length + caravanMeeples.length);
+        dojo.attr(`board_resource_${player.id}_dwarf`, 'data-n', meeples.length + caravanMeeples.length);
       });
     },
 
@@ -224,9 +226,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         ` +
         // Specific counters for animals on board or reserve
         ANIMALS.map((res) => this.tplResourceCounter(player, res, 'board_')).join('') +
-        // Specific div to show remeaning farmers
+        // Specific div to show remeaning dwarves
         this.formatStringMeeples(`
-            <div class='player-resource resource-farmer' id='board_resource_${player.id}_farmer'>
+            <div class='player-resource resource-dwarf' id='board_resource_${player.id}_dwarf'>
               <FARMER><FARMER><FARMER><FARMER><FARMER>
             </div>
           `) +
@@ -234,7 +236,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         </div>
         <div class="player-panel-personal-resources">
         ` +
-        ['farmer', 'fence', 'stable'].map((res) => this.tplResourceCounter(player, res)).join('') +
+        ['dwarf', 'stable'].map((res) => this.tplResourceCounter(player, res)).join('') +
         `
         </div>
       </div>
@@ -276,7 +278,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         stables: _('Fenced stables'),
         clayRooms: _('Clay hut rooms'),
         stoneRooms: _('Stone house rooms'),
-        farmers: _('Family members'),
+        dwarves: _('Family members'),
         cards: _('Points for cards'),
         cardsBonus: _('Bonus point'),
         beggings: _('Beggar cards'),
@@ -378,6 +380,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update score counters
      */
     updatePlayersScores(anim = true) {
+      return; // TODO
+      
       if (this.gamedatas.scores !== null) {
         this.forEachPlayer((player) => {
           SCORE_CATEGORIES.forEach((category) => {

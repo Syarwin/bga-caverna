@@ -3285,189 +3285,86 @@ html {
   .caverna-meeple.meeple-wood {
     width: 0.6em;
     height: 0.78em;
-    background-position: 58.4507% 21.7766%;
-    background-size: 3413.33%; }
-  .caverna-meeple.meeple-clay {
-    width: 0.64em;
-    height: 0.74em;
-    background-position: 97.127% 8.61196%;
-    background-size: 3200%; }
-  .caverna-meeple.meeple-reed {
-    width: 0.72em;
-    height: 0.82em;
-    background-position: 14.1194% 21.821%;
-    background-size: 2844.44%; }
+    background-position: 56.8584% 32.0276%;
+    background-size: 853.333%; }
   .caverna-meeple.meeple-stone {
     width: 0.64em;
     height: 0.8em;
-    background-position: 36.9456% 21.7988%;
-    background-size: 3200%; }
+    background-position: 0% 32.1759%;
+    background-size: 800%; }
+  .caverna-meeple.meeple-ore {
+    width: 0.9154em;
+    height: 0.7062em;
+    background-position: 0% 47.8166%;
+    background-size: 731.429%; }
+  .caverna-meeple.meeple-ruby {
+    width: 0.9154em;
+    height: 0.693em;
+    background-position: 15.8371% 47.7124%;
+    background-size: 731.429%; }
   .caverna-meeple.meeple-food {
     width: 0.8em;
     height: 0.8em;
-    background-position: 41.0061% 21.7988%;
-    background-size: 2560%; }
+    background-position: 98.6111% 0%;
+    background-size: 640%; }
   .caverna-meeple.meeple-grain {
     width: 0.75em;
     height: 0.79em;
-    background-position: 54.5869% 21.7877%;
-    background-size: 2730.67%; }
+    background-position: 14.6453% 32.1016%;
+    background-size: 682.667%; }
   .caverna-meeple.meeple-vegetable {
     width: 0.82em;
     height: 0.8em;
-    background-position: 77.0791% 21.7325%;
-    background-size: 2694.74%; }
+    background-position: 95.1835% 31.7352%;
+    background-size: 673.684%; }
   .caverna-meeple.meeple-sheep {
     width: 0.98em;
     height: 0.76em;
-    background-position: 80.7692% 8.62069%;
-    background-size: 2089.8%; }
+    background-position: 76.57% 31.8807%;
+    background-size: 522.449%; }
   .caverna-meeple.meeple-pig {
     width: 1.118em;
     height: 0.78em;
-    background-position: 63.8342% 21.7766%;
-    background-size: 1735.59%; }
+    background-position: 35.2792% 32.0276%;
+    background-size: 433.898%; }
   .caverna-meeple.meeple-cattle {
     width: 1.104em;
     height: 0.82em;
-    background-position: 18.57% 21.821%;
-    background-size: 1969.23%; }
-  .caverna-meeple.meeple-score {
-    width: 0.8em;
-    height: 0.8em;
-    background-position: 45.5793% 21.7988%;
-    background-size: 2560%; }
-  .caverna-meeple.meeple-arrow {
-    width: 0.4em;
-    height: 0.3em;
-    background-position: 98.3359% 21.45%;
-    background-size: 3150.77%; }
-  .caverna-meeple.meeple-arrow-1x {
-    width: 1.3em;
-    height: 0.6em;
-    background-position: 7.09477% 26.3736%;
-    background-size: 1750.43%; }
-  .caverna-meeple.meeple-arrow-2x {
-    width: 1.2em;
-    height: 0.6em;
-    background-position: 0.517866% 26.4397%;
-    background-size: 1750.43%; }
-  .caverna-meeple.meeple-major {
-    width: 1.1em;
-    height: 0.74em;
-    background-position: 8.08903% 15.0728%;
-    background-size: 994.175%; }
-  .caverna-meeple.meeple-minor {
-    width: 1.1em;
-    height: 0.74em;
-    background-position: 19.7832% 15.0571%;
-    background-size: 1008.87%; }
-  .caverna-meeple.meeple-occupation {
-    width: 1.1em;
-    height: 0.74em;
-    background-position: 31.3279% 15.0571%;
-    background-size: 1008.87%; }
-  .caverna-meeple.meeple-field_icon {
-    width: 1.1em;
-    height: 0.6em;
-    background-position: 43.5094% 15.0415%;
-    background-size: 890.435%; }
-  .caverna-meeple.meeple-sow {
-    width: 1.8em;
-    height: 1.5em;
-    background-position: 0.580383% 0.56243%;
-    background-size: 630.154%; }
-  .caverna-meeple.meeple-bread {
-    width: 1.1em;
-    height: 0.74em;
-    background-position: 0.526316% 21.8989%;
-    background-size: 1383.78%; }
+    background-position: 59.3137% 0%;
+    background-size: 492.308%; }
+  .caverna-meeple.meeple-donkey {
+    width: 1.04em;
+    height: 0.87em;
+    background-position: 33.8235% 0%;
+    background-size: 492.308%; }
+  .caverna-meeple.meeple-dog {
+    width: 0.68em;
+    height: 0.9em;
+    background-position: 15.7658% 0%;
+    background-size: 752.941%; }
   .caverna-meeple.meeple-first {
     width: 0.4em;
     height: 0.9em;
-    background-position: 93.9333% 0.523834%;
-    background-size: 2925.71%; }
-  .caverna-meeple.meeple-child {
-    width: 1.1em;
-    height: 1.3em;
-    background-position: 19.0819% 0.562114%;
-    background-size: 853.333%; }
-  .caverna-meeple.meeple-child_free {
-    width: 1.1em;
-    height: 1.5em;
-    background-position: 31.7333% 0.552486%;
-    background-size: 1183.82%; }
-  .caverna-meeple.meeple-room_wood {
-    width: 1.5em;
-    height: 0.8em;
-    background-position: 74.5923% 8.62506%;
-    background-size: 1393.2%; }
-  .caverna-meeple.meeple-room_clay {
-    width: 1.5em;
-    height: 0.8em;
-    background-position: 88.5324% 8.62069%;
-    background-size: 1393.2%; }
-  .caverna-meeple.meeple-room_stone {
-    width: 1.5em;
-    height: 0.8em;
-    background-position: 71.6544% 21.7766%;
-    background-size: 1365.33%; }
-  .caverna-meeple.meeple-upgrade {
-    width: 4em;
-    height: 1.7em;
-    background-position: 54.866% 0.552181%;
-    background-size: 325.079%; }
-  .caverna-meeple.meeple-cook {
-    width: 2em;
-    height: 1.1em;
-    background-position: 13.3132% 26.2165%;
-    background-size: 3150.77%; }
-    #anytimeActions .caverna-meeple.meeple-cook {
-      margin: 0em -0.4em; }
+    background-position: 0% 0%;
+    background-size: 731.429%; }
   .caverna-meeple.meeple-begging {
     width: 1.1em;
     height: 1.1em;
-    background-position: 50.1524% 21.7988%;
-    background-size: 2560%; }
-  .caverna-meeple.meeple-farmer_icon {
-    background-image: url("img/farmers.png");
-    background-size: 500% 100%;
-    width: 0.9em;
-    height: 1.2em; }
-  .caverna-meeple.meeple-barn {
-    background-image: url("img/stables.png");
-    background-size: 500% 100%;
-    background-position-x: 100%;
-    width: 0.8em;
-    height: 1.1em; }
-  .caverna-meeple.meeple-fence_icon {
-    background-image: url("img/fences.png");
-    background-size: 500% 100%;
-    background-position-x: 100%;
-    width: 0.9em;
-    height: 0.9em; }
-  .caverna-meeple.meeple-reorganize {
-    background-position: 26.3889% 21.821%;
-    background-size: 825.806%;
-    width: 4.1em;
-    height: 1.4em;
-    margin: -0.2em -0.4em; }
-  .caverna-meeple.meeple-pasture {
-    width: 1.1em;
+    background-position: 80.0926% 0%;
+    background-size: 640%; }
+  .caverna-meeple.meeple-cook {
+    width: 2em;
     height: 1.1em;
-    background-position: 93.3536% 8.61632%;
-    background-size: 2659.74%; }
-  .caverna-meeple.meeple-empty {
-    width: 1em;
-    height: 1em;
-    background-position: 94.5674% 21.5686%;
-    background-size: 3413.33%; }
+    background-position: 15.66% 18.8285%;
+    background-size: 787.692%; }
+    #anytimeActions .caverna-meeple.meeple-cook {
+      margin: 0em -0.4em; }
 
 .meeple-farmer, .meeple-stable {
   width: 45px;
   height: 60px;
   background-image: url("img/farmers.png");
-  background-size: 500% 100%;
+  background-size: 700% 100%;
   position: relative;
   z-index: 100; }
   .colorblind .meeple-farmer,
@@ -3480,13 +3377,17 @@ html {
   .meeple-farmer[data-color='ff0000'], .player-ff0000 .meeple-farmer, .meeple-stable[data-color='ff0000'], .player-ff0000 .meeple-stable {
     background-position-x: 0%; }
   .meeple-farmer[data-color='008000'], .player-008000 .meeple-farmer, .meeple-stable[data-color='008000'], .player-008000 .meeple-stable {
-    background-position-x: 25%; }
+    background-position-x: 100% / 6; }
   .meeple-farmer[data-color='72c3b1'], .player-72c3b1 .meeple-farmer, .meeple-stable[data-color='72c3b1'], .player-72c3b1 .meeple-stable {
-    background-position-x: 50%; }
+    background-position-x: 200% / 6; }
   .meeple-farmer[data-color='982fff'], .player-982fff .meeple-farmer, .meeple-stable[data-color='982fff'], .player-982fff .meeple-stable {
-    background-position-x: 75%; }
-  .meeple-farmer[data-color='7b7b7b'], .player-7b7b7b .meeple-farmer, .meeple-stable[data-color='7b7b7b'], .player-7b7b7b .meeple-stable {
-    background-position-x: 100%; }
+    background-position-x: 300% / 6; }
+  .meeple-farmer[data-color='aa9702'], .player-aa9702 .meeple-farmer, .meeple-stable[data-color='aa9702'], .player-aa9702 .meeple-stable {
+    background-position-x: 400% / 6; }
+  .meeple-farmer[data-color='df7605'], .player-df7605 .meeple-farmer, .meeple-stable[data-color='df7605'], .player-df7605 .meeple-stable {
+    background-position-x: 500% / 6; }
+  .meeple-farmer[data-color='2a05df'], .player-2a05df .meeple-farmer, .meeple-stable[data-color='2a05df'], .player-2a05df .meeple-stable {
+    background-position-x: 600% / 6; }
 
 .meeple-farmer {
   width: 30px;
@@ -3496,27 +3397,6 @@ html {
   transform: scale(1); }
   .meeple-farmer.child {
     transform: scale(0.7); }
-
-.meeple-fence {
-  border: 1px solid #535050;
-  box-shadow: 2px 2px 6px -2px black;
-  background-image: none; }
-  .meeple-fence.fence-hor {
-    width: 110px;
-    height: 12px; }
-  .meeple-fence.fence-ver {
-    height: 110px;
-    width: 12px; }
-  .meeple-fence[data-color='ff0000'] {
-    background-color: #ee0808; }
-  .meeple-fence[data-color='008000'] {
-    background-color: #2c8404; }
-  .meeple-fence[data-color='72c3b1'] {
-    background-color: #2eb9b9; }
-  .meeple-fence[data-color='982fff'] {
-    background-color: #803fb5; }
-  .meeple-fence[data-color='7b7b7b'] {
-    background-color: #959393; }
 
 .meeple-firstPlayer {
   width: 0.4em;
@@ -3544,68 +3424,6 @@ html {
         filter: drop-shadow(1px 1px 1px black); }
       .meeple-field .seed-holder .caverna-meeple:first-child {
         margin: 0; }
-
-.meeple-roomWood,
-.meeple-roomClay,
-.meeple-roomStone {
-  background-image: url("img/rooms.png");
-  background-size: 300% 100%;
-  width: 100%;
-  height: 100%; }
-  .meeple-roomWood.meeple-roomClay,
-  .meeple-roomClay.meeple-roomClay,
-  .meeple-roomStone.meeple-roomClay {
-    background-position-x: 50%; }
-  .meeple-roomWood.meeple-roomStone,
-  .meeple-roomClay.meeple-roomStone,
-  .meeple-roomStone.meeple-roomStone {
-    background-position-x: 100%; }
-  .meeple-roomWood::after,
-  .meeple-roomClay::after,
-  .meeple-roomStone::after {
-    content: '';
-    position: absolute;
-    left: 1px;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-image: url("img/room_layouts.png");
-    background-size: 400% 400%; }
-
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomWood::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomClay::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomStone::before {
-  content: '';
-  position: absolute;
-  z-index: 2;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(230, 216, 142, 0.9);
-  border: 3px solid rgba(230, 216, 142, 0.9);
-  border-radius: 3px;
-  background-image: url("img/meeples.png");
-  background-repeat: no-repeat; }
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomWood.meeple-roomWood::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomClay.meeple-roomWood::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomStone.meeple-roomWood::before {
-  width: 0.6em;
-  height: 0.78em;
-  background-position: 58.4507% 21.7766%;
-  background-size: 3413.33%; }
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomWood.meeple-roomClay::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomClay.meeple-roomClay::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomStone.meeple-roomClay::before {
-  width: 0.64em;
-  height: 0.74em;
-  background-position: 97.127% 8.61196%;
-  background-size: 3200%; }
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomWood.meeple-roomStone::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomClay.meeple-roomStone::before,
-.colorblind .board-cell:hover .node-background.containsRoom .meeple-roomStone.meeple-roomStone::before {
-  width: 0.64em;
-  height: 0.8em;
-  background-position: 36.9456% 21.7988%;
-  background-size: 3200%; }
 
 .switch-wrapper {
   width: 100px;
@@ -3659,11 +3477,6 @@ html {
   .switch-wrapper .switch-vegetable:checked ~ .switch-ball {
     left: 66.66%;
     background: rgba(225, 142, 36, 0.77); }
-  .switch-wrapper.wood-switch .switch-neutral:checked ~ .switch-ball {
-    left: 0%; }
-  .switch-wrapper.wood-switch .switch-wood:checked ~ .switch-ball {
-    left: 50%;
-    background: rgba(168, 101, 15, 0.77); }
 
 .player-board {
   background-image: url("img/action_frame_bg.jpg");

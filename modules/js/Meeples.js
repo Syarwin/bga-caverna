@@ -1,15 +1,19 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   const MEEPLES = [
     'WOOD',
+    'STONE',
     'ORE',
     'RUBY',
-    'STONE',
     'FOOD',
     'GRAIN',
     'VEGETABLE',
     'SHEEP',
     'PIG',
     'CATTLE',
+    'DONKEY',
+    'DOG',
+    'BEGGING',
+
     'SCORE',
     'ARROW',
     'ARROW-1X',
@@ -31,12 +35,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'UPGRADE',
     'COOK',
     'FARMER',
-    'BEGGING',
     'REORGANIZE',
     'PASTURE',
     'EMPTY',
   ];
-  const PERSONAL_RESOURCES = ['farmer', 'fence', 'stable'];
+  const PERSONAL_RESOURCES = ['dwarf', 'stable'];
 
   return declare('caverna.meeples', null, {
     setupMeeples() {

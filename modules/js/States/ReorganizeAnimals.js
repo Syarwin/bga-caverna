@@ -90,6 +90,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update drop zones counters and "disabled" status
      */
     updateDropZonesStatus(preAnimation) {
+      return; // TODO
+      
       // Update zones capacity counters
       this.forEachPlayer((player) => {
         this.getAnimalsDropZones(player.id).forEach((zone) => {

@@ -37,6 +37,8 @@ class Player extends \CAV\Helpers\DB_Model
   {
     $data = parent::jsonSerialize();
     $current = $this->id == $currentPlayerId;
+    $data['harvestCost'] = 4; // TODO
+    
     return $data;
   }
 
