@@ -13,10 +13,10 @@ class Dwarves extends Meeples
     $meeples = [];
     foreach ($players as $pId => $player) {
       // Dwarves in reserve
-      $meeples[] = ['type' => 'farmer', 'player_id' => $pId, 'location' => 'reserve', 'nbr' => 3];
+      $meeples[] = ['type' => 'dwarf', 'player_id' => $pId, 'location' => 'reserve', 'nbr' => 3];
       // Dwarves in position
       $meeples[] = [
-        'type' => 'farmer',
+        'type' => 'dwarf',
         'player_id' => $pId,
         'location' => 'board',
         'x' => 1,
@@ -24,7 +24,7 @@ class Dwarves extends Meeples
         'nbr' => 1,
       ];
       $meeples[] = [
-        'type' => 'farmer',
+        'type' => 'dwarf',
         'player_id' => $pId,
         'location' => 'board',
         'x' => 1,
@@ -41,7 +41,7 @@ class Dwarves extends Meeples
   {
     $query = self::getSelectQuery()
       ->wherePlayer($pId)
-      ->where('type', 'farmer');
+      ->where('type', 'dwarf');
 
     if ($location != null) {
       $query = $query->where('meeple_location', $location);
@@ -175,7 +175,7 @@ class Dwarves extends Meeples
   public static function getOnCard($cId, $pId = null)
   {
     return parent::getOnCardQ($cId, $pId)
-      ->where('type', 'farmer')
+      ->where('type', 'dwarf')
       ->get();
   }
 

@@ -25,7 +25,7 @@ class PlaceDwarf extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return $player->hasFarmerAvailable();
+    return $player->hasDwarfAvailable();
   }
 
   /**

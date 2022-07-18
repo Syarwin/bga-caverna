@@ -381,7 +381,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     updatePlayersScores(anim = true) {
       return; // TODO
-      
+
       if (this.gamedatas.scores !== null) {
         this.forEachPlayer((player) => {
           SCORE_CATEGORIES.forEach((category) => {

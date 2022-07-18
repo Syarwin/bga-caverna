@@ -197,7 +197,7 @@ trait TurnTrait
     }
 
     // No farmer to allocate ?
-    if (!$player->hasFarmerAvailable() && !$player->hasAdoptiveAvailable()) {
+    if (!$player->hasDwarfAvailable() && !$player->hasAdoptiveAvailable()) {
       $skipped[] = $player->getId();
       Globals::setSkippedPlayers($skipped);
       $this->nextPlayerCustomOrder('labor');
@@ -213,7 +213,7 @@ trait TurnTrait
       'action' => PLACE_DWARF,
       'pId' => $player->getId(),
     ];
-    // if (!$player->hasFarmerAvailable() && $player->hasAdoptiveAvailable()) {
+    // if (!$player->hasDwarfAvailable() && $player->hasAdoptiveAvailable()) {
     //   $card = Buildings::get('A92_AdoptiveParents');
     //   $node = $card->getStartOfRoundChoice($player);
     // }

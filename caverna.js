@@ -516,10 +516,10 @@ define([
         this.setupTour();
       },
 
-      // updatePlayerOrdering() {
-      //   this.inherited(arguments);
-      //   dojo.place('player_board_config', 'player_boards', 'first');
-      // },
+      updatePlayerOrdering() {
+        this.inherited(arguments);
+        dojo.place('player_board_config', 'player_boards', 'first');
+      },
 
       toggleSettings() {
         dojo.toggleClass('settings-controls-container', 'settingsControlsHidden');

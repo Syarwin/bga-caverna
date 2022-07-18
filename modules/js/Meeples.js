@@ -14,11 +14,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'DOG',
     'BEGGING',
 
+    'DWARF',
+    'STABLE',
+    'BARN',
+
     'SCORE',
     'ARROW',
     'ARROW-1X',
     'ARROW-2X',
-    'FENCE',
     'MAJOR',
     'MINOR',
     'OCCUPATION',
@@ -31,7 +34,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'ROOM_WOOD',
     'ROOM_CLAY',
     'ROOM_STONE',
-    'BARN',
     'UPGRADE',
     'COOK',
     'FARMER',
@@ -396,7 +398,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     formatStringMeeples(str) {
       // This text icon are also board component, so we add the prefix _icon to distinguish them
-      let conflictingNames = ['FENCE', 'FIELD', 'FARMER'];
+      let conflictingNames = ['FENCE', 'FIELD', 'DWARF'];
 
       let jstpl_meeple = `
       <div class="meeple-container">

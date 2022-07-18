@@ -1,7 +1,6 @@
 <?php
 namespace CAV\Models;
 use CAV\Managers\Meeples;
-use CAV\Managers\Fences;
 use CAV\Managers\Stables;
 use CAV\Managers\Players;
 use CAV\Managers\Buildings;
@@ -64,10 +63,10 @@ class PlayerBoard
   {
     $this->grid = self::createEmptyGrid();
 
-    $this->fences = Fences::getOnBoard($this->pId)->toArray();
-    foreach ($this->fences as $fence) {
-      $this->grid[$fence['x']][$fence['y']] = $fence;
-    }
+    // $this->fences = Fences::getOnBoard($this->pId)->toArray();
+    // foreach ($this->fences as $fence) {
+    //   $this->grid[$fence['x']][$fence['y']] = $fence;
+    // }
 
     $this->rooms = Meeples::getRooms($this->pId)->toArray();
     foreach ($this->rooms as $room) {
@@ -79,9 +78,9 @@ class PlayerBoard
       $field['uid'] = $field['x'] . '_' . $field['y'];
       $this->grid[$field['x']][$field['y']] = $field;
     }
-    foreach (Buildings::getFieldCards($this->pId) as $card) {
-      $this->addFieldCard($card->getId(), $card->getFieldDetails());
-    }
+    // foreach (Buildings::getFieldCards($this->pId) as $card) {
+    //   $this->addFieldCard($card->getId(), $card->getFieldDetails());
+    // }
 
     $this->stables = Stables::getOnBoard($this->pId)->toArray();
     foreach ($this->stables as $stable) {
@@ -483,7 +482,7 @@ class PlayerBoard
     });
     return $fields;
   }
-  
+
   /**
    * Return all fields that contain a crop
    */
@@ -494,7 +493,7 @@ class PlayerBoard
       return !empty($field['crops']);
     });
     return $fields;
-  }  
+  }
 
   /**
    * Return all edges that could receive a fence and adjacent to a field
