@@ -24,6 +24,7 @@ class Globals extends \CAV\Helpers\DB_Manager
 
     // Game options
     'solo' => 'bool',
+    'beginner' => 'bool',
     'liveScoring' => 'bool',
     'turn' => 'int',
     'lastRevealed' => 'str',
@@ -155,6 +156,7 @@ class Globals extends \CAV\Helpers\DB_Manager
   public static function setupNewGame($players, $options)
   {
     self::setSolo(count($players) == 1);
+    self::setBeginner($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER);
     self::setLiveScoring($options[OPTION_SCORING] == OPTION_SCORING_ENABLED);
     self::setTurn(0);
     self::setFirstPlayer(Game::get()->getNextPlayerTable()[0]);

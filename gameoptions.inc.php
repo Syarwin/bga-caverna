@@ -19,6 +19,22 @@ namespace CAV;
 require_once 'modules/php/constants.inc.php';
 
 $game_options = [
+  OPTION_COMPETITIVE_LEVEL => [
+    'name' => totranslate('Competitive level'),
+    'values' => [
+      OPTION_COMPETITIVE_BEGINNER => [
+        'name' => totranslate('Beginner'),
+        'tmdisplay' => totranslate('Beginner'),
+        'description' => totranslate('Less buildings'),
+      ],
+      OPTION_COMPETITIVE_NORMAL => [
+        'name' => totranslate('Normal'),
+        'nobeginner' => true,
+      ],
+    ],
+    'default' => OPTION_COMPETITIVE_BEGINNER,
+  ],
+
   OPTION_SCORING => [
     'name' => totranslate('Live scoring'),
     'values' => [
