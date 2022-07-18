@@ -119,17 +119,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     tplMeeple(meeple) {
       let color = meeple.pId == 0 ? meeple.pId : this.getPlayerColor(meeple.pId);
       let className = '';
-      if (meeple.type == 'fence') {
-        className = 'fence-' + (meeple.x % 2 == 1 ? 'hor' : 'ver');
-      }
-      if (meeple.type == 'farmer') {
+      if (meeple.type == 'dwarf') {
         className = meeple.state == 1 ? 'child' : '';
       }
       if (meeple.type == 'field' && meeple.location != 'board') {
         meeple.type = 'field_icon';
-      }
-      if (meeple.type == 'roomStone' && meeple.location != 'board') {
-        meeple.type = 'room_stone';
       }
 
       return `<div class="caverna-meeple meeple-${meeple.type} ${className}" id="meeple-${meeple.id}" data-id="${meeple.id}" data-color="${color}" data-type="${meeple.type}"></div>`;

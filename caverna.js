@@ -164,7 +164,7 @@ define([
         // dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
         this.setupInfoPanel();
         // this.setupScoresModal();
-        // this.setupActionCards();
+        this.setupActionCards();
         this.setupPlayers();
         // this.setupBuildings();
         this.setupMeeples();

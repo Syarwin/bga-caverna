@@ -2819,14 +2819,16 @@ html {
   margin: 0px 10px 10px; }
 
 .player-board-wrapper {
-  width: 660px;
-  transform: scale(var(--cavernaPlayerBoardScale));
+  width: auto;
   transform-origin: top left; }
   .player-board-wrapper.harvest .player-board-holder .animals-counters .baby-counter {
     display: inline-block; }
   .player-board-wrapper .player-board-holder {
-    border: 1px dashed #7b776e;
-    border-radius: 10px; }
+    border: 1px solid black;
+    border-radius: 10px;
+    background-image: url("img/action_frame_bg.jpg");
+    background-size: 200px 40px;
+    box-shadow: 2px 2px 10px black; }
     .player-board-wrapper .player-board-holder .cards-wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -2890,15 +2892,27 @@ html {
       right: 30px;
       border-bottom: 1px solid black !important; }
     .player-board-wrapper .player-board-holder .caverna-player-board {
-      width: 658px;
-      height: 405px;
-      position: relative; }
+      width: 628px;
+      height: 387px;
+      position: relative;
+      border-top: 1px solid black; }
       .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid {
+        background-image: url("img/player-board-small.jpg");
+        background-size: 100% 100%;
         display: grid;
-        grid-template-columns: repeat(5, 18px 110px) 18px;
-        grid-template-rows: repeat(3, 18px 110px) 18px;
+        grid-template-columns: 8px repeat(3, 5px 90px) 50px repeat(3, 90px 5px) 0px;
+        grid-template-rows: 2px repeat(4, 5px 90px) 5px 0px;
         grid-gap: 0px;
-        position: relative; }
+        position: relative;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px; }
+        .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid.office-room {
+          background-image: url("img/player-board.jpg");
+          background-size: 90% 90%;
+          grid-template-columns: 70px repeat(3, 4px 70px) 44px repeat(3, 70px 4px) 70px;
+          grid-template-rows: 70px repeat(4, 1px 70px) 1px 70px;
+          background-repeat: no-repeat;
+          background-position: 31px 33px; }
         .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell {
           display: flex;
           justify-content: center;
@@ -2913,18 +2927,6 @@ html {
             display: flex;
             justify-content: center;
             align-items: center; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell .node-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; }
-            .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell .node-background .empty-node {
-              width: 100%;
-              height: 100%;
-              background-image: url("img/empty_slots.png");
-              background-size: 700% 100%; }
           .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='1'][data-y='1'] .empty-node {
             background-position-x: 66.6666666667%; }
           .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='3'][data-y='1'] .empty-node {
@@ -3410,9 +3412,17 @@ html {
   height: 29px;
   transform-origin: bottom center;
   transition: transform 1s;
-  transform: scale(1); }
+  transform: scale(1);
+  position: relative; }
   .meeple-dwarf.child {
     transform: scale(0.7); }
+  .meeple-dwarf::before {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("img/weapons.png");
+    background-size: 700% 200%; }
 
 .meeple-firstPlayer {
   width: 0.4em;

@@ -19,17 +19,9 @@ class Dwarves extends Meeples
         'type' => 'dwarf',
         'player_id' => $pId,
         'location' => 'board',
-        'x' => 1,
-        'y' => 3,
-        'nbr' => 1,
-      ];
-      $meeples[] = [
-        'type' => 'dwarf',
-        'player_id' => $pId,
-        'location' => 'board',
-        'x' => 1,
-        'y' => 5,
-        'nbr' => 1,
+        'x' => 7,
+        'y' => 7,
+        'nbr' => 2,
       ];
     }
 

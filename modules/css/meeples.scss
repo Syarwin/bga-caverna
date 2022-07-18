@@ -190,9 +190,20 @@
   transform-origin: bottom center;
   transition: transform 1s;
   transform: scale(1);
+  position: relative;
 
   &.child {
     transform: scale(0.7);
+  }
+
+  &::before {
+//    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/weapons.png');
+    background-size: 700% 200%;
   }
 }
 

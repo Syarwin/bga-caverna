@@ -89,11 +89,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Format action card desc
      */
     formatCardDesc(desc) {
-      return desc
-        .map((s) => _(s))
-        .map((s) => s.replace(/__([^_]+)__/g, '<span class="action-card-name-reference">$1</span>'))
-        .map((s) => '<div>' + this.formatStringMeeples(s) + '</div>')
-        .join('');
+      return '';
+      // return desc
+      //   .map((s) => _(s))
+      //   .map((s) => s.replace(/__([^_]+)__/g, '<span class="action-card-name-reference">$1</span>'))
+      //   .map((s) => '<div>' + this.formatStringMeeples(s) + '</div>')
+      //   .join('');
     },
 
     /**

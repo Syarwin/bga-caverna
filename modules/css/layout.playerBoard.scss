@@ -7,8 +7,8 @@
 }
 
 .player-board-wrapper {
-  width: 660px;
-  transform: scale(var(--cavernaPlayerBoardScale));
+  width: auto;
+  //  transform: scale(var(--cavernaPlayerBoardScale));
   transform-origin: top left;
 
   &.harvest .player-board-holder .animals-counters .baby-counter {
@@ -16,8 +16,11 @@
   }
 
   .player-board-holder {
-    border: 1px dashed #7b776e;
+    border: 1px solid black;
     border-radius: 10px;
+    background-image: url('img/action_frame_bg.jpg');
+    background-size: 200px 40px;
+    box-shadow: 2px 2px 10px black;
 
     .cards-wrapper {
       display: flex;
@@ -101,16 +104,30 @@
     }
 
     .caverna-player-board {
-      width: 658px;
-      height: 405px;
+      width: 628px;
+      height: 387px;
       position: relative;
+      border-top: 1px solid black;
 
       .player-board-grid {
+        background-image: url('img/player-board-small.jpg');
+        background-size: 100% 100%;
         display: grid;
-        grid-template-columns: repeat(5, 18px 110px) 18px;
-        grid-template-rows: repeat(3, 18px 110px) 18px;
+        grid-template-columns: 8px repeat(3, 5px 90px) 50px repeat(3, 90px 5px) 0px;
+        grid-template-rows: 2px repeat(4, 5px 90px) 5px 0px;
+
+        &.office-room {
+          background-image: url("img/player-board.jpg");
+          background-size: 90% 90%;
+          grid-template-columns: 70px repeat(3, 4px 70px) 44px repeat(3, 70px 4px) 70px;
+          grid-template-rows: 70px repeat(4, 1px 70px) 1px 70px;
+          background-repeat: no-repeat;
+          background-position: 31px 33px;
+        }
         grid-gap: 0px;
         position: relative;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
 
         .board-cell {
           display: flex;
@@ -129,21 +146,6 @@
             align-items: center;
           }
 
-          .node-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-
-            .empty-node {
-              width: 100%;
-              height: 100%;
-              background-image: url('img/empty_slots.png');
-              background-size: 700% 100%;
-            }
-          }
           &[data-x='1'][data-y='1'] .empty-node {
             background-position-x: 4 * 100% / 6;
           }

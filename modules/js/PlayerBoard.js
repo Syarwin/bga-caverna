@@ -1,18 +1,23 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
-  const resources = ['wood', 'stone', 'ore', 'ruby', 'grain', 'vegetable', 'food', 'sheep', 'pig', 'cattle', 'donkey', 'dog'];
+  const resources = [
+    'wood',
+    'stone',
+    'ore',
+    'ruby',
+    'grain',
+    'vegetable',
+    'food',
+    'sheep',
+    'pig',
+    'cattle',
+    'donkey',
+    'dog',
+  ];
 
   return declare('caverna.playerBoard', null, {
     getCell(pos, pId = null) {
       if (pId == null) {
         pId = pos.pId ? pos.pId : this.player_id;
-      }
-
-      // Handle fieldCards
-      if ((pos.x == -1 && pos.y == -1) || (pos.id && pos.type && pos.type == 'fieldCard' && $(pos.id))) {
-        let cardId = pos.id || pos.location;
-        let elem = $(cardId).querySelector('.player-card-field-cell');
-        dojo.addClass(elem, 'active');
-        return elem;
       }
 
       return document.querySelector(`#board-${pId} .board-cell[data-x='${pos.x}'][data-y='${pos.y}']`);
@@ -49,20 +54,18 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           <div class="caverna-player-board" id="board-${player.id}" data-color="${player.color}">
             <div class="player-board-grid">
         `;
-      for (let y = 0; y <= 6; y++) {
-        for (let x = 0; x <= 10; x++) {
+      for (let y = -1; y <= 9; y++) {
+        for (let x = -1; x <= 13; x++) {
           let type = 'edge';
-          if (x % 2 == 1 && y % 2 == 1) type = 'node';
-          if (x % 2 == 0 && y % 2 == 0) type = 'virtual';
+          if ((x + 2) % 2 == 1 && (y + 2) % 2 == 1) type = 'node';
+          if ((x + 2) % 2 == 0 && (y + 2) % 2 == 0) type = 'virtual';
 
           let content =
             type == 'node'
               ? `
-              <div class="node-background"><div class="empty-node"></div></div>
               <div class="animal-holder resource-holder-update"></div>
               <div class="stable-holder"></div>`
               : '';
-          if (type == 'edge') content = '<div class="animal-holder resource-holder-update"></div>';
 
           html += `<div data-x='${x}' data-y='${y}' class="board-cell cell-${type}">${content}</div>`;
         }
@@ -70,7 +73,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       html += `
             </div>
           </div>
-          <div class="cards-wrapper" id="cards-wrapper-${player.id}"></div>
         </div>
       </div>
     </div>

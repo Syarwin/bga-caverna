@@ -50,7 +50,7 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
       'component' => $this->isBoardComponent(),
       // 'desc' => $this->desc,
-      // 'container' => $this->container,
+      'container' => $this->container,
     ];
   }
 
