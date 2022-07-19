@@ -97,6 +97,12 @@
   background-size: 100% auto;
   position: relative;
 
+  // TODO : remove
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-row-gap: 5px;
+  grid-column-gap: 5px;
+
   #modal-buttons-holder {
     position: absolute;
     left: 679px;
@@ -133,6 +139,8 @@
     width: 140px;
     height: 140px;
     position: absolute;
+    // TODO : remove
+    display: none;
 
     &#turn_1 {
       left: 167px;
@@ -362,8 +370,15 @@
 }
 
 .action-card-holder {
-  position: absolute;
-  left: 30px;
+  // TODO : add back
+  // position: absolute;
+  // left: 30px;
+
+  // TODO : remove
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: relative;
 
   #ebd-body:not(.help-mode) & {
     &.selectable {
@@ -659,19 +674,11 @@
     }
   }
 
-  // D101 - SugarBaker
-  &[data-id='ActionGrainUtilization'] {
-    .action-card.accumulate-left .action-desc::before {
-      display: none;
-    }
-
-    .resource-holder[data-n='0'] {
-      opacity: 0;
-    }
-  }
-
   .resource-holder {
     position: absolute;
+    // TODO : remove
+    bottom : 30px;
+    left: 30px;
     padding: 4px;
     font-size: 30px;
     background-color: rgba(230, 216, 142, 0.9);

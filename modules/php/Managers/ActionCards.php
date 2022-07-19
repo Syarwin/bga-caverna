@@ -22,17 +22,29 @@ class ActionCards extends \CAV\Helpers\Pieces
   }
 
   protected static $actionCards = [
+    'Clearing',
+    'Clearing4',
     'DriftMining',
     'DriftMining4',
     'Excavation',
     'Excavation4',
     'FirstPlayer',
     'FirstPlayer4',
+    'ForestExploration',
+    'ForestExploration4',
+    'Housework',
     'Imitation',
     'Logging',
     'Logging4',
+    'OreMining',
+    'OreMining4',
+    'RubyMining',
+    'Slash',
     'Supplies',
     'Supplies4',
+    'Sustenance',
+    'Sustenance4',
+    'WoodGathering',
   ];
 
   /* Creation of the cards */

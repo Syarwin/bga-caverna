@@ -14,6 +14,7 @@ class Actions
     EXPEDITION => 'Expedition',
     FENCING => 'Fencing',
     FIRSTPLAYER => 'FirstPlayer',
+    FURNISH => 'Furnish',
     GAIN => 'Gain',
     IMITATE => 'Imitate',
     PAY => 'Pay',

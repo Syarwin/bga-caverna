@@ -2066,7 +2066,11 @@ html {
   transform-origin: top left;
   background-image: url("img/central.png");
   background-size: 100% auto;
-  position: relative; }
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-row-gap: 5px;
+  grid-column-gap: 5px; }
   #central-board #modal-buttons-holder {
     position: absolute;
     left: 679px;
@@ -2096,7 +2100,8 @@ html {
   #central-board .turn-action-container {
     width: 140px;
     height: 140px;
-    position: absolute; }
+    position: absolute;
+    display: none; }
     #central-board .turn-action-container#turn_1 {
       left: 167px;
       top: 2px; }
@@ -2295,8 +2300,10 @@ html {
   transform: scale(1); }
 
 .action-card-holder {
-  position: absolute;
-  left: 30px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: relative;
   /*
    * COMPONENT ACTIONS
    */
@@ -2493,12 +2500,10 @@ html {
     pointer-events: none; }
     #ebd-body:not(.mobile_version) .action-card-holder .farmer-holder:not([data-n='0']) ~ .action-card {
       filter: grayscale(75%); }
-  .action-card-holder[data-id='ActionGrainUtilization'] .action-card.accumulate-left .action-desc::before {
-    display: none; }
-  .action-card-holder[data-id='ActionGrainUtilization'] .resource-holder[data-n='0'] {
-    opacity: 0; }
   .action-card-holder .resource-holder {
     position: absolute;
+    bottom: 30px;
+    left: 30px;
     padding: 4px;
     font-size: 30px;
     background-color: rgba(230, 216, 142, 0.9);

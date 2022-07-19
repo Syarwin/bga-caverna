@@ -141,6 +141,15 @@ class Player extends \CAV\Helpers\DB_Model
     return $reserve;
   }
 
+  public function countOreMines()
+  {
+    return 0; // TODO
+  }
+  public function countRubyMines()
+  {
+    return 0; // TODO
+  }
+
   public function getRoomType()
   {
     return Meeples::getRoomType($this->id);
@@ -422,20 +431,13 @@ class Player extends \CAV\Helpers\DB_Model
     return Dwarves::hasAvailable($this->id);
   }
 
-  public function hasAdoptiveAvailable()
-  {
-    return $this->hasPlayedCard('A92_AdoptiveParents') &&
-      Dwarves::hasChildren($this->id) &&
-      !in_array($this->id, Globals::getSkippedPlayers());
-  }
-
   // TODO : useful ??
-  public function getNextFarmerAvailable()
+  public function getNextDwarfAvailable()
   {
     return Dwarves::getNextAvailable($this->id);
   }
 
-  public function moveNextFarmerAvailable($location, $coords = null)
+  public function moveNextDwarfAvailable($location, $coords = null)
   {
     return Dwarves::moveNextAvailable($this->id, $location, $coords);
   }
@@ -445,7 +447,7 @@ class Player extends \CAV\Helpers\DB_Model
     return Dwarves::count($this->id, $type);
   }
 
-  public function hasFarmerInReserve()
+  public function hasDwarfInReserve()
   {
     return Dwarves::hasInReserve($this->id);
   }
@@ -477,17 +479,17 @@ class Player extends \CAV\Helpers\DB_Model
   {
     $rooms = Meeples::getRooms($this->id);
     foreach ($rooms as $room) {
-      if ($this->countFarmerAtPos(['x' => $room['x'], 'y' => $room['y']]) == 0) {
+      if ($this->countDwarfAtPos(['x' => $room['x'], 'y' => $room['y']]) == 0) {
         return $room;
       }
     }
     return null;
   }
 
-  public function countFarmerAtPos($coord)
+  public function countDwarfAtPos($coord)
   {
     return Meeples::getOnCardQ('board', $this->id)
-      ->where('type', 'farmer')
+      ->where('type', 'dwarf')
       ->where('x', $coord['x'])
       ->where('y', $coord['y'])
       ->count();
@@ -495,48 +497,37 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function returnHomeDwarves()
   {
-    $farmers = self::getAllDwarves();
+    $dwarves = self::getAllDwarves();
     $rooms = Meeples::getRooms($this->id);
-    $caravan = false;
-    if ($this->hasPlayedCard('B10_Caravan')) {
-      $caravan = true;
-    }
-
-    foreach ($farmers as $farmer) {
-      if ($farmer['location'] == 'board' || $farmer['location'] == 'B10_Caravan') {
+    foreach ($dwarves as $dwarf) {
+      if ($dwarf['location'] == 'board') {
         continue;
       }
 
       foreach ($rooms as $room) {
-        if ($this->countFarmerAtPos(['x' => $room['x'], 'y' => $room['y']]) == 0) {
-          Meeples::moveToCoords($farmer['id'], 'board', [$room['x'], $room['y']]);
+        if ($this->countDwarfAtPos(['x' => $room['x'], 'y' => $room['y']]) == 0) {
+          Meeples::moveToCoords($dwarf['id'], 'board', [$room['x'], $room['y']]);
           continue;
         }
       }
     }
 
-    // check if all farmers have been allocated. else we put in an existing room as they may have been born from urgent wish for children
-    foreach (self::getAllDwarves() as $farmer) {
-      if ($farmer['location'] == 'board' || $farmer['location'] == 'B10_Caravan') {
-        continue;
-      }
-
-      if ($caravan) {
-        Meeples::moveToCoords($farmer['id'], 'B10_Caravan');
-        $caravan = false;
+    // check if all dwarves have been allocated. else we put in an existing room as they may have been born from urgent wish for children
+    foreach (self::getAllDwarves() as $dwarf) {
+      if ($dwarf['location'] == 'board') {
         continue;
       }
 
       foreach ($rooms as $room) {
-        if ($this->countFarmerAtPos(['x' => $room['x'], 'y' => $room['y']]) == 1) {
-          Meeples::moveToCoords($farmer['id'], 'board', [$room['x'], $room['y']]);
+        if ($this->countDwarfAtPos(['x' => $room['x'], 'y' => $room['y']]) == 1) {
+          Meeples::moveToCoords($dwarf['id'], 'board', [$room['x'], $room['y']]);
           continue 2;
         }
       }
 
       foreach ($rooms as $room) {
-        if ($this->countFarmerAtPos(['x' => $room['x'], 'y' => $room['y']]) == 2) {
-          Meeples::moveToCoords($farmer['id'], 'board', [$room['x'], $room['y']]);
+        if ($this->countDwarfAtPos(['x' => $room['x'], 'y' => $room['y']]) == 2) {
+          Meeples::moveToCoords($dwarf['id'], 'board', [$room['x'], $room['y']]);
           continue;
         }
       }
@@ -545,8 +536,7 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getHarvestCost()
   {
-    $mult = Globals::isSolo() ? 3 : 2;
-    return $this->countDwarves(ADULT) * $mult + $this->countDwarves(CHILD);
+    return $this->countDwarves(ADULT) * 2 + $this->countDwarves(CHILD);
   }
 
   public function breed($animalType = null, $source = null)

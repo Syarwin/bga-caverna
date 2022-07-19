@@ -94,20 +94,12 @@ trait TurnTrait
     // Get meeple to receive
     $resources = Meeples::getResourcesOnCard('turn_' . $turn, $pId);
     foreach ($resources as $id => $res) {
-      // If 'x' field is null, that's just a normal RECEIVE action
-      if (is_null($res['x'])) {
-        $reaction['childs'][] = [
-          'action' => RECEIVE,
-          'args' => [
-            'meeple' => $id,
-          ],
-        ];
-      }
-      // Otherwise, 'x' refers to the card that needs to be triggered by that meeple
-      else {
-        $card = Buildings::get($res['x']);
-        $reaction['childs'][] = $card->getReceiveFlow($res);
-      }
+      $reaction['childs'][] = [
+        'action' => RECEIVE,
+        'args' => [
+          'meeple' => $id,
+        ],
+      ];
     }
 
     if (empty($reaction['childs'])) {
@@ -197,7 +189,7 @@ trait TurnTrait
     }
 
     // No farmer to allocate ?
-    if (!$player->hasDwarfAvailable() && !$player->hasAdoptiveAvailable()) {
+    if (!$player->hasDwarfAvailable()) {
       $skipped[] = $player->getId();
       Globals::setSkippedPlayers($skipped);
       $this->nextPlayerCustomOrder('labor');
@@ -213,10 +205,6 @@ trait TurnTrait
       'action' => PLACE_DWARF,
       'pId' => $player->getId(),
     ];
-    // if (!$player->hasDwarfAvailable() && $player->hasAdoptiveAvailable()) {
-    //   $card = Buildings::get('A92_AdoptiveParents');
-    //   $node = $card->getStartOfRoundChoice($player);
-    // }
 
     // Inserting leaf PLACE_DWARF
     Engine::setup($node, ['order' => 'labor']);

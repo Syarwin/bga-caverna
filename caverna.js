@@ -160,8 +160,7 @@ define([
         //   }
         // });
         //
-        // dojo.attr('game_play_area', 'data-additional', gamedatas.isAdditional ? 1 : 0);
-        // dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
+        dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
         this.setupInfoPanel();
         // this.setupScoresModal();
         this.setupActionCards();
@@ -169,7 +168,7 @@ define([
         // this.setupBuildings();
         this.setupMeeples();
         // this.setupAnimalsDropZones();
-        // this.updatePrefs();
+        this.updatePrefs();
         // this.setCardScale(this._cardScale);
         // this.setCardAnimationSpeed(this._cardAnimationSpeed);
         // this.setCentralBoardScale(this._centralBoardScale);

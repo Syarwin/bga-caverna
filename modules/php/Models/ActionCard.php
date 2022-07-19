@@ -136,16 +136,20 @@ class ActionCard extends \CAV\Helpers\DB_Model
     }
 
     // Check that the action is doable
-    $flow = $this->getFlow($player);
+    $flow = $this->getTaggedFlow($player);
     $flowTree = Engine::buildTree($flow);
     return $flowTree->isDoable($player, $ignoreResources);
   }
 
-
   public function getFlow($player)
   {
+    return $this->flow;
+  }
+
+  public function getTaggedFlow($player)
+  {
     // Add card context for listeners
-    return Utils::tagTree($this->flow, [
+    return Utils::tagTree($this->getFlow($player), [
       'pId' => $player->getId(),
       'cardId' => $this->id,
     ]);

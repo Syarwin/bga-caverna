@@ -45,8 +45,6 @@ class PlayerBoard
   public function getUiData()
   {
     return [
-      'pastures' => $this->getPastures(),
-      'fences' => $this->fences,
       'dropZones' => $this->getAnimalsDropZones(),
     ];
   }
@@ -63,29 +61,27 @@ class PlayerBoard
   {
     $this->grid = self::createEmptyGrid();
 
-    // $this->fences = Fences::getOnBoard($this->pId)->toArray();
-    // foreach ($this->fences as $fence) {
-    //   $this->grid[$fence['x']][$fence['y']] = $fence;
+    // Separating mountain from the plain
+    $this->grid[6][1] = true;
+    $this->grid[6][3] = true;
+    $this->grid[6][5] = true;
+    $this->grid[6][7] = true;
+
+    // $this->rooms = Meeples::getRooms($this->pId)->toArray();
+    // foreach ($this->rooms as $room) {
+    //   $this->grid[$room['x']][$room['y']] = $room;
+    // }
+    //
+    // $this->fields = Meeples::getFields($this->pId)->toArray();
+    // foreach ($this->fields as &$field) {
+    //   $field['uid'] = $field['x'] . '_' . $field['y'];
+    //   $this->grid[$field['x']][$field['y']] = $field;
     // }
 
-    $this->rooms = Meeples::getRooms($this->pId)->toArray();
-    foreach ($this->rooms as $room) {
-      $this->grid[$room['x']][$room['y']] = $room;
-    }
-
-    $this->fields = Meeples::getFields($this->pId)->toArray();
-    foreach ($this->fields as &$field) {
-      $field['uid'] = $field['x'] . '_' . $field['y'];
-      $this->grid[$field['x']][$field['y']] = $field;
-    }
-    // foreach (Buildings::getFieldCards($this->pId) as $card) {
-    //   $this->addFieldCard($card->getId(), $card->getFieldDetails());
+    // $this->stables = Stables::getOnBoard($this->pId)->toArray();
+    // foreach ($this->stables as $stable) {
+    //   $this->grid[$stable['x']][$stable['y']] = $stable;
     // }
-
-    $this->stables = Stables::getOnBoard($this->pId)->toArray();
-    foreach ($this->stables as $stable) {
-      $this->grid[$stable['x']][$stable['y']] = $stable;
-    }
   }
 
   public function getRooms()
@@ -905,8 +901,8 @@ class PlayerBoard
   protected static function createEmptyGrid()
   {
     $t = [];
-    for ($x = 0; $x <= 10; $x++) {
-      for ($y = 0; $y <= 6; $y++) {
+    for ($x = -1; $x <= 13; $x++) {
+      for ($y = -1; $y <= 9; $y++) {
         $t[$x][$y] = null;
       }
     }
@@ -916,8 +912,8 @@ class PlayerBoard
   protected static function getAllIntersections()
   {
     $result = [];
-    for ($x = 0; $x <= 10; $x += 2) {
-      for ($y = 0; $y <= 6; $y += 2) {
+    for ($x = 0; $x <= 12; $x += 2) {
+      for ($y = 0; $y <= 8; $y += 2) {
         $result[] = ['x' => $x, 'y' => $y];
       }
     }
@@ -927,8 +923,8 @@ class PlayerBoard
   protected static function getAllNodes()
   {
     $result = [];
-    for ($x = 1; $x <= 10; $x += 2) {
-      for ($y = 1; $y <= 6; $y += 2) {
+    for ($x = -1; $x <= 13; $x += 2) {
+      for ($y = -1; $y <= 9; $y += 2) {
         $result[] = ['x' => $x, 'y' => $y];
       }
     }
@@ -990,17 +986,17 @@ class PlayerBoard
       $y = $x['y'];
       $x = $x['x'];
     }
-    return $x >= 0 && $x <= 10 && $y >= 0 && $y <= 6;
+    return $x >= -1 && $x <= 13 && $y >= -1 && $y <= 9;
   }
 
   protected static function checkFencePos(&$x, &$y = null)
   {
     self::checkPos($x, $y, false);
-    if ($x % 2 == 1 && $y % 2 == 1) {
+    if (($x + 2) % 2 == 1 && ($y + 2) % 2 == 1) {
       throw new \feException('Trying to ask fence of a node :' . self::posToStr($x, $y));
     }
 
-    if ($x % 2 == 0 && $y % 2 == 0) {
+    if (($x + 2) % 2 == 0 && ($y + 2) % 2 == 0) {
       throw new \feException('Trying to ask fence of a virtual intersection :' . self::posToStr($x, $y));
     }
   }
@@ -1008,7 +1004,7 @@ class PlayerBoard
   protected static function checkNodePos(&$x, &$y = null)
   {
     self::checkPos($x, $y);
-    if ($x % 2 != 1 || $y % 2 != 1) {
+    if (($x + 2) % 2 != 1 || ($y + 1) % 2 != 1) {
       throw new \feException('Trying to ask node of an edge or a virtual intersection :' . self::posToStr($x, $y));
     }
   }
@@ -1146,7 +1142,7 @@ class PlayerBoard
     $edges = $this->getEdgesAround($x, $y);
     foreach ([W, N, E, S] as $i) {
       $edge = $edges[$i];
-      if ($this->grid[$edge['x']][$edge['y']] == null) {
+      if (is_null($this->grid[$edge['x']][$edge['y']])) {
         unset($edges[$i]);
       }
     }

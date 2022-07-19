@@ -167,6 +167,7 @@ const ROOMS = ['roomStone', 'roomClay', 'roomWood'];
 
 const TILE_CAVERN_TUNNEL = 'tileCavernTunnel';
 const TILE_CAVERN_CAVERN = 'tileCavernCavern';
+const TILE_MEADOW_FIELD = 'tileMeadowField';
 
 // State to differentiate chah beh oui !ildren from grown ups
 const ADULT = 0;
@@ -225,6 +226,7 @@ const EXCHANGE = 'EXCHANGE';
 const EXPEDITION = 'EXPEDITION';
 const FENCING = 'FENCING';
 const FIRSTPLAYER = 'FIRST_PLAYER';
+const FURNISH = 'FURNISH';
 const GAIN = 'GAIN';
 const IMITATE = 'IMITATE';
 const PAY = 'PAY';
@@ -315,25 +317,3 @@ const STAT_BEGGING_FROM_CARDS = 77;
 
 const STAT_HARVESTED_GRAINS = 78;
 const STAT_HARVESTED_VEGETABLES = 79;
-
-const STAT_CARD_1 = 100;
-const STAT_CARD_2 = 101;
-const STAT_CARD_3 = 102;
-const STAT_CARD_4 = 103;
-const STAT_CARD_5 = 104;
-const STAT_CARD_6 = 105;
-const STAT_CARD_7 = 106;
-const STAT_CARD_8 = 107;
-const STAT_CARD_9 = 108;
-const STAT_CARD_10 = 109;
-const STAT_CARD_11 = 110;
-const STAT_CARD_12 = 111;
-const STAT_CARD_13 = 112;
-const STAT_CARD_14 = 113;
-
-const STAT_CARD_DISCARDED_1 = 114;
-const STAT_CARD_DISCARDED_2 = 115;
-const STAT_CARD_DISCARDED_3 = 116;
-const STAT_CARD_DISCARDED_4 = 117;
-const STAT_CARD_DISCARDED_5 = 118;
-const STAT_CARD_DISCARDED_6 = 119;
