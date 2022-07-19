@@ -19,7 +19,7 @@ class ActionOreMining extends \CAV\Models\ActionCard
     $this->accumulation = [ORE => [2, 1]];
   }
 
-  public function getFlow($player)
+  public function getFlow($player, $dwarf)
   {
     return [
       'type' => NODE_SEQ,

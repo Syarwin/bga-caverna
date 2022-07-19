@@ -19,7 +19,7 @@ class ActionRubyMining extends \CAV\Models\ActionCard
     $this->accumulation = [RUBY => 1];
   }
 
-  public function getFlow($player)
+  public function getFlow($player, $dwarf)
   {
     return $player->countRubyMines() > 0
       ? [

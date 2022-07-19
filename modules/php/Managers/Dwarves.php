@@ -31,100 +31,84 @@ class Dwarves extends Meeples
   /* Partial query for a given player */
   public function qPlayer($pId, $location = null)
   {
-    $query = self::getSelectQuery()
-      ->wherePlayer($pId)
-      ->where('type', 'dwarf');
+    return self::getFilteredQuery($pId, $location, 'dwarf');
+  }
 
-    if ($location != null) {
-      $query = $query->where('meeple_location', $location);
+  /* Add the weapons to a collection of dwarves */
+  protected function addWeapons($pId, &$dwarves)
+  {
+    $weapons = self::getFilteredQuery($pId, null, 'weapon')->get();
+    foreach ($weapons as $w) {
+      if (isset($dwarves[$w['location']])) {
+        $dwarves[$w['location']]['weapon'] = $w['state'];
+      }
     }
-
-    return $query;
   }
 
   /**
-   * Get all the farmers not in reserve
-   * @return Collection of farmers
+   * Get all the dwarves not in reserve
+   * @return Collection of dwarves
    * @param number $pId Id of player
    */
   public function getAllOfPlayer($pId)
   {
-    return self::qPlayer($pId, null)
+    $dwarves = self::qPlayer($pId, null)
       ->where('meeple_location', '<>', 'reserve')
       ->get();
+    self::addWeapons($pId, $dwarves);
+    return $dwarves;
   }
 
   /**
-   * Do we have an available farmer for an action?
+   * Do we have an available dwarf for an action?
    * @return boolean true if has one available, else false
    * @param number $pId Id of player
    */
   public function hasAvailable($pId)
   {
-    return self::qPlayer($pId, 'board')->count() + self::qPlayer($pId, 'B10_Caravan')->count() > 0;
+    return self::qPlayer($pId, 'board')->count() > 0;
   }
 
   public function getAllAvailable($pId = null)
   {
-    return self::qPlayer($pId, 'board')
-      ->get()
-      ->merge(self::qPlayer($pId, 'B10_Caravan')->get());
+    $dwarves = self::qPlayer($pId, 'board')->get();
+    self::addWeapons($pId, $dwarves);
+    return $dwarves;
   }
 
-  public function getNextChildren($pId)
-  {
-    return self::qPlayer($pId, null)
-      ->where('meeple_location', '<>', 'reserve')
-      ->where('meeple_state', CHILD)
-      ->get();
-  }
-
-  public function hasChildren($pId)
-  {
-    return self::qPlayer($pId, null)
-      ->where('meeple_location', '<>', 'reserve')
-      ->where('meeple_state', CHILD)
-      ->count() > 0;
-  }
-
-  /**
-   * Provide first available farmer
-   * @param number $pId
-   * @return array meeple
-   */
-  public function getNextAvailable($pId)
-  {
-    // return self::qPlayer($pId, 'board')->getSingle();
-    return self::getAllAvailable($pId)->first();
-  }
-
-  /**
-   * move Farmer token. Take the next available farmer
-   * @param number $pId
-   * @param varchar $location place on which we put the card
-   * @param array $coord X & Y position
-   * CAUTION : don't use 'move' as it's already taken by parent
-   **/
-  public function moveNextAvailable($pId, $location, $coords = null)
-  {
-    // if (Globals::getAdoptiveChild() != 0) {
-    //   $farmer = self::get(Globals::getAdoptiveChild());
-    //   Globals::setAdoptiveChild(0);
-    // } else {
-    $farmer = self::getNextAvailable($pId);
-    // }
-
-    if ($farmer == null) {
-      throw new \feException('No more available person');
-    }
-
-    parent::moveToCoords($farmer['id'], $location, $coords);
-    return $farmer['id'];
-  }
+  // /**
+  //  * Provide first available dwarf
+  //  * @param number $pId
+  //  * @return array meeple
+  //  */
+  // public function getNextAvailable($pId)
+  // {
+  //   // return self::qPlayer($pId, 'board')->getSingle();
+  //   return self::getAllAvailable($pId)->first();
+  // }
+  //
+  // /**
+  //  * move Farmer token. Take the next available dwarf
+  //  * @param number $pId
+  //  * @param varchar $location place on which we put the card
+  //  * @param array $coord X & Y position
+  //  * CAUTION : don't use 'move' as it's already taken by parent
+  //  **/
+  // public function moveNextAvailable($pId, $location, $coords = null)
+  // {
+  //   $dwarf = self::getNextAvailable($pId);
+  //
+  //   if ($dwarf == null) {
+  //     throw new \feException('No more available person');
+  //   }
+  //
+  //   parent::moveToCoords($dwarf['id'], $location, $coords);
+  //   return $dwarf['id'];
+  // }
 
   /**
    * @param number $pId
-   * @return int number of farmers
+   * @return int number of dwarves
    **/
   public function count($pId, $type = null)
   {
@@ -160,7 +144,7 @@ class Dwarves extends Meeples
   }
 
   /**
-   * Return all farmers on a card
+   * Return all dwarves on a card
    * @param number $cId card Id
    * @param number $pId (opt)
    */

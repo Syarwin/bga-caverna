@@ -49,7 +49,6 @@ class Collect extends \CAV\Models\Action
     $reorganize = $player->checkAutoReorganize($meeples);
     Notifications::collectResources($player, $meeples);
     Notifications::updateDropZones($player);
-    $player->updateObtainedResources($meeples);
 
     $this->checkListeners('ImmediatelyAfterCollect', $player, $eventData);
     $player->checkAnimalsInReserve($reorganize);

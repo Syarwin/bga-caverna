@@ -248,12 +248,11 @@ class Exchange extends \CAV\Models\Action
           Notifications::exchange($player, $deleted, $created, $exchange['source']);
         }
         array_push($eventData['created'], ...$created);
-        $player->updateObtainedResources($created);
         $deleted = [];
         $created = [];
       }
     }
-    
+
 
     if ($this->isMandatory()) {
       // If it was mandatory, discard excess animals

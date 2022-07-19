@@ -91,7 +91,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     updateDropZonesStatus(preAnimation) {
       return; // TODO
-      
+
       // Update zones capacity counters
       this.forEachPlayer((player) => {
         this.getAnimalsDropZones(player.id).forEach((zone) => {
@@ -226,9 +226,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_updateDropZones(n) {
       debug('Notif: updating player drop zones', n);
-      let pId = n.args.player_id;
-      this.gamedatas.players[pId].board.dropZones = n.args.zones;
-      this.updateAnimalsDropZones(pId);
+      // TODO
+      // let pId = n.args.player_id;
+      // this.gamedatas.players[pId].board.dropZones = n.args.zones;
+      // this.updateAnimalsDropZones(pId);
     },
 
     /**

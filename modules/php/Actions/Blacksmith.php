@@ -8,34 +8,35 @@ use CAV\Core\Engine;
 use CAV\Helpers\Utils;
 use CAV\Core\Stats;
 
-class Expedition extends \CAV\Models\Action
+class Blacksmith extends \CAV\Models\Action
 {
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->description = clienttranslate('Go to an expedition)');
+    $this->description = clienttranslate('Forge a Weapon');
   }
 
   public function getState()
   {
-    return ST_CONSTRUCT; // TODO
+    return ST_BLACKSMITH;
   }
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return true;
+    // TODO handle BlackSmith building
+    return $ignoreResources || $player->getReserveResource(ORE)->count() > 0;
   }
 
-  public function argsExpedition()
+  public function argsBlacksmith()
   {
     $player = Players::getActive();
 
     return [];
   }
 
-  public function actExpedition($rooms)
+  public function actBlacksmith($rooms)
   {
-    self::checkAction('actExpedition');
+    self::checkAction('actBlacksmith');
     die('NOT DONE YET');
 
     $player = Players::getCurrent();

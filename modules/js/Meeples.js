@@ -36,7 +36,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'ROOM_STONE',
     'UPGRADE',
     'COOK',
-    'FARMER',
     'REORGANIZE',
     'PASTURE',
     'EMPTY',
@@ -106,7 +105,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       if (['sheep', 'pig', 'cattle'].includes(type)) {
         this.updateAnimalsPlayerCounters(type);
         this.updateDropZonesStatus();
-      } else if (type == 'farmer') {
+      } else if (type == 'dwarf') {
         this.updateDwarvesPlayerCounters();
       }
     },
@@ -131,11 +130,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     getMeepleContainer(meeple) {
       if (meeple.location == 'board') {
-        if (meeple.type == 'farmer' && meeple.x == null && meeple.y == null) {
-          // TODO : remove !
-          meeple.x = 1;
-          meeple.y = 5;
-        }
         let container = this.getCell(meeple);
 
         if (['vegetable', 'grain'].includes(meeple.type)) {
@@ -167,13 +161,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       } else if (meeple.location.substr(0, 4) == 'turn') {
         return $(meeple.location).querySelector('[data-pid="' + meeple.pId + '"]');
       } else if ($(meeple.location)) {
-        let holder = meeple.type == 'farmer' ? 'farmer' : 'resource';
+        let holder = meeple.type == 'dwarf' ? 'dwarf' : 'resource';
         if (meeple.type == 'score') {
           return document.querySelector('#' + meeple.location + ' .card-bonus-vp-counter');
-        }
-
-        if (meeple.location == 'D75_WoodField') {
-          return document.querySelector(`#${meeple.location} .resource-holder .subholder[data-x="${meeple.x}"]`);
         }
 
         return document.querySelector('#' + meeple.location + ' .' + holder + '-holder');
@@ -184,14 +174,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     /**
-     * Placing a farmer on an action card
+     * Placing a dwarf on an action card
      */
-    notif_placeFarmer(n) {
-      debug('Notif: place farmer ', n);
+    notif_placeDwarf(n) {
+      debug('Notif: place dwarf ', n);
       let meeple = {
-        id: n.args.farmer,
+        id: n.args.dwarf,
         location: n.args.card.id,
-        type: 'farmer',
+        type: 'dwarf',
       };
       this.slideResources([meeple], {
         duration: 1000,
@@ -342,18 +332,18 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     /**
-     * All farmers return home
+     * All dwarves return home
      */
     notif_returnHome(n) {
       debug('Notif: returning home', n);
-      this.slideResources(n.args.farmers, {
+      this.slideResources(n.args.dwarves, {
         delay: 0,
         duration: 1200,
       });
     },
 
     /**
-     * An extra farmer makes popin
+     * An extra dwarf makes popin
      */
     notif_growFamily(n) {
       debug('Notif: grow family', n);

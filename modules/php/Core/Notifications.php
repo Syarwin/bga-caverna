@@ -120,17 +120,17 @@ class Notifications
     ]);
   }
 
-  public static function placeFarmer($player, $fId, $card, $source = null)
+  public static function placeDwarf($player, $dwarfId, $card, $source = null)
   {
     if ($source != null) {
       $msg = clienttranslate('${player_name} places a person on card ${card_name} (${source})');
     } else {
       $msg = clienttranslate('${player_name} places a person on card ${card_name}');
     }
-    self::notifyAll('placeFarmer', $msg, [
+    self::notifyAll('placeDwarf', $msg, [
       'card' => $card,
       'player' => $player,
-      'farmer' => $fId,
+      'dwarf' => $dwarfId,
       'source' => $source,
     ]);
   }
@@ -416,14 +416,14 @@ class Notifications
   public static function returnHome($meeples)
   {
     self::notifyAll('returnHome', clienttranslate('End of turn. All people come back home'), [
-      'farmers' => $meeples->toArray(),
+      'dwarfs' => $meeples->toArray(),
     ]);
   }
 
   public static function adoptiveChildren($meeples)
   {
     self::notifyAll('returnHome', '', [
-      'farmers' => $meeples->toArray(),
+      'dwarfs' => $meeples->toArray(),
     ]);
   }
 

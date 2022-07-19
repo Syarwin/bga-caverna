@@ -8,6 +8,7 @@ class Actions
 {
   static $classes = [
     ACTIVATE_BUILDING => 'ActivateBuilding',
+    BLACKSMITH => 'Blacksmith',
     COLLECT => 'Collect',
     CONSTRUCT => 'Construct',
     EXCHANGE => 'Exchange',

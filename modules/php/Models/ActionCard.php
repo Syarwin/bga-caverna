@@ -38,7 +38,6 @@ class ActionCard extends \CAV\Helpers\DB_Model
   // Constraints
   protected $players = null; // Players requirements => null if none, integer if only one, array otherwise
 
-
   public function jsonSerialize()
   {
     return [
@@ -56,7 +55,7 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
   public function isSupported($players, $options)
   {
-    return ($this->players == null || in_array(count($players), $this->players));
+    return $this->players == null || in_array(count($players), $this->players);
   }
 
   public function getActionCardType()
@@ -103,9 +102,9 @@ class ActionCard extends \CAV\Helpers\DB_Model
     $ids = [];
     if ($this->hasAccumulation()) {
       foreach ($this->accumulation as $resource => $amount) {
-        if(is_array($amount)){
+        if (is_array($amount)) {
           $n = Meeples::getResourcesOnCard(self::getId())->count();
-          $amount = $n == 0? $amount[0] : $amount[1];
+          $amount = $n == 0 ? $amount[0] : $amount[1];
         }
         $ids = array_merge($ids, Meeples::createResourceOnCard($resource, self::getId(), $amount));
       }
@@ -113,7 +112,7 @@ class ActionCard extends \CAV\Helpers\DB_Model
     return $ids;
   }
 
-  public function canBePlayed($player, $onlyCheckSpecificPlayer = null, $ignoreResources = false)
+  public function canBePlayed($player, $dwarf, $onlyCheckSpecificPlayer = null, $ignoreResources = false)
   {
     // What cards should we check ?
     $actionList = [$this->id];
@@ -136,22 +135,23 @@ class ActionCard extends \CAV\Helpers\DB_Model
     }
 
     // Check that the action is doable
-    $flow = $this->getTaggedFlow($player);
+    $flow = $this->getTaggedFlow($player, $dwarf);
     $flowTree = Engine::buildTree($flow);
     return $flowTree->isDoable($player, $ignoreResources);
   }
 
-  public function getFlow($player)
+  protected function getFlow($player, $dwarf)
   {
     return $this->flow;
   }
 
-  public function getTaggedFlow($player)
+  public function getTaggedFlow($player, $dwarf)
   {
     // Add card context for listeners
-    return Utils::tagTree($this->getFlow($player), [
+    return Utils::tagTree($this->getFlow($player, $dwarf), [
       'pId' => $player->getId(),
       'cardId' => $this->id,
+      'dwarfId' => $dwarf['id'],
     ]);
   }
 }

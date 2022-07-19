@@ -1004,7 +1004,7 @@ class PlayerBoard
   protected static function checkNodePos(&$x, &$y = null)
   {
     self::checkPos($x, $y);
-    if (($x + 2) % 2 != 1 || ($y + 1) % 2 != 1) {
+    if (($x + 2) % 2 != 1 || ($y + 2) % 2 != 1) {
       throw new \feException('Trying to ask node of an edge or a virtual intersection :' . self::posToStr($x, $y));
     }
   }
@@ -1142,7 +1142,7 @@ class PlayerBoard
     $edges = $this->getEdgesAround($x, $y);
     foreach ([W, N, E, S] as $i) {
       $edge = $edges[$i];
-      if (is_null($this->grid[$edge['x']][$edge['y']])) {
+      if (!self::isValid($edge) || is_null($this->grid[$edge['x']][$edge['y']])) {
         unset($edges[$i]);
       }
     }

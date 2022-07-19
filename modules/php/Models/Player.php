@@ -53,10 +53,53 @@ class Player extends \CAV\Helpers\DB_Model
     return Stats::$name($this->id);
   }
 
+  public function canTakeAction($action, $ctx, $ignoreResources)
+  {
+    return Actions::isDoable($action, $ctx, $this, $ignoreResources);
+  }
 
+  ////////////////////////////////////////////////
+  //  ____
+  // |  _ \__      ____ _ _ ____   _____  ___
+  // | | | \ \ /\ / / _` | '__\ \ / / _ \/ __|
+  // | |_| |\ V  V / (_| | |   \ V /  __/\__ \
+  // |____/  \_/\_/ \__,_|_|    \_/ \___||___/
+  ////////////////////////////////////////////////
 
+  public function getAllDwarves()
+  {
+    return Dwarves::getAllOfPlayer($this->id);
+  }
 
-  // UNCHECKED
+  public function hasDwarfAvailable()
+  {
+    return Dwarves::hasAvailable($this->id);
+  }
+
+  public function getAvailableDwarves()
+  {
+    return Dwarves::getAllAvailable($this->id);
+  }
+
+  public function countDwarves($type = null)
+  {
+    return Dwarves::count($this->id, $type);
+  }
+
+  public function hasDwarfInReserve()
+  {
+    return Dwarves::hasInReserve($this->id);
+  }
+
+  ////////////////////////////////////////////////////////////
+  //  _   _ _   _  ____ _   _ _____ ____ _  _______ ____
+  // | | | | \ | |/ ___| | | | ____/ ___| |/ / ____|  _ \
+  // | | | |  \| | |   | |_| |  _|| |   | ' /|  _| | | | |
+  // | |_| | |\  | |___|  _  | |__| |___| . \| |___| |_| |
+  //  \___/|_| \_|\____|_| |_|_____\____|_|\_\_____|____/
+  //
+  ////////////////////////////////////////////////////////////
+
   // public function jsonSerialize($currentPlayerId = null)
   // {
   //   $current = $this->id == $currentPlayerId;
@@ -91,11 +134,6 @@ class Player extends \CAV\Helpers\DB_Model
   public function countRooms()
   {
     return Meeples::countRooms($this->id);
-  }
-
-  public function canTakeAction($action, $ctx, $ignoreResources)
-  {
-    return Actions::isDoable($action, $ctx, $this, $ignoreResources);
   }
 
   public function countReserveResource($type)
@@ -187,30 +225,9 @@ class Player extends \CAV\Helpers\DB_Model
     });
   }
 
-  public function getDraftSelection()
-  {
-    return $this->getCards()->filter(function ($card) {
-      return $card->getLocation() == 'selection';
-    });
-  }
-
-  public function getHand($type = null)
-  {
-    return Buildings::getOfPlayer($this->id)->filter(function ($card) use ($type) {
-      return ($type == null || $card->getType() == $type) && !$card->isPlayed();
-    });
-  }
-
   public function getPlayedCards($type = null)
   {
     return $this->getCards($type, true);
-  }
-
-  public function getActionCards()
-  {
-    return $this->getPlayedCards()->filter(function ($card) {
-      return $card->isActionCard();
-    });
   }
 
   public function hasPlayedCard($cardId)
@@ -419,40 +436,6 @@ class Player extends \CAV\Helpers\DB_Model
   }
 
   /**************************
-   ****** FARMERS SUGAR ******
-   **************************/
-  public function getAllDwarves()
-  {
-    return Dwarves::getAllOfPlayer($this->id);
-  }
-
-  public function hasDwarfAvailable()
-  {
-    return Dwarves::hasAvailable($this->id);
-  }
-
-  // TODO : useful ??
-  public function getNextDwarfAvailable()
-  {
-    return Dwarves::getNextAvailable($this->id);
-  }
-
-  public function moveNextDwarfAvailable($location, $coords = null)
-  {
-    return Dwarves::moveNextAvailable($this->id, $location, $coords);
-  }
-
-  public function countDwarves($type = null)
-  {
-    return Dwarves::count($this->id, $type);
-  }
-
-  public function hasDwarfInReserve()
-  {
-    return Dwarves::hasInReserve($this->id);
-  }
-
-  /**************************
    ********* ACTIONS ********
    **************************/
 
@@ -584,22 +567,5 @@ class Player extends \CAV\Helpers\DB_Model
     }
 
     return $canBreed;
-  }
-
-  /***************************
-   ******* CARD SPECIFIC ******
-   ***************************/
-  public function updateObtainedResources($meeples)
-  {
-    $g = Globals::getObtainedResourcesDuringWork();
-    if (!isset($g[$this->id])) {
-      $g[$this->id] = [];
-    }
-
-    foreach ($meeples as $meeple) {
-      $g[$this->id][$meeple['type']] = ($g[$this->id][$meeple['type']] ?? 0) + 1;
-    }
-
-    Globals::setObtainedResourcesDuringWork($g);
   }
 }

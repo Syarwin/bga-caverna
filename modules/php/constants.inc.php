@@ -86,6 +86,7 @@ const ST_SPECIAL_EFFECT = 36;
 const ST_RECEIVE = 37;
 const ST_REAP = 38;
 const ST_PLACE_FUTURE_MEEPLES = 39;
+const ST_BLACKSMITH = 41;
 
 const ST_REORGANIZE = 80;
 
@@ -165,6 +166,8 @@ const RESOURCES = [WOOD, STONE, ORE, RUBY, FOOD, GOLD, GRAIN, VEGETABLE, SHEEP, 
 const ANIMALS = [SHEEP, PIG, CATTLE];
 const ROOMS = ['roomStone', 'roomClay', 'roomWood'];
 
+const WEAPON = 'weapon';
+
 const TILE_CAVERN_TUNNEL = 'tileCavernTunnel';
 const TILE_CAVERN_CAVERN = 'tileCavernCavern';
 const TILE_MEADOW_FIELD = 'tileMeadowField';
@@ -220,6 +223,7 @@ const NO_COST = ['trades' => [['max' => 1]]];
  * Atomic action
  */
 const ACTIVATE_BUILDING = 'ACTIVATE_BUILDING';
+const BLACKSMITH = 'BLACKSMITH';
 const COLLECT = 'COLLECT';
 const CONSTRUCT = 'CONSTRUCT';
 const EXCHANGE = 'EXCHANGE';

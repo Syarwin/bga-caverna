@@ -57,17 +57,13 @@ class Receive extends \CAV\Models\Action
 
     $meeples = [$meeple];
     $reorganize = $player->checkAutoReorganize($meeples);
-    
+
     $eventData = [
       'meeples' => $meeples,
-    ];    
+    ];
 
     // Notify
     Notifications::receiveResource($player, $meeple);
-
-    if ($this->getCtxArgs()['updateObtained'] ?? false) {
-      $player->updateObtainedResources([$meeple]);
-    }
 
     // Add special action for field
     if ($meeple['type'] == 'field') {
@@ -83,7 +79,7 @@ class Receive extends \CAV\Models\Action
         ]);
       }
     }
-	
+
     // Add special action for B14 (stone room)
     if ($meeple['type'] == 'roomStone') {
       if ($player->board()->canConstruct() && $player->getRoomType() == 'roomStone') {
@@ -91,14 +87,14 @@ class Receive extends \CAV\Models\Action
           'action' => CONSTRUCT,
           'optional' => true,
           'pId' => $player->getId(),
-          'args' => ['costs' => Utils::formatCost(['max' => 1]), 'max' => 1],		  
+          'args' => ['costs' => Utils::formatCost(['max' => 1]), 'max' => 1],
         ]);
       } else {
         Notifications::message(clienttranslate('${player_name} can`t build the received room'), [
           'player_name' => $player->getName(),
         ]);
       }
-    }	
+    }
     Notifications::updateDropZones($player);
     // Check animals in reserve
     $player->checkAnimalsInReserve($reorganize);

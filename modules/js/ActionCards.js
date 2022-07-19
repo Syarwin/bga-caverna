@@ -144,7 +144,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       return (
         `
       <div id="${card.id}" data-id="${card.id}" class="action-card-holder ${component}">
-        <div class="farmer-holder resource-holder-update" data-n="0"></div>
+        <div class="dwarf-holder resource-holder-update" data-n="0"></div>
         <div class="action-card ${accumulate} action-${card.size}">
           <h4 class="action-header">${_(card.name)}</h4>
           <div class="action-desc">${card.description}</div>
@@ -206,10 +206,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     promptActionCard(cards, callback, allCards = []) {
       if (this.isFastMode()) return;
 
-      // allCards.forEach((cId) => dojo.addClass(cId, 'unselectable'));
-      // cards.forEach((cId) => {
-      //   this.onClick(cId, () => callback(cId));
-      // });
+      allCards.forEach((cId) => dojo.addClass(cId, 'unselectable'));
+      cards.forEach((cId) => {
+        this.onClick(cId, () => callback(cId));
+      });
     },
   });
 });

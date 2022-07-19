@@ -167,7 +167,7 @@ class Meeples extends \CAV\Helpers\Pieces
   public function getRoomType($pId)
   {
     return null;
-    
+
     $roomsType = array_unique(
       self::getRooms($pId)
         ->map(function ($token) {
@@ -279,7 +279,7 @@ class Meeples extends \CAV\Helpers\Pieces
   public function getResourcesOnCard($cId, $pId = null, $type = null)
   {
     return self::getOnCardQ($cId, $pId, $type)
-      ->where('type', '<>', 'farmer')
+      ->where('type', '<>', 'dwarf')
       ->get();
   }
 

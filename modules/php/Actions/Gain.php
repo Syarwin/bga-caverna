@@ -47,6 +47,9 @@ class Gain extends \CAV\Models\Action
     // Create resources
     $meeples = [];
     foreach ($args as $resource => $amount) {
+      if ($amount == 0) {
+        continue;
+      }
       if (in_array($resource, ['cardId', 'skipReorganize', 'pId'])) {
         continue;
       }
@@ -70,7 +73,13 @@ class Gain extends \CAV\Models\Action
         Notifications::updateDropZones($player);
       }
     }
-    
+
+    // Handle empty gain
+    if (empty($meeples)) {
+      $this->resolveAction();
+      return;
+    }
+
     $eventData = [
       'actionCardId' => $cardId,
       'meeples' => $meeples,
@@ -80,7 +89,6 @@ class Gain extends \CAV\Models\Action
     $reorganize = $player->checkAutoReorganize($meeples);
     // Notify
     Notifications::gainResources($player, $meeples, $cardId, $source);
-    $player->updateObtainedResources($meeples);
     if (!($args['skipReorganize'] ?? false)) {
       $player->checkAnimalsInReserve($reorganize);
     }

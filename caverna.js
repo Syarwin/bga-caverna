@@ -66,7 +66,7 @@ define([
           'improvement',
           'occupation',
           'payResources',
-          'placeFarmer',
+          'placeDwarf',
           'plow',
           'reorganize',
           'sow',
@@ -78,7 +78,7 @@ define([
         ];
         this._notifications = [
           ['revealActionCard', 1100],
-          ['placeFarmer', null],
+          ['placeDwarf', null],
           ['addFences', null],
           ['addStables', null],
           ['collectResources', null],

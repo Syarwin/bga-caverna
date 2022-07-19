@@ -22,6 +22,7 @@ class ActionCards extends \CAV\Helpers\Pieces
   }
 
   protected static $actionCards = [
+    'Blacksmithing',
     'Clearing',
     'Clearing4',
     'DriftMining',
@@ -82,11 +83,7 @@ class ActionCards extends \CAV\Helpers\Pieces
 
   public static function getVisible($player = null)
   {
-    $cards = self::getInLocation('board')->merge(self::getInLocation(['turn', '%'], VISIBLE));
-    if ($player != null) {
-      $cards = $cards->merge($player->getActionCards());
-    }
-    return $cards;
+    return self::getInLocation('board')->merge(self::getInLocation(['turn', '%'], VISIBLE));
   }
 
   public static function getAccumulationSpaces($type = null, $player = null)
