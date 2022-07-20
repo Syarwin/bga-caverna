@@ -235,7 +235,7 @@ class Pieces extends DB_Manager
    */
   public static function get($id, $raiseExceptionIfNotEnough = true)
   {
-    $result = self::getMany($id, $raiseExceptionIfNotEnough);
+    $result = static::getMany($id, $raiseExceptionIfNotEnough);
     return $result->count() == 1 ? $result->first() : $result;
   }
 

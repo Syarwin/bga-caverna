@@ -18,7 +18,7 @@ class Expedition extends \CAV\Models\Action
 
   public function getState()
   {
-    return ST_CONSTRUCT; // TODO
+    return ST_EXPEDITION;
   }
 
   public function isDoable($player, $ignoreResources = false)
@@ -29,13 +29,21 @@ class Expedition extends \CAV\Models\Action
   public function argsExpedition()
   {
     $player = Players::getActive();
+    $args = $this->getCtxArgs();
 
-    return [];
+    return [
+      'n' => $args['lvl'],
+      'max' => $this->getDwarf()['weapon'],
+    ];
   }
 
-  public function actExpedition($rooms)
+  public function actExpedition($items)
   {
     self::checkAction('actExpedition');
+    if (count($items) > $this->argsExpedition()['max']) {
+      throw new \BgaVisibleSystemException('Invalid loot selection');
+    }
+
     die('NOT DONE YET');
 
     $player = Players::getCurrent();

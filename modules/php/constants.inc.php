@@ -87,6 +87,7 @@ const ST_RECEIVE = 37;
 const ST_REAP = 38;
 const ST_PLACE_FUTURE_MEEPLES = 39;
 const ST_BLACKSMITH = 41;
+const ST_EXPEDITION = 42;
 
 const ST_REORGANIZE = 80;
 

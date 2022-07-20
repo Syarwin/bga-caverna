@@ -177,6 +177,16 @@ $machinestates = [
     'possibleactions' => ['actBlacksmith', 'actPassOptionalAction', 'actRestart'],
   ],
 
+  ST_EXPEDITION => [
+    'name' => 'expedition',
+    'description' => clienttranslate('${actplayer} may take up to ${n} loot items of strength at most ${max}'),
+    'descriptionmyturn' => clienttranslate('${you} may take up to ${n} loot items of strength at most ${max}'),
+    'args' => 'argsAtomicAction',
+    'action' => 'stAtomicAction',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actExpedition', 'actPassOptionalAction', 'actRestart'],
+  ],
+
 
   ST_FENCING => [
     'name' => 'fencing',
