@@ -15,7 +15,7 @@ class PlaceDwarf extends \CAV\Models\Action
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->description = clienttranslate('Place a person');
+    $this->description = clienttranslate('Place a dwarf');
   }
 
   public function getState()
@@ -52,6 +52,8 @@ class PlaceDwarf extends \CAV\Models\Action
     if (is_null($dwarf)) {
       $dwarf = reset($possibleWeapons);
     }
+
+    // TODO: manage ruby possibility to use another dwarf
 
     $args = [
       'dwarf' => $dwarf,

@@ -188,7 +188,7 @@ trait TurnTrait
       return;
     }
 
-    // No farmer to allocate ?
+    // No dwarf to allocate ?
     if (!$player->hasDwarfAvailable()) {
       $skipped[] = $player->getId();
       Globals::setSkippedPlayers($skipped);
@@ -257,8 +257,6 @@ trait TurnTrait
     $this->addArgsAnytimeAction($args, 'impossibleAction');
     return $args;
   }
-
-
 
   /*******************************
    ******* CONFIRM / RESTART ******

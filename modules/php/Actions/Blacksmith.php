@@ -24,7 +24,7 @@ class Blacksmith extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return $ignoreResources || $this->maximumForgeableWeapon($player) > 0;
+    return ($ignoreResources || $this->maximumForgeableWeapon($player) > 0) && ($this->getDwarf()['weapon'] ?? 0) == 0;
   }
 
   public function maximumForgeableWeapon($player)
@@ -51,6 +51,14 @@ class Blacksmith extends \CAV\Models\Action
     $player = Players::getCurrent();
     $dwarf = $this->getDwarf();
     $weapon = Dwarves::equipWeapon($dwarf, $force);
+    Engine::insertAsChild([
+      'action' => PAY,
+      'args' => [
+        'nb' => 1,
+        'costs' => Utils::formatCost([ORE => $force]),
+        'source' => clienttranslate('forging a weapon'),
+      ],
+    ]);
     Notifications::equipWeapon($player, $dwarf, $weapon);
 
     // Listeners for cards

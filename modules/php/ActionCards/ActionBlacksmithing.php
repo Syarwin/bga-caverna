@@ -33,7 +33,7 @@ a Level 3 expedition.'
       : [
         'type' => NODE_SEQ,
         'childs' => [
-          ['action' => BLACKSMITH],
+          ['action' => BLACKSMITH, 'optional' => true],
           [
             'action' => EXPEDITION,
             'args' => [

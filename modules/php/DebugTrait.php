@@ -96,7 +96,7 @@ trait DebugTrait
   {
     $player = Players::getCurrent();
     $meeples = [];
-    foreach ([WOOD, CLAY, REED, STONE, FOOD] as $res) {
+    foreach ([WOOD, STONE, ORE, RUBY] as $res) {
       $meeples = array_merge($meeples, $player->createResourceInReserve($res, 8));
     }
     Notifications::gainResources($player, $meeples);
