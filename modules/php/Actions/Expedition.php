@@ -13,7 +13,7 @@ class Expedition extends \CAV\Models\Action
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->description = clienttranslate('Go to an expedition)');
+    $this->description = clienttranslate('Go to an expedition');
   }
 
   public function getState()

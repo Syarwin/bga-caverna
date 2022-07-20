@@ -65,7 +65,7 @@ define([
           'resolveChoice',
           'confirmTurn',
           'confirmPartialTurn',
-
+          // UNCHECKED
           'construct',
           'exchange',
           'fencing',
@@ -79,14 +79,19 @@ define([
           'renovation',
         ];
         this._notifications = [
+          ['updateScores', 1],
+          ['clearTurn', 1],
+          ['refreshUI', 1],
           ['revealActionCard', 1100],
-          ['placeDwarf', null],
-          ['addFences', null],
-          ['addStables', null],
           ['collectResources', null],
           ['gainResources', null],
           ['payResources', null],
           ['accumulation', null],
+          ['placeDwarf', null],
+          ['equipWeapon', null],
+          // UNCHECKED
+          ['addFences', null],
+          ['addStables', null],
           ['growFamily', null],
           ['growChildren', 1000],
           ['firstPlayer', 800],
@@ -104,12 +109,8 @@ define([
           ['buyAndPassCard', null],
           ['buyAndDestroyCard', null],
           ['payWithCard', 1000],
-          ['updateScores', 1],
           ['silentKill', null],
           ['silentDestroy', 1],
-          ['clearTurn', 1],
-          ['refreshUI', 1],
-          ['refreshHand', 1],
           ['startHarvest', 3200],
           ['addCardToDraftSelection', 600],
           ['removeCardFromDraftSelection', 600],
@@ -231,7 +232,8 @@ define([
 
       notif_refreshUI(n) {
         debug('Notif: refreshing UI', n);
-        ['meeples', 'players', 'scores', 'playerCards'].forEach((value) => {
+//        ['meeples', 'players', 'scores', 'playerCards'].forEach((value) => {
+        ['meeples', 'players', 'scores'].forEach((value) => {
           this.gamedatas[value] = n.args.datas[value];
         });
         this.setupMeeples();
@@ -239,12 +241,6 @@ define([
         this.updateBuildings();
         this.updatePlayersCounters();
         this.updatePlayersScores();
-      },
-
-      notif_refreshHand(n) {
-        debug('Notif: refreshing UI', n);
-        this.gamedatas.players[n.args.player_id].hand = n.args.hand;
-        this.updateHandCards();
       },
 
       notif_startHarvest(n) {

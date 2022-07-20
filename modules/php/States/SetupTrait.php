@@ -80,9 +80,6 @@ trait SetupTrait
     // Refresh UI
     $datas = $this->getAllDatas();
     Notifications::refreshUI($datas);
-    foreach (Players::getAll() as $player) {
-      Notifications::refreshHand($player, $player->getHand()->ui());
-    }
 
     // Start game
     $this->gamestate->nextState('start');

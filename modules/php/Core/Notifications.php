@@ -85,17 +85,6 @@ class Notifications
     ]);
   }
 
-  public static function refreshHand($player, $hand)
-  {
-    foreach ($hand as &$card) {
-      $card = self::filterCardDatas($card);
-    }
-    self::notify($player, 'refreshHand', '', [
-      'player' => $player,
-      'hand' => $hand,
-    ]);
-  }
-
   public static function startNewTurn($turn)
   {
     self::notifyAll('startNewTurn', clienttranslate('Starting round n°${round}'), [

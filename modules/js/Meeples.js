@@ -125,14 +125,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         meeple.type = 'field_icon';
       }
 
+      if (meeple.type == 'weapon') {
+        return `<div class="caverna-meeple meeple-weapon" id="meeple-${meeple.id}" data-id="${meeple.id}" data-force="${meeple.state}"></div>`;
+      }
       return `<div class="caverna-meeple meeple-${meeple.type} ${className}" id="meeple-${meeple.id}" data-id="${meeple.id}" data-color="${color}" data-type="${meeple.type}"></div>`;
     },
 
     getMeepleContainer(meeple) {
       if (meeple.type == 'weapon') {
         return $(`meeple-${meeple.location}`);
-      }
-      else if (meeple.location == 'board') {
+      } else if (meeple.location == 'board') {
         let container = this.getCell(meeple);
 
         if (['vegetable', 'grain'].includes(meeple.type)) {
@@ -274,7 +276,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     /**
-     * Accumulation
+     * Accumulation on action cards
      */
     notif_accumulation(n) {
       debug('Notif: accumulation', n);
@@ -312,6 +314,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       }));
     },
 
+    /**
+     * Silently kill/remove a meeple
+     */
     notif_silentKill(n) {
       debug('Notif: silenKill', n);
       this.slideResources(n.args.resources, (meeple) => ({
@@ -342,6 +347,15 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.slideResources(n.args.dwarves, {
         delay: 0,
         duration: 1200,
+      });
+    },
+
+    /**
+     * Equip a weapon on a dwarf
+     */
+    notif_equipWeapon(n) {
+      this.slideResources([n.args.weapon], {
+        from: 'page-title',
       });
     },
 

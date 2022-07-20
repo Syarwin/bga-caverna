@@ -3418,16 +3418,45 @@ html {
   transform-origin: bottom center;
   transition: transform 1s;
   transform: scale(1);
-  position: relative; }
+  position: relative;
+  padding: 1px 2px;
+  box-sizing: border-box; }
   .meeple-dwarf.child {
     transform: scale(0.7); }
-  .meeple-dwarf::before {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url("img/weapons.png");
-    background-size: 700% 200%; }
+
+.meeple-weapon {
+  width: 31px;
+  height: 21px;
+  background-image: url("img/weapons.png");
+  background-size: 700% 200%; }
+  .meeple-weapon[data-force='1'] {
+    background-position: 0% 0%; }
+  .meeple-weapon[data-force='2'] {
+    background-position: 16.6666666667% 0%; }
+  .meeple-weapon[data-force='3'] {
+    background-position: 33.3333333333% 0%; }
+  .meeple-weapon[data-force='4'] {
+    background-position: 50% 0%; }
+  .meeple-weapon[data-force='5'] {
+    background-position: 66.6666666667% 0%; }
+  .meeple-weapon[data-force='6'] {
+    background-position: 83.3333333333% 0%; }
+  .meeple-weapon[data-force='7'] {
+    background-position: 100% 0%; }
+  .meeple-weapon[data-force='8'] {
+    background-position: 0% 100%; }
+  .meeple-weapon[data-force='9'] {
+    background-position: 16.6666666667% 100%; }
+  .meeple-weapon[data-force='10'] {
+    background-position: 33.3333333333% 100%; }
+  .meeple-weapon[data-force='11'] {
+    background-position: 50% 100%; }
+  .meeple-weapon[data-force='12'] {
+    background-position: 66.6666666667% 100%; }
+  .meeple-weapon[data-force='13'] {
+    background-position: 83.3333333333% 100%; }
+  .meeple-weapon[data-force='14'] {
+    background-position: 100% 100%; }
 
 .meeple-firstPlayer {
   width: 0.4em;
