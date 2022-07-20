@@ -135,6 +135,16 @@ class Notifications
     ]);
   }
 
+  public static function equipWeapon($player, $dwarf, $weapon)
+  {
+    self::notifyAll('equipWeapon', clienttranslate('${player_name} forge a weapon of streng ${strength}'), [
+      'player' => $player,
+      'dwarf' => $dwarf['id'],
+      'weapon' => $weapon,
+      'strength' => $weapon['state'],
+    ]);
+  }
+
   public static function growFamily($player, $meeple)
   {
     self::notifyAll('growFamily', clienttranslate('${player_name} family grows'), [

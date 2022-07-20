@@ -3,10 +3,11 @@ namespace CAV\Actions;
 
 use CAV\Managers\Meeples;
 use CAV\Managers\Players;
+use CAV\Managers\Dwarves;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
-use CAV\Helpers\Utils;
 use CAV\Core\Stats;
+use CAV\Helpers\Utils;
 
 class Blacksmith extends \CAV\Models\Action
 {
@@ -47,20 +48,16 @@ class Blacksmith extends \CAV\Models\Action
       throw new \BgaVisibleSystemException('Invalid weapon strength');
     }
 
-    $dwarf = $this->getDwarf();
-    var_dump($dwarf);
-    die('NOT DONE YET');
-
     $player = Players::getCurrent();
+    $dwarf = $this->getDwarf();
+    $weapon = Dwarves::equipWeapon($dwarf, $force);
+    Notifications::equipWeapon($player, $dwarf, $weapon);
 
     // Listeners for cards
     $eventData = [
-      'roomType' => $roomType,
-      'rooms' => $rooms,
-      'oldRoomCount' => $oldRoomCount,
+      'weapon' => $force,
     ];
     $this->checkAfterListeners($player, $eventData);
-
     $this->resolveAction();
   }
 }

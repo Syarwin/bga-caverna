@@ -145,4 +145,18 @@ class Dwarves extends Meeples
     }
     return $children;
   }
+
+  /**
+   * Add a weapon to a dwarf
+   */
+  public static function equipWeapon($dwarf, $force)
+  {
+    return self::singleCreate([
+      'type' => 'weapon',
+      'player_id' => $dwarf['pId'],
+      'location' => $dwarf['id'],
+      'state' => $force,
+      'nbr' => 1,
+    ]);
+  }
 }

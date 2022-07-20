@@ -129,7 +129,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     getMeepleContainer(meeple) {
-      if (meeple.location == 'board') {
+      if (meeple.type == 'weapon') {
+        return $(`meeple-${meeple.location}`);
+      }
+      else if (meeple.location == 'board') {
         let container = this.getCell(meeple);
 
         if (['vegetable', 'grain'].includes(meeple.type)) {
