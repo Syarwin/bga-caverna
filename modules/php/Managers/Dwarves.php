@@ -1,6 +1,5 @@
 <?php
 namespace CAV\Managers;
-
 use CAV\Core\Globals;
 
 /* Class to manage all the famers for Agricola */
@@ -28,21 +27,30 @@ class Dwarves extends Meeples
     self::create($meeples);
   }
 
-  /* Partial query for a given player */
-  public function qPlayer($pId, $location = null)
-  {
-    return self::getFilteredQuery($pId, $location, 'dwarf');
-  }
-
   /* Add the weapons to a collection of dwarves */
-  protected function addWeapons($pId, &$dwarves)
+  protected function addWeapons(&$dwarves, $pId = null)
   {
-    $weapons = self::getFilteredQuery($pId, null, 'weapon')->get();
+    $weapons = Meeples::getFilteredQuery($pId, null, 'weapon')->get();
     foreach ($weapons as $w) {
       if (isset($dwarves[$w['location']])) {
         $dwarves[$w['location']]['weapon'] = $w['state'];
       }
     }
+  }
+
+  /* Automatically Add the weapons when fetching dwarves */
+
+  public static function getMany($ids, $raiseExceptionIfNotEnough = true)
+  {
+    $dwarves = parent::getMany($ids, $raiseExceptionIfNotEnough);
+    self::addWeapons($dwarves);
+    return $dwarves;
+  }
+
+  /* Partial query for a given player */
+  public function qPlayer($pId, $location = null)
+  {
+    return self::getFilteredQuery($pId, $location, 'dwarf');
   }
 
   /**
@@ -55,7 +63,7 @@ class Dwarves extends Meeples
     $dwarves = self::qPlayer($pId, null)
       ->where('meeple_location', '<>', 'reserve')
       ->get();
-    self::addWeapons($pId, $dwarves);
+    self::addWeapons($dwarves, $pId);
     return $dwarves;
   }
 
@@ -72,39 +80,9 @@ class Dwarves extends Meeples
   public function getAllAvailable($pId = null)
   {
     $dwarves = self::qPlayer($pId, 'board')->get();
-    self::addWeapons($pId, $dwarves);
+    self::addWeapons($dwarves, $pId);
     return $dwarves;
   }
-
-  // /**
-  //  * Provide first available dwarf
-  //  * @param number $pId
-  //  * @return array meeple
-  //  */
-  // public function getNextAvailable($pId)
-  // {
-  //   // return self::qPlayer($pId, 'board')->getSingle();
-  //   return self::getAllAvailable($pId)->first();
-  // }
-  //
-  // /**
-  //  * move Farmer token. Take the next available dwarf
-  //  * @param number $pId
-  //  * @param varchar $location place on which we put the card
-  //  * @param array $coord X & Y position
-  //  * CAUTION : don't use 'move' as it's already taken by parent
-  //  **/
-  // public function moveNextAvailable($pId, $location, $coords = null)
-  // {
-  //   $dwarf = self::getNextAvailable($pId);
-  //
-  //   if ($dwarf == null) {
-  //     throw new \feException('No more available person');
-  //   }
-  //
-  //   parent::moveToCoords($dwarf['id'], $location, $coords);
-  //   return $dwarf['id'];
-  // }
 
   /**
    * @param number $pId
@@ -128,9 +106,7 @@ class Dwarves extends Meeples
    */
   public function hasInReserve($pId)
   {
-    return self::qPlayer($pId)
-      ->where('meeple_location', 'reserve')
-      ->count() > 0;
+    return self::qPlayer($pId, 'reserve')->count() > 0;
   }
 
   /**
@@ -167,23 +143,6 @@ class Dwarves extends Meeples
     foreach ($children as $cId) {
       self::setState($cId, ADULT);
     }
-    return $children;
-  }
-
-  /**
-   * Grow one child
-   */
-  public static function growOneChild($pId)
-  {
-    $children = self::qPlayer($pId)
-      ->where('meeple_state', CHILD)
-      ->limit(1)
-      ->get()
-      ->getIds();
-    foreach ($children as $cId) {
-      self::setState($cId, ADULT);
-    }
-
     return $children;
   }
 }

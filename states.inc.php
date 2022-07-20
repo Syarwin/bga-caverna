@@ -169,23 +169,12 @@ $machinestates = [
 
   ST_BLACKSMITH => [
     'name' => 'blacksmith',
-    'description' => clienttranslate('${actplayer} must build fence(s)'),
-    'descriptionmyturn' => clienttranslate('${you} may construct up to ${max} fence(s)'),
-    'descriptionskippable' => clienttranslate('${actplayer} may build fence(s)'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may construct up to ${max} fence(s)'),
-
-    'descriptionmyturnnomore' => clienttranslate(
-      '${you} may construct up to ${max} fence(s) (quantity of fences in your reserve)'
-    ),
-
-    'descriptionminipasture' => clienttranslate('${actplayer} must fence a farmyard space'),
-    'descriptionmyturnminipasture' => clienttranslate('${you} must fence a farmyard space'),
-    'descriptionfieldfences' => clienttranslate('${actplayer} must build fence(s). Fences adjacent to fields are free'),
-    'descriptionmyturnfieldfences' => clienttranslate('${you} must build fence(s). Fences adjacent to fields are free'),
+    'description' => clienttranslate('${actplayer} must forge a weapon'),
+    'descriptionmyturn' => clienttranslate('${you} must forge a weapon with a maximum strength of ${max}'),
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actFence', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actBlacksmith', 'actPassOptionalAction', 'actRestart'],
   ],
 
 

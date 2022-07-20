@@ -174,6 +174,11 @@ class AbstractNode
     return $this->infos['cardId'] ?? null;
   }
 
+  public function getDwarfId()
+  {
+    return $this->infos['dwarfId'] ?? null;
+  }
+
   public function getSource()
   {
     return $this->infos['source'] ?? null;

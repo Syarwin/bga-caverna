@@ -60,20 +60,22 @@ define([
     {
       constructor() {
         this._activeStates = [
+          'placeDwarf',
+          'blacksmith',
+          'resolveChoice',
+          'confirmTurn',
+          'confirmPartialTurn',
+
           'construct',
           'exchange',
           'fencing',
           'improvement',
           'occupation',
           'payResources',
-          'placeDwarf',
           'plow',
           'reorganize',
           'sow',
           'stables',
-          'resolveChoice',
-          'confirmTurn',
-          'confirmPartialTurn',
           'renovation',
         ];
         this._notifications = [
@@ -404,6 +406,21 @@ define([
       onEnteringStatePlaceDwarf(args) {
         this.promptActionCard(args.cards, (cId) => this.takeAtomicAction('actPlaceDwarf', [cId]), args.allCards);
       },
+
+      onEnteringStateBlacksmith(args) {
+        for (let i = 1; i <= args.max; i++) {
+          let force = i;
+          this.addPrimaryActionButton(
+            `btnForge${force}`,
+            this.format_string_recursive(_('Strength ${force}'), { force }),
+            () => this.takeAtomicAction('actBlacksmith', [force]),
+          );
+        }
+      },
+
+      //////////////////////////
+      //////// TODO ////////////
+      //////////////////////////
 
       onEnteringStateFencing(args) {
         this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actFence', [zones]));

@@ -23,20 +23,32 @@ class Blacksmith extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
+    return $ignoreResources || $this->maximumForgeableWeapon($player) > 0;
+  }
+
+  public function maximumForgeableWeapon($player)
+  {
     // TODO handle BlackSmith building
-    return $ignoreResources || $player->getReserveResource(ORE)->count() > 0;
+    return min(8, $player->getReserveResource(ORE)->count());
   }
 
   public function argsBlacksmith()
   {
     $player = Players::getActive();
-
-    return [];
+    return [
+      'max' => $this->maximumForgeableWeapon($player),
+    ];
   }
 
-  public function actBlacksmith($rooms)
+  public function actBlacksmith($force)
   {
     self::checkAction('actBlacksmith');
+    if ($force <= 0 || $force > $this->argsBlacksmith()['max']) {
+      throw new \BgaVisibleSystemException('Invalid weapon strength');
+    }
+
+    $dwarf = $this->getDwarf();
+    var_dump($dwarf);
     die('NOT DONE YET');
 
     $player = Players::getCurrent();
