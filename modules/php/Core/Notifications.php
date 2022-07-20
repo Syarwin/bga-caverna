@@ -126,7 +126,7 @@ class Notifications
 
   public static function equipWeapon($player, $dwarf, $weapon)
   {
-    self::notifyAll('equipWeapon', clienttranslate('${player_name} forge a weapon of strength ${strength}'), [
+    self::notifyAll('equipWeapon', clienttranslate('${player_name} forges a weapon of strength ${strength}'), [
       'player' => $player,
       'dwarf' => $dwarf['id'],
       'weapon' => $weapon,
