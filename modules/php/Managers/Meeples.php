@@ -42,7 +42,7 @@ class Meeples extends \CAV\Helpers\Pieces
     // other players have 3 foods
     $foodMap = [1, 1, 2, 3, 3, 3, 3, 3];
     $order = Players::getTurnOrder();
-    foreach($order as $i => $pId){
+    foreach ($order as $i => $pId) {
       $meeples[] = ['type' => FOOD, 'player_id' => $pId, 'location' => 'reserve', 'nbr' => $foodMap[$i]];
     }
     $meeples[] = ['type' => 'firstPlayer', 'player_id' => $order[0], 'location' => 'reserve', 'nbr' => 1];
@@ -119,12 +119,12 @@ class Meeples extends \CAV\Helpers\Pieces
   /**************************** Animals *****************************************/
   public function getAnimals($pId, $location = null)
   {
-    return self::getFilteredQuery($pId, $location, [SHEEP, PIG, CATTLE])->get();
+    return self::getFilteredQuery($pId, $location, [DOG, SHEEP, DONKEY, PIG, CATTLE])->get();
   }
 
   public function countAnimalsInZoneLocation($pId, $location = null)
   {
-    return self::getFilteredQuery($pId, 'board', [SHEEP, PIG, CATTLE])
+    return self::getFilteredQuery($pId, 'board', [SHEEP, PIG, CATTLE, DONKEY])
       ->where('x', $location['x'])
       ->where('y', $location['y'])
       ->count();

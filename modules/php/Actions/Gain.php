@@ -66,12 +66,13 @@ class Gain extends \CAV\Models\Action
 
       $meeples = array_merge($meeples, $player->createResourceInReserve($resource, $amount));
 
-      $statName = 'inc' . ($source == null ? 'Board' : 'Cards') . ucfirst($resource);
-      Stats::$statName($player, $amount);
+      // TODO
+      // $statName = 'inc' . ($source == null ? 'Board' : 'Cards') . ucfirst($resource);
+      // Stats::$statName($player, $amount);
 
-      if ($resource == GRAIN && $player->hasPlayedCard('C86_LivestockFeeder')) {
-        Notifications::updateDropZones($player);
-      }
+      // if ($resource == GRAIN && $player->hasPlayedCard('C86_LivestockFeeder')) {
+      //   Notifications::updateDropZones($player);
+      // }
     }
 
     // Handle empty gain

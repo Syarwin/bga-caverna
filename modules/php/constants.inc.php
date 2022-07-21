@@ -88,6 +88,8 @@ const ST_REAP = 38;
 const ST_PLACE_FUTURE_MEEPLES = 39;
 const ST_BLACKSMITH = 41;
 const ST_EXPEDITION = 42;
+const ST_WEAPON_INCREASE = 43;
+const ST_FURNISH = 44;
 
 const ST_REORGANIZE = 80;
 
@@ -245,6 +247,7 @@ const SOW = 'SOW';
 const SPECIAL_EFFECT = 'SPECIAL_EFFECT';
 const STABLES = 'STABLES';
 const WISHCHILDREN = 'WISH_CHILDREN';
+const WEAPON_INCREASE = 'WEAPON_INCREASE';
 
 /** ExtraDatas**/
 const BONUS_VP = 'bonusVP';

@@ -354,9 +354,18 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Equip a weapon on a dwarf
      */
     notif_equipWeapon(n) {
+      debug('Notif: equip a weapon', n);
       this.slideResources([n.args.weapon], {
         from: 'page-title',
       });
+    },
+
+    /**
+     * Equip a weapon on one or multiple dwarf(ves)
+     */
+    notif_upgradeWeapon(n) {
+      debug('Notif : upgrading weapons', n);
+      // TODO
     },
 
     /**

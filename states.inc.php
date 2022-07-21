@@ -99,8 +99,12 @@ $machinestates = [
 
   ST_IMPOSSIBLE_MANDATORY_ACTION => [
     'name' => 'impossibleAction',
-    'description' => clienttranslate('${actplayer} can\'t take the mandatory action and must restart his turn or exchange/cook'),
-    'descriptionmyturn' => clienttranslate('${you} can\'t take the mandatory action. Restart your turn or exchange/cook to make it possible'),
+    'description' => clienttranslate(
+      '${actplayer} can\'t take the mandatory action and must restart his turn or exchange/cook'
+    ),
+    'descriptionmyturn' => clienttranslate(
+      '${you} can\'t take the mandatory action. Restart your turn or exchange/cook to make it possible'
+    ),
     'type' => 'activeplayer',
     'args' => 'argsImpossibleAction',
     'possibleactions' => ['actRestart'],
@@ -187,6 +191,14 @@ $machinestates = [
     'possibleactions' => ['actExpedition', 'actPassOptionalAction', 'actRestart'],
   ],
 
+  ST_WEAPON_INCREASE => [
+    'name' => 'weaponIncrease',
+    'description' => clienttranslate('${actplayer} increases the weapons of all armed dwarf of 1'),
+    'descriptionmyturn' => clienttranslate('${you} increases the weapons of all armed dwarf of 1'),
+    'action' => 'stAtomicAction',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actWeaponIncrease', 'actRestart'],
+  ],
 
   ST_FENCING => [
     'name' => 'fencing',
@@ -262,6 +274,18 @@ $machinestates = [
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
     'possibleactions' => ['actConstruct', 'actPassOptionalAction', 'actRestart'],
+  ],
+
+  ST_FURNISH => [
+    'name' => 'furnish',
+    'description' => clienttranslate('${actplayer} must furnish its cavern'),
+    'descriptionmyturn' => clienttranslate('${you} must furnish your cavern'),
+    'descriptionskippable' => clienttranslate('${actplayer} may furnish its cavern'),
+    'descriptionmyturnskippable' => clienttranslate('${you} may furnish your cavern'),
+    'args' => 'argsAtomicAction',
+    'action' => 'stAtomicAction',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actFurnish', 'actPassOptionalAction', 'actRestart'],
   ],
 
   ST_SOW => [

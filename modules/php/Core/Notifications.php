@@ -134,6 +134,20 @@ class Notifications
     ]);
   }
 
+  public static function upgradeWeapon($player, $dwarfes, $source)
+  {
+    if ($source != null) {
+      $msg = clienttranslate('${player_name} upgrades dwarf weapon (${source})');
+    } else {
+      $msg = clienttranslate('${player_name} upgrades dwarf weapon');
+    }
+    self::notifyAll('upgradeWeapon', $msg, [
+      'player' => $player,
+      'dwarves' => $dwarfes->toArray(),
+      'source' => $source,
+    ]);
+  }
+
   public static function growFamily($player, $meeple)
   {
     self::notifyAll('growFamily', clienttranslate('${player_name} family grows'), [

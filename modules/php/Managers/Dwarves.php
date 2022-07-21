@@ -34,6 +34,7 @@ class Dwarves extends Meeples
     foreach ($weapons as $w) {
       if (isset($dwarves[$w['location']])) {
         $dwarves[$w['location']]['weapon'] = $w['state'];
+        $dwarves[$w['location']]['weaponId'] = $w['id'];
       }
     }
   }
@@ -158,5 +159,10 @@ class Dwarves extends Meeples
       'state' => $force,
       'nbr' => 1,
     ]);
+  }
+
+  public static function upgradeWeapon($dwarf, $inc)
+  {
+    return self::DB()->update(['meeple_state' => ($dwarf['weapon'] ?? 0) + $inc], $dwarf['weaponId']);
   }
 }

@@ -18,11 +18,12 @@ class Furnish extends \CAV\Models\Action
 
   public function getState()
   {
-    return ST_CONSTRUCT; // TODO
+    return ST_FURNISH;
   }
 
   public function isDoable($player, $ignoreResources = false)
   {
+    // TODO: check available building that can be paid
     return false;
   }
 

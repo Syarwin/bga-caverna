@@ -90,6 +90,7 @@ define([
           ['accumulation', null],
           ['placeDwarf', null],
           ['equipWeapon', null],
+          ['upgradeWeapon', 500],
           // UNCHECKED
           ['addFences', null],
           ['addStables', null],
