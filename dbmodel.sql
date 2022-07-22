@@ -38,10 +38,13 @@ CREATE TABLE IF NOT EXISTS `cards` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `buildings` (
-  `building_id` varchar(100)  NOT NULL,
+  `building_id`  int(10) unsigned NOT NULL AUTO_INCREMENT,
   `building_location` varchar(32) NOT NULL,
   `building_state` int(10) DEFAULT 0,
   `player_id` int(10) DEFAULT 0,
+  `type` varchar(100) NOT NULL,
+  `x` varchar(100) NULL,
+  `y` varchar(100) NULL,
   `extra_datas` JSON NULL,
   PRIMARY KEY (`building_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

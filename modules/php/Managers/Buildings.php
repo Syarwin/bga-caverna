@@ -10,22 +10,23 @@ class Buildings extends \CAV\Helpers\Pieces
 {
   protected static $table = 'buildings';
   protected static $prefix = 'building_';
-  protected static $customFields = ['player_id', 'extra_datas'];
-  protected static $autoIncrement = false;
+  protected static $customFields = ['player_id', 'extra_datas', 'type', 'x', 'y'];
+  protected static $autoIncrement = true;
 
   protected static function cast($building)
   {
-    return $building;
-//    return self::getCardInstance($building['id'], $building);
+    // return $building;
+    return self::getBuildingInstance($building['id'], $building);
   }
 
-  public static function getCardInstance($id, $data = null)
+  public static function getBuildingInstance($id, $data = null)
   {
-    $t = explode('_', $id);
-    // First part before _ specify the deck and the numbering
+    $type = $data['type'] ?? $id;
+    $t = explode('_', $type);
+    // First part before _ specify the type of Building
     // Eg: Major_Fireplace1,  A24_ThreshingBoard, ...
-    $prefix = $t[0] == 'Major' ? 'Major' : $t[0][0];
-    $className = "\CAV\Cards\\$prefix\\$id";
+    $prefix = $t[0];
+    $className = "\CAV\Buildings\\$prefix\\$type";
     return new $className($data);
   }
 
@@ -33,7 +34,7 @@ class Buildings extends \CAV\Helpers\Pieces
   public static function setupNewGame($players, $options)
   {
     // Load list of cards
-    include dirname(__FILE__) . '/../Cards/list.inc.php';
+    include dirname(__FILE__) . '/../Buildings/list.inc.php';
 
     // Keep only the supported cards and group them by type
     // $buildings = [
@@ -41,49 +42,29 @@ class Buildings extends \CAV\Helpers\Pieces
     //   MINOR => [],
     //   OCCUPATION => [],
     // ];
-    // foreach ($buildingIds as $cId) {
-    //   $building = self::getCardInstance($cId);
-    //   if ($building->isSupported($players, $options)) {
-    //     $buildings[$building->getType()][$building->getId()] = [
-    //       'id' => $building->getId(),
-    //       'location' => 'box',
-    //     ];
-    //   }
-    // }
-    //
-    // // Put the Major Improvements on the board
-    // foreach ($buildings[MAJOR] as &$building) {
-    //   $building['location'] = 'board';
-    // }
-    //
-    // // If Draft mode is disabled
-    // if (!Globals::isBeginner() && Globals::getDraftMode() != OPTION_SEED_MODE) {
-    //   if (Globals::getDraftMode() == OPTION_DRAFT_DISABLED) {
-    //     foreach ($players as $pId => $player) {
-    //       self::drawCards($buildings[MINOR], $pId, 7);
-    //       self::drawCards($buildings[OCCUPATION], $pId, 7);
-    //     }
-    //   } else {
-    //     $n = Game::get()->getDraftStartingNumberOfCards();
-    //     $nMinor = $n == -1 ? count($buildings[MINOR]) : $n;
-    //     $nOccupation = $n == -1 ? count($buildings[OCCUPATION]) : $n;
-    //     foreach ($players as $pId => $player) {
-    //       self::drawCards($buildings[MINOR], $pId, $nMinor, 'draft');
-    //       self::drawCards($buildings[OCCUPATION], $pId, $nOccupation, 'draft');
-    //     }
-    //   }
-    // }
-    //
-    // // Merge cards to be created
+
+    $buildings = [];
+    foreach ($buildingIds as $cId) {
+      $building = self::getBuildingInstance($cId);
+      if ($building->isSupported($players, $options)) {
+        $buildings[] = [
+          'type' => $building->getType(),
+          'location' => 'board',
+          'nbr' => $building->getNbInBox(),
+        ];
+      }
+    }
+
+    // Merge cards to be created
     // $oCards = array_merge(array_values($buildings[MAJOR]), array_values($buildings[MINOR]), array_values($buildings[OCCUPATION]));
-    //
+
     // // Remove cards still in the box
     // $oCards = array_filter($oCards, function ($building) {
     //   return $building['location'] != 'box';
     // });
     //
-    // // Create the cards
-    // self::create($oCards, null);
+    // Create the cards
+    self::create($buildings, null);
   }
 
   public static function drawCards(&$buildings, $pId, $n, $location = 'hand')
@@ -114,10 +95,7 @@ class Buildings extends \CAV\Helpers\Pieces
 
   public static function getAvailables($type = null)
   {
-    $location = 'hand';
-    if ($type == MAJOR) {
-      $location = 'board';
-    }
+    $location = 'board';
 
     return self::getInLocation($location)->filter(function ($building) use ($type) {
       return !$building->isPlayed() && ($type == null || $building->getType() == $type);
@@ -240,7 +218,11 @@ class Buildings extends \CAV\Helpers\Pieces
     $building = $building instanceof \CAV\Models\Building ? $building : self::get($building);
     $res = null;
     $listened = false;
-    if ($player != null && $player->getId() == $building->getPId() && \method_exists($building, 'onPlayer' . $methodName)) {
+    if (
+      $player != null &&
+      $player->getId() == $building->getPId() &&
+      \method_exists($building, 'onPlayer' . $methodName)
+    ) {
       $n = 'onPlayer' . $methodName;
       $res = $building->$n($player, $args);
       $listened = true;

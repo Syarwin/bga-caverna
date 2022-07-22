@@ -208,55 +208,55 @@ class Player extends \CAV\Helpers\DB_Model
     return Meeples::getReserveResource($this->id, $type)->first();
   }
 
-  public function countOccupations()
-  {
-    return $this->getCards(OCCUPATION, true)->count();
-  }
+  // public function countOccupations()
+  // {
+  //   return $this->getCards(OCCUPATION, true)->count();
+  // }
+  //
+  // public function countAllImprovements()
+  // {
+  //   return $this->getBuildings(MAJOR, true)->count() + $this->getBuildings(MINOR, true)->count();
+  // }
 
-  public function countAllImprovements()
+  public function getBuildings($type = null, $playedOnly = false)
   {
-    return $this->getCards(MAJOR, true)->count() + $this->getCards(MINOR, true)->count();
-  }
-
-  public function getCards($type = null, $playedOnly = false)
-  {
-    return Buildings::getOfPlayer($this->id)->filter(function ($card) use ($type, $playedOnly) {
-      return ($type == null || $card->getType() == $type) && (!$playedOnly || $card->isPlayed());
+    return Buildings::getOfPlayer($this->id)->filter(function ($building) use ($type, $playedOnly) {
+      return ($type == null || $building->getType() == $type) && (!$playedOnly || $building->isPlayed());
     });
   }
 
-  public function getPlayedCards($type = null)
+  public function getPlayedBuildings($type = null)
   {
-    return $this->getCards($type, true);
+    return $this->getBuildings($type, true);
   }
 
-  public function hasPlayedCard($cardId)
+  public function hasPlayedBuilding($buildingId)
   {
-    return $this->getPlayedCards()->reduce(function ($carry, $card) use ($cardId) {
-      return $carry || $card->getId() == $cardId;
+    return $this->getPlayedBuildings()->reduce(function ($carry, $building) use ($buildingId) {
+      return $carry || $building->getId() == $buildingId;
     }, false);
   }
 
-  public function canCook()
-  {
-    return $this->getPlayedCards()->reduce(function ($carry, $card) {
-      return $carry || $card->canCook();
-    }, false);
-  }
-
-  public function canBake()
-  {
-    return $this->getPlayedCards()->reduce(function ($carry, $card) {
-      return $carry || $card->canBake();
-    }, false);
-  }
+  // public function canCook()
+  // {
+  //   return $this->getPlayedBuildings()->reduce(function ($carry, $card) {
+  //     return $carry || $card->canCook();
+  //   }, false);
+  // }
+  //
+  // public function canBake()
+  // {
+  //   return $this->getPlayedBuildings()->reduce(function ($carry, $card) {
+  //     return $carry || $card->canBake();
+  //   }, false);
+  // }
 
   public function getPossibleExchanges($trigger = ANYTIME, $removeAnytime = false)
   {
     $exchanges = [Utils::formatExchange([GRAIN => [FOOD => 1]]), Utils::formatExchange([VEGETABLE => [FOOD => 1]])];
 
-    foreach ($this->getPlayedCards() as $card) {
-      $exchanges = array_merge($exchanges, $card->getExchanges());
+    foreach ($this->getPlayedBuildings() as $building) {
+      $exchanges = array_merge($exchanges, $building->getExchanges());
     }
 
     // Filter according to trigger
@@ -294,7 +294,7 @@ class Player extends \CAV\Helpers\DB_Model
   public function getAnimalsOnBoard()
   {
     $animals = $this->getAnimals('board');
-    foreach ($this->getPlayedCards() as $card) {
+    foreach ($this->getPlayedBuildings() as $card) {
       if ($card->isAnimalHolder()) {
         $animals = $animals->merge($this->getAnimals($card->getId()));
       }
@@ -320,9 +320,9 @@ class Player extends \CAV\Helpers\DB_Model
   public function countAnimalsOnBoard($res = null)
   {
     $res = $this->countAnimalsInLocation('board', $res);
-    foreach ($this->getPlayedCards() as $card) {
-      if ($card->isAnimalHolder()) {
-        $res = $this->countAnimalsInLocation($card->getId(), $res);
+    foreach ($this->getPlayedBuildings() as $building) {
+      if ($building->isAnimalHolder()) {
+        $res = $this->countAnimalsInLocation($building->getId(), $res);
       }
     }
     return $res;

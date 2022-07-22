@@ -82,7 +82,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 11,
       'flow' => [
         'action' => FURNISH,
-        'args' => [], //TODO add args?
+        'args' => [], //TODO Dwelling only + cost reduction 2W + 2S
       ],
     ],
     'field' => [

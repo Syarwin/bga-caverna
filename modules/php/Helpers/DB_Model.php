@@ -24,6 +24,7 @@ abstract class DB_Model extends \APP_DbObject implements \JsonSerializable
   {
     foreach ($this->attributes as $attribute => $field) {
       $fieldName = is_array($field) ? $field[0] : $field;
+
       $this->$attribute = $row[$fieldName] ?? null;
       if (is_array($field)) {
         if ($field[1] == 'int') {

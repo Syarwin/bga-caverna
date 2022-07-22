@@ -21,7 +21,7 @@ trait SetupTrait
     Meeples::setupNewGame($players, $options);
     Preferences::setupNewGame($players, $this->player_preferences);
     ActionCards::setupNewGame($players, $options);
-    //    Buildings::setupNewGame($players, $options);
+    Buildings::setupNewGame($players, $options);
     Stats::checkExistence();
 
     $this->setGameStateInitialValue('logging', false);

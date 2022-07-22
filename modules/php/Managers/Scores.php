@@ -184,7 +184,7 @@ class Scores extends \CAV\Helpers\DB_Manager
 
     // Specific case of score computing
     foreach (Players::getAll() as $pId => $player) {
-      self::computeC135($player, self::$scores);
+      // self::computeC135($player, self::$scores);
     }
 
     // update of Stats
@@ -422,12 +422,12 @@ class Scores extends \CAV\Helpers\DB_Manager
     Stats::setScoreCardsBonus($player, self::$scores[$player->getId()][SCORING_CARDS_BONUS]['total']);
   }
 
-  protected function computeC135($player, $score)
-  {
-    if ($player->hasPlayedCard('C135_Constable')) {
-      Buildings::get('C135_Constable')->computeSpecialScore($score);
-    }
-  }
+  // protected function computeC135($player, $score)
+  // {
+  //   if ($player->hasPlayedCard('C135_Constable')) {
+  //     Buildings::get('C135_Constable')->computeSpecialScore($score);
+  //   }
+  // }
 
   protected function computeBeggings($player)
   {
