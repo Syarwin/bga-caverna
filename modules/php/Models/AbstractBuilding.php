@@ -8,10 +8,10 @@ use CAV\Core\Engine;
 use CAV\Helpers\Utils;
 use CAV\Core\Globals;
 use CAV\Core\Stats;
-use AGR\Managers\Scores;
-use AGR\Managers\ActionCards;
-use AGR\Managers\Players;
-use AGR\Managers\Buildings;
+use CAV\Managers\Scores;
+use CAV\Managers\ActionCards;
+use CAV\Managers\Players;
+use CAV\Managers\Buildings;
 
 /*
  * Action cards for all
@@ -78,7 +78,7 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
       'state' => $this->state,
       'tooltip' => $this->tooltip,
 
-      'component' => $this->isBoardComponent(),
+      // 'component' => $this->isBoardComponent(),
       // 'desc' => $this->desc,
       'container' => $this->container,
     ];

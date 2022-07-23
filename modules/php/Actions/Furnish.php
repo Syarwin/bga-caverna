@@ -3,9 +3,11 @@ namespace CAV\Actions;
 
 use CAV\Managers\Meeples;
 use CAV\Managers\Players;
+use CAV\Managers\Buildings;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Helpers\Utils;
+use CAV\Helpers\Collection;
 use CAV\Core\Stats;
 
 class Furnish extends \CAV\Models\Action
@@ -21,17 +23,41 @@ class Furnish extends \CAV\Models\Action
     return ST_FURNISH;
   }
 
+  public function getAvailableBuildings()
+  {
+    $buildings = new Collection();
+    $types = $this->getCtxArgs()['types'] ?? [null];
+
+    foreach ($types as $type) {
+      $buildings = $buildings->merge(Buildings::getAvailables($type));
+    }
+    return $buildings;
+  }
+
+  public function getBuyableBuildings($player, $ignoreResources = false)
+  {
+    $args = [
+      'actionCardId' => $this->ctx != null ? $this->ctx->getCardId() : null,
+    ];
+
+    $buy = $this->getAvailableBuildings()->filter(function ($imp) use ($player, $ignoreResources, $args) {
+      return $imp->isBuyable($player, $ignoreResources, $args);
+    });
+
+    return $buy;
+  }
+
   public function isDoable($player, $ignoreResources = false)
   {
-    // TODO: check available building that can be paid
-    return false;
+    return true;
+    return !$this->getBuyableBuildings($player, $ignoreResources)->empty();
   }
 
   public function argsFurnish()
   {
     $player = Players::getActive();
 
-    return [];
+    return ['buildings' => $this->getBuyableBuildings($player)->getIds()];
   }
 
   public function actFurnish($rooms)
