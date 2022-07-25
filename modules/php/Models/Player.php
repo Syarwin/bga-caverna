@@ -188,10 +188,10 @@ class Player extends \CAV\Helpers\DB_Model
     return 0; // TODO
   }
 
-  public function getRoomType()
-  {
-    return Meeples::getRoomType($this->id);
-  }
+  // public function getRoomType()
+  // {
+  //   return Meeples::getRoomType($this->id);
+  // }
 
   public function countStablesInReserve()
   {

@@ -112,7 +112,6 @@ class Expedition extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return true;
     return ($this->getDwarf()['weapon'] ?? 0) > 0;
   }
 
@@ -124,6 +123,7 @@ class Expedition extends \CAV\Models\Action
     return [
       'n' => $args['lvl'],
       'max' => $this->getDwarf()['weapon'],
+      // TODO: add doable actions only
     ];
   }
 

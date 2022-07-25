@@ -51,15 +51,16 @@ trait DebugTrait
 
   function vt()
   {
-    $map = [
-      83994342 => 2322020,
-      84579729 => 2322021,
-      90717377 => 2322022,
-      86928659 => 2322023,
-    ];
-    $engine = Globals::getEngine();
-    self::loadDebugUpdateEngine($engine, $map);
-    var_dump($engine);
+    // $map = [
+    //   83994342 => 2322020,
+    //   84579729 => 2322021,
+    //   90717377 => 2322022,
+    //   86928659 => 2322023,
+    // ];
+    // $engine = Globals::getEngine();
+    // self::loadDebugUpdateEngine($engine, $map);
+    // var_dump($engine);
+    $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
   }
 
   public function dd()

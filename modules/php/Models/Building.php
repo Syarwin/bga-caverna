@@ -27,7 +27,6 @@ class Building extends AbstractBuilding
   protected $costText = ''; // UI
   protected $prerequisite = ''; // UI
   protected $holder = false; // Is holding resources ?
-  protected $animalHolder = false; // Is holding animals ?
 
   // protected $vp = 0;
   protected $extraVp = false;

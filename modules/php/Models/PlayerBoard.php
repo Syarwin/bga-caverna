@@ -30,7 +30,7 @@ class PlayerBoard
   protected $pId = null;
   protected $grid = []; // 10x6 grid that holds 'nodes' (room/field/empty) + 'edges' (fences) + virtual intersections
   protected $fences = [];
-  protected $rooms = [];
+  protected $buildings = [];
   protected $stables = [];
   protected $fields = [];
   protected $pastures = null; // Array of all current pastures
@@ -67,11 +67,11 @@ class PlayerBoard
     $this->grid[6][5] = true;
     $this->grid[6][7] = true;
 
-    // $this->rooms = Meeples::getRooms($this->pId)->toArray();
-    // foreach ($this->rooms as $room) {
-    //   $this->grid[$room['x']][$room['y']] = $room;
-    // }
-    //
+    $this->buildings = Buildings::getbuildings($this->pId)->toArray();
+    foreach ($this->buildings as $building) {
+      $this->grid[$building->getX()][$building->getY()] = $building;
+    }
+
     // $this->fields = Meeples::getFields($this->pId)->toArray();
     // foreach ($this->fields as &$field) {
     //   $field['uid'] = $field['x'] . '_' . $field['y'];
@@ -84,9 +84,9 @@ class PlayerBoard
     // }
   }
 
-  public function getRooms()
+  public function getBuildings()
   {
-    return $this->rooms;
+    return $this->buildings;
   }
 
   public function getFields()
@@ -165,46 +165,51 @@ class PlayerBoard
   }
 
   /**
-   * Add a room at a given position
+   * Add a building at a given position
    * This only check that the spot is free
    */
-  public function addRoom($roomType, &$room)
+  public function addBuilding($buildingType, &$building)
   {
-    self::checkNodePos($room['x'], $room['y']);
-    if (!$this->isFree($room)) {
+    self::checkNodePos($building['x'], $building['y']);
+    if (!$this->isFree($building)) {
       throw new \BgaVisibleSystemException('This node is not free');
     }
 
-    // Create the room meeple and update the variable
-    $id = Meeples::createResourceInLocation($roomType, 'board', $this->pId, $room['x'], $room['y']);
-    $room = Meeples::get($id);
-    $this->rooms[] = $room;
-    $this->grid[$room['x']][$room['y']] = $room;
+    // Create the building meeple and update the variable
+    $id = Buildings::createResourceInLocation($buildingType, 'board', $this->pId, $room['x'], $room['y']);
+    $building = Buildings::get($id);
+    $this->buildings[] = $building;
+    $this->grid[$building->getX()][$building->getY()] = $building;
   }
 
-  /**
-   * Change all rooms type to $newRoomType
-   */
-  public function renovateRooms($newRoomType)
-  {
-    $rooms = $this->rooms;
-    $this->rooms = [];
-    foreach ($rooms as &$room) {
-      $tmp = $room['id'];
-      // Remove existing room
-      Meeples::DB()->delete($room['id']);
-      $this->grid[$room['x']][$room['y']] = null;
-      // Add the next room in the same place
-      $this->addRoom($newRoomType, $room);
-      $room['oldId'] = $tmp;
-    }
-
-    return $rooms;
-  }
+  // /**
+  //  * Change all rooms type to $newRoomType
+  //  */
+  // public function renovateRooms($newRoomType)
+  // {
+  //   $caverns = $this->rooms;
+  //   $this->rooms = [];
+  //   foreach ($caverns as &$room) {
+  //     $tmp = $room['id'];
+  //     // Remove existing room
+  //     Meeples::DB()->delete($room['id']);
+  //     $this->grid[$room['x']][$room['y']] = null;
+  //     // Add the next room in the same place
+  //     $this->addRoom($newRoomType, $room);
+  //     $room['oldId'] = $tmp;
+  //   }
+  //
+  //   return $caverns;
+  // }
 
   /****************************
    ******* SANITY CHECKS *******
    ****************************/
+
+  public function isMoutainZone($coord)
+  {
+    return $coord['x'] >= 7;
+  }
 
   /**
    * Check whether the current board is valid wrt to pastures
@@ -281,13 +286,13 @@ class PlayerBoard
   /**
    * Check whether the current board is valid wrt to rooms
    */
-  public function areRoomsValid($raiseException = false)
+  public function areBuildingsValid($raiseException = false)
   {
     // Check adjacency of fields
-    $marks = self::getSubgraphMarks($this->rooms);
+    $marks = self::getSubgraphMarks($this->buildings);
     if (!self::isConnex($marks)) {
       if ($raiseException) {
-        throw new UserException(totranslate('Some rooms are not adjacent'));
+        throw new UserException(totranslate('Some buildings are not adjacent'));
       }
       return false;
     }
@@ -402,7 +407,7 @@ class PlayerBoard
 
   /**
    * Return all nodes that could receive a specific type, ie free and adjacent to existing same type
-   * Used for fields and rooms that share similar constraints
+   * Used for fields and buildings that share similar constraints
    */
   protected function getAdjacentZones($existingNodes)
   {
@@ -445,7 +450,7 @@ class PlayerBoard
    */
   public function getBuildableZones()
   {
-    return $this->getAdjacentZones($this->rooms);
+    return $this->getAdjacentZones($this->buildings);
   }
 
   public function canConstruct()
@@ -539,12 +544,12 @@ class PlayerBoard
       ];
     }
 
-    // Add the rooms as a single zone
-    $zones[] = [
-      'type' => 'room',
-      'capacity' => 1,
-      'locations' => array_map(['CAV\Models\PlayerBoard', 'extractPos'], $this->rooms),
-    ];
+    // // Add the rooms as a single zone
+    // $zones[] = [
+    //   'type' => 'room',
+    //   'capacity' => 1,
+    //   'locations' => array_map(['CAV\Models\PlayerBoard', 'extractPos'], $this->rooms),
+    // ];
 
     // Add the unfenced stables
     $marks = $this->getPasturesMarks();
@@ -689,8 +694,8 @@ class PlayerBoard
     }
 
     foreach ($this->getGrowingCrops($keepOnlyThisType) as $crop) {
-      $uid = ($crop['x'] < 0 || $crop['y'] < 0) ? $crop['location'] : $crop['x'] . '_' . $crop['y'];
-      if($crop['location'] == 'D75_WoodField' && $crop['x'] == 0){
+      $uid = $crop['x'] < 0 || $crop['y'] < 0 ? $crop['location'] : $crop['x'] . '_' . $crop['y'];
+      if ($crop['location'] == 'D75_WoodField' && $crop['x'] == 0) {
         $uid = 'D75_WoodField2';
       }
       $fields[$uid]['crops'][] = $crop;
@@ -1048,7 +1053,9 @@ class PlayerBoard
   protected function containsStable($x, $y = null)
   {
     self::checkNodePos($x, $y);
-    return $this->grid[$x][$y] != null && $this->grid[$x][$y]['type'] == 'stable';
+    return $this->grid[$x][$y] != null &&
+      ((is_array($this->grid[$x][$y]) && $this->grid[$x][$y]['type'] == 'stable') ||
+        $this->grid[$x][$y]->getType() == 'stable');
   }
 
   /***********************************
@@ -1315,48 +1322,5 @@ class PlayerBoard
       }
     }
     return true;
-  }
-
-  /*************************
-   ****** CARD D148 ********
-   ************************/
-
-  /**
-   * Return true if an edge is between two rooms
-   * @param $fpos : assoc array x,y
-   */
-  protected function isSurroundedByRooms($x, $y = null)
-  {
-    self::checkFencePos($x, $y);
-
-    $dirs = $x % 2 == 1 ? [N, S] : [W, E];
-    $fpos = ['x' => $x, 'y' => $y];
-    $n = 0;
-    foreach ($dirs as $dir) {
-      $npos = self::nextCellInDirection($fpos, $dir);
-      if (self::isValid($npos)) {
-        if (is_null($this->grid[$npos['x']][$npos['y']])) {
-          return false;
-        }
-        if (!in_array($this->grid[$npos['x']][$npos['y']]['type'], ['roomWood', 'roomClay', 'roomStone'])) {
-          return false;
-        }
-        $n++;
-      }
-    }
-
-    return $n == 2;
-  }
-
-  /**
-   * Return all edges that could receive a fence, ie free and not in-between two buildings
-   */
-  public function getSurroundedByRoomsEdges()
-  {
-    $edges = self::getAllEdges();
-    Utils::filter($edges, function ($pos) {
-      return $this->isSurroundedByRooms($pos);
-    });
-    return $edges;
   }
 }

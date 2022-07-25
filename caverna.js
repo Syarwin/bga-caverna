@@ -91,6 +91,7 @@ define([
           ['placeDwarf', null],
           ['equipWeapon', null],
           ['upgradeWeapon', 500],
+          ['furnish', 500],
           // UNCHECKED
           ['addFences', null],
           ['addStables', null],

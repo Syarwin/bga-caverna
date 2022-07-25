@@ -48,15 +48,14 @@ class Meeples extends \CAV\Helpers\Pieces
     $meeples[] = ['type' => 'firstPlayer', 'player_id' => $order[0], 'location' => 'reserve', 'nbr' => 1];
 
     // foreach ($players as $pId => $player) {
-    //   // rooms TODO ?
-    //   // $meeples[] = [
-    //   //   'type' => 'roomWood',
-    //   //   'player_id' => $player_id,
-    //   //   'location' => 'board',
-    //   //   'x' => 1,
-    //   //   'y' => 3,
-    //   //   'nbr' => 1,
-    //   // ];
+    //   $meeples[] = [
+    //     'type' => 'cavern',
+    //     'player_id' => $player_id,
+    //     'location' => 'board',
+    //     'x' => 7,
+    //     'y' => 5,
+    //     'nbr' => 1,
+    //   ];
     // }
     self::create($meeples);
 
@@ -139,47 +138,6 @@ class Meeples extends \CAV\Helpers\Pieces
   public function getFields($pId)
   {
     return self::getFilteredQuery($pId, 'board', 'field')->get();
-  }
-
-  /**************************** Rooms *****************************************/
-  protected function getRoomsQ($pId)
-  {
-    return self::getFilteredQuery($pId, 'board', 'room%');
-  }
-
-  public function getRooms($pId)
-  {
-    return self::getRoomsQ($pId)->get();
-  }
-
-  // countRooms
-  public function countRooms($pId)
-  {
-    return self::getRoomsQ($pId)->count();
-  }
-
-  /**
-   *
-   * Provides the type of room constructed
-   * @param number $player_id
-   * @return string rommType (roomWood, roomClay, roomStone)
-   */
-  public function getRoomType($pId)
-  {
-    return null;
-
-    $roomsType = array_unique(
-      self::getRooms($pId)
-        ->map(function ($token) {
-          return $token['type'];
-        })
-        ->toArray()
-    );
-
-    if (count($roomsType) != 1) {
-      throw new \feException('multiple Room type, should not happen');
-    }
-    return $roomsType[0];
   }
 
   /*************************** Resource management ***********************/

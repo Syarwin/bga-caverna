@@ -15,13 +15,17 @@ class Buildings extends \CAV\Helpers\Pieces
 
   protected static function cast($building)
   {
-    // return $building;
+    $building['building_id'] = $building['id'];
+
     return self::getBuildingInstance($building['id'], $building);
   }
 
   public static function getBuildingInstance($id, $data = null)
   {
     $type = $data['type'] ?? $id;
+    if ($type == 'cavern') {
+      return new \CAV\Buildings\Cavern($data);
+    }
     $t = explode('_', $type);
     // First part before _ specify the type of Building
     // Eg: Major_Fireplace1,  A24_ThreshingBoard, ...
@@ -36,13 +40,6 @@ class Buildings extends \CAV\Helpers\Pieces
     // Load list of cards
     include dirname(__FILE__) . '/../Buildings/list.inc.php';
 
-    // Keep only the supported cards and group them by type
-    // $buildings = [
-    //   MAJOR => [],
-    //   MINOR => [],
-    //   OCCUPATION => [],
-    // ];
-
     $buildings = [];
     foreach ($buildingIds as $cId) {
       $building = self::getBuildingInstance($cId);
@@ -53,6 +50,25 @@ class Buildings extends \CAV\Helpers\Pieces
           'nbr' => $building->getNbInBox(),
         ];
       }
+    }
+
+    foreach ($players as $pId => $player) {
+      $buildings[] = [
+        'type' => 'cavern',
+        'player_id' => $pId,
+        'location' => 'inPlay',
+        'x' => 7,
+        'y' => 5,
+        'nbr' => 1,
+      ];
+      $buildings[] = [
+        'type' => 'D_StartDwelling',
+        'player_id' => $pId,
+        'location' => 'inPlay',
+        'x' => 7,
+        'y' => 7,
+        'nbr' => 1,
+      ];
     }
 
     // Merge cards to be created
@@ -66,6 +82,82 @@ class Buildings extends \CAV\Helpers\Pieces
     // Create the cards
     self::create($buildings, null);
   }
+
+  /**************************** Buildings *****************************************/
+  public function getBuildings($pId)
+  {
+    return self::getFilteredQuery($pId, 'board', '%')->get();
+  }
+
+  public function addBuilding($tile, $cavernId, $player)
+  {
+    self::DB()->delete($cavernId);
+    self::DB()->update(
+      ['player_id' => $player->getId(), 'building_location' => 'inPlay', 'x' => $tile['x'], 'y' => $tile['y']],
+      $tile['id']
+    );
+  }
+
+  /**************************** Caverns *****************************************/
+  protected function getCavernsQ($pId)
+  {
+    return self::getFilteredQuery($pId, 'board', 'cavern%');
+  }
+
+  public function getCaverns($pId)
+  {
+    return self::getCavernsQ($pId)->get();
+  }
+
+  // countRooms
+  public function countCaverns($pId)
+  {
+    return self::getCavernsQ($pId)->count();
+  }
+
+  /**************************** Dwellings *****************************************/
+  protected function getDwellingsQ($pId)
+  {
+    return self::getFilteredQuery($pId, 'board', 'D_%');
+  }
+
+  public function getDwellings($pId)
+  {
+    return self::getDwellingsQ($pId)->get();
+  }
+
+  // countRooms
+  public function countDwelings($pId)
+  {
+    $room = 0;
+    return self::getDwellingsQ($pId)->accumulate($room, function ($b) {
+      return $b->getDwellingCapacity();
+    });
+  }
+
+  // /**
+  //  *
+  //  * Provides the type of room constructed
+  //  * @param number $player_id
+  //  * @return string rommType (roomWood, roomClay, roomStone)
+  //  */
+  // public function getRoomType($pId)
+  // {
+  //   return null;
+  //
+  //   $roomsType = array_unique(
+  //     self::getRooms($pId)
+  //       ->map(function ($token) {
+  //         return $token['type'];
+  //       })
+  //       ->toArray()
+  //   );
+  //
+  //   if (count($roomsType) != 1) {
+  //     throw new \feException('multiple Room type, should not happen');
+  //   }
+  //   return $roomsType[0];
+  // }
 
   public static function drawCards(&$buildings, $pId, $n, $location = 'hand')
   {
@@ -316,5 +408,24 @@ class Buildings extends \CAV\Helpers\Pieces
       }
     }
     self::create($values, null);
+  }
+
+  /**
+   * Generic base query
+   */
+  public function getFilteredQuery($pId, $location, $type)
+  {
+    $query = self::getSelectQuery()->wherePlayer($pId);
+    if ($location != null) {
+      $query = $query->where('building_location', $location);
+    }
+    if ($type != null) {
+      if (is_array($type)) {
+        $query = $query->whereIn('type', $type);
+      } else {
+        $query = $query->where('type', strpos($type, '%') === false ? '=' : 'LIKE', $type);
+      }
+    }
+    return $query;
   }
 }

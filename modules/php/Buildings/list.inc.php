@@ -3,6 +3,7 @@ $buildingIds = [
   // Dwellings
   'D_Dwelling',
   'D_SimpleDwelling1',
+  'D_StartDwelling',
   // 'D_SimpleDwelling2',
   // 'D_MixedDwelling',
   // 'D_CoupleDwelling',

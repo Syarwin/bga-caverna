@@ -19,10 +19,10 @@ class D_Dwelling extends \CAV\Models\Building
     parent::__construct($row);
     $this->type = 'D_Dwelling';
     $this->name = clienttranslate('Dwelling');
-    $this->dwelling = true;
+    $this->dwelling = 1;
     $this->nbInBox = 99;
     $this->desc = [clienttranslate('Room for exactly 1 Dwarf')];
-    $this->costs = [[WOOD => 4], [STONE => 3]];
+    $this->costs = [[WOOD => 4, STONE => 3]];
     $this->vp = 3;
   }
 }

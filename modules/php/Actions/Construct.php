@@ -23,6 +23,8 @@ class Construct extends \CAV\Models\Action
 
   public function getCosts($player)
   {
+    return [];
+    // TODO: to see later on
     $roomType = $player->getRoomType();
     $constructCost = [];
     $costs = $constructCost[$roomType] ?? [];

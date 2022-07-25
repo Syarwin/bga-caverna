@@ -168,6 +168,7 @@ const FIELD = 'field';
 const RESOURCES = [WOOD, STONE, ORE, RUBY, FOOD, GOLD, GRAIN, VEGETABLE, SHEEP, PIG, CATTLE, DOG, DONKEY, BEGGING];
 const ANIMALS = [SHEEP, PIG, CATTLE];
 const ROOMS = ['roomStone', 'roomClay', 'roomWood'];
+const CAVERN = 'Cavern';
 
 const WEAPON = 'weapon';
 

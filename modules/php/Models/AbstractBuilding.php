@@ -52,6 +52,7 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
     'number',
     'nbInBox',
     'dwelling',
+    'animalHolder',
   ];
   protected $name = '';
   protected $tooltip = [];
@@ -60,12 +61,13 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
   protected $stage = 0;
   protected $accumulation = []; // Array of resource => amount
   protected $type = null; // Class of the building
-  protected $dwelling = false;
+  protected $dwelling = 0;
   protected $container = 'central'; // UI
   protected $vp = 0;
   protected $field = false;
   protected $cost = [];
   protected $nbInBox = 1;
+  protected $animalHolder = 0;
   // Constraints
   protected $players = null; // Players requirements => null if none, integer if only one, array otherwise
 
@@ -113,12 +115,31 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
     return Players::get($this->pId);
   }
 
+  public function isDwelling()
+  {
+    return $this->dwelling > 0;
+  }
+
+  public function getDwellingCapacity()
+  {
+    return $this->dwelling;
+  }
+
+  public function isAnimalHolder()
+  {
+    return $this->animalHolder > 0;
+  }
+
+  public function getAnimalCapactiy()
+  {
+    return $this->animalHolder;
+  }
+
   /**
    * Cost/buy function
    */
   public function getBaseCosts()
   {
-    // TODO: do we need costS?
     return $this->costs ?? [$this->cost];
   }
 

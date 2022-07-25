@@ -169,6 +169,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       });
     },
 
+    notif_furnish(n) {
+      debug('Notif: furnishing ', n);
+      // TODO
+    },
+
     /**
      * Renovating rooms on the board
      */

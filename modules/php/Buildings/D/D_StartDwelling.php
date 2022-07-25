@@ -12,16 +12,16 @@ use CAV\Managers\ActionCards;
 use CAV\Managers\Players;
 use CAV\Managers\Buildings;
 
-class D_SimpleDwelling1 extends \CAV\Models\Building
+class D_StartDwelling extends \CAV\Models\Building
 {
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->type = 'D_SimpleDwelling1';
-    $this->name = clienttranslate('Simple Dwelling');
-    $this->dwelling = 1;
-    $this->nbInBox = 1;
-    $this->desc = [clienttranslate('Room for exactly 1 Dwarf')];
-    $this->costs = [[WOOD => 4], [STONE => 2]];
+    $this->type = 'D_StartDwelling';
+    $this->name = clienttranslate('Entry level Dwelling');
+    $this->dwelling = 2;
+    $this->nbInBox = 0;
+    $this->animalHolder = 2;
+    $this->desc = [clienttranslate('Room for exactly 2 Dwarves and 1 pair of anima')];
   }
 }

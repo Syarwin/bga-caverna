@@ -49,29 +49,65 @@ class Furnish extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return true;
     return !$this->getBuyableBuildings($player, $ignoreResources)->empty();
   }
 
-  public function argsFurnish()
+  public function argsFurnish($full = false)
   {
     $player = Players::getActive();
 
-    return ['buildings' => $this->getBuyableBuildings($player)->getIds()];
+    if (!$full) {
+      $buildings = $this->getBuyableBuildings($player)->getIds();
+    } else {
+      $buildings = $this->getBuyableBuildings($player);
+    }
+    return ['buildings' => $buildings];
   }
 
-  public function actFurnish($rooms)
+  public function actFurnish($tile)
   {
     self::checkAction('actFurnish');
-    die('NOT DONE YET');
 
+    // $tile = ['id' , 'x', 'y'];
+    $args = $this->argsFurnish(true);
     $player = Players::getCurrent();
+
+    // checking card is buyable
+    if (!in_array($tile['id'], $args['buildings']->getIds())) {
+      throw new \feException('Tile cannot be bought. Should not happen');
+    }
+
+    $playerBoard = $player->board();
+    $building = $args['buildings'][$tile['id']];
+
+    // check on mountain (not sure it's necessary)
+    if (!$playerBoard->isMoutainZone($tile)) {
+      throw new \feException('Cannot furnish outside of the mountain');
+    }
+    // checking than we have a cavern
+    $cavern = array_filter($playerBoard->getBuildings(), function ($c) use ($tile) {
+      return $c->getType() == CAVERN && $tile['x'] == $c->getX() && $tile['y'] == $c->getY();
+    });
+
+    if (empty($cavern)) {
+      throw new \feException('No cavern on this spot. Cannot furnish. Should not happen');
+    }
+    $cavernId = $cavern[0]->getId();
+    // throw new \feException(Buildings::get($tile['id'])->getId());
+    // Replace cavern with the new building
+    Buildings::addBuilding($tile, $cavernId, $player);
+    Notifications::furnish($player, Buildings::get($tile['id']), $cavernId);
+
+    // Trigger of Pay if needed
+    $cost = $building->getCosts($player, $this->getCtxArgs());
+    if ($cost != NO_COST) {
+      $player->pay(1, $cost, $building->getName());
+    }
+    $playerBoard->refresh();
 
     // Listeners for cards
     $eventData = [
-      'roomType' => $roomType,
-      'rooms' => $rooms,
-      'oldRoomCount' => $oldRoomCount,
+      'building' => $tile,
     ];
     $this->checkAfterListeners($player, $eventData);
 
