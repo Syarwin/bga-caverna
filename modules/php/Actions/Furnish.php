@@ -93,7 +93,7 @@ class Furnish extends \CAV\Models\Action
       throw new \feException('No cavern on this spot. Cannot furnish. Should not happen');
     }
     $cavernId = $cavern[0]->getId();
-    // throw new \feException(Buildings::get($tile['id'])->getId());
+
     // Replace cavern with the new building
     Buildings::addBuilding($tile, $cavernId, $player);
     Notifications::furnish($player, Buildings::get($tile['id']), $cavernId);

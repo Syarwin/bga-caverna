@@ -24,14 +24,15 @@ class Stables extends \CAV\Models\Action
   {
     $costs = $this->getCtxArgs()['costs'];
     $this->checkCostModifiers($costs, $player);
-    // throw new \feException(print_r($costs));
     return $costs;
   }
 
   public function isDoable($player, $ignoreResources = false)
   {
-    // The player must be able to buy at least one room and have an empty spot
-    return ($ignoreResources || $player->canBuy($this->getCosts($player))) && $player->countStablesInReserve() > 0;
+    // The player must be able to buy at least one stable and have an empty spot
+    return ($ignoreResources || $player->canBuy($this->getCosts($player))) &&
+      $player->countStablesInReserve() > 0 &&
+      !empty($player->board()->getFreeZones(false));
   }
 
   public function getMaxBuildableStables($player)
