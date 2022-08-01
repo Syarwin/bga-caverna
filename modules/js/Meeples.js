@@ -1,5 +1,7 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   const MEEPLES = [
+    'SCORE',
+    'GOLD',
     'WOOD',
     'STONE',
     'ORE',
@@ -18,7 +20,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'STABLE',
     'BARN',
 
-    'SCORE',
     'ARROW',
     'ARROW-1X',
     'ARROW-2X',

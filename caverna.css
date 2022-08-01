@@ -3294,65 +3294,75 @@ html {
 .caverna-meeple {
   background-image: url("img/meeples.png");
   background-repeat: no-repeat; }
+  .caverna-meeple.meeple-score {
+    width: 0.8em;
+    height: 1em;
+    background-position: 41.1215% 0%;
+    background-size: 609.524%; }
+  .caverna-meeple.meeple-gold {
+    width: 0.78em;
+    height: 0.78em;
+    background-position: 17.2414% 0%;
+    background-size: 483.019%; }
   .caverna-meeple.meeple-wood {
     width: 0.6em;
     height: 0.78em;
-    background-position: 56.8584% 32.0276%;
+    background-position: 97.5664% 32.0276%;
     background-size: 853.333%; }
   .caverna-meeple.meeple-stone {
     width: 0.64em;
     height: 0.8em;
-    background-position: 0% 32.1759%;
+    background-position: 41.0714% 32.1759%;
     background-size: 800%; }
   .caverna-meeple.meeple-ore {
     width: 0.9154em;
     height: 0.7062em;
-    background-position: 0% 47.8166%;
+    background-position: 39.3665% 48.2533%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-ruby {
     width: 0.9154em;
     height: 0.693em;
-    background-position: 15.8371% 47.7124%;
+    background-position: 55.2036% 48.1481%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-food {
     width: 0.8em;
     height: 0.8em;
-    background-position: 98.6111% 0%;
+    background-position: 24.0741% 32.1759%;
     background-size: 640%; }
   .caverna-meeple.meeple-grain {
     width: 0.75em;
     height: 0.79em;
-    background-position: 14.6453% 32.1016%;
+    background-position: 56.7506% 32.1016%;
     background-size: 682.667%; }
   .caverna-meeple.meeple-vegetable {
     width: 0.82em;
     height: 0.8em;
-    background-position: 95.1835% 31.7352%;
+    background-position: 22.4771% 50.4566%;
     background-size: 673.684%; }
   .caverna-meeple.meeple-sheep {
     width: 0.98em;
     height: 0.76em;
-    background-position: 76.57% 31.8807%;
+    background-position: 0% 50.6881%;
     background-size: 522.449%; }
   .caverna-meeple.meeple-pig {
     width: 1.118em;
     height: 0.78em;
-    background-position: 35.2792% 32.0276%;
+    background-position: 81.9797% 32.0276%;
     background-size: 433.898%; }
   .caverna-meeple.meeple-cattle {
     width: 1.104em;
     height: 0.82em;
-    background-position: 59.3137% 0%;
+    background-position: 0% 32.3256%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-donkey {
     width: 1.04em;
     height: 0.87em;
-    background-position: 33.8235% 0%;
+    background-position: 80.3922% 0%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-dog {
     width: 0.68em;
     height: 0.9em;
-    background-position: 15.7658% 0%;
+    background-position: 58.5586% 0%;
     background-size: 752.941%; }
   .caverna-meeple.meeple-first {
     width: 0.4em;
@@ -3362,12 +3372,12 @@ html {
   .caverna-meeple.meeple-begging {
     width: 1.1em;
     height: 1.1em;
-    background-position: 80.0926% 0%;
+    background-position: 100% 0%;
     background-size: 640%; }
   .caverna-meeple.meeple-cook {
     width: 2em;
     height: 1.1em;
-    background-position: 15.66% 18.8285%;
+    background-position: 70.2461% 46.2343%;
     background-size: 787.692%; }
     #anytimeActions .caverna-meeple.meeple-cook {
       margin: 0em -0.4em; }
@@ -3555,6 +3565,13 @@ html {
     width: 242px !important; }
   .mobile_version .player-board {
     margin-right: 2px !important; }
+  .player-board .player_score {
+    display: flex;
+    align-items: center; }
+    .player-board .player_score .fa.fa-star {
+      display: none; }
+    .player-board .player_score .player-resource.resource-gold {
+      margin-left: 3px; }
   .player-board .player_board_inner {
     padding: 13px 10px 0px; }
     .player-board .player_board_inner .player-name {

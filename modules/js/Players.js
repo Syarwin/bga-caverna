@@ -1,6 +1,7 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   const PLAYER_RESOURCES = 109;
   const RESOURCES = [
+    'gold',
     'wood',
     'stone',
     'ore',
@@ -81,6 +82,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       orderedPlayers.forEach((player) => {
         this.place('tplPlayerBoard', player, 'player-boards');
         this.place('tplPlayerPanel', player, 'overall_player_board_' + player.id);
+
+        // Add gold counter
+        dojo.place(
+          `<div class="meeple-container"><div class="caverna-meeple meeple-score"></div></div>` +
+            this.tplResourceCounter(player, 'gold'),
+          `icon_point_${player.id}`,
+          'after',
+        );
       });
       dojo.place('<div id="player-boards-separator"></div>', 'player-boards', 3);
 
@@ -219,7 +228,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         <div class="player-panel-resources">
           <div class="player-reserve" id="reserve-${player.id}"></div>
         ` +
-        RESOURCES.map((res) => (ANIMALS.includes(res) ? '' : this.tplResourceCounter(player, res))).join('') +
+        RESOURCES.map((res) =>
+          res == 'gold' || ANIMALS.includes(res) ? '' : this.tplResourceCounter(player, res),
+        ).join('') +
         `
         </div>
         <div class="player-panel-board-resources">
