@@ -392,14 +392,16 @@ class PlayerBoard
   /**
    * Return all free nodes
    */
-  public function getFreeZones($bNotInsidePasture = true)
+  public function getFreeZones($bNotInsidePasture = true, $bForestOnly = true)
   {
     $nodes = self::getAllNodes();
 
     // Should be free and not in a pasture
     $marks = $this->getPasturesMarks();
-    Utils::filter($nodes, function ($pos) use ($marks, $bNotInsidePasture) {
-      return $this->isFree($pos) && (!$bNotInsidePasture || $marks[$pos['x']][$pos['y']] != INSIDE);
+    Utils::filter($nodes, function ($pos) use ($marks, $bNotInsidePasture, $bForestOnly) {
+      return ($this->isFree($pos) || !$this->containsStable($pos)) &&
+        (!$bNotInsidePasture || $marks[$pos['x']][$pos['y']] != INSIDE) &&
+        (!$bForestOnly || $pos['x'] < 7);
     });
 
     return $nodes;
