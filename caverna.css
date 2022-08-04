@@ -2061,7 +2061,6 @@ html {
 
 #central-board {
   width: 830px;
-  height: 795px;
   transform: scale(var(--cavernaCentralBoardScale));
   transform-origin: top left;
   background-image: url("img/central.png");
@@ -2300,19 +2299,34 @@ html {
   transform: scale(1); }
 
 .action-card-holder {
-  background: white;
+  width: 150px;
+  height: 180px;
+  background-color: white;
+  background-image: url("img/background_card.jpg");
+  background-size: 100% 100%;
   border: 1px solid black;
+  box-shadow: 2px 2px 6px -1px black;
   border-radius: 10px;
   position: relative;
   /*
-   * COMPONENT ACTIONS
-   */
-  /*
    * ACTION CARD FRAME
-   */
-  /*
-   * REAL ACTION CARDS
    */ }
+  .action-card-holder[data-id='ActionBlacksmithing'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 400% 100%;
+    background-position-x: 0%; }
+  .action-card-holder[data-id='ActionHousework'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 400% 100%;
+    background-position-x: 33.3333333333%; }
+  .action-card-holder[data-id='ActionRubyMining'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 400% 100%;
+    background-position-x: 66.6666666667%; }
+  .action-card-holder[data-id='ActionSlash'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 400% 100%;
+    background-position-x: 100%; }
   #ebd-body:not(.help-mode) .action-card-holder.selectable {
     cursor: pointer; }
     #ebd-body:not(.help-mode) .action-card-holder.selectable:hover .action-card {
@@ -2323,171 +2337,6 @@ html {
     cursor: not-allowed; }
   #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable .action-card {
     filter: grayscale(75%); }
-  .action-card-holder[data-id='ActionFarmExpansion'] {
-    top: -3px;
-    height: 134px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionFarmExpansion'] .action-desc {
-      margin-top: -2px; }
-      .action-card-holder[data-id='ActionFarmExpansion'] .action-desc > div {
-        font-size: 0.67em;
-        z-index: 3; }
-        .action-card-holder[data-id='ActionFarmExpansion'] .action-desc > div:nth-child(4) {
-          margin: 0px auto -7px; }
-  .action-card-holder[data-id='ActionFarmland'] {
-    top: 310px;
-    height: 80px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionFarmland'] .action-desc > div {
-      font-size: 1.5em; }
-  .action-card-holder[data-id='ActionGrainSeeds'] {
-    top: 220px;
-    height: 69px;
-    width: 115px; }
-  .action-card-holder[data-id='ActionForest'], .action-card-holder[data-id='ActionForestSolo'] {
-    top: 203px;
-    left: 253px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionForest'] .resource-holder, .action-card-holder[data-id='ActionForestSolo'] .resource-holder {
-      left: -54px;
-      bottom: 5px; }
-  .action-card-holder[data-id='ActionReedBank'] {
-    top: 411px;
-    left: 254px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionReedBank'] .resource-holder {
-      left: -75px;
-      bottom: 7px; }
-  .action-card-holder[data-id='ActionClayPit'] {
-    top: 306px;
-    left: 175px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionClayPit'] .resource-holder {
-      bottom: 5px;
-      left: 92px; }
-  .action-card-holder[data-id='ActionFishing'] {
-    top: 514px;
-    left: 175px;
-    width: 62px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionFishing'] .resource-holder {
-      bottom: 10px;
-      left: 98px; }
-  .action-card-holder[data-id='ActionMeetingPlace'], .action-card-holder[data-id='ActionMeetingPlaceSolo'], .action-card-holder[data-id='ActionMeetingPlaceBeginner'], .action-card-holder[data-id='ActionMeetingPlaceSoloBeginner'] {
-    left: 31px;
-    top: 134px;
-    height: 72px;
-    width: 115px; }
-  .action-card-holder[data-id='ActionMeetingPlaceBeginner'] .resource-holder, .action-card-holder[data-id='ActionMeetingPlaceSoloBeginner'] .resource-holder {
-    bottom: 7px;
-    right: -55px; }
-  .action-card-holder[data-id='ActionDayLaborer'] {
-    top: 526px;
-    left: 30px;
-    height: 74px;
-    width: 115px; }
-  .action-card-holder[data-id='ActionLessons'] {
-    top: 406px;
-    height: 94px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionLessons'] .action-desc > div:nth-child(1) {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionSideJob'] {
-    top: 406px;
-    height: 94px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionSideJob'] .action-desc > div:nth-child(1) {
-      font-size: 0.8em; }
-  .action-card-holder[data-id='ActionGrove'] {
-    top: 110px;
-    left: 54px;
-    width: 60px;
-    height: 86px; }
-    [data-players='4'] .action-card-holder[data-id='ActionGrove'] {
-      top: 138px; }
-    .action-card-holder[data-id='ActionGrove'] .resource-holder {
-      left: -51px;
-      bottom: 3px; }
-  .action-card-holder[data-id='ActionResourceMarket'] {
-    top: 255px;
-    left: 4px;
-    width: 111px;
-    height: 64px; }
-    .action-card-holder[data-id='ActionResourceMarket'] .action-desc > div {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionLessons3'] {
-    top: 433px;
-    left: 2px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionLessons3'] .action-desc > div:nth-child(1) {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionLessons4'] {
-    top: 412px;
-    left: 2px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionLessons4'] .action-desc > div:nth-child(1) {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionHollow'] {
-    top: 329px;
-    left: 6px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionHollow'] .resource-holder {
-      left: 85px;
-      bottom: 5px; }
-  .action-card-holder[data-id='ActionHollow4'] {
-    top: 313px;
-    left: 6px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionHollow4'] .resource-holder {
-      left: 87px;
-      bottom: 9px; }
-  .action-card-holder[data-id='ActionTravelingPlayers'] {
-    top: 516px;
-    left: 53px;
-    width: 65px;
-    height: 84px; }
-    .action-card-holder[data-id='ActionTravelingPlayers'] .resource-holder {
-      left: -54px;
-      bottom: 1px; }
-  .action-card-holder[data-id='ActionCopse'], .action-card-holder[data-id='ActionCopseAdd'] {
-    top: 18px;
-    left: 5px;
-    width: 60px;
-    height: 83px; }
-    .action-card-holder[data-id='ActionCopse'] .resource-holder, .action-card-holder[data-id='ActionCopseAdd'] .resource-holder {
-      left: 87px;
-      bottom: 5px; }
-  .action-card-holder[data-id='ActionResourceMarket4'] {
-    top: 236px;
-    left: 5px;
-    width: 110px;
-    height: 65px; }
-    .action-card-holder[data-id='ActionResourceMarket4'] .action-desc > div {
-      font-size: 0.65em; }
-  .action-card-holder[data-id='ActionWishChildrenAdd'] {
-    top: 15px;
-    left: 44px;
-    width: 111px;
-    height: 100px; }
-  .action-card-holder[data-id='ActionResourceMarketAdd'] {
-    top: 276px;
-    left: 18px;
-    width: 128px;
-    height: 77px; }
-  .action-card-holder[data-id='ActionAnimalMarketAdd'] {
-    top: 158px;
-    left: 2px;
-    width: 151px;
-    height: 136px; }
-  [data-players='2'] .action-card-holder[data-id='ActionWishChildrenAdd'] {
-    top: 150px; }
-  [data-players='2'] .action-card-holder[data-id='ActionAnimalMarketAdd'] {
-    top: 408px; }
   .action-card-holder .farmer-holder {
     position: absolute;
     top: 0;
@@ -2583,159 +2432,10 @@ html {
       font-size: 11px;
       font-family: var(--caverna-font-family);
       padding-top: 1px;
-      padding-top: 4px;
+      padding-top: 6px;
       background-image: url("img/action_frame.png");
       background-size: 100% 160px;
       height: 32px; }
-    .action-card-holder .action-card.action-s .action-header {
-      background-image: url("img/action_frame_s.png");
-      background-size: 100% 143px;
-      height: 40px; }
-    .action-card-holder .action-card .action-desc {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      font-family: Calibri;
-      font-weight: bold;
-      font-size: 22px;
-      position: relative;
-      background-image: url("img/action_frame.png");
-      background-size: 100% 160px;
-      background-position: 0 -40px; }
-      .action-card-holder .action-card .action-desc > div {
-        margin-top: 2px; }
-      .action-card-holder .action-card .action-desc span.text {
-        font-family: var(--caverna-font-family);
-        font-size: 0.8em;
-        font-weight: normal; }
-      .action-card-holder .action-card .action-desc div.text-wrapper {
-        display: flex;
-        align-items: center; }
-    .action-card-holder .action-card.action-s .action-desc {
-      background-image: url("img/action_frame_s.png");
-      background-size: 100% 109px;
-      background-position: 0 -32px; }
-    .action-card-holder .action-card .action-footer {
-      flex-shrink: 0;
-      position: relative;
-      height: 10px;
-      background-image: url("img/action_frame.png");
-      background-size: 100% 160px;
-      background-position: 0px 10px; }
-    .action-card-holder .action-card.action-s .action-footer {
-      background-image: url("img/action_frame_s.png");
-      background-size: 100% 109px;
-      background-position: 0px 10px; }
-    .action-card-holder .action-card.accumulate-bottom .action-footer::before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 26px;
-      height: 30px;
-      background-image: url("img/action_frame_arrow.png");
-      background-size: 100%;
-      top: 7px;
-      left: calc(50% - 13px); }
-    .action-card-holder .action-card.accumulate-left .action-desc::before, .action-card-holder .action-card.accumulate-right .action-desc::before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 26px;
-      height: 30px;
-      background-image: url("img/action_frame_arrow.png");
-      background-size: 100%;
-      top: calc(50% - 13px); }
-    .action-card-holder .action-card.accumulate-left .action-desc::before {
-      left: -23px;
-      transform: rotate(90deg); }
-    .action-card-holder .action-card.accumulate-right .action-desc::before {
-      right: -23px;
-      transform: rotate(-90deg); }
-  .action-card-holder:not(.component) {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    left: 0;
-    background: url("img/actions_background.png");
-    background-size: 500% 300%;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    margin-top: -1px;
-    margin-left: -1px; }
-    .action-card-holder:not(.component)[data-id='ActionFencing'] {
-      background-position-x: 0%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionSheepMarket'] {
-      background-position-x: 25%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionGrainUtilization'] {
-      background-position-x: 50%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionMajorImprovement'] {
-      background-position-x: 75%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionWesternQuarry'] {
-      background-position-x: 100%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionPigMarket'] {
-      background-position-x: 0%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionVegetableSeeds'] {
-      background-position-x: 25%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionEasternQuarry'] {
-      background-position-x: 50%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionCattleMarket'] {
-      background-position-x: 75%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionWishChildren'] {
-      background-position-x: 100%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionUrgentWishChildren'] {
-      background-position-x: 0%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionCultivation'] {
-      background-position-x: 25%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionHouseRedevelopment'] {
-      background-position-x: 50%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionFarmRedevelopment'] {
-      background-position-x: 75%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionMajorImprovementBeginner'] {
-      background-position-x: 75%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionWishChildrenBeginner'] {
-      background-position-x: 100%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionHouseRedevelopmentBeginner'] {
-      background-position-x: 50%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component) .action-card {
-      width: 100%;
-      height: auto; }
-    .action-card-holder:not(.component) .resource-holder {
-      position: absolute;
-      bottom: 6px;
-      right: 30px;
-      display: flex;
-      flex-flow: row-reverse; }
-      .action-card-holder:not(.component) .resource-holder .caverna-meeple {
-        margin: auto 0 auto -0.3em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple.meeple-sheep {
-          margin-left: -0.6em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple.meeple-pig {
-          margin-left: -0.7em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple.meeple-cattle {
-          margin-left: -0.7em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple:last-child {
-          margin: 0; }
-      .action-card-holder:not(.component) .resource-holder::before {
-        right: -13px; }
 
 /**
  * TOOLTIPS
@@ -3295,8 +2995,8 @@ html {
   background-image: url("img/meeples.png");
   background-repeat: no-repeat; }
   .caverna-meeple.meeple-score {
-    width: 0.8em;
-    height: 1em;
+    width: 0.7em;
+    height: 0.93em;
     background-position: 41.1215% 0%;
     background-size: 609.524%; }
   .caverna-meeple.meeple-gold {

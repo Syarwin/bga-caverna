@@ -90,7 +90,7 @@
 
 #central-board {
   width: 830px;
-  height: 795px;
+  //  height: 795px; TODO
   transform: scale(var(--cavernaCentralBoardScale));
   transform-origin: top left;
   background-image: url('img/central.png');
@@ -375,10 +375,25 @@
   // left: 30px;
 
   // TODO : remove
-  background: white;
+  width: 150px;
+  height: 180px;
+  background-color: white;
+  background-image: url('img/background_card.jpg');
+  background-size: 100% 100%;
   border: 1px solid black;
+  box-shadow: 2px 2px 6px -1px black;
   border-radius: 10px;
   position: relative;
+
+  $actionCards: 'ActionBlacksmithing' 'ActionHousework' 'ActionRubyMining' 'ActionSlash';
+  @each $cId in $actionCards {
+    $i: index($actionCards, $cId);
+    &[data-id='#{$cId}'] {
+      background-image: url('img/action_cards.jpg');
+      background-size: 400% 100%;
+      background-position-x: ($i - 1) * 100% / 3;
+    }
+  }
 
   #ebd-body:not(.help-mode) & {
     &.selectable {
@@ -398,262 +413,6 @@
 
   #ebd-body:not(.help-mode):not(.mobile_version) &.unselectable .action-card {
     filter: grayscale(75%);
-  }
-
-  /*
-   * COMPONENT ACTIONS
-   */
-  &[data-id='ActionFarmExpansion'] {
-    top: -3px;
-    height: 134px;
-    width: 115px;
-    .action-desc {
-      margin-top: -2px;
-
-      & > div {
-        font-size: 0.67em;
-        z-index: 3;
-
-        &:nth-child(4) {
-          margin: 0px auto -7px;
-        }
-      }
-    }
-  }
-
-  &[data-id='ActionFarmland'] {
-    top: 310px;
-    height: 80px;
-    width: 115px;
-    .action-desc > div {
-      font-size: 1.5em;
-    }
-  }
-
-  &[data-id='ActionGrainSeeds'] {
-    top: 220px;
-    height: 69px;
-    width: 115px;
-  }
-
-  &[data-id='ActionForest'],
-  &[data-id='ActionForestSolo'] {
-    top: 203px;
-    left: 253px;
-    width: 60px;
-    height: 86px;
-    .resource-holder {
-      left: -54px;
-      bottom: 5px;
-    }
-  }
-
-  &[data-id='ActionReedBank'] {
-    top: 411px;
-    left: 254px;
-    width: 60px;
-    height: 86px;
-    .resource-holder {
-      left: -75px;
-      bottom: 7px;
-    }
-  }
-
-  &[data-id='ActionClayPit'] {
-    top: 306px;
-    left: 175px;
-    width: 60px;
-    height: 86px;
-    .resource-holder {
-      bottom: 5px;
-      left: 92px;
-    }
-  }
-
-  &[data-id='ActionFishing'] {
-    top: 514px;
-    left: 175px;
-    width: 62px;
-    height: 86px;
-    .resource-holder {
-      bottom: 10px;
-      left: 98px;
-    }
-  }
-
-  &[data-id='ActionMeetingPlace'],
-  &[data-id='ActionMeetingPlaceSolo'],
-  &[data-id='ActionMeetingPlaceBeginner'],
-  &[data-id='ActionMeetingPlaceSoloBeginner'] {
-    left: 31px;
-    top: 134px;
-    height: 72px;
-    width: 115px;
-  }
-
-  &[data-id='ActionMeetingPlaceBeginner'] .resource-holder,
-  &[data-id='ActionMeetingPlaceSoloBeginner'] .resource-holder {
-    bottom: 7px;
-    right: -55px;
-  }
-
-  &[data-id='ActionDayLaborer'] {
-    top: 526px;
-    left: 30px;
-    height: 74px;
-    width: 115px;
-  }
-
-  &[data-id='ActionLessons'] {
-    top: 406px;
-    height: 94px;
-    width: 115px;
-
-    .action-desc > div:nth-child(1) {
-      font-size: 0.7em;
-    }
-  }
-
-  &[data-id='ActionSideJob'] {
-    top: 406px;
-    height: 94px;
-    width: 115px;
-
-    .action-desc > div:nth-child(1) {
-      font-size: 0.8em;
-    }
-  }
-
-  &[data-id='ActionGrove'] {
-    top: 110px;
-    left: 54px;
-    width: 60px;
-    height: 86px;
-
-    [data-players='4'] & {
-      top: 138px;
-    }
-
-    .resource-holder {
-      left: -51px;
-      bottom: 3px;
-    }
-  }
-
-  &[data-id='ActionResourceMarket'] {
-    top: 255px;
-    left: 4px;
-    width: 111px;
-    height: 64px;
-
-    .action-desc > div {
-      font-size: 0.7em;
-    }
-  }
-
-  &[data-id='ActionLessons3'] {
-    top: 433px;
-    left: 2px;
-    width: 115px;
-    .action-desc > div:nth-child(1) {
-      font-size: 0.7em;
-    }
-  }
-
-  &[data-id='ActionLessons4'] {
-    top: 412px;
-    left: 2px;
-    width: 115px;
-    .action-desc > div:nth-child(1) {
-      font-size: 0.7em;
-    }
-  }
-
-  &[data-id='ActionHollow'] {
-    top: 329px;
-    left: 6px;
-    width: 60px;
-    height: 86px;
-    .resource-holder {
-      left: 85px;
-      bottom: 5px;
-    }
-  }
-
-  &[data-id='ActionHollow4'] {
-    top: 313px;
-    left: 6px;
-    width: 60px;
-    height: 86px;
-    .resource-holder {
-      left: 87px;
-      bottom: 9px;
-    }
-  }
-
-  &[data-id='ActionTravelingPlayers'] {
-    top: 516px;
-    left: 53px;
-    width: 65px;
-    height: 84px;
-    .resource-holder {
-      left: -54px;
-      bottom: 1px;
-    }
-  }
-
-  &[data-id='ActionCopse'],
-  &[data-id='ActionCopseAdd'] {
-    top: 18px;
-    left: 5px;
-    width: 60px;
-    height: 83px;
-    .resource-holder {
-      left: 87px;
-      bottom: 5px;
-    }
-  }
-
-  &[data-id='ActionResourceMarket4'] {
-    top: 236px;
-    left: 5px;
-    width: 110px;
-    height: 65px;
-
-    .action-desc > div {
-      font-size: 0.65em;
-    }
-  }
-
-  &[data-id='ActionWishChildrenAdd'] {
-    top: 15px;
-    left: 44px;
-    width: 111px;
-    height: 100px;
-  }
-
-  &[data-id='ActionResourceMarketAdd'] {
-    top: 276px;
-    left: 18px;
-    width: 128px;
-    height: 77px;
-  }
-
-  &[data-id='ActionAnimalMarketAdd'] {
-    top: 158px;
-    left: 2px;
-    width: 151px;
-    height: 136px;
-  }
-
-  [data-players='2'] & {
-    &[data-id='ActionWishChildrenAdd'] {
-      top: 150px;
-    }
-
-    &[data-id='ActionAnimalMarketAdd'] {
-      top: 408px;
-    }
   }
 
   .farmer-holder {
@@ -677,7 +436,7 @@
   .resource-holder {
     position: absolute;
     // TODO : remove
-    bottom : 30px;
+    bottom: 30px;
     left: 30px;
     padding: 4px;
     font-size: 30px;
@@ -689,7 +448,6 @@
 
     .caverna-meeple {
       margin: -0.6em auto 0;
-      //filter: drop-shadow(1px 1px 1px black);
 
       &:last-child {
         margin: 0;
@@ -761,180 +519,10 @@
       font-family: var(--caverna-font-family);
       padding-top: 1px;
 
-      padding-top: 4px;
+      padding-top: 6px;
       background-image: url('img/action_frame.png');
       background-size: 100% 160px;
       height: 32px;
-    }
-
-    &.action-s .action-header {
-      background-image: url('img/action_frame_s.png');
-      background-size: 100% 143px;
-      height: 40px;
-    }
-
-    .action-desc {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      font-family: Calibri;
-      font-weight: bold;
-      font-size: 22px;
-      position: relative;
-
-      background-image: url('img/action_frame.png');
-      background-size: 100% 160px;
-      background-position: 0 -40px;
-
-      & > div {
-        margin-top: 2px;
-      }
-
-      span.text {
-        font-family: var(--caverna-font-family);
-        font-size: 0.8em;
-        font-weight: normal;
-      }
-
-      div.text-wrapper {
-        display: flex;
-        align-items: center;
-      }
-    }
-
-    &.action-s .action-desc {
-      background-image: url('img/action_frame_s.png');
-      background-size: 100% 109px;
-      background-position: 0 -32px;
-    }
-
-    .action-footer {
-      flex-shrink: 0;
-      position: relative;
-      height: 10px;
-      background-image: url('img/action_frame.png');
-      background-size: 100% 160px;
-      background-position: 0px 10px;
-    }
-
-    &.action-s .action-footer {
-      background-image: url('img/action_frame_s.png');
-      background-size: 100% 109px;
-      background-position: 0px 10px;
-    }
-
-    &.accumulate-bottom {
-      .action-footer::before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 26px;
-        height: 30px;
-        background-image: url('img/action_frame_arrow.png');
-        background-size: 100%;
-        top: 7px;
-        left: calc(50% - 13px);
-      }
-    }
-
-    &.accumulate-left,
-    &.accumulate-right {
-      .action-desc::before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 26px;
-        height: 30px;
-        background-image: url('img/action_frame_arrow.png');
-        background-size: 100%;
-        top: calc(50% - 13px);
-      }
-    }
-
-    &.accumulate-left .action-desc::before {
-      left: -23px;
-      transform: rotate(90deg);
-    }
-    &.accumulate-right .action-desc::before {
-      right: -23px;
-      transform: rotate(-90deg);
-    }
-  }
-
-  /*
-   * REAL ACTION CARDS
-   */
-  &:not(.component) {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    left: 0;
-    background: url('img/actions_background.png');
-    background-size: 500% 300%;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    margin-top: -1px;
-    margin-left: -1px;
-
-    $actionCards: 'ActionFencing' 'ActionSheepMarket' 'ActionGrainUtilization' 'ActionMajorImprovement'
-      'ActionWesternQuarry' 'ActionPigMarket' 'ActionVegetableSeeds' 'ActionEasternQuarry' 'ActionCattleMarket'
-      'ActionWishChildren' 'ActionUrgentWishChildren' 'ActionCultivation' 'ActionHouseRedevelopment'
-      'ActionFarmRedevelopment';
-    @each $cId in $actionCards {
-      $i: index($actionCards, $cId);
-      &[data-id='#{$cId}'] {
-        background-position-x: (($i - 1) % 5) * 100% / 4;
-        background-position-y: (($i - 1 - ($i - 1) % 5) / 5) * 100% / 2;
-      }
-    }
-
-    &[data-id='ActionMajorImprovementBeginner'] {
-      background-position-x: 75%;
-      background-position-y: 0%;
-    }
-    &[data-id='ActionWishChildrenBeginner'] {
-      background-position-x: 100%;
-      background-position-y: 50%;
-    }
-    &[data-id='ActionHouseRedevelopmentBeginner'] {
-      background-position-x: 50%;
-      background-position-y: 100%;
-    }
-
-    .action-card {
-      width: 100%;
-      height: auto;
-    }
-
-    .resource-holder {
-      position: absolute;
-      bottom: 6px;
-      right: 30px;
-      display: flex;
-      flex-flow: row-reverse;
-
-      .caverna-meeple {
-        margin: auto 0 auto -0.3em;
-        &.meeple-sheep {
-          margin-left: -0.6em;
-        }
-        &.meeple-pig {
-          margin-left: -0.7em;
-        }
-        &.meeple-cattle {
-          margin-left: -0.7em;
-        }
-
-        &:last-child {
-          margin: 0;
-        }
-      }
-
-      &::before {
-        right: -13px;
-      }
     }
   }
 }
