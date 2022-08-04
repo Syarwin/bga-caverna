@@ -277,14 +277,13 @@ class Meeples extends \CAV\Helpers\Pieces
   /**
    * Return seeds on fields
    */
-  public function getGrowingCrops($pId, $fieldCards = [])
+  public function getGrowingCrops($pId)
   {
-    $type = [VEGETABLE, GRAIN, STONE, WOOD];
-    $locations = array_merge($fieldCards, ['board']);
+    $type = [VEGETABLE, GRAIN];
     return self::getSelectQuery()
       ->wherePlayer($pId)
       ->whereIn('type', $type)
-      ->whereIn('meeple_location', $locations)
+      ->where('meeple_location', 'board')
       ->get();
   }
 

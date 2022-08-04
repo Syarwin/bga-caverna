@@ -47,8 +47,9 @@ class ActionCard extends \CAV\Helpers\DB_Model
       'state' => $this->state,
       'tooltip' => $this->tooltip,
 
+      'accumulate' => count($this->accumulation) > 0,
       'component' => $this->isBoardComponent(),
-      // 'desc' => $this->desc,
+      'desc' => $this->desc,
       'container' => $this->container,
     ];
   }
@@ -65,7 +66,9 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
   public function getInitialLocation()
   {
-    return $this->stage == 0 ? 'board' : ['deck', $this->stage];
+    // TODO
+    return 'board';
+//    return $this->stage == 0 ? 'board' : ['deck', $this->stage];
   }
 
   public function getTurn()

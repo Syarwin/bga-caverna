@@ -13,7 +13,7 @@
 
   #main-boards {
     width: 100%;
-    height: calc(var(--cavernaCentralBoardScale) * 795px);
+//    height: calc(var(--cavernaCentralBoardScale) * 795px);
     display: flex;
 
     [data-additional='1'][data-players='4'] & {

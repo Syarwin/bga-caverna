@@ -56,45 +56,48 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       // Add extra info
       card.description = this.formatCardDesc(card.desc);
       card.tooltipText = card.tooltip.map((s) => _(s)).join('<br />');
-      card.tooltipDescription = this.formatCardDesc(card.tooltipDesc);
+      card.tooltipDescription = card.description; // TODO : this.formatCardDesc(card.tooltipDesc);
 
       // Place it
       let addTooltip = () => {
-        let method = card.component? "tplActionComponentTooltip"  : "tplActionCardTooltip";
-        this.addCustomTooltip(card.id, this[method](card));
+        this.addCustomTooltip(card.id, this.tplActionCardTooltip(card));
       };
 
-      if (card.component) {
-        this.place('tplActionCard', card, card.container + '-board');
-        addTooltip();
-      } else {
-        if (flip) {
-          let target = $(card.location).querySelector('.turn-number');
-          if (this.isFastMode()) {
-            this.flipAndReplace(target, this.tplActionCard(card));
-            addTooltip();
-          } else {
-            this.flipAndReplace(target, this.tplActionCard(card)).then(addTooltip);
-          }
-        } else {
-          let target = $(card.location).querySelector('.turn-number');
-          dojo.destroy(target); // Remove turn number slot
-          this.place('tplActionCard', card, card.location);
-          addTooltip();
-        }
-      }
+      this.place('tplActionCard', card, card.container + '-board');
+      addTooltip();
+
+
+      // TODO
+      // if (card.component) {
+      //   this.place('tplActionCard', card, card.container + '-board');
+      //   addTooltip();
+      // } else {
+      //   if (flip) {
+      //     let target = $(card.location).querySelector('.turn-number');
+      //     if (this.isFastMode()) {
+      //       this.flipAndReplace(target, this.tplActionCard(card));
+      //       addTooltip();
+      //     } else {
+      //       this.flipAndReplace(target, this.tplActionCard(card)).then(addTooltip);
+      //     }
+      //   } else {
+      //     let target = $(card.location).querySelector('.turn-number');
+      //     dojo.destroy(target); // Remove turn number slot
+      //     this.place('tplActionCard', card, card.location);
+      //     addTooltip();
+      //   }
+      // }
     },
 
     /**
      * Format action card desc
      */
     formatCardDesc(desc) {
-      return '';
-      // return desc
-      //   .map((s) => _(s))
-      //   .map((s) => s.replace(/__([^_]+)__/g, '<span class="action-card-name-reference">$1</span>'))
-      //   .map((s) => '<div>' + this.formatStringMeeples(s) + '</div>')
-      //   .join('');
+      return desc
+        .map((s) => _(s))
+        .map((s) => s.replace(/__([^_]+)__/g, '<span class="action-card-name-reference">$1</span>'))
+        .map((s) => '<div>' + this.formatStringMeeples(s) + '</div>')
+        .join('');
     },
 
     /**
@@ -139,44 +142,21 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Template for action card
      */
     tplActionCard(card) {
-      let accumulate = card.accumulate != '' ? 'accumulate-' + card.accumulate : '';
       let component = card.component ? 'component' : '';
       return (
         `
       <div id="${card.id}" data-id="${card.id}" class="action-card-holder ${component}">
         <div class="dwarf-holder resource-holder-update" data-n="0"></div>
-        <div class="action-card ${accumulate} action-${card.size}">
+        <div class="action-card">
           <h4 class="action-header">${_(card.name)}</h4>
           <div class="action-desc">${card.description}</div>
-          <div class="action-footer"></div>
         </div>
         ` +
-        (card.accumulate != '' ? "<div class='resource-holder resource-holder-update'></div>" : '') +
+        (card.accumulate ? "<div class='resource-holder resource-holder-update'></div>" : '') +
         `
       </div>
       `
       );
-    },
-
-    /**
-     * Template for tooltip
-     */
-    tplActionComponentTooltip(card) {
-      let accumulate = card.accumulate != '' ? 'accumulate-' + card.accumulate : '';
-      return `
-          <div class="action-component-tooltip">
-            <div class="action-holder" data-id="${card.id}">
-              <div id="${card.id}" data-id="${card.id}" class="action-card-holder component">
-                <div class="action-card ${accumulate} action-${card.size}">
-                  <h4 class="action-header">${_(card.name)}</h4>
-                  <div class="action-desc">${card.description}</div>
-                  <div class="action-footer"></div>
-                </div>
-              </div>
-            </div>
-            ${card.tooltipText}
-          </div>
-          `;
     },
 
     /**

@@ -85,7 +85,7 @@
 
 #central-board-holder {
   width: calc(var(--cavernaCentralBoardScale) * 830px);
-  height: calc(var(--cavernaCentralBoardScale) * 795px);
+  //  height: calc(var(--cavernaCentralBoardScale) * 795px);
 }
 
 #central-board {
@@ -99,41 +99,42 @@
 
   // TODO : remove
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   grid-row-gap: 5px;
   grid-column-gap: 5px;
+  grid-template-columns: repeat(5, 1fr);
 
-  #modal-buttons-holder {
-    position: absolute;
-    left: 679px;
-    top: 326px;
-    background-image: url('img/action_frame_bg.jpg');
-    background-size: 100% 10px;
-    box-shadow: 2px 2px 5px -1px black;
-    background-color: transparent;
-    border-radius: 13px;
-    padding: 7px;
-    display: flex;
-    border: 2px solid black;
-
-    #majors-button,
-    #hand-button {
-      position: relative;
-      width: 60px;
-      height: 60px;
-      background-image: url('img/majors_icon.png');
-      background-size: 100%;
-      cursor: pointer;
-
-      &:hover {
-        transform: scale(1.1);
-      }
-    }
-    #hand-button {
-      background-image: url('img/hand_icon.png');
-      margin-left: 10px;
-    }
-  }
+  // TODO
+  // #modal-buttons-holder {
+  //   position: absolute;
+  //   left: 679px;
+  //   top: 326px;
+  //   background-image: url('img/action_frame_bg.jpg');
+  //   background-size: 100% 10px;
+  //   box-shadow: 2px 2px 5px -1px black;
+  //   background-color: transparent;
+  //   border-radius: 13px;
+  //   padding: 7px;
+  //   display: flex;
+  //   border: 2px solid black;
+  //
+  //   #majors-button,
+  //   #hand-button {
+  //     position: relative;
+  //     width: 60px;
+  //     height: 60px;
+  //     background-image: url('img/majors_icon.png');
+  //     background-size: 100%;
+  //     cursor: pointer;
+  //
+  //     &:hover {
+  //       transform: scale(1.1);
+  //     }
+  //   }
+  //   #hand-button {
+  //     background-image: url('img/hand_icon.png');
+  //     margin-left: 10px;
+  //   }
+  // }
 
   .turn-action-container {
     width: 140px;
@@ -141,126 +142,6 @@
     position: absolute;
     // TODO : remove
     display: none;
-
-    &#turn_1 {
-      left: 167px;
-      top: 2px;
-    }
-    &#turn_2 {
-      left: 331px;
-      top: 1px;
-    }
-    &#turn_3 {
-      left: 493px;
-      top: 1px;
-    }
-    &#turn_4 {
-      left: 657px;
-      top: 1px;
-    }
-
-    &#turn_5 {
-      top: 156px;
-      left: 330px;
-    }
-    &#turn_6 {
-      top: 156px;
-      left: 493px;
-    }
-    &#turn_7 {
-      top: 156px;
-      left: 657px;
-    }
-
-    &#turn_8 {
-      top: 311px;
-      left: 330px;
-    }
-    &#turn_9 {
-      top: 311px;
-      left: 493px;
-    }
-
-    &#turn_10 {
-      top: 462px;
-      left: 330px;
-    }
-    &#turn_11 {
-      top: 462px;
-      left: 493px;
-    }
-
-    &#turn_12 {
-      top: 626px;
-      left: 6px;
-    }
-    &#turn_13 {
-      top: 626px;
-      left: 172px;
-    }
-
-    &#turn_14 {
-      top: 626px;
-      left: 489px;
-    }
-
-    .turn-number {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0.4;
-      width: 100%;
-      height: 100%;
-      background-image: url('img/back_numbers.png');
-      background-size: 600% 100%;
-      z-index: 1;
-
-      .help-marker {
-        opacity: 1;
-        pointer-events: all;
-        bottom: 11%;
-        right: 11%;
-        left: auto;
-        top: auto;
-      }
-
-      .turn-number-indication {
-        position: absolute;
-        bottom: 13px;
-        right: 9%;
-        height: 24px;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 13px;
-        border: 1px solid #004f00;
-        font-size: 17px;
-        line-height: 24px;
-        padding-right: 26px;
-        padding-left: 7px;
-      }
-    }
-
-    &#turn_5,
-    &#turn_6,
-    &#turn_7 {
-      .turn-number {
-        background-position-x: 20%;
-      }
-    }
-    &#turn_8 .turn-number,
-    &#turn_9 .turn-number {
-      background-position-x: 40%;
-    }
-    &#turn_10 .turn-number,
-    &#turn_11 .turn-number {
-      background-position-x: 60%;
-    }
-    &#turn_12 .turn-number,
-    &#turn_13 .turn-number {
-      background-position-x: 80%;
-    }
-    &#turn_14 .turn-number {
-      background-position-x: 100%;
-    }
 
     .future-resources-holder {
       position: absolute;
@@ -304,6 +185,7 @@
         &[data-color='7b7b7b'] {
           background-color: #b3acac7d;
         }
+        // TODO
       }
     }
 
@@ -322,39 +204,6 @@
     width: 35px;
     height: 28px;
     z-index: 12;
-
-    &#harvest-slot-4 {
-      top: 64px;
-      left: 788px;
-    }
-    &#harvest-slot-7 {
-      top: 213px;
-      left: 787px;
-    }
-    &#harvest-slot-9 {
-      top: 370px;
-      left: 630px;
-    }
-    &#harvest-slot-11 {
-      top: 532px;
-      left: 632px;
-    }
-    &#harvest-slot-13 {
-      top: 663px;
-      left: 302px;
-    }
-    &#harvest-slot-14 {
-      top: 688px;
-      left: 617px;
-    }
-
-    $harvestTurns: 4 7 9 11 13 14;
-    @each $turn in $harvestTurns {
-      [data-turn='#{$turn}'] &#harvest-slot-#{$turn}:not(:empty) {
-        background-color: #fff563;
-        border: 1px solid black;
-      }
-    }
   }
 }
 
@@ -385,20 +234,25 @@
   border-radius: 10px;
   position: relative;
 
-  $actionCards: 'ActionBlacksmithing' 'ActionHousework' 'ActionRubyMining' 'ActionSlash';
+  $actionCards: 'ActionAdventure' 'ActionBlacksmithing' 'ActionDepot' 'ActionDonkeyFarming' 'ActionDriftMining'
+    'ActionExploration' 'ActionFamilyLife' 'ActionFenceBuilding' 'ActionHardwareRental' 'ActionHousework'
+    'ActionImitation' 'ActionOreDelivery' 'ActionOreMineConstruction' 'ActionOreTrading' 'ActionRubyDelivery'
+    'ActionRubyMineConstruction' 'ActionRubyMining' 'ActionSheepFarming' 'ActionSlash' 'ActionSmallDriftMining'
+    'ActionUrgentWish' 'ActionWeeklyMarket' 'ActionWishChildren';
   @each $cId in $actionCards {
-    $i: index($actionCards, $cId);
+    $i: index($actionCards, $cId) - 1;
     &[data-id='#{$cId}'] {
       background-image: url('img/action_cards.jpg');
-      background-size: 400% 100%;
-      background-position-x: ($i - 1) * 100% / 3;
+      background-size: 500% 500%;
+      background-position-x: ($i % 5) * 100% / 4;
+      background-position-y: (($i - ($i % 5)) / 5) * 100% / 4;
     }
   }
 
   #ebd-body:not(.help-mode) & {
     &.selectable {
       cursor: pointer;
-      &:hover .action-card {
+      &:hover {
         transform: scale(1.15);
       }
       .action-card {
@@ -411,7 +265,7 @@
     cursor: not-allowed;
   }
 
-  #ebd-body:not(.help-mode):not(.mobile_version) &.unselectable .action-card {
+  #ebd-body:not(.help-mode):not(.mobile_version) &.unselectable {
     filter: grayscale(75%);
   }
 
@@ -509,20 +363,146 @@
     */
 
     .action-header {
+      padding-top: 4px;
+      height: 32px;
       flex-shrink: 0;
       margin: 0;
-      text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
       font-family: var(--caverna-font-family);
-      padding-top: 1px;
+    }
 
-      padding-top: 6px;
-      background-image: url('img/action_frame.png');
-      background-size: 100% 160px;
-      height: 32px;
+    .action-desc {
+      font-size: 11px;
+      font-family: var(--caverna-font-family);
+    }
+  }
+  &[data-id='ActionRubyMining'] {
+    .action-desc {
+      margin-top: 34px;
+
+      & > div:nth-child(1) {
+        text-align: center;
+        margin-left: 6px;
+        width: 53px;
+        height: 35px;
+        font-size: 7px;
+        line-height: 10px;
+      }
+      & > div:nth-child(2) {
+        text-align: right;
+        margin-top: 33px;
+        margin-left: 5px;
+        width: 67px;
+        font-size: 10px;
+        line-height: 10px;
+      }
+    }
+
+    .resource-holder {
+      bottom: 83px;
+      left: 92px;
+    }
+  }
+  &[data-id='ActionHousework'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 58px;
+    }
+  }
+
+  &[data-id='ActionBlacksmithing'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 65px;
+    }
+  }
+  &[data-id='ActionOreMineConstruction'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 65px;
+    }
+  }
+  &[data-id='ActionSheepFarming'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 72px;
+    }
+
+    .resource-holder {
+      bottom: 12px;
+      left: 92px;
+    }
+  }
+  &[data-id='ActionDonkeyFarming'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 72px;
+    }
+
+    .resource-holder {
+      bottom: 12px;
+      left: 92px;
+    }
+  }
+  &[data-id='ActionRubyMineConstruction'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 65px;
+    }
+  }
+  &[data-id='ActionOreDelivery'] {
+    .action-desc {
+      margin-top: 102px;
+      & > div:nth-child(1) {
+        text-align: right;
+        margin-left: 5px;
+        width: 72px;
+        font-size: 14px;
+      }
+    }
+
+    .resource-holder {
+      bottom: 83px;
+      left: 92px;
+    }
+  }
+  &[data-id='ActionFamilyLife'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 65px;
+    }
+  }
+  &[data-id='ActionAdventure'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 71px;
+    }
+  }
+  &[data-id='ActionRubyDelivery'] {
+    .action-desc {
+      margin-top: 102px;
+
+      & > div:nth-child(1) {
+        text-align: right;
+        margin-left: 5px;
+        width: 67px;
+        font-size: 10px;
+        line-height: 10px;
+      }
+    }
+
+    .resource-holder {
+      bottom: 83px;
+      left: 92px;
+    }
+  }
+  &[data-id='ActionSlash'] {
+    .action-desc {
+      text-align: center;
+      margin-top: 63px;
     }
   }
 }
@@ -534,131 +514,20 @@
   display: flex;
 }
 
-.action-component-tooltip {
+.action-card-tooltip {
+  display: flex;
+
   .action-holder {
-    .component {
+    height: 280px;
+    width: 250px;
+    flex-shrink: 0;
+    margin-right: 5px;
+
+    .action-card-holder {
       position: initial;
       transform: scale(1.5);
       transform-origin: top center;
       margin: auto;
     }
-
-    width: 200px;
-    height: 140px;
-    margin-bottom: 10px;
-
-    &[data-id='ActionFarmExpansion'] {
-      height: 221px;
-    }
-    &[data-id='ActionFarmland'] {
-      height: 126px;
-    }
-
-    &[data-id='ActionGrainSeeds'] {
-      height: 107px;
-    }
-
-    &[data-id='ActionForest'],
-    &[data-id='ActionForestSolo'] {
-      height: 135px;
-    }
-
-    &[data-id='ActionReedBank'] {
-      height: 135px;
-    }
-
-    &[data-id='ActionClayPit'] {
-      height: 135px;
-    }
-
-    &[data-id='ActionFishing'] {
-      height: 135px;
-      width: 110px;
-    }
-
-    &[data-id='ActionMeetingPlace'],
-    &[data-id='ActionMeetingPlaceBeginner'] {
-      height: 120px;
-    }
-
-    &[data-id='ActionDayLaborer'] {
-      height: 112px;
-    }
-
-    &[data-id='ActionLessons'] {
-      height: 150px;
-    }
-
-    &[data-id='ActionWishChildrenAdd'] {
-      height: 160px;
-    }
-
-    &[data-id='ActionResourceMarketAdd'] {
-      height: 120px;
-    }
-
-    &[data-id='ActionAnimalMarketAdd'] {
-      width: 240px;
-      height: 210px;
-    }
-
-    &[data-id='ActionSideJob'] {
-      height: 160px;
-    }
-  }
-}
-
-.action-card-tooltip {
-  display: flex;
-  max-width: 450px;
-
-  .action-card-holder {
-    background-image: url('img/actions.jpg');
-    width: 230px;
-    height: 355px;
-    background-size: 500% 300%;
-
-    .action-card {
-      align-items: center;
-
-      .action-header {
-        background: none;
-        margin-top: 18px;
-        height: 36px;
-        font-size: 17px;
-        padding-top: 7px;
-      }
-
-      .action-desc {
-        background: none;
-        margin-top: 5px;
-        font-size: 33px;
-        width: 80%;
-
-        & > div {
-          margin: 4.5px auto;
-        }
-
-        .text {
-          font-size: 0.5em;
-          display: inline-block;
-          text-align: center;
-        }
-      }
-    }
-
-    &[data-id='ActionWishChildren'],
-    &[data-id='ActionUrgentWishChildren'],
-    &[data-id='ActionWishChildrenBeginner'] {
-      .action-header {
-        height: 52px;
-      }
-    }
-  }
-
-  .card-tooltip-text {
-    font-size: 15px;
-    text-align: justify;
-    margin: 15px 7px 0px 2px;
   }
 }
