@@ -175,6 +175,7 @@ const WEAPON = 'weapon';
 const TILE_CAVERN_TUNNEL = 'tileCavernTunnel';
 const TILE_CAVERN_CAVERN = 'tileCavernCavern';
 const TILE_MEADOW_FIELD = 'tileMeadowField';
+const CAVE_TILES = [TILE_CAVERN_CAVERN, TILE_CAVERN_TUNNEL];
 
 // State to differentiate chah beh oui !ildren from grown ups
 const ADULT = 0;

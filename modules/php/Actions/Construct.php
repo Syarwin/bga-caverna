@@ -13,7 +13,7 @@ class Construct extends \CAV\Models\Action
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->description = clienttranslate('Build rooms');
+    $this->description = clienttranslate('Build tiles');
   }
 
   public function getState()
@@ -36,7 +36,8 @@ class Construct extends \CAV\Models\Action
   public function isDoable($player, $ignoreResources = false)
   {
     // The player must be able to buy at least one room and have an empty spot
-    return ($ignoreResources || $player->canBuy($this->getCosts($player))) && $player->board()->canConstruct();
+    return ($ignoreResources || $player->canBuy($this->getCosts($player))) &&
+      $player->board()->canConstruct($this->getCtxArgs()['tiles'] ?? []);
   }
 
   public function getMaxBuildableRooms($player)

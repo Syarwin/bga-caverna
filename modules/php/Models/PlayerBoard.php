@@ -410,6 +410,7 @@ class PlayerBoard
   /**
    * Return all nodes that could receive a specific type, ie free and adjacent to existing same type
    * Used for fields and buildings that share similar constraints
+   * Buildings must be in the same zone (forest / cave)
    */
   protected function getAdjacentZones($existingNodes)
   {
@@ -455,9 +456,26 @@ class PlayerBoard
     return $this->getAdjacentZones($this->buildings);
   }
 
-  public function canConstruct()
+  public function canConstruct($tiles = [])
   {
-    return !empty($this->getBuildableZones());
+    $zones = [];
+    if ($tiles == []) {
+      return !empty($this->getBuildableZones());
+    }
+    foreach ($tiles as $tile) {
+      if (in_array($tile, \CAVE_TILES)) {
+        $zones['cave'] = true;
+      } else {
+        $zones['forest'] = true;
+      }
+    }
+    if (count(array_keys($zones)) == 2) {
+      return !empty($this->getBuildableZones());
+    } elseif ($zones['cave'] ?? null == true) {
+      return !empty($this->getBuildableZones('cave'));
+    } else {
+      return !empty($this->getBuildableZones('forest'));
+    }
   }
 
   /**

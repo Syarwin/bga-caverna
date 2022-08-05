@@ -29,7 +29,17 @@ class Expedition extends \CAV\Models\Action
     'pig' => ['lvl' => 5, 'flow' => ['action' => GAIN, 'args' => [\PIG => 1]]],
     'gold' => ['lvl' => 6, 'flow' => ['action' => GAIN, 'args' => [\GOLD => 2]]],
     'furnish' => ['lvl' => 7, 'flow' => ['action' => FURNISH]], // TODO check
-    'stable' => ['lvl' => 8, 'flow' => ['action' => STABLES]],
+    'stable' => [
+      'lvl' => 8,
+      'flow' => [
+        'action' => STABLES,
+        'args' => [
+          'costs' => [
+            'trades' => [[STONE => 1, 'max' => 1]],
+          ],
+        ],
+      ],
+    ],
     'tunnel' => ['lvl' => 9, 'flow' => ['action' => CONSTRUCT]], // TODO check
     'smallPasture' => [
       'lvl' => 9,
