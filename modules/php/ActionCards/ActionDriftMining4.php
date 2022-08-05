@@ -9,6 +9,7 @@ class ActionDriftMining4 extends \CAV\Models\ActionCard
     $this->id = 'ActionDriftMining4';
     $this->actionCardType = 'ActionDriftMining';
     $this->name = clienttranslate('Drift Mining');
+    $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [
       clienttranslate(
         'Take all the Stone that has accumulated on this Action space. (2 Stone will be added to this Action space every round)'

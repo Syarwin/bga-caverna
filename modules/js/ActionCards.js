@@ -66,7 +66,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.place('tplActionCard', card, card.container + '-board');
       addTooltip();
 
-
       // TODO
       // if (card.component) {
       //   this.place('tplActionCard', card, card.container + '-board');
@@ -149,7 +148,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         <div class="dwarf-holder resource-holder-update" data-n="0"></div>
         <div class="action-card">
           <h4 class="action-header">${_(card.name)}</h4>
-          <div class="action-desc">${card.description}</div>
+          <div class="action-background">
+            <div class="action-desc">${card.description}</div>
+          </div>
         </div>
         ` +
         (card.accumulate ? "<div class='resource-holder resource-holder-update'></div>" : '') +
@@ -165,11 +166,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     tplActionCardTooltip(card) {
       return `
       <div class="action-card-tooltip">
-        <div class="action-holder" data-id="${card.id}">
+        <div class="action-holder">
           <div data-id="${card.id}" class="action-card-holder">
             <div class="action-card">
               <h4 class="action-header">${_(card.name)}</h4>
-              <div class="action-desc">${card.tooltipDescription}</div>
+              <div class="action-background">
+                <div class="action-desc">${card.tooltipDescription}</div>
+              </div>
             </div>
           </div>
         </div>

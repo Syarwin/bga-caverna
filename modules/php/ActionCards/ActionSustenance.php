@@ -8,6 +8,7 @@ class ActionSustenance extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionSustenance';
     $this->name = clienttranslate('Sustenance');
+    $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [
       clienttranslate(
         'Take all the food markers that have accumulated on this Action space. (1 Food will be added to this Action space every round)'

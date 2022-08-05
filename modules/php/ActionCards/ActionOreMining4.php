@@ -9,6 +9,7 @@ class ActionOreMining4 extends \CAV\Models\ActionCard
     $this->id = 'ActionOreMining4';
     $this->actionCardType = 'ActionOreMining';
     $this->name = clienttranslate('Ore Mining');
+    $this->desc = [clienttranslate('for each')];
     $this->tooltip = [
       clienttranslate(
         'Take all the Ore that has accumulated on this Action space. (2 Ore will be added to this Action space every round unless it is empty. Then 3 Ore will be added to it instead.)'

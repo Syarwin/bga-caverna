@@ -28,7 +28,7 @@ class ActionOreTrading extends \CAV\Models\ActionCard
           'childs' => [
             [
               'action' => PAY,
-              'args' => ['costs' => Utils::formatCost([ORE => 2])],
+              'args' => ['nb' => 1, 'costs' => Utils::formatCost([ORE => 2])],
             ],
             [
               'action' => GAIN,
@@ -41,7 +41,7 @@ class ActionOreTrading extends \CAV\Models\ActionCard
           'childs' => [
             [
               'action' => PAY,
-              'args' => ['costs' => Utils::formatCost([ORE => 4])],
+              'args' => ['nb' => 1, 'costs' => Utils::formatCost([ORE => 4])],
             ],
             [
               'action' => GAIN,
@@ -54,7 +54,7 @@ class ActionOreTrading extends \CAV\Models\ActionCard
           'childs' => [
             [
               'action' => PAY,
-              'args' => ['costs' => Utils::formatCost([ORE => 6])],
+              'args' => ['nb' => 1, 'costs' => Utils::formatCost([ORE => 6])],
             ],
             [
               'action' => GAIN,

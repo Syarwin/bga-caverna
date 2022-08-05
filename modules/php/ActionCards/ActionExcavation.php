@@ -8,6 +8,7 @@ class ActionExcavation extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionExcavation';
     $this->name = clienttranslate('Excavation');
+    $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [
       clienttranslate(
         'Take all the Stone that has accumulated on this Action space. (1 Stone will be added to this Action space every round)'
