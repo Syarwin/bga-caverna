@@ -21,6 +21,18 @@
     margin-right: 2px !important;
   }
 
+  .player_score {
+    display: flex;
+    align-items: center;
+
+    .fa.fa-star {
+      display: none;
+    }
+    .player-resource.resource-gold {
+      margin-left: 3px;
+    }
+  }
+
   .player_board_inner {
     padding: 13px 10px 0px;
 

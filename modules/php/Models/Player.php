@@ -33,11 +33,22 @@ class Player extends \CAV\Helpers\DB_Model
     'zombie' => 'player_zombie',
   ];
 
+  // Cached attribute
+  public function board()
+  {
+    if ($this->board == null) {
+      $this->board = new PlayerBoard($this);
+    }
+    return $this->board;
+  }
+
   public function jsonSerialize($currentPlayerId = null)
   {
     $data = parent::jsonSerialize();
     $current = $this->id == $currentPlayerId;
     $data['harvestCost'] = 4; // TODO
+    $data['board'] = $this->board()->getUiData();
+
 
     return $data;
   }
@@ -91,6 +102,43 @@ class Player extends \CAV\Helpers\DB_Model
     return Dwarves::hasInReserve($this->id);
   }
 
+  ////////////////////////////////////////////////////
+  //  ____        _ _     _ _
+  // | __ ) _   _(_) | __| (_)_ __   __ _ ___
+  // |  _ \| | | | | |/ _` | | '_ \ / _` / __|
+  // | |_) | |_| | | | (_| | | | | | (_| \__ \
+  // |____/ \__,_|_|_|\__,_|_|_| |_|\__, |___/
+  //                                |___/
+  ////////////////////////////////////////////////////
+
+  public function getBuildings($type = null, $playedOnly = false)
+  {
+    return Buildings::getOfPlayer($this->id)->filter(function ($building) use ($type, $playedOnly) {
+      return ($type == null || $building->getType() == $type) && (!$playedOnly || $building->isPlayed());
+    });
+  }
+
+  public function getPlayedBuildings($type = null)
+  {
+    return $this->getBuildings($type, true);
+  }
+
+  public function hasPlayedBuilding($buildingId)
+  {
+    return $this->getPlayedBuildings()->reduce(function ($carry, $building) use ($buildingId) {
+      return $carry || $building->getId() == $buildingId;
+    }, false);
+  }
+
+  public function countOreMines()
+  {
+    return 0; // TODO
+  }
+  public function countRubyMines()
+  {
+    return 0; // TODO
+  }
+
   ////////////////////////////////////////////////////////////
   //  _   _ _   _  ____ _   _ _____ ____ _  _______ ____
   // | | | | \ | |/ ___| | | | ____/ ___| |/ / ____|  _ \
@@ -123,18 +171,6 @@ class Player extends \CAV\Helpers\DB_Model
   //   return $data;
   // }
 
-  public function board()
-  {
-    if ($this->board == null) {
-      $this->board = new PlayerBoard($this);
-    }
-    return $this->board;
-  }
-
-  public function countRooms()
-  {
-    return Meeples::countRooms($this->id);
-  }
 
   public function countReserveResource($type)
   {
@@ -172,26 +208,22 @@ class Player extends \CAV\Helpers\DB_Model
     return Meeples::getReserveResource($this->id, $type);
   }
 
+  public function useResource($resource, $amount)
+  {
+    return Meeples::useResource($this->id, $resource, $amount);
+  }
+
+  public function payResourceTo($pId, $resource, $amount)
+  {
+    return Meeples::payResourceTo($this->id, $resource, $amount, $pId);
+  }
+
   public function getExchangeResources()
   {
     $reserve = $this->getAllReserveResources();
     $reserve = $this->countAnimalsOnBoard($reserve); // Add animals, even if they are not in reserve
     return $reserve;
   }
-
-  public function countOreMines()
-  {
-    return 0; // TODO
-  }
-  public function countRubyMines()
-  {
-    return 0; // TODO
-  }
-
-  // public function getRoomType()
-  // {
-  //   return Meeples::getRoomType($this->id);
-  // }
 
   public function countStablesInReserve()
   {
@@ -206,35 +238,6 @@ class Player extends \CAV\Helpers\DB_Model
   public function getNextCropToSow($type)
   {
     return Meeples::getReserveResource($this->id, $type)->first();
-  }
-
-  // public function countOccupations()
-  // {
-  //   return $this->getCards(OCCUPATION, true)->count();
-  // }
-  //
-  // public function countAllImprovements()
-  // {
-  //   return $this->getBuildings(MAJOR, true)->count() + $this->getBuildings(MINOR, true)->count();
-  // }
-
-  public function getBuildings($type = null, $playedOnly = false)
-  {
-    return Buildings::getOfPlayer($this->id)->filter(function ($building) use ($type, $playedOnly) {
-      return ($type == null || $building->getType() == $type) && (!$playedOnly || $building->isPlayed());
-    });
-  }
-
-  public function getPlayedBuildings($type = null)
-  {
-    return $this->getBuildings($type, true);
-  }
-
-  public function hasPlayedBuilding($buildingId)
-  {
-    return $this->getPlayedBuildings()->reduce(function ($carry, $building) use ($buildingId) {
-      return $carry || $building->getId() == $buildingId;
-    }, false);
   }
 
   // public function canCook()
@@ -263,16 +266,6 @@ class Player extends \CAV\Helpers\DB_Model
     Utils::filterExchanges($exchanges, $trigger, $removeAnytime);
 
     return $exchanges;
-  }
-
-  public function useResource($resource, $amount)
-  {
-    return Meeples::useResource($this->id, $resource, $amount);
-  }
-
-  public function payResourceTo($pId, $resource, $amount)
-  {
-    return Meeples::payResourceTo($this->id, $resource, $amount, $pId);
   }
 
   /************************

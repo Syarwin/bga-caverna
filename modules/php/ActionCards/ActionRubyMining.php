@@ -8,6 +8,7 @@ class ActionRubyMining extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionRubyMining';
     $this->name = clienttranslate('Ruby Mining');
+    $this->desc = [clienttranslate('with 2 players only from round 3 on'), clienttranslate('if you have at least')];
     $this->tooltip = [
       clienttranslate(
         'Take all the Ruby that has accumulated on this Action space. (1 Ruby will be added to this Action space every round.)'

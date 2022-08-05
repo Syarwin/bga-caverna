@@ -8,6 +8,7 @@ class ActionSlash extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionSlash';
     $this->name = clienttranslate('Slash-and-burn');
+    $this->desc = [clienttranslate('and then / or')];
     $this->tooltip = [
       clienttranslate(
         'Place a Meadow/Field twin tile on 2 adjacent empty Forest spaces of your Home board that are not covered by any tiles.'
@@ -24,7 +25,6 @@ class ActionSlash extends \CAV\Models\ActionCard
       ),
     ];
 
-    $this->accumulation = [WOOD => 1];
     $this->flow = [
       'type' => NODE_SEQ,
       'childs' => [

@@ -28,8 +28,8 @@ class PlayerBoard
 {
   protected $player = null;
   protected $pId = null;
-  protected $grid = []; // 10x6 grid that holds 'nodes' (room/field/empty) + 'edges' (fences) + virtual intersections
-  protected $fences = [];
+  protected $grid = []; // grid that holds 'nodes' (room/field/empty) + 'edges' (fences) + virtual intersections
+  protected $stablesGrid = []; // same grid for stables
   protected $buildings = [];
   protected $stables = [];
   protected $fields = [];
@@ -60,6 +60,7 @@ class PlayerBoard
   protected function fetchDatas()
   {
     $this->grid = self::createEmptyGrid();
+    $this->stablesGrid = self::createEmptyGrid();
 
     // Separating mountain from the plain
     $this->grid[6][1] = true;
@@ -78,10 +79,10 @@ class PlayerBoard
     //   $this->grid[$field['x']][$field['y']] = $field;
     // }
 
-    // $this->stables = Stables::getOnBoard($this->pId)->toArray();
-    // foreach ($this->stables as $stable) {
-    //   $this->grid[$stable['x']][$stable['y']] = $stable;
-    // }
+    $this->stables = Stables::getOnBoard($this->pId)->toArray();
+    foreach ($this->stables as $stable) {
+      $this->stablesGrid[$stable['x']][$stable['y']] = $stable;
+    }
   }
 
   public function getBuildings()
@@ -97,31 +98,6 @@ class PlayerBoard
   /*************************
    ********* ADDERS *********
    *************************/
-
-  /**
-   * Add a fence at a given position
-   * This only check that the player has a fence in reserve and that the spot is free
-   */
-  public function addFence(&$fence)
-  {
-    self::checkFencePos($fence['x'], $fence['y']);
-
-    if (!Fences::hasAvailable($this->pId)) {
-      throw new \BgaVisibleSystemException('You do not have any fence available');
-    }
-
-    // check fence is on a correct place
-    if ($this->containsFence($fence)) {
-      throw new \BgaVisibleSystemException('A fence already exist at this position');
-    }
-
-    // Move fence
-    $id = Fences::moveNextAvailable($this->pId, 'board', $fence);
-    $fence = Meeples::get($id);
-    $this->fences[] = $fence;
-    $this->grid[$fence['x']][$fence['y']] = $fence;
-    $this->arePasturesUpToDate = false;
-  }
 
   /**
    * Add a stable at a given position
@@ -182,29 +158,14 @@ class PlayerBoard
     $this->grid[$building->getX()][$building->getY()] = $building;
   }
 
-  // /**
-  //  * Change all rooms type to $newRoomType
-  //  */
-  // public function renovateRooms($newRoomType)
-  // {
-  //   $caverns = $this->rooms;
-  //   $this->rooms = [];
-  //   foreach ($caverns as &$room) {
-  //     $tmp = $room['id'];
-  //     // Remove existing room
-  //     Meeples::DB()->delete($room['id']);
-  //     $this->grid[$room['x']][$room['y']] = null;
-  //     // Add the next room in the same place
-  //     $this->addRoom($newRoomType, $room);
-  //     $room['oldId'] = $tmp;
-  //   }
-  //
-  //   return $caverns;
-  // }
-
   /****************************
    ******* SANITY CHECKS *******
    ****************************/
+
+   public function isPlainZone($coord)
+   {
+     return $coord['x'] < 7;
+   }
 
   public function isMoutainZone($coord)
   {
@@ -221,18 +182,7 @@ class PlayerBoard
       return true;
     }
 
-    // Checks that pasture contains nothing expect stable
-    foreach ($pastures as $pasture) {
-      foreach ($pasture['nodes'] as $pos) {
-        if (!$this->isFreeOrStable($pos)) {
-          if ($raiseException) {
-            throw new UserException(totranslate('A pasture contains a room or a field'));
-          }
-          return false;
-        }
-      }
-    }
-
+    // TODO
     // Check adjacency of pastures
     $marks = $this->getPasturesMarks();
     if (!self::isConnex($marks)) {
@@ -240,27 +190,6 @@ class PlayerBoard
         throw new UserException(totranslate('Some pastures are not adjacent'));
       }
       return false;
-    }
-
-    return true;
-  }
-
-  /**
-   * Check whether the current board is valid wrt to fences
-   */
-  public function areFencesValid($raiseException = false)
-  {
-    foreach (self::getAllEdges() as $pos) {
-      if ($this->containsFence($pos)) {
-        $endpoints = $this->getEndpointConnections($pos);
-        if (empty($endpoints['start']) || empty($endpoints['end'])) {
-          if ($raiseException) {
-            throw new UserException(totranslate('One fence is not connected at one of its endpoint'));
-          }
-
-          return false;
-        }
-      }
     }
 
     return true;
@@ -440,7 +369,8 @@ class PlayerBoard
    */
   public function getPlowableZones()
   {
-    return $this->getAdjacentZones($this->getFieldTiles());
+    // TODO
+    return []; //$this->getAdjacentZones($this->getFieldTiles());
   }
 
   public function canPlow()
@@ -479,18 +409,6 @@ class PlayerBoard
   }
 
   /**
-   * Return all edges that could receive a fence, ie free and not in-between two buildings
-   */
-  public function getFencableZones()
-  {
-    $edges = self::getAllEdges();
-    Utils::filter($edges, function ($pos) {
-      return !$this->containsFence($pos) && !$this->isSurrounded($pos);
-    });
-    return $edges;
-  }
-
-  /**
    * Return all fields that could receive a crop
    */
   public function getSowableFields($reserve = null, $ignoreResources = false)
@@ -514,31 +432,6 @@ class PlayerBoard
       return !empty($field['crops']);
     });
     return $fields;
-  }
-
-  /**
-   * Return all edges that could receive a fence and adjacent to a field
-   */
-  public function getAvailableFieldFences()
-  {
-    $availableEdges = [];
-    $fencable = $this->getFencableZones();
-    foreach ($this->fields as $field) {
-      if ($field['type'] == 'fieldCard') {
-        continue;
-      }
-
-      $edges = self::getEdgesAround($field['x'], $field['y']);
-      foreach ($edges as $edge) {
-        if (in_array($edge, $fencable)) {
-          $availableEdges[] = $edge;
-        }
-      }
-    }
-
-    $availableEdges = array_unique($availableEdges, SORT_REGULAR);
-    // throw new \feException(print_r($availableEdges));
-    return $availableEdges;
   }
 
   public function canSow($reserve = null, $ignoreResources = false)
@@ -643,57 +536,9 @@ class PlayerBoard
    ***** FIELDS/CROPS UTILS *****
    ******************************
    *****************************/
-  public function addFieldCard($id, $details)
-  {
-    $this->fields[$id] = array_merge($details, [
-      'uid' => $id,
-      'id' => $id,
-      'pId' => $this->pId,
-      'location' => $id,
-      'type' => 'fieldCard',
-      'x' => -1,
-      'y' => -1,
-    ]);
-
-    // D75_WoodField
-    if ($id == 'D75_WoodField') {
-      $id .= '2';
-      $this->fields[$id] = array_merge($details, [
-        'uid' => $id,
-        'id' => 'D75_WoodField',
-        'pId' => $this->pId,
-        'location' => 'D75_WoodField',
-        'type' => 'fieldCard',
-        'x' => 0,
-        'y' => -1,
-      ]);
-    }
-  }
-
-  public function getFieldTiles()
-  {
-    $fields = $this->fields;
-    Utils::filter($fields, function ($field) {
-      return $field['type'] == 'field';
-    });
-    return $fields;
-  }
-
-  public function getFieldCards()
-  {
-    $fields = $this->fields;
-    Utils::filter($fields, function ($field) {
-      return $field['type'] == 'fieldCard';
-    });
-    return $fields;
-  }
-
   public function getGrowingCrops($keepOnlyThisType = null)
   {
-    $fieldCards = array_map(function ($field) {
-      return $field['id'];
-    }, $this->getFieldCards());
-    $crops = Meeples::getGrowingCrops($this->pId, $fieldCards);
+    $crops = Meeples::getGrowingCrops($this->pId);
 
     if ($keepOnlyThisType != null) {
       $crops = $crops->filter(function ($crop) use ($keepOnlyThisType) {
@@ -775,147 +620,78 @@ class PlayerBoard
 
   /**
    * Compute and store the set of all pastures
-   * WARNING this function presuppose areFencesValid is true
    */
   protected function computePastures()
   {
+    // TODO
     $this->pastures = [];
-    $visited = [];
-    foreach (self::getAllNodes() as $pos) {
-      if (isset($visited[$pos['x']][$pos['y']]) || !$this->isFreeOrStable($pos)) {
-        continue;
-      }
-      $fences = $this->getFencesAround($pos);
-      if (!isset($fences[W]) || !isset($fences[N])) {
-        // The top-left corner of a pasture should have fence on TOP and LEFT
-        continue;
-      }
-
-      // Run graph exploration
-      $queue = [$pos];
-      $visited[$pos['x']][$pos['y']] = true;
-      $pasture = [
-        'nodes' => [],
-        'stables' => [],
-      ];
-      while (!empty($queue)) {
-        $pos = array_pop($queue);
-        array_push($pasture['nodes'], $pos);
-        if ($this->containsStable($pos)) {
-          array_push($pasture['stables'], $pos);
-        }
-
-        foreach ([W, N, E, S] as $i) {
-          if ($this->hasFenceInDirection($pos, $i)) {
-            continue;
-          }
-
-          $npos = $this->nextNodeInDirection($pos, $i);
-          if (!self::isValid($npos) || isset($visited[$npos['x']][$npos['y']])) {
-            continue;
-          }
-
-          $visited[$npos['x']][$npos['y']] = true;
-          array_push($queue, $npos);
-        }
-      }
-
-      // Check if the pasture is not the outside
-      $fenced = true;
-      foreach ($pasture['nodes'] as $node) {
-        foreach ([W, N, E, S] as $i) {
-          if (!$this->hasFenceInDirection($node, $i)) {
-            $npos = $this->nextNodeInDirection($node, $i);
-            if (!in_array($npos, $pasture['nodes'])) {
-              $fenced = false;
-              break;
-            }
-          }
-        }
-      }
-
-      if ($fenced) {
-        array_push($this->pastures, $pasture);
-      }
-    }
+    // $visited = [];
+    // foreach (self::getAllNodes() as $pos) {
+    //   if (isset($visited[$pos['x']][$pos['y']]) || !$this->isFreeOrStable($pos)) {
+    //     continue;
+    //   }
+    //   $fences = $this->getFencesAround($pos);
+    //   if (!isset($fences[W]) || !isset($fences[N])) {
+    //     // The top-left corner of a pasture should have fence on TOP and LEFT
+    //     continue;
+    //   }
+    //
+    //   // Run graph exploration
+    //   $queue = [$pos];
+    //   $visited[$pos['x']][$pos['y']] = true;
+    //   $pasture = [
+    //     'nodes' => [],
+    //     'stables' => [],
+    //   ];
+    //   while (!empty($queue)) {
+    //     $pos = array_pop($queue);
+    //     array_push($pasture['nodes'], $pos);
+    //     if ($this->containsStable($pos)) {
+    //       array_push($pasture['stables'], $pos);
+    //     }
+    //
+    //     foreach ([W, N, E, S] as $i) {
+    //       if ($this->hasFenceInDirection($pos, $i)) {
+    //         continue;
+    //       }
+    //
+    //       $npos = $this->nextNodeInDirection($pos, $i);
+    //       if (!self::isValid($npos) || isset($visited[$npos['x']][$npos['y']])) {
+    //         continue;
+    //       }
+    //
+    //       $visited[$npos['x']][$npos['y']] = true;
+    //       array_push($queue, $npos);
+    //     }
+    //   }
+    //
+    //   // Check if the pasture is not the outside
+    //   $fenced = true;
+    //   foreach ($pasture['nodes'] as $node) {
+    //     foreach ([W, N, E, S] as $i) {
+    //       if (!$this->hasFenceInDirection($node, $i)) {
+    //         $npos = $this->nextNodeInDirection($node, $i);
+    //         if (!in_array($npos, $pasture['nodes'])) {
+    //           $fenced = false;
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    //
+    //   if ($fenced) {
+    //     array_push($this->pastures, $pasture);
+    //   }
+    // }
   }
 
   /**
    * Check wether a player can create a pasture with at most X fences
-   * WARNING : this does not ensure the player has enough fences in reserve
-   * it's also supposing that current pastures and fences are valid
-   * @param int $n : the number of available fences to build a new pasture
    */
-  public function canCreateNewPasture($n)
+  public function canCreateNewPasture()
   {
-    if ($n == 0) {
-      return false;
-    }
-
-    $marks = $this->getPasturesMarks();
-    $bMustTouchAnotherPasture = !empty($this->getPastures());
-    foreach (self::getAllNodes() as $pos) {
-      if (!$this->isFreeOrStable($pos)) {
-        continue;
-      }
-
-      // Is the starting node inside a pasture ?
-      $splitPasture = $marks[$pos['x']][$pos['y']] == INSIDE;
-      if (($splitPasture || $bMustTouchAnotherPasture) && $this->countFencesAround($pos) == 0) {
-        continue; // We cannot create a new pasture in the middle of an existing one, or create a non-adjacent pasture if one already exists
-      }
-
-      // Start creating a new pasture starting from $pos
-      if ($this->canCreateNewPastureAux($marks, $pos, 0, $n, $splitPasture)) {
-        return true;
-      }
-    }
+    // TODO
     return false;
-  }
-
-  // Recursive auxiliary function
-  protected function canCreateNewPastureAux(&$marks, $pos, $borderSize, $n, $splitPasture)
-  {
-    // Compute how many fences you need to add the current $pos to work in progress (can be negative !)
-    $extraFences = 4 - 2 * $this->countNeighboursAux($pos, $marks) - $this->countFencesAround($pos);
-    $borderSize += $extraFences;
-
-    // Do we have anough fences are not in the middle of a pasture ? We happy!
-    if ($borderSize <= $n && (!$splitPasture || $this->countFencesAround($pos) != 0)) {
-      return true;
-    }
-
-    $tmp = $marks[$pos['x']][$pos['y']];
-    $marks[$pos['x']][$pos['y']] = CURRENT_WORK;
-    foreach ([W, N, E, S] as $dir) {
-      if ($this->hasFenceInDirection($pos, $dir)) {
-        continue;
-      }
-
-      $npos = $this->nextNodeInDirection($pos, $dir);
-      if (!self::isValid($npos) || $marks[$npos['x']][$npos['y']] == CURRENT_WORK) {
-        continue;
-      }
-
-      if ($this->canCreateNewPastureAux($marks, $npos, $borderSize, $n, $splitPasture)) {
-        return true;
-      }
-    }
-    $marks[$pos['x']][$pos['y']] = $tmp;
-    return false;
-  }
-
-  // Auxiliary function to count neighbours in current work recursive function above
-  protected function countNeighboursAux(&$pos, &$marks)
-  {
-    $n = 0;
-    foreach ([W, N, E, S] as $dir) {
-      $npos = $this->nextNodeInDirection($pos, $dir);
-      if (self::isValid($npos) && $marks[$npos['x']][$npos['y']] == CURRENT_WORK) {
-        $n++;
-      }
-    }
-    return $n;
   }
 
   /***********************************
@@ -934,17 +710,6 @@ class PlayerBoard
     return $t;
   }
 
-  protected static function getAllIntersections()
-  {
-    $result = [];
-    for ($x = 0; $x <= 12; $x += 2) {
-      for ($y = 0; $y <= 8; $y += 2) {
-        $result[] = ['x' => $x, 'y' => $y];
-      }
-    }
-    return $result;
-  }
-
   protected static function getAllNodes()
   {
     $result = [];
@@ -953,37 +718,6 @@ class PlayerBoard
         $result[] = ['x' => $x, 'y' => $y];
       }
     }
-    return $result;
-  }
-
-  protected static function getAllEdges()
-  {
-    $result = [];
-    for ($x = 0; $x <= 10; $x++) {
-      $startingY = $x % 2 == 0 ? 1 : 0;
-      for ($y = $startingY; $y <= 6; $y += 2) {
-        $result[] = ['x' => $x, 'y' => $y];
-      }
-    }
-    return $result;
-  }
-
-  /**
-   * Return an associative array of 4 intersections around a node
-   * @param $x,$y  coordinate of 'node'
-   */
-  protected static function getIntersections($x, $y = null)
-  {
-    self::checkPos($x, $y);
-    self::checkNodePos($x, $y);
-
-    $result = [];
-    foreach ([NW, NE, SW, SE] as $i) {
-      $nx = $x + self::$dirs[$i]['x'];
-      $ny = $y + self::$dirs[$i]['y'];
-      $result[$i] = ['x' => $nx, 'y' => $ny];
-    }
-
     return $result;
   }
 
@@ -1012,18 +746,6 @@ class PlayerBoard
       $x = $x['x'];
     }
     return $x >= -1 && $x <= 13 && $y >= -1 && $y <= 9;
-  }
-
-  protected static function checkFencePos(&$x, &$y = null)
-  {
-    self::checkPos($x, $y, false);
-    if (($x + 2) % 2 == 1 && ($y + 2) % 2 == 1) {
-      throw new \feException('Trying to ask fence of a node :' . self::posToStr($x, $y));
-    }
-
-    if (($x + 2) % 2 == 0 && ($y + 2) % 2 == 0) {
-      throw new \feException('Trying to ask fence of a virtual intersection :' . self::posToStr($x, $y));
-    }
   }
 
   protected static function checkNodePos(&$x, &$y = null)
@@ -1056,15 +778,6 @@ class PlayerBoard
   {
     self::checkPos($x, $y);
     return is_null($this->grid[$x][$y]) || $this->containsStable($x, $y);
-  }
-
-  /**
-   * Util function to test if a fence is present at given position
-   */
-  protected function containsFence($x, $y = null)
-  {
-    self::checkFencePos($x, $y);
-    return $this->grid[$x][$y] != null;
   }
 
   /**
@@ -1140,124 +853,6 @@ class PlayerBoard
       }
     }
     return $result;
-  }
-
-  /**
-   * Return an associative array with 4 edges around a node
-   * @param $x,$y  coordinate of 'node'
-   */
-  protected static function getEdgesAround($x, $y = null)
-  {
-    self::checkNodePos($x, $y);
-    $result = [];
-    foreach ([W, N, E, S] as $dir) {
-      $result[$dir] = self::nextCellInDirection(['x' => $x, 'y' => $y], $dir);
-    }
-    return $result;
-  }
-
-  /*****************
-   *** NON-STATIC ***
-   *****************/
-
-  /**
-   * Return an associative array with key set only if a fence exists in corresponding direction
-   * @param $x,$y  coordinate of 'node'
-   */
-  protected function getFencesAround($x, $y = null)
-  {
-    $edges = $this->getEdgesAround($x, $y);
-    foreach ([W, N, E, S] as $i) {
-      $edge = $edges[$i];
-      if (!self::isValid($edge) || is_null($this->grid[$edge['x']][$edge['y']])) {
-        unset($edges[$i]);
-      }
-    }
-
-    return $edges;
-  }
-
-  protected function countFencesAround($x, $y = null)
-  {
-    self::checkNodePos($x, $y);
-    return count($this->getFencesAround($x, $y));
-  }
-
-  /**
-   * Test if a node has a fence in given direction
-   * @param $pos : assoc x,y array corresponding to pos
-   * @param $dir : direction index (cf self::$dirs)
-   */
-  protected function hasFenceInDirection($pos, $dir)
-  {
-    $fences = $this->getFencesAround($pos['x'], $pos['y']);
-    return isset($fences[$dir]) && $fences[$dir] != null;
-  }
-
-  /**
-   * Given a fence position, return true if another fence is connected in given direction
-   */
-  protected function isConnectedInDirection($fpos, $dir)
-  {
-    $coeff = in_array($dir, [W, N, E, S]) ? 2 : 1;
-    $npos = self::nextCellInDirection($fpos, $dir, $coeff);
-    return self::isValid($npos) && $this->containsFence($npos);
-  }
-
-  /**
-   * Return the set of other fence positions connected (by endpoint) to given fence position
-   * @param $fpos : assoc array x,y
-   * @return $result : assoc array with start/end which contains the dirs in which there is a fence
-   *   start correspond to the start endpoint of a fence (top for a vertical, left for an horizontal)
-   * and end correspond to the other endpoint
-   */
-  protected function getEndpointConnections($x, $y = null)
-  {
-    self::checkFencePos($x, $y);
-    if ($x % 2 == 1) {
-      // HORIZONTAL
-      $tStart = [W, NW, SW];
-      $tEnd = [E, NE, SE];
-    } else {
-      // VERTICAL
-      $tStart = [NW, N, NE];
-      $tEnd = [SW, S, SE];
-    }
-
-    $fpos = ['x' => $x, 'y' => $y];
-    $result = ['start' => [], 'end' => []];
-    foreach ($tStart as $dir) {
-      if ($this->isConnectedInDirection($fpos, $dir)) {
-        $result['start'][] = $dir;
-      }
-    }
-    foreach ($tEnd as $dir) {
-      if ($this->isConnectedInDirection($fpos, $dir)) {
-        $result['end'][] = $dir;
-      }
-    }
-
-    return $result;
-  }
-
-  /**
-   * Return true if an edge is between two non-empty nodes
-   * @param $fpos : assoc array x,y
-   */
-  protected function isSurrounded($x, $y = null)
-  {
-    self::checkFencePos($x, $y);
-
-    $dirs = $x % 2 == 1 ? [N, S] : [W, E];
-    $fpos = ['x' => $x, 'y' => $y];
-    foreach ($dirs as $dir) {
-      $npos = self::nextCellInDirection($fpos, $dir);
-      if (self::isValid($npos) && $this->isFreeOrStable($npos)) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   /***********************************

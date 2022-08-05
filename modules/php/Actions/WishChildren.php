@@ -26,6 +26,8 @@ class WishChildren extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
+    return false;
+    
     if (!$player->hasFarmerInReserve()) {
       return false;
     }
@@ -58,8 +60,8 @@ class WishChildren extends \CAV\Models\Action
 
   public function stWishChildren()
   {
-    $args = $this->ctx->getArgs();  
-      
+    $args = $this->ctx->getArgs();
+
     $type = $args['type'] ?? null;
     $player = Players::getActive();
     if ($args['insideHouse'] ?? false) {
@@ -74,7 +76,7 @@ class WishChildren extends \CAV\Models\Action
 
     Notifications::growFamily($player, $meep);
     Notifications::updateHarvestCosts();
-    
+
     // Listeners for cards
     $eventData = [
       'farmers' => $player->countDwarves(),

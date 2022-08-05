@@ -17,7 +17,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       if (!this.isSpectator) {
         this.updateHandCards();
 
-        //        ['hand-container-minor', 'hand-container-occupation'].forEach((container) => {
         ['hand-container'].forEach((container) => {
           sortable('#' + container, {
             handle: '.card-icon',

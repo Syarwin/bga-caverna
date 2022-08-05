@@ -1931,7 +1931,6 @@ html {
   position: relative; }
   #position-wrapper #main-boards {
     width: 100%;
-    height: calc(var(--cavernaCentralBoardScale) * 795px);
     display: flex; }
     [data-additional='1'][data-players='4'] #position-wrapper #main-boards {
       height: calc(var(--cavernaCentralBoardScale) * 965px); }
@@ -2056,133 +2055,24 @@ html {
     height: 614px; }
 
 #central-board-holder {
-  width: calc(var(--cavernaCentralBoardScale) * 830px);
-  height: calc(var(--cavernaCentralBoardScale) * 795px); }
+  width: calc(var(--cavernaCentralBoardScale) * 830px); }
 
 #central-board {
   width: 830px;
-  height: 795px;
   transform: scale(var(--cavernaCentralBoardScale));
   transform-origin: top left;
   background-image: url("img/central.png");
   background-size: 100% auto;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   grid-row-gap: 5px;
-  grid-column-gap: 5px; }
-  #central-board #modal-buttons-holder {
-    position: absolute;
-    left: 679px;
-    top: 326px;
-    background-image: url("img/action_frame_bg.jpg");
-    background-size: 100% 10px;
-    box-shadow: 2px 2px 5px -1px black;
-    background-color: transparent;
-    border-radius: 13px;
-    padding: 7px;
-    display: flex;
-    border: 2px solid black; }
-    #central-board #modal-buttons-holder #majors-button,
-    #central-board #modal-buttons-holder #hand-button {
-      position: relative;
-      width: 60px;
-      height: 60px;
-      background-image: url("img/majors_icon.png");
-      background-size: 100%;
-      cursor: pointer; }
-      #central-board #modal-buttons-holder #majors-button:hover,
-      #central-board #modal-buttons-holder #hand-button:hover {
-        transform: scale(1.1); }
-    #central-board #modal-buttons-holder #hand-button {
-      background-image: url("img/hand_icon.png");
-      margin-left: 10px; }
+  grid-column-gap: 5px;
+  grid-template-columns: repeat(5, 1fr); }
   #central-board .turn-action-container {
     width: 140px;
     height: 140px;
     position: absolute;
     display: none; }
-    #central-board .turn-action-container#turn_1 {
-      left: 167px;
-      top: 2px; }
-    #central-board .turn-action-container#turn_2 {
-      left: 331px;
-      top: 1px; }
-    #central-board .turn-action-container#turn_3 {
-      left: 493px;
-      top: 1px; }
-    #central-board .turn-action-container#turn_4 {
-      left: 657px;
-      top: 1px; }
-    #central-board .turn-action-container#turn_5 {
-      top: 156px;
-      left: 330px; }
-    #central-board .turn-action-container#turn_6 {
-      top: 156px;
-      left: 493px; }
-    #central-board .turn-action-container#turn_7 {
-      top: 156px;
-      left: 657px; }
-    #central-board .turn-action-container#turn_8 {
-      top: 311px;
-      left: 330px; }
-    #central-board .turn-action-container#turn_9 {
-      top: 311px;
-      left: 493px; }
-    #central-board .turn-action-container#turn_10 {
-      top: 462px;
-      left: 330px; }
-    #central-board .turn-action-container#turn_11 {
-      top: 462px;
-      left: 493px; }
-    #central-board .turn-action-container#turn_12 {
-      top: 626px;
-      left: 6px; }
-    #central-board .turn-action-container#turn_13 {
-      top: 626px;
-      left: 172px; }
-    #central-board .turn-action-container#turn_14 {
-      top: 626px;
-      left: 489px; }
-    #central-board .turn-action-container .turn-number {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0.4;
-      width: 100%;
-      height: 100%;
-      background-image: url("img/back_numbers.png");
-      background-size: 600% 100%;
-      z-index: 1; }
-      #central-board .turn-action-container .turn-number .help-marker {
-        opacity: 1;
-        pointer-events: all;
-        bottom: 11%;
-        right: 11%;
-        left: auto;
-        top: auto; }
-      #central-board .turn-action-container .turn-number .turn-number-indication {
-        position: absolute;
-        bottom: 13px;
-        right: 9%;
-        height: 24px;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 13px;
-        border: 1px solid #004f00;
-        font-size: 17px;
-        line-height: 24px;
-        padding-right: 26px;
-        padding-left: 7px; }
-    #central-board .turn-action-container#turn_5 .turn-number, #central-board .turn-action-container#turn_6 .turn-number, #central-board .turn-action-container#turn_7 .turn-number {
-      background-position-x: 20%; }
-    #central-board .turn-action-container#turn_8 .turn-number, #central-board .turn-action-container#turn_9 .turn-number {
-      background-position-x: 40%; }
-    #central-board .turn-action-container#turn_10 .turn-number, #central-board .turn-action-container#turn_11 .turn-number {
-      background-position-x: 60%; }
-    #central-board .turn-action-container#turn_12 .turn-number, #central-board .turn-action-container#turn_13 .turn-number {
-      background-position-x: 80%; }
-    #central-board .turn-action-container#turn_14 .turn-number {
-      background-position-x: 100%; }
     #central-board .turn-action-container .future-resources-holder {
       position: absolute;
       width: 100%;
@@ -2252,42 +2142,6 @@ html {
     width: 35px;
     height: 28px;
     z-index: 12; }
-    #central-board .harvest-slot#harvest-slot-4 {
-      top: 64px;
-      left: 788px; }
-    #central-board .harvest-slot#harvest-slot-7 {
-      top: 213px;
-      left: 787px; }
-    #central-board .harvest-slot#harvest-slot-9 {
-      top: 370px;
-      left: 630px; }
-    #central-board .harvest-slot#harvest-slot-11 {
-      top: 532px;
-      left: 632px; }
-    #central-board .harvest-slot#harvest-slot-13 {
-      top: 663px;
-      left: 302px; }
-    #central-board .harvest-slot#harvest-slot-14 {
-      top: 688px;
-      left: 617px; }
-    [data-turn='4'] #central-board .harvest-slot#harvest-slot-4:not(:empty) {
-      background-color: #fff563;
-      border: 1px solid black; }
-    [data-turn='7'] #central-board .harvest-slot#harvest-slot-7:not(:empty) {
-      background-color: #fff563;
-      border: 1px solid black; }
-    [data-turn='9'] #central-board .harvest-slot#harvest-slot-9:not(:empty) {
-      background-color: #fff563;
-      border: 1px solid black; }
-    [data-turn='11'] #central-board .harvest-slot#harvest-slot-11:not(:empty) {
-      background-color: #fff563;
-      border: 1px solid black; }
-    [data-turn='13'] #central-board .harvest-slot#harvest-slot-13:not(:empty) {
-      background-color: #fff563;
-      border: 1px solid black; }
-    [data-turn='14'] #central-board .harvest-slot#harvest-slot-14:not(:empty) {
-      background-color: #fff563;
-      border: 1px solid black; }
 
 .harvest-icon {
   background-image: url("img/meeples.png");
@@ -2300,194 +2154,143 @@ html {
   transform: scale(1); }
 
 .action-card-holder {
-  background: white;
+  width: 150px;
+  height: 180px;
+  background-color: white;
+  background-image: url("img/background_card.jpg");
+  background-size: 100% 100%;
   border: 1px solid black;
+  box-shadow: 2px 2px 6px -1px black;
   border-radius: 10px;
   position: relative;
   /*
-   * COMPONENT ACTIONS
-   */
-  /*
    * ACTION CARD FRAME
-   */
-  /*
-   * REAL ACTION CARDS
    */ }
+  .action-card-holder[data-id='ActionAdventure'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 0%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionBlacksmithing'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 25%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionDepot'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 50%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionDonkeyFarming'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 75%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionDriftMining'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 100%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionExploration'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 0%;
+    background-position-y: 25%; }
+  .action-card-holder[data-id='ActionFamilyLife'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 25%;
+    background-position-y: 25%; }
+  .action-card-holder[data-id='ActionFenceBuilding'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 50%;
+    background-position-y: 25%; }
+  .action-card-holder[data-id='ActionHardwareRental'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 75%;
+    background-position-y: 25%; }
+  .action-card-holder[data-id='ActionHousework'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 100%;
+    background-position-y: 25%; }
+  .action-card-holder[data-id='ActionImitation'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 0%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreDelivery'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 25%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreMineConstruction'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 50%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreTrading'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 75%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionRubyDelivery'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 100%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionRubyMineConstruction'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 0%;
+    background-position-y: 75%; }
+  .action-card-holder[data-id='ActionRubyMining'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 25%;
+    background-position-y: 75%; }
+  .action-card-holder[data-id='ActionSheepFarming'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 50%;
+    background-position-y: 75%; }
+  .action-card-holder[data-id='ActionSlash'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 75%;
+    background-position-y: 75%; }
+  .action-card-holder[data-id='ActionSmallDriftMining'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 100%;
+    background-position-y: 75%; }
+  .action-card-holder[data-id='ActionUrgentWish'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 0%;
+    background-position-y: 100%; }
+  .action-card-holder[data-id='ActionWeeklyMarket'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 25%;
+    background-position-y: 100%; }
+  .action-card-holder[data-id='ActionWishChildren'] {
+    background-image: url("img/action_cards.jpg");
+    background-size: 500% 500%;
+    background-position-x: 50%;
+    background-position-y: 100%; }
   #ebd-body:not(.help-mode) .action-card-holder.selectable {
     cursor: pointer; }
-    #ebd-body:not(.help-mode) .action-card-holder.selectable:hover .action-card {
+    #ebd-body:not(.help-mode) .action-card-holder.selectable:hover {
       transform: scale(1.15); }
     #ebd-body:not(.help-mode) .action-card-holder.selectable .action-card {
       filter: none; }
   #ebd-body:not(.help-mode) .action-card-holder.unselectable {
     cursor: not-allowed; }
-  #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable .action-card {
+  #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable {
     filter: grayscale(75%); }
-  .action-card-holder[data-id='ActionFarmExpansion'] {
-    top: -3px;
-    height: 134px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionFarmExpansion'] .action-desc {
-      margin-top: -2px; }
-      .action-card-holder[data-id='ActionFarmExpansion'] .action-desc > div {
-        font-size: 0.67em;
-        z-index: 3; }
-        .action-card-holder[data-id='ActionFarmExpansion'] .action-desc > div:nth-child(4) {
-          margin: 0px auto -7px; }
-  .action-card-holder[data-id='ActionFarmland'] {
-    top: 310px;
-    height: 80px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionFarmland'] .action-desc > div {
-      font-size: 1.5em; }
-  .action-card-holder[data-id='ActionGrainSeeds'] {
-    top: 220px;
-    height: 69px;
-    width: 115px; }
-  .action-card-holder[data-id='ActionForest'], .action-card-holder[data-id='ActionForestSolo'] {
-    top: 203px;
-    left: 253px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionForest'] .resource-holder, .action-card-holder[data-id='ActionForestSolo'] .resource-holder {
-      left: -54px;
-      bottom: 5px; }
-  .action-card-holder[data-id='ActionReedBank'] {
-    top: 411px;
-    left: 254px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionReedBank'] .resource-holder {
-      left: -75px;
-      bottom: 7px; }
-  .action-card-holder[data-id='ActionClayPit'] {
-    top: 306px;
-    left: 175px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionClayPit'] .resource-holder {
-      bottom: 5px;
-      left: 92px; }
-  .action-card-holder[data-id='ActionFishing'] {
-    top: 514px;
-    left: 175px;
-    width: 62px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionFishing'] .resource-holder {
-      bottom: 10px;
-      left: 98px; }
-  .action-card-holder[data-id='ActionMeetingPlace'], .action-card-holder[data-id='ActionMeetingPlaceSolo'], .action-card-holder[data-id='ActionMeetingPlaceBeginner'], .action-card-holder[data-id='ActionMeetingPlaceSoloBeginner'] {
-    left: 31px;
-    top: 134px;
-    height: 72px;
-    width: 115px; }
-  .action-card-holder[data-id='ActionMeetingPlaceBeginner'] .resource-holder, .action-card-holder[data-id='ActionMeetingPlaceSoloBeginner'] .resource-holder {
-    bottom: 7px;
-    right: -55px; }
-  .action-card-holder[data-id='ActionDayLaborer'] {
-    top: 526px;
-    left: 30px;
-    height: 74px;
-    width: 115px; }
-  .action-card-holder[data-id='ActionLessons'] {
-    top: 406px;
-    height: 94px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionLessons'] .action-desc > div:nth-child(1) {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionSideJob'] {
-    top: 406px;
-    height: 94px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionSideJob'] .action-desc > div:nth-child(1) {
-      font-size: 0.8em; }
-  .action-card-holder[data-id='ActionGrove'] {
-    top: 110px;
-    left: 54px;
-    width: 60px;
-    height: 86px; }
-    [data-players='4'] .action-card-holder[data-id='ActionGrove'] {
-      top: 138px; }
-    .action-card-holder[data-id='ActionGrove'] .resource-holder {
-      left: -51px;
-      bottom: 3px; }
-  .action-card-holder[data-id='ActionResourceMarket'] {
-    top: 255px;
-    left: 4px;
-    width: 111px;
-    height: 64px; }
-    .action-card-holder[data-id='ActionResourceMarket'] .action-desc > div {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionLessons3'] {
-    top: 433px;
-    left: 2px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionLessons3'] .action-desc > div:nth-child(1) {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionLessons4'] {
-    top: 412px;
-    left: 2px;
-    width: 115px; }
-    .action-card-holder[data-id='ActionLessons4'] .action-desc > div:nth-child(1) {
-      font-size: 0.7em; }
-  .action-card-holder[data-id='ActionHollow'] {
-    top: 329px;
-    left: 6px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionHollow'] .resource-holder {
-      left: 85px;
-      bottom: 5px; }
-  .action-card-holder[data-id='ActionHollow4'] {
-    top: 313px;
-    left: 6px;
-    width: 60px;
-    height: 86px; }
-    .action-card-holder[data-id='ActionHollow4'] .resource-holder {
-      left: 87px;
-      bottom: 9px; }
-  .action-card-holder[data-id='ActionTravelingPlayers'] {
-    top: 516px;
-    left: 53px;
-    width: 65px;
-    height: 84px; }
-    .action-card-holder[data-id='ActionTravelingPlayers'] .resource-holder {
-      left: -54px;
-      bottom: 1px; }
-  .action-card-holder[data-id='ActionCopse'], .action-card-holder[data-id='ActionCopseAdd'] {
-    top: 18px;
-    left: 5px;
-    width: 60px;
-    height: 83px; }
-    .action-card-holder[data-id='ActionCopse'] .resource-holder, .action-card-holder[data-id='ActionCopseAdd'] .resource-holder {
-      left: 87px;
-      bottom: 5px; }
-  .action-card-holder[data-id='ActionResourceMarket4'] {
-    top: 236px;
-    left: 5px;
-    width: 110px;
-    height: 65px; }
-    .action-card-holder[data-id='ActionResourceMarket4'] .action-desc > div {
-      font-size: 0.65em; }
-  .action-card-holder[data-id='ActionWishChildrenAdd'] {
-    top: 15px;
-    left: 44px;
-    width: 111px;
-    height: 100px; }
-  .action-card-holder[data-id='ActionResourceMarketAdd'] {
-    top: 276px;
-    left: 18px;
-    width: 128px;
-    height: 77px; }
-  .action-card-holder[data-id='ActionAnimalMarketAdd'] {
-    top: 158px;
-    left: 2px;
-    width: 151px;
-    height: 136px; }
-  [data-players='2'] .action-card-holder[data-id='ActionWishChildrenAdd'] {
-    top: 150px; }
-  [data-players='2'] .action-card-holder[data-id='ActionAnimalMarketAdd'] {
-    top: 408px; }
   .action-card-holder .farmer-holder {
     position: absolute;
     top: 0;
@@ -2574,168 +2377,91 @@ html {
     }
     */ }
     .action-card-holder .action-card .action-header {
+      padding-top: 4px;
+      height: 32px;
       flex-shrink: 0;
       margin: 0;
-      text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      font-family: var(--caverna-font-family);
-      padding-top: 1px;
-      padding-top: 4px;
-      background-image: url("img/action_frame.png");
-      background-size: 100% 160px;
-      height: 32px; }
-    .action-card-holder .action-card.action-s .action-header {
-      background-image: url("img/action_frame_s.png");
-      background-size: 100% 143px;
-      height: 40px; }
+      font-family: var(--caverna-font-family); }
     .action-card-holder .action-card .action-desc {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      font-family: Calibri;
-      font-weight: bold;
-      font-size: 22px;
-      position: relative;
-      background-image: url("img/action_frame.png");
-      background-size: 100% 160px;
-      background-position: 0 -40px; }
-      .action-card-holder .action-card .action-desc > div {
-        margin-top: 2px; }
-      .action-card-holder .action-card .action-desc span.text {
-        font-family: var(--caverna-font-family);
-        font-size: 0.8em;
-        font-weight: normal; }
-      .action-card-holder .action-card .action-desc div.text-wrapper {
-        display: flex;
-        align-items: center; }
-    .action-card-holder .action-card.action-s .action-desc {
-      background-image: url("img/action_frame_s.png");
-      background-size: 100% 109px;
-      background-position: 0 -32px; }
-    .action-card-holder .action-card .action-footer {
-      flex-shrink: 0;
-      position: relative;
-      height: 10px;
-      background-image: url("img/action_frame.png");
-      background-size: 100% 160px;
-      background-position: 0px 10px; }
-    .action-card-holder .action-card.action-s .action-footer {
-      background-image: url("img/action_frame_s.png");
-      background-size: 100% 109px;
-      background-position: 0px 10px; }
-    .action-card-holder .action-card.accumulate-bottom .action-footer::before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 26px;
-      height: 30px;
-      background-image: url("img/action_frame_arrow.png");
-      background-size: 100%;
-      top: 7px;
-      left: calc(50% - 13px); }
-    .action-card-holder .action-card.accumulate-left .action-desc::before, .action-card-holder .action-card.accumulate-right .action-desc::before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 26px;
-      height: 30px;
-      background-image: url("img/action_frame_arrow.png");
-      background-size: 100%;
-      top: calc(50% - 13px); }
-    .action-card-holder .action-card.accumulate-left .action-desc::before {
-      left: -23px;
-      transform: rotate(90deg); }
-    .action-card-holder .action-card.accumulate-right .action-desc::before {
-      right: -23px;
-      transform: rotate(-90deg); }
-  .action-card-holder:not(.component) {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    left: 0;
-    background: url("img/actions_background.png");
-    background-size: 500% 300%;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    margin-top: -1px;
-    margin-left: -1px; }
-    .action-card-holder:not(.component)[data-id='ActionFencing'] {
-      background-position-x: 0%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionSheepMarket'] {
-      background-position-x: 25%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionGrainUtilization'] {
-      background-position-x: 50%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionMajorImprovement'] {
-      background-position-x: 75%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionWesternQuarry'] {
-      background-position-x: 100%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionPigMarket'] {
-      background-position-x: 0%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionVegetableSeeds'] {
-      background-position-x: 25%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionEasternQuarry'] {
-      background-position-x: 50%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionCattleMarket'] {
-      background-position-x: 75%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionWishChildren'] {
-      background-position-x: 100%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionUrgentWishChildren'] {
-      background-position-x: 0%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionCultivation'] {
-      background-position-x: 25%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionHouseRedevelopment'] {
-      background-position-x: 50%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionFarmRedevelopment'] {
-      background-position-x: 75%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component)[data-id='ActionMajorImprovementBeginner'] {
-      background-position-x: 75%;
-      background-position-y: 0%; }
-    .action-card-holder:not(.component)[data-id='ActionWishChildrenBeginner'] {
-      background-position-x: 100%;
-      background-position-y: 50%; }
-    .action-card-holder:not(.component)[data-id='ActionHouseRedevelopmentBeginner'] {
-      background-position-x: 50%;
-      background-position-y: 100%; }
-    .action-card-holder:not(.component) .action-card {
-      width: 100%;
-      height: auto; }
-    .action-card-holder:not(.component) .resource-holder {
-      position: absolute;
-      bottom: 6px;
-      right: 30px;
-      display: flex;
-      flex-flow: row-reverse; }
-      .action-card-holder:not(.component) .resource-holder .caverna-meeple {
-        margin: auto 0 auto -0.3em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple.meeple-sheep {
-          margin-left: -0.6em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple.meeple-pig {
-          margin-left: -0.7em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple.meeple-cattle {
-          margin-left: -0.7em; }
-        .action-card-holder:not(.component) .resource-holder .caverna-meeple:last-child {
-          margin: 0; }
-      .action-card-holder:not(.component) .resource-holder::before {
-        right: -13px; }
+      font-size: 11px;
+      font-family: var(--caverna-font-family); }
+  .action-card-holder[data-id='ActionRubyMining'] .action-desc {
+    margin-top: 34px; }
+    .action-card-holder[data-id='ActionRubyMining'] .action-desc > div:nth-child(1) {
+      text-align: center;
+      margin-left: 6px;
+      width: 53px;
+      height: 35px;
+      font-size: 7px;
+      line-height: 10px; }
+    .action-card-holder[data-id='ActionRubyMining'] .action-desc > div:nth-child(2) {
+      text-align: right;
+      margin-top: 33px;
+      margin-left: 5px;
+      width: 67px;
+      font-size: 10px;
+      line-height: 10px; }
+  .action-card-holder[data-id='ActionRubyMining'] .resource-holder {
+    bottom: 83px;
+    left: 92px; }
+  .action-card-holder[data-id='ActionHousework'] .action-desc {
+    text-align: center;
+    margin-top: 58px; }
+  .action-card-holder[data-id='ActionBlacksmithing'] .action-desc {
+    text-align: center;
+    margin-top: 65px; }
+  .action-card-holder[data-id='ActionOreMineConstruction'] .action-desc {
+    text-align: center;
+    margin-top: 65px; }
+  .action-card-holder[data-id='ActionSheepFarming'] .action-desc {
+    text-align: center;
+    margin-top: 72px; }
+  .action-card-holder[data-id='ActionSheepFarming'] .resource-holder {
+    bottom: 12px;
+    left: 92px; }
+  .action-card-holder[data-id='ActionDonkeyFarming'] .action-desc {
+    text-align: center;
+    margin-top: 72px; }
+  .action-card-holder[data-id='ActionDonkeyFarming'] .resource-holder {
+    bottom: 12px;
+    left: 92px; }
+  .action-card-holder[data-id='ActionRubyMineConstruction'] .action-desc {
+    text-align: center;
+    margin-top: 65px; }
+  .action-card-holder[data-id='ActionOreDelivery'] .action-desc {
+    margin-top: 102px; }
+    .action-card-holder[data-id='ActionOreDelivery'] .action-desc > div:nth-child(1) {
+      text-align: right;
+      margin-left: 5px;
+      width: 72px;
+      font-size: 14px; }
+  .action-card-holder[data-id='ActionOreDelivery'] .resource-holder {
+    bottom: 83px;
+    left: 92px; }
+  .action-card-holder[data-id='ActionFamilyLife'] .action-desc {
+    text-align: center;
+    margin-top: 65px; }
+  .action-card-holder[data-id='ActionAdventure'] .action-desc {
+    text-align: center;
+    margin-top: 71px; }
+  .action-card-holder[data-id='ActionRubyDelivery'] .action-desc {
+    margin-top: 102px; }
+    .action-card-holder[data-id='ActionRubyDelivery'] .action-desc > div:nth-child(1) {
+      text-align: right;
+      margin-left: 5px;
+      width: 67px;
+      font-size: 10px;
+      line-height: 10px; }
+  .action-card-holder[data-id='ActionRubyDelivery'] .resource-holder {
+    bottom: 83px;
+    left: 92px; }
+  .action-card-holder[data-id='ActionSlash'] .action-desc {
+    text-align: center;
+    margin-top: 71px; }
 
 /**
  * TOOLTIPS
@@ -2743,79 +2469,18 @@ html {
 .action-card-help-tooltip {
   display: flex; }
 
-.action-component-tooltip .action-holder {
-  width: 200px;
-  height: 140px;
-  margin-bottom: 10px; }
-  .action-component-tooltip .action-holder .component {
-    position: initial;
-    transform: scale(1.5);
-    transform-origin: top center;
-    margin: auto; }
-  .action-component-tooltip .action-holder[data-id='ActionFarmExpansion'] {
-    height: 221px; }
-  .action-component-tooltip .action-holder[data-id='ActionFarmland'] {
-    height: 126px; }
-  .action-component-tooltip .action-holder[data-id='ActionGrainSeeds'] {
-    height: 107px; }
-  .action-component-tooltip .action-holder[data-id='ActionForest'], .action-component-tooltip .action-holder[data-id='ActionForestSolo'] {
-    height: 135px; }
-  .action-component-tooltip .action-holder[data-id='ActionReedBank'] {
-    height: 135px; }
-  .action-component-tooltip .action-holder[data-id='ActionClayPit'] {
-    height: 135px; }
-  .action-component-tooltip .action-holder[data-id='ActionFishing'] {
-    height: 135px;
-    width: 110px; }
-  .action-component-tooltip .action-holder[data-id='ActionMeetingPlace'], .action-component-tooltip .action-holder[data-id='ActionMeetingPlaceBeginner'] {
-    height: 120px; }
-  .action-component-tooltip .action-holder[data-id='ActionDayLaborer'] {
-    height: 112px; }
-  .action-component-tooltip .action-holder[data-id='ActionLessons'] {
-    height: 150px; }
-  .action-component-tooltip .action-holder[data-id='ActionWishChildrenAdd'] {
-    height: 160px; }
-  .action-component-tooltip .action-holder[data-id='ActionResourceMarketAdd'] {
-    height: 120px; }
-  .action-component-tooltip .action-holder[data-id='ActionAnimalMarketAdd'] {
-    width: 240px;
-    height: 210px; }
-  .action-component-tooltip .action-holder[data-id='ActionSideJob'] {
-    height: 160px; }
-
 .action-card-tooltip {
-  display: flex;
-  max-width: 450px; }
-  .action-card-tooltip .action-card-holder {
-    background-image: url("img/actions.jpg");
-    width: 230px;
-    height: 355px;
-    background-size: 500% 300%; }
-    .action-card-tooltip .action-card-holder .action-card {
-      align-items: center; }
-      .action-card-tooltip .action-card-holder .action-card .action-header {
-        background: none;
-        margin-top: 18px;
-        height: 36px;
-        font-size: 17px;
-        padding-top: 7px; }
-      .action-card-tooltip .action-card-holder .action-card .action-desc {
-        background: none;
-        margin-top: 5px;
-        font-size: 33px;
-        width: 80%; }
-        .action-card-tooltip .action-card-holder .action-card .action-desc > div {
-          margin: 4.5px auto; }
-        .action-card-tooltip .action-card-holder .action-card .action-desc .text {
-          font-size: 0.5em;
-          display: inline-block;
-          text-align: center; }
-    .action-card-tooltip .action-card-holder[data-id='ActionWishChildren'] .action-header, .action-card-tooltip .action-card-holder[data-id='ActionUrgentWishChildren'] .action-header, .action-card-tooltip .action-card-holder[data-id='ActionWishChildrenBeginner'] .action-header {
-      height: 52px; }
-  .action-card-tooltip .card-tooltip-text {
-    font-size: 15px;
-    text-align: justify;
-    margin: 15px 7px 0px 2px; }
+  display: flex; }
+  .action-card-tooltip .action-holder {
+    height: 280px;
+    width: 250px;
+    flex-shrink: 0;
+    margin-right: 5px; }
+    .action-card-tooltip .action-holder .action-card-holder {
+      position: initial;
+      transform: scale(1.5);
+      transform-origin: top center;
+      margin: auto; }
 
 .action-card-name-reference {
   font-style: italic; }
@@ -3294,65 +2959,75 @@ html {
 .caverna-meeple {
   background-image: url("img/meeples.png");
   background-repeat: no-repeat; }
+  .caverna-meeple.meeple-score {
+    width: 0.7em;
+    height: 0.93em;
+    background-position: 41.1215% 0%;
+    background-size: 609.524%; }
+  .caverna-meeple.meeple-gold {
+    width: 0.78em;
+    height: 0.78em;
+    background-position: 17.2414% 0%;
+    background-size: 483.019%; }
   .caverna-meeple.meeple-wood {
     width: 0.6em;
     height: 0.78em;
-    background-position: 56.8584% 32.0276%;
+    background-position: 97.5664% 32.0276%;
     background-size: 853.333%; }
   .caverna-meeple.meeple-stone {
     width: 0.64em;
     height: 0.8em;
-    background-position: 0% 32.1759%;
+    background-position: 41.0714% 32.1759%;
     background-size: 800%; }
   .caverna-meeple.meeple-ore {
     width: 0.9154em;
     height: 0.7062em;
-    background-position: 0% 47.8166%;
+    background-position: 39.3665% 48.2533%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-ruby {
     width: 0.9154em;
     height: 0.693em;
-    background-position: 15.8371% 47.7124%;
+    background-position: 55.2036% 48.1481%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-food {
     width: 0.8em;
     height: 0.8em;
-    background-position: 98.6111% 0%;
+    background-position: 24.0741% 32.1759%;
     background-size: 640%; }
   .caverna-meeple.meeple-grain {
     width: 0.75em;
     height: 0.79em;
-    background-position: 14.6453% 32.1016%;
+    background-position: 56.7506% 32.1016%;
     background-size: 682.667%; }
   .caverna-meeple.meeple-vegetable {
     width: 0.82em;
     height: 0.8em;
-    background-position: 95.1835% 31.7352%;
+    background-position: 22.4771% 50.4566%;
     background-size: 673.684%; }
   .caverna-meeple.meeple-sheep {
     width: 0.98em;
     height: 0.76em;
-    background-position: 76.57% 31.8807%;
+    background-position: 0% 50.6881%;
     background-size: 522.449%; }
   .caverna-meeple.meeple-pig {
     width: 1.118em;
     height: 0.78em;
-    background-position: 35.2792% 32.0276%;
+    background-position: 81.9797% 32.0276%;
     background-size: 433.898%; }
   .caverna-meeple.meeple-cattle {
     width: 1.104em;
     height: 0.82em;
-    background-position: 59.3137% 0%;
+    background-position: 0% 32.3256%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-donkey {
     width: 1.04em;
     height: 0.87em;
-    background-position: 33.8235% 0%;
+    background-position: 80.3922% 0%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-dog {
     width: 0.68em;
     height: 0.9em;
-    background-position: 15.7658% 0%;
+    background-position: 58.5586% 0%;
     background-size: 752.941%; }
   .caverna-meeple.meeple-first {
     width: 0.4em;
@@ -3362,12 +3037,12 @@ html {
   .caverna-meeple.meeple-begging {
     width: 1.1em;
     height: 1.1em;
-    background-position: 80.0926% 0%;
+    background-position: 100% 0%;
     background-size: 640%; }
   .caverna-meeple.meeple-cook {
     width: 2em;
     height: 1.1em;
-    background-position: 15.66% 18.8285%;
+    background-position: 70.2461% 46.2343%;
     background-size: 787.692%; }
     #anytimeActions .caverna-meeple.meeple-cook {
       margin: 0em -0.4em; }
@@ -3555,6 +3230,13 @@ html {
     width: 242px !important; }
   .mobile_version .player-board {
     margin-right: 2px !important; }
+  .player-board .player_score {
+    display: flex;
+    align-items: center; }
+    .player-board .player_score .fa.fa-star {
+      display: none; }
+    .player-board .player_score .player-resource.resource-gold {
+      margin-left: 3px; }
   .player-board .player_board_inner {
     padding: 13px 10px 0px; }
     .player-board .player_board_inner .player-name {

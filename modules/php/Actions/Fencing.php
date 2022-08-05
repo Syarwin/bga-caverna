@@ -2,7 +2,6 @@
 namespace CAV\Actions;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
-use CAV\Managers\Fences;
 use CAV\Managers\Meeples;
 use CAV\Managers\Players;
 use CAV\Helpers\Utils;
@@ -17,30 +16,10 @@ class Fencing extends \CAV\Models\Action
     $this->description = clienttranslate('Build fences');
   }
 
-  protected function isMiniPasture()
-  {
-    return $this->getCtxArgs()['miniPasture'] ?? false;
-  }
-
-  protected function isFieldFences()
-  {
-    return $this->getCtxArgs()['fieldFences'] ?? false;
-  }
-
   public function isDoable($player, $ignoreResources = false)
   {
-    $nFences = self::getMaxBuildableFences($player, $ignoreResources);
-    return $player->board()->canCreateNewPasture($nFences);
-  }
-
-  public function getMaxBuildableFences($player, $ignoreResources = false)
-  {
-    $available = Fences::countAvailable($player->getId());
-    $maxBuyable = $ignoreResources ? 15 : $player->maxBuyableAmount($this->getCosts($player));
-    if ($this->isFieldFences() && !$ignoreResources) {
-      $maxBuyable += count($player->board()->getAvailableFieldFences());
-    }
-    return min($available, $maxBuyable);
+    return false;
+    return $player->board()->canCreateNewPasture();
   }
 
   public function getState()

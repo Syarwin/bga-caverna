@@ -22,7 +22,6 @@ class ActionCards extends \CAV\Helpers\Pieces
   }
 
   protected static $actionCards = [
-    'Blacksmithing',
     'Clearing',
     'Clearing4',
     'DriftMining',
@@ -46,6 +45,22 @@ class ActionCards extends \CAV\Helpers\Pieces
     'Sustenance',
     'Sustenance4',
     'WoodGathering',
+
+    // Stage 1
+    'Blacksmithing',
+    'OreMineConstruction',
+    'SheepFarming',
+    // Stage 2
+    'DonkeyFarming',
+    'RubyMineConstruction',
+    // Stage 3
+    'FamilyLife',
+    'Exploration',
+    'OreDelivery',
+    // Stage 4
+    'Adventure',
+    'OreTrading',
+    'RubyDelivery',
   ];
 
   /* Creation of the cards */
@@ -94,14 +109,14 @@ class ActionCards extends \CAV\Helpers\Pieces
     }
 
     $cards = $cards->filter(function ($space) {
-      return ($space->getAccumulation() != null);
+      return $space->getAccumulation() != null;
     });
 
     if (isset($type)) {
       $cards = $cards->filter(function ($space) use ($type) {
         return isset($space->getAccumulation()[$type]);
       });
-   }
+    }
 
     return $cards;
   }
