@@ -60,7 +60,16 @@ trait DebugTrait
     // $engine = Globals::getEngine();
     // self::loadDebugUpdateEngine($engine, $map);
     // var_dump($engine);
-    $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
+    // $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
+    Engine::insertAsChild([
+      'action' => STABLES,
+      'args' => [
+        'max' => 1,
+        'costs' => Utils::formatCost([STONE => 1, 'max' => 1]),
+      ],
+    ]);
+    Engine::resolveAction();
+    Engine::proceed();
   }
 
   public function dd()

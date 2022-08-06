@@ -105,6 +105,11 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
   public function getCosts($player, $args = [])
   {
     $costs = [];
+
+    if (isset($args['costs']) && $args['costs'] != null) {
+      $costs['trades'][] = $args['costs'];
+    }
+
     foreach ($this->getBaseCosts() as $cost) {
       $costs['trades'][] = array_merge(['max' => 1], $cost);
     }

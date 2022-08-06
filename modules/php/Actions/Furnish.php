@@ -38,6 +38,7 @@ class Furnish extends \CAV\Models\Action
   {
     $args = [
       'actionCardId' => $this->ctx != null ? $this->ctx->getCardId() : null,
+      'costs' => $this->getCtxArgs()['costs'] ?? null,
     ];
 
     $buy = $this->getAvailableBuildings()->filter(function ($imp) use ($player, $ignoreResources, $args) {

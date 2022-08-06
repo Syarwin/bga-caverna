@@ -28,9 +28,19 @@ class Expedition extends \CAV\Models\Action
     'ore' => ['lvl' => 4, 'flow' => ['action' => GAIN, 'args' => [\ORE => 2]]],
     'pig' => ['lvl' => 5, 'flow' => ['action' => GAIN, 'args' => [\PIG => 1]]],
     'gold' => ['lvl' => 6, 'flow' => ['action' => GAIN, 'args' => [\GOLD => 2]]],
-    'furnish' => ['lvl' => 7, 'flow' => ['action' => FURNISH]], // TODO check
-    'stable' => ['lvl' => 8, 'flow' => ['action' => STABLES]],
-    'tunnel' => ['lvl' => 9, 'flow' => ['action' => CONSTRUCT]], // TODO check
+    'furnish' => ['lvl' => 7, 'flow' => ['action' => FURNISH]],
+    'stable' => [
+      'lvl' => 8,
+      'flow' => [
+        'action' => STABLES,
+        'args' => [
+          'costs' => [
+            'trades' => [[STONE => 1, 'max' => 1]],
+          ],
+        ],
+      ],
+    ],
+    'tunnel' => ['lvl' => 9, 'flow' => ['action' => CONSTRUCT]], // TODO
     'smallPasture' => [
       'lvl' => 9,
       'flow' => [
@@ -45,7 +55,7 @@ class Expedition extends \CAV\Models\Action
               ],
             ],
           ],
-          ['action' => \FENCING, 'args' => ['size' => 1]],
+          ['action' => \FENCING, 'args' => ['size' => 1]], // TODO
         ],
       ],
     ],
@@ -82,7 +92,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 11,
       'flow' => [
         'action' => FURNISH,
-        'args' => [], //TODO Dwelling only + cost reduction 2W + 2S
+        'args' => ['types' => ['D_Dwelling'], 'costs' => [STONE => 2, WOOD => 2]],
       ],
     ],
     'field' => [
@@ -94,9 +104,9 @@ class Expedition extends \CAV\Models\Action
         ],
       ],
     ],
-    'sow' => ['lvl' => 12, ['action' => SOW, 'args' => [\VEGETABLE => 2, GRAIN => 2]]],
+    'sow' => ['lvl' => 12, ['action' => SOW, 'args' => [\VEGETABLE => 2, GRAIN => 2]]], // TODO
     'cavern' => ['lvl' => 14, ['action' => CONSTRUCT, 'args' => ['tiles' => []]]], // TODO: add cavern tile
-    'breed' => ['lvl' => 14, ['special' => 'breed']],
+    'breed' => ['lvl' => 14, ['special' => 'breed']], // TODO
   ];
 
   public function __construct($row)
