@@ -92,7 +92,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 11,
       'flow' => [
         'action' => FURNISH,
-        'args' => ['types' => ['D_Dwelling'], 'costs' => [STONE => 2, WOOD => 2]], //TODO Dwelling only + cost reduction 2W + 2S
+        'args' => ['types' => ['D_Dwelling'], 'costs' => [STONE => 2, WOOD => 2]],
       ],
     ],
     'field' => [
@@ -104,9 +104,9 @@ class Expedition extends \CAV\Models\Action
         ],
       ],
     ],
-    'sow' => ['lvl' => 12, ['action' => SOW, 'args' => [\VEGETABLE => 2, GRAIN => 2]]],
+    'sow' => ['lvl' => 12, ['action' => SOW, 'args' => [\VEGETABLE => 2, GRAIN => 2]]], // TODO
     'cavern' => ['lvl' => 14, ['action' => CONSTRUCT, 'args' => ['tiles' => []]]], // TODO: add cavern tile
-    'breed' => ['lvl' => 14, ['special' => 'breed']],
+    'breed' => ['lvl' => 14, ['special' => 'breed']], // TODO
   ];
 
   public function __construct($row)

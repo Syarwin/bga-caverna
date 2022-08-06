@@ -1,5 +1,7 @@
 <?php
 namespace CAV\ActionCards;
+use CAV\Managers\Players;
+use CAV\Core\Globals;
 
 class ActionRubyMining extends \CAV\Models\ActionCard
 {
@@ -18,6 +20,14 @@ class ActionRubyMining extends \CAV\Models\ActionCard
     $this->players = [1, 2, 3, 4, 5, 6, 7];
 
     $this->accumulation = [RUBY => 1];
+  }
+
+  public function accumulate()
+  {
+    if (Players::count() == 2 && Globals::getRound() <= 2) {
+      return [];
+    }
+    return parent::accumulate();
   }
 
   public function getFlow($player, $dwarf)

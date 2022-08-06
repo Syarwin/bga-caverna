@@ -16,7 +16,7 @@ class ActionLogging extends \CAV\Models\ActionCard
     ];
     $this->players = [1, 2, 3];
 
-    $this->accumulation = [WOOD => [1, 3]];
+    $this->accumulation = [WOOD => [3, 1]];
     $this->flow = [
       'type' => NODE_SEQ,
       'childs' => [
