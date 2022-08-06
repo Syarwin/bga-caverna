@@ -266,10 +266,10 @@ $machinestates = [
 
   ST_CONSTRUCT => [
     'name' => 'construct',
-    'description' => clienttranslate('${actplayer} must build room(s)'),
-    'descriptionmyturn' => clienttranslate('${you} must build up to ${max} rooms(s)'),
-    'descriptionskippable' => clienttranslate('${actplayer} may build room(s)'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may build up to ${max} rooms(s)'),
+    'description' => clienttranslate('${actplayer} must place ${tiles}'),
+    'descriptionmyturn' => clienttranslate('${you} must place ${tiles}'),
+    'descriptionskippable' => clienttranslate('${actplayer} may place ${tiles}'),
+    'descriptionmyturnskippable' => clienttranslate('${you} may place ${tiles}'),
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',

@@ -47,7 +47,6 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
     'text',
     'type',
     'vp',
-    'field',
     'cost',
     'number',
     'nbInBox',
@@ -56,44 +55,23 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
   ];
   protected $name = '';
   protected $tooltip = [];
-  protected $desc = []; // UI
   protected $text = []; // Text of the card, needed for front
-  protected $stage = 0;
-  protected $accumulation = []; // Array of resource => amount
   protected $type = null; // Class of the building
-  protected $dwelling = 0;
-  protected $container = 'central'; // UI
   protected $vp = 0;
-  protected $field = false;
   protected $cost = [];
+  protected $number = null;
   protected $nbInBox = 1;
+  protected $dwelling = 0;
   protected $animalHolder = 0;
-  // Constraints
-  protected $players = null; // Players requirements => null if none, integer if only one, array otherwise
 
   public function jsonSerialize()
   {
-    return [
-      'id' => $this->id,
-      'name' => $this->name,
-      'location' => $this->location,
-      'state' => $this->state,
-      'tooltip' => $this->tooltip,
-
-      // 'component' => $this->isBoardComponent(),
-      // 'desc' => $this->desc,
-      'container' => $this->container,
-    ];
+    return parent::jsonSerialize();
   }
 
   public function isSupported($players, $options)
   {
-    return $this->players == null || in_array(count($players), $this->players);
-  }
-
-  public function getActionCardType()
-  {
-    return $this->actionCardType ?? substr($this->id, 6);
+    return true; // TODO
   }
 
   public function getScore()
@@ -103,7 +81,7 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
 
   public function isPlayed()
   {
-    return $this->location == 'inPlay';
+    return $this->location == 'board';
   }
 
   public function getPlayer($checkPlayed = false)
@@ -115,25 +93,6 @@ class AbstractBuilding extends \CAV\Helpers\DB_Model
     return Players::get($this->pId);
   }
 
-  public function isDwelling()
-  {
-    return $this->dwelling > 0;
-  }
-
-  public function getDwellingCapacity()
-  {
-    return $this->dwelling;
-  }
-
-  public function isAnimalHolder()
-  {
-    return $this->animalHolder > 0;
-  }
-
-  public function getAnimalCapactiy()
-  {
-    return $this->animalHolder;
-  }
 
   /**
    * Cost/buy function

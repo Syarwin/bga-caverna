@@ -479,7 +479,8 @@ define([
       },
 
       onEnteringStateConstruct(args) {
-        this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actConstruct', [zones]));
+        // TODOOOOO
+//        this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actConstruct', [zones]));
       },
 
       onEnteringStateStables(args) {

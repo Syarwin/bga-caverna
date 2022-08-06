@@ -1,8 +1,8 @@
 #!/bin/bash
 SRC=~/bga/bga-caverna/ # with trailing slash
 OLD=caverna
-#NEW=cavernatisaac
-NEW=caverna
+NEW=cavernatisaac
+#NEW=caverna
 TMP=/tmp/bgarewrite-$OLD
 TMPNEW=/tmp/bgarewrite-$NEW/
 

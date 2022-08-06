@@ -13,12 +13,53 @@ class Construct extends \CAV\Models\Action
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->description = clienttranslate('Build rooms');
+    $this->description = [
+      'log' => clienttranslate('Place a ${tiles}'),
+      'args' => [
+        'i18n' => ['tiles'],
+        'tiles' => $this->getTilesMsg(),
+      ],
+    ];
   }
 
   public function getState()
   {
     return ST_CONSTRUCT;
+  }
+
+  public function getTiles()
+  {
+    // TODO : ?? should be useless
+    return $this->getCtxArgs()['tiles'] ?? [];
+  }
+
+  public function getTilesMsg()
+  {
+    $tileNames = [
+      TILE_CAVERN_TUNNEL => clienttranslate('a Cavern/Tunnel twin tile'),
+      TILE_CAVERN_CAVERN => clienttranslate('a Cavern/Cavern twin tile'),
+      TILE_MEADOW_FIELD => clienttranslate('a Meadow/Field twin tile'),
+      TILE_MINE_DEEP_TUNNEL => clienttranslate('a Ore Mine/Deep tunnel twin tile'),
+      TILE_RUBY_MINE => clienttranslate('a Ruby mine tile'),
+      TILE_MEADOW => clienttranslate('a Meadow tile'),
+      TILE_FIELD => clienttranslate('a Field tile'),
+    ];
+
+    $tiles = $this->getTiles();
+    if (count($tiles) == 1) {
+      return $tileNames[$tiles[0]];
+    } elseif (count($tiles) == 2) {
+      return [
+        'log' => clienttranslate('${tile1} or ${tile2}'),
+        'args' => [
+          'i18n' => ['tile1', 'tile2'],
+          'tile1' => $tileNames[$tiles[0]],
+          'tile2' => $tileNames[$tiles[1]],
+        ],
+      ];
+    }
+
+    return 'NOT DONE';
   }
 
   public function getCosts($player)
@@ -35,26 +76,22 @@ class Construct extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
-    // The player must be able to buy at least one room and have an empty spot
-    return ($ignoreResources || $player->canBuy($this->getCosts($player))) && $player->board()->canConstruct();
-  }
-
-  public function getMaxBuildableRooms($player)
-  {
-    $argMax = $this->ctx->getArgs()['max'] ?? 99; // Are there any upper bound linked to the action itself (in case the action is triggered by a player card)
-    $maxBuyable = $player->maxBuyableAmount($this->getCosts($player));
-    return min($argMax, $maxBuyable);
+    // The player must be able place one of the tiles
+    return $player->board()->canConstruct($this->getTiles());
   }
 
   public function argsConstruct()
   {
     $player = Players::getActive();
-    $roomType = $player->getRoomType();
+    $zones = [];
+    foreach ($this->getTiles() as $tile) {
+      $zones[$tile] = $player->board()->getPlacementOptions($tile);
+    }
 
     return [
-      'roomType' => $roomType,
-      'max' => self::getMaxBuildableRooms($player),
-      'zones' => $player->board()->getFreeZones(),
+      'i18n' => ['tiles'],
+      'tiles' => $this->getTilesMsg(),
+      'zones' => $zones,
     ];
   }
 

@@ -1,7 +1,6 @@
 <?php
 namespace CAV\Managers;
 use CAV\Core\Globals;
-use CAV\Core\Game;
 use CAV\Helpers\Utils;
 
 /* Class to manage all the buildings for Caverna */
@@ -23,9 +22,6 @@ class Buildings extends \CAV\Helpers\Pieces
   public static function getBuildingInstance($id, $data = null)
   {
     $type = $data['type'] ?? $id;
-    if ($type == 'cavern') {
-      return new \CAV\Buildings\Cavern($data);
-    }
     $t = explode('_', $type);
     // First part before _ specify the type of Building
     // Eg: Major_Fireplace1,  A24_ThreshingBoard, ...
@@ -54,14 +50,6 @@ class Buildings extends \CAV\Helpers\Pieces
 
     foreach ($players as $pId => $player) {
       $buildings[] = [
-        'type' => 'cavern',
-        'player_id' => $pId,
-        'location' => 'inPlay',
-        'x' => 7,
-        'y' => 5,
-        'nbr' => 1,
-      ];
-      $buildings[] = [
         'type' => 'D_StartDwelling',
         'player_id' => $pId,
         'location' => 'inPlay',
@@ -71,24 +59,23 @@ class Buildings extends \CAV\Helpers\Pieces
       ];
     }
 
-    // Merge cards to be created
-    // $oCards = array_merge(array_values($buildings[MAJOR]), array_values($buildings[MINOR]), array_values($buildings[OCCUPATION]));
-
-    // // Remove cards still in the box
-    // $oCards = array_filter($oCards, function ($building) {
-    //   return $building['location'] != 'box';
-    // });
-    //
-    // Create the cards
+    // Create the buildings
     self::create($buildings, null);
   }
 
-  /**************************** Buildings *****************************************/
-  public function getBuildings($pId)
+  public static function getUiData()
   {
-    return self::getFilteredQuery($pId, 'board', '%')->get();
+    return self::getInLocationOrdered('board')
+      ->merge(self::getInLocationOrdered('inPlay'))
+      ->ui();
   }
 
+  public static function getOfPlayer($pId)
+  {
+    return self::getFilteredQuery($pId, 'inPlay', null)->get();
+  }
+
+  /**************************** Buildings *****************************************/
   public function addBuilding($tile, $cavernId, $player)
   {
     self::DB()->delete($cavernId);
@@ -169,20 +156,6 @@ class Buildings extends \CAV\Helpers\Pieces
       $buildings[$cId]['location'] = $location;
       $buildings[$cId]['player_id'] = $pId;
     }
-  }
-
-  public static function getUiData()
-  {
-    return self::getInLocationOrdered('board')
-      ->merge(self::getInLocationOrdered('inPlay'))
-      ->ui();
-  }
-
-  public static function getOfPlayer($pId)
-  {
-    return self::getSelectQuery()
-      ->wherePlayer($pId)
-      ->get();
   }
 
   public static function getAvailables($type = null)
