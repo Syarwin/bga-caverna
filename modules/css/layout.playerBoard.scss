@@ -104,8 +104,8 @@
     }
 
     .caverna-player-board {
-      width: 628px;
-      height: 387px;
+      width: 623px;
+      height: 383px;
       position: relative;
       border-top: 1px solid black;
 
@@ -113,11 +113,11 @@
         background-image: url('img/player-board-small.jpg');
         background-size: 100% 100%;
         display: grid;
-        grid-template-columns: 8px repeat(3, 5px 90px) 50px repeat(3, 90px 5px) 0px;
-        grid-template-rows: 2px repeat(4, 5px 90px) 5px 0px;
+        grid-template-columns: 8px repeat(3, 4px 90px) 50px repeat(3, 90px 4px) 0px;
+        grid-template-rows: 2px repeat(4, 4px 90px) 4px 0px;
 
         &.office-room {
-          background-image: url("img/player-board.jpg");
+          background-image: url('img/player-board.jpg');
           background-size: 90% 90%;
           grid-template-columns: 70px repeat(3, 4px 70px) 44px repeat(3, 70px 4px) 70px;
           grid-template-rows: 70px repeat(4, 1px 70px) 1px 70px;
@@ -146,48 +146,9 @@
             align-items: center;
           }
 
-          &[data-x='1'][data-y='1'] .empty-node {
-            background-position-x: 4 * 100% / 6;
-          }
-          &[data-x='3'][data-y='1'] .empty-node {
-            background-position-x: 0 * 100% / 6;
-          }
-          &[data-x='5'][data-y='1'] .empty-node {
-            background-position-x: 1 * 100% / 6;
-          }
-          &[data-x='7'][data-y='1'] .empty-node {
-            background-position-x: 2 * 100% / 6;
-          }
-          &[data-x='9'][data-y='1'] .empty-node {
-            background-position-x: 6 * 100% / 6;
-          }
-          &[data-x='3'][data-y='3'] .empty-node {
-            background-position-x: 1 * 100% / 6;
-          }
-          &[data-x='5'][data-y='3'] .empty-node {
-            background-position-x: 6 * 100% / 6;
-          }
-          &[data-x='7'][data-y='3'] .empty-node {
-            background-position-x: 5 * 100% / 6;
-          }
-          &[data-x='9'][data-y='3'] .empty-node {
-            background-position-x: 4 * 100% / 6;
-          }
-          &[data-x='3'][data-y='5'] .empty-node {
-            background-position-x: 3 * 100% / 6;
-          }
-          &[data-x='5'][data-y='5'] .empty-node {
-            background-position-x: 2 * 100% / 6;
-          }
-          &[data-x='7'][data-y='5'] .empty-node {
-            background-position-x: 1 * 100% / 6;
-          }
-          &[data-x='9'][data-y='5'] .empty-node {
-            background-position-x: 0 * 100% / 6;
-          }
-
           #ebd-body:not(.help-mode) &.selectable {
             cursor: pointer;
+            background-color: rgba(255, 0, 0, 0.2);
             &:hover {
               background-color: rgba(255, 0, 0, 0.3);
             }
@@ -197,26 +158,6 @@
             background-color: rgba(0, 255, 0, 0.5);
             &:hover {
               background-color: rgba(0, 255, 0, 0.9);
-            }
-          }
-        }
-      }
-
-      @each $color, $layout in $roomLayouts {
-        @each $y, $row in $layout {
-          @for $i from 1 to 5 {
-            $x: 2 * $i - 1;
-            $k: nth($row, $i);
-            $kx: $k % 4;
-            $ky: ($k - ($k % 4)) / 4;
-            &[data-color='#{$color}'] .board-cell[data-x='#{$x}'][data-y='#{$y}'] {
-              .meeple-roomWood,
-              .meeple-roomClay,
-              .meeple-roomStone {
-                &::after {
-                  background-position: $kx * 100% / 3 $ky * 100% / 3;
-                }
-              }
             }
           }
         }

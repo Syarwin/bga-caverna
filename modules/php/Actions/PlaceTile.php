@@ -1,14 +1,13 @@
 <?php
 namespace CAV\Actions;
 
-use CAV\Managers\Meeples;
 use CAV\Managers\Players;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Helpers\Utils;
 use CAV\Core\Stats;
 
-class Construct extends \CAV\Models\Action
+class PlaceTile extends \CAV\Models\Action
 {
   public function __construct($row)
   {
@@ -24,7 +23,7 @@ class Construct extends \CAV\Models\Action
 
   public function getState()
   {
-    return ST_CONSTRUCT;
+    return ST_PLACE_TILE;
   }
 
   public function getTiles()
@@ -33,10 +32,10 @@ class Construct extends \CAV\Models\Action
     return $this->getCtxArgs()['tiles'] ?? [];
   }
 
-  public function getTilesMsg()
+  public static function getTileName($tile)
   {
     $tileNames = [
-      TILE_CAVERN_TUNNEL => clienttranslate('a Cavern/Tunnel twin tile'),
+      TILE_TUNNEL_CAVERN => clienttranslate('a Cavern/Tunnel twin tile'),
       TILE_CAVERN_CAVERN => clienttranslate('a Cavern/Cavern twin tile'),
       TILE_MEADOW_FIELD => clienttranslate('a Meadow/Field twin tile'),
       TILE_MINE_DEEP_TUNNEL => clienttranslate('a Ore Mine/Deep tunnel twin tile'),
@@ -44,17 +43,21 @@ class Construct extends \CAV\Models\Action
       TILE_MEADOW => clienttranslate('a Meadow tile'),
       TILE_FIELD => clienttranslate('a Field tile'),
     ];
+    return $tileNames[$tile];
+  }
 
+  public function getTilesMsg()
+  {
     $tiles = $this->getTiles();
     if (count($tiles) == 1) {
-      return $tileNames[$tiles[0]];
+      return self::getTileName($tiles[0]);
     } elseif (count($tiles) == 2) {
       return [
         'log' => clienttranslate('${tile1} or ${tile2}'),
         'args' => [
           'i18n' => ['tile1', 'tile2'],
-          'tile1' => $tileNames[$tiles[0]],
-          'tile2' => $tileNames[$tiles[1]],
+          'tile1' => self::getTileName($tiles[0]),
+          'tile2' => self::getTileName($tiles[1]),
         ],
       ];
     }
@@ -62,25 +65,13 @@ class Construct extends \CAV\Models\Action
     return 'NOT DONE';
   }
 
-  public function getCosts($player)
-  {
-    return [];
-    // TODO: to see later on
-    $roomType = $player->getRoomType();
-    $constructCost = [];
-    $costs = $constructCost[$roomType] ?? [];
-    $costs = $this->getCtxArgs()['costs'] ?? $costs;
-    $this->checkCostModifiers($costs, $player, ['type' => $roomType]);
-    return $costs;
-  }
-
   public function isDoable($player, $ignoreResources = false)
   {
     // The player must be able place one of the tiles
-    return $player->board()->canConstruct($this->getTiles());
+    return $player->board()->canPlace($this->getTiles());
   }
 
-  public function argsConstruct()
+  public function argsPlaceTile()
   {
     $player = Players::getActive();
     $zones = [];
@@ -95,43 +86,48 @@ class Construct extends \CAV\Models\Action
     ];
   }
 
-  public function actConstruct($rooms)
+  public function actPlaceTile($tile, $positions)
   {
-    self::checkAction('actConstruct');
+    self::checkAction('actPlaceTile');
 
     $player = Players::getCurrent();
-    $roomType = $player->getRoomType();
-    $args = $this->getCtxArgs();
-    $source = $args['source'] ?? null;
-
-    if (count($rooms) > $this->getMaxBuildableRooms($player)) {
-      throw new \BgaVisibleSystemException('You can\'t build that many rooms with your resources');
+    $args = $this->argsPlaceTile();
+    $zones = $this->argsPlaceTile()['zones'][$tile] ?? [];
+    Utils::filter($zones, function ($zone) use ($positions) {
+      if (count($positions) == 2) {
+        return $positions[0] == $zone['pos1'] && $positions[1] == $zone['pos2'];
+      } else {
+        return $positions[0] == $zone;
+      }
+    });
+    if (empty($zones)) {
+      throw new \BgaVisibleSystemException('You can\'t place that tile here');
     }
-
-    // Record amount of rooms prior to building (A21)
-    $oldRoomCount = $player->countRooms();
 
     // Add them to board
     $playerBoard = $player->board();
-    foreach ($rooms as &$room) {
-      $playerBoard->addRoom($roomType, $room);
+    list($squares, $bonus) = $playerBoard->addTile($tile, $positions);
+
+    // Notify the new tile squares
+    Notifications::placeTile($player, $tile, $squares);
+
+    // Insert gain node if any bonus
+    if (!is_null($bonus)) {
+      Engine::insertAsChild([
+        'action' => GAIN,
+        'pId' => $player->getId(),
+        'args' => $bonus,
+      ]);
     }
 
-    // Then run sanity checks with $raiseException = true to auto rollback in case of invalid choice
-    $playerBoard->areRoomsValid(true);
-
-    // If everything is fine, notify the new rooms
-    Notifications::construct($player, $rooms, $source);
-
-    // Insert PAY action and proceed
-    $player->pay(count($rooms), $this->getCosts($player), clienttranslate('Construction'));
-    Stats::incTotalRoomsBuilt($player, count($rooms));
+    // TODO : stats
+    //    Stats::incTotalRoomsBuilt($player, count($rooms));
 
     // Listeners for cards
     $eventData = [
-      'roomType' => $roomType,
-      'rooms' => $rooms,
-      'oldRoomCount' => $oldRoomCount,
+      'tile' => $tile,
+      'positions' => $positions,
+      'bonus' => $bonus,
     ];
     $this->checkAfterListeners($player, $eventData);
 

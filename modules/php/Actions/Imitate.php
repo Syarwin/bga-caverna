@@ -18,7 +18,7 @@ class Imitate extends \CAV\Models\Action
 
   public function getState()
   {
-    return ST_CONSTRUCT; // TODO
+    return ST_PLACE_TILE; // TODO
   }
 
   public function isDoable($player, $ignoreResources = false)

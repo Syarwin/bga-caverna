@@ -1,10 +1,5 @@
 {OVERALL_GAME_HEADER}
 
-<div id="draft-wrapper">
-  <div class="draft-title"><h4>{DRAFT}</h4></div>
-  <div class="draft-title"><h4>{YOUR_HAND}</h4></div>
-  <div id="draft-container"></div>
-</div>
 <div id="position-wrapper">
   <div id="main-boards">
     <div id="add-board-holder"><div id="add-board"></div></div>

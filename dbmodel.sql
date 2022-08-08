@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `tiles` (
   `tile_state` int(10) DEFAULT 0,
   `player_id` int(10) DEFAULT 0,
   `type` varchar(100) NOT NULL,
+  `asset` varchar(100) NOT NULL,
   `x` varchar(100) NULL,
   `y` varchar(100) NULL,
   PRIMARY KEY (`tile_id`)

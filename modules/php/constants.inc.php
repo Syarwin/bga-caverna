@@ -74,7 +74,7 @@ const ST_COLLECT = 24;
 const ST_FIRSTPLAYER = 25;
 const ST_OCCUPATION = 26;
 const ST_PLOW = 27;
-const ST_CONSTRUCT = 28;
+const ST_PLACE_TILE = 28;
 const ST_SOW = 29;
 const ST_STABLE = 30;
 const ST_RENOVATION = 31;
@@ -172,11 +172,10 @@ const CAVERN = 'Cavern';
 
 const WEAPON = 'weapon';
 
-
 const FOREST = 'forest';
 const MOUNTAIN = 'mountain';
 
-const TILE_CAVERN_TUNNEL = 'tileCavernTunnel';
+const TILE_TUNNEL_CAVERN = 'tileTunnelCavern';
 const TILE_CAVERN_CAVERN = 'tileCavernCavern';
 const TILE_MEADOW_FIELD = 'tileMeadowField';
 const TILE_MINE_DEEP_TUNNEL = 'tileMineDeepTunnel';
@@ -185,6 +184,16 @@ const TILE_MEADOW = 'tileMeadow';
 const TILE_FIELD = 'tileField';
 const TILE_CAVERN = 'tileCavern';
 const TILE_TUNNEL = 'tileTunnel';
+
+const TILE_SQUARES_MAPPING = [
+  TILE_TUNNEL_CAVERN => [TILE_TUNNEL, TILE_CAVERN],
+  TILE_CAVERN_CAVERN => [TILE_CAVERN, TILE_CAVERN],
+  TILE_MEADOW_FIELD => [TILE_MEADOW, TILE_FIELD],
+  TILE_MINE_DEEP_TUNNEL => [], // TODO
+  TILE_RUBY_MINE => [TILE_RUBY_MINE],
+  TILE_MEADOW => [TILE_MEADOW],
+  TILE_FIELD => [TILE_FIELD],
+];
 
 // State to differentiate chah beh oui !ildren from grown ups
 const ADULT = 0;
@@ -239,7 +248,7 @@ const NO_COST = ['trades' => [['max' => 1]]];
 const ACTIVATE_BUILDING = 'ACTIVATE_BUILDING';
 const BLACKSMITH = 'BLACKSMITH';
 const COLLECT = 'COLLECT';
-const CONSTRUCT = 'CONSTRUCT';
+const PLACE_TILE = 'PLACE_TILE';
 const EXCHANGE = 'EXCHANGE';
 const EXPEDITION = 'EXPEDITION';
 const FENCING = 'FENCING';

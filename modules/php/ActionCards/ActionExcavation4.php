@@ -32,10 +32,10 @@ class ActionExcavation4 extends \CAV\Models\ActionCard
       'childs' => [
         ['action' => COLLECT],
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'args' => [
-            'tiles' => [TILE_CAVERN_TUNNEL, TILE_CAVERN_CAVERN],
+            'tiles' => [TILE_TUNNEL_CAVERN, TILE_CAVERN_CAVERN],
           ],
         ],
       ],

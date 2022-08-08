@@ -25,6 +25,34 @@ define('INSIDE', 1);
 define('BORDER', 2);
 define('CURRENT_WORK', 3);
 
+define('BONUSES', [
+  [
+    'x' => 5,
+    'y' => 1,
+    'gain' => [PIG => 1],
+  ],
+  [
+    'x' => 1,
+    'y' => 5,
+    'gain' => [PIG => 1],
+  ],
+  [
+    'x' => 3,
+    'y' => 7,
+    'gain' => [FOOD => 1],
+  ],
+  [
+    'x' => 9,
+    'y' => 7,
+    'gain' => [FOOD => 1],
+  ],
+  [
+    'x' => 11,
+    'y' => 1,
+    'gain' => [FOOD => 2],
+  ],
+]);
+
 class PlayerBoard
 {
   protected $player = null;
@@ -99,6 +127,15 @@ class PlayerBoard
     });
   }
 
+  public function getBonus($pos)
+  {
+    foreach (BONUSES as $cell) {
+      if ($cell['x'] == $pos['x'] && $cell['y'] == $pos['y']) {
+        return $cell['gain'];
+      }
+    }
+    return null;
+  }
   ////////////////////////////////////////
   //     _       _     _
   //    / \   __| | __| | ___ _ __ ___
@@ -131,21 +168,19 @@ class PlayerBoard
   }
 
   /**
-   * Add a field at a given position
-   * This only check that the spot is free
+   * Add a tile square at a given position
    */
-  public function addField(&$field)
+  public function addTileSquare($tileType, $tileAsset, $pos)
   {
-    $this->checkNodePos($field['x'], $field['y']);
-    if (!$this->isFree($field)) {
-      throw new \BgaVisibleSystemException('This node is not free');
-    }
+    $this->checkNodePos($pos['x'], $pos['y']);
 
     // Create the field meeple and update the variable
-    $id = Meeples::createResourceInLocation('field', 'board', $this->pId, $field['x'], $field['y']);
-    $field = Meeples::get($id); // Update $field value
-    $this->fields[] = $field;
-    $this->grid[$field['x']][$field['y']] = $field;
+    $tile = Tiles::createTileOnBoard($tileType, $tileAsset, $this->pId, $pos['x'], $pos['y']);
+    $this->tiles[] = $tile;
+    // Check bonus under the tile
+    $bonus = is_null($this->grid[$pos['x']][$pos['y']]) ? $this->getBonus($pos) : null;
+    $this->grid[$pos['x']][$pos['y']] = $tile;
+    return [$tile, $bonus];
   }
 
   /**
@@ -323,12 +358,6 @@ class PlayerBoard
   // /_/   \_\_|  \__, |___/  \___/ \__|_|_|___/
   //              |___/
   /////////////////////////////////////////////////
-
-  public function canConstruct($tiles)
-  {
-    return true;
-    //    return !empty($this->getBuildableZones());
-  }
 
   /**
    * Return all fields that could receive a crop
@@ -518,6 +547,7 @@ class PlayerBoard
     } elseif (in_array($tile, [TILE_CAVERN, TILE_TUNNEL])) {
       $nodes = $this->getFreeZones(MOUNTAIN);
     } else {
+      return [];
       die('TODO : getBuildableZones : ' . $tile);
     }
 
@@ -529,17 +559,8 @@ class PlayerBoard
    */
   public function getPlacementOptions($tile)
   {
-    // Decompose any twin tile into two tiles
-    $tileMapping = [
-      TILE_CAVERN_TUNNEL => [TILE_CAVERN, TILE_TUNNEL],
-      TILE_CAVERN_CAVERN => [TILE_CAVERN, TILE_CAVERN],
-      TILE_MEADOW_FIELD => [TILE_MEADOW, TILE_FIELD],
-      TILE_MINE_DEEP_TUNNEL => [], // TODO
-      TILE_RUBY_MINE => [TILE_RUBY_MINE],
-      TILE_MEADOW => [TILE_MEADOW],
-      TILE_FIELD => [TILE_FIELD],
-    ];
-    $tiles = $tileMapping[$tile];
+    // Decompose any twin tile into two squares
+    $tiles = TILE_SQUARES_MAPPING[$tile];
 
     // Get buildable zone
     if (count($tiles) == 1) {
@@ -559,7 +580,52 @@ class PlayerBoard
       }
       return $zones;
     } else {
+      return [];
       die('TODO : getPlacementOptions');
+    }
+  }
+
+  public function canPlace($tiles)
+  {
+    foreach ($tiles as $tile) {
+      if (!empty($this->getPlacementOptions($tile))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Add a tile at a given position(s)
+   */
+  public function addTile($tile, $positions)
+  {
+    $tiles = TILE_SQUARES_MAPPING[$tile];
+
+    // Get buildable zone
+    if (count($tiles) == 1) {
+      die('TODO');
+    } elseif (count($tiles) == 2) {
+      // Compute rotation
+      $rotation = 0;
+      $dx = $positions[0]['x'] - $positions[1]['x'];
+      $dy = $positions[0]['y'] - $positions[1]['y'];
+      // Left/right
+      if ($dy == 0) {
+        $rotation = $dx > 0 ? 2 : 0;
+      } else {
+        $rotation = $dy > 0 ? 1 : 3;
+      }
+
+      $squares = [];
+      $bonus = null;
+      for ($i = 0; $i <= 1; $i++) {
+        $tileAsset = $tile . '-' . $i . '_' . $rotation;
+        list($square, $coveredBonus) = $this->addTileSquare($tiles[$i], $tileAsset, $positions[$i]);
+        $squares[] = $square;
+        $bonus = $bonus ?? $coveredBonus;
+      }
+      return [$squares, $bonus];
     }
   }
 

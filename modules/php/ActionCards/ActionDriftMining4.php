@@ -32,10 +32,10 @@ class ActionDriftMining4 extends \CAV\Models\ActionCard
       'childs' => [
         ['action' => COLLECT],
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'args' => [
-            'tiles' => [TILE_CAVERN_TUNNEL],
+            'tiles' => [TILE_TUNNEL_CAVERN],
           ],
         ],
       ],

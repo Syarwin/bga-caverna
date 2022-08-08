@@ -264,8 +264,8 @@ $machinestates = [
     'possibleactions' => ['actPlow', 'actPassOptionalAction', 'actRestart'],
   ],
 
-  ST_CONSTRUCT => [
-    'name' => 'construct',
+  ST_PLACE_TILE => [
+    'name' => 'placeTile',
     'description' => clienttranslate('${actplayer} must place ${tiles}'),
     'descriptionmyturn' => clienttranslate('${you} must place ${tiles}'),
     'descriptionskippable' => clienttranslate('${actplayer} may place ${tiles}'),
@@ -273,7 +273,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actConstruct', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actPlaceTile', 'actPassOptionalAction', 'actRestart'],
   ],
 
   ST_FURNISH => [

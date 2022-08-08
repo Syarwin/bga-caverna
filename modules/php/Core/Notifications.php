@@ -229,39 +229,18 @@ class Notifications
     ]);
   }
 
-  public static function construct($player, $rooms, $source = null)
+
+  public static function placeTile($player, $tile, $squares)
   {
-    // $msg =
-    //   count($rooms) == 1
-    //     ? clienttranslate('${player_name} constructs one room')
-    // : clienttranslate('${player_name} constructs ${nb} rooms');
-
-    if (count($rooms) == 1 && $source == null) {
-      $msg = clienttranslate('${player_name} constructs one room');
-    } elseif (count($rooms) == 1 && $source != null) {
-      $msg = clienttranslate('${player_name} constructs one room (${source})');
-    } else {
-      $msg = clienttranslate('${player_name} constructs ${nb} rooms');
-    }
-
-    self::notifyAll('construct', $msg, [
-      'nb' => count($rooms),
+    self::notifyAll('construct', clienttranslate('${player_name} places ${tile_name}'), [
+      'i18n' => ['tile_name'],
+      'tile_name' => \CAV\Actions\PlaceTile::getTileName($tile),
       'player' => $player,
-      'rooms' => $rooms,
-      'source' => $source,
+      'squares' => $squares,
     ]);
 
-    // Update drop zones of player
-    self::updateDropZones($player);
-  }
-
-  public static function renovate($player, $rooms)
-  {
-    self::notifyAll('renovate', clienttranslate('${player_name} renovates its house (${nb} rooms)'), [
-      'nb' => count($rooms),
-      'player' => $player,
-      'rooms' => $rooms,
-    ]);
+    // TODO ?? Update drop zones of player
+    // self::updateDropZones($player);
   }
 
   public static function stables($player, $stables)

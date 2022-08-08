@@ -8,8 +8,21 @@ class Tiles extends \CAV\Helpers\Pieces
 {
   protected static $table = 'tiles';
   protected static $prefix = 'tile_';
-  protected static $customFields = ['player_id', 'type', 'x', 'y'];
+  protected static $customFields = ['player_id', 'type', 'asset', 'x', 'y'];
   protected static $autoIncrement = true;
+
+  protected static function cast($tile)
+  {
+    return [
+      'id' => (int) $tile['id'],
+      'location' => $tile['location'],
+      'pId' => $tile['player_id'],
+      'type' => $tile['type'],
+      'asset' => $tile['asset'],
+      'x' => (int) $tile['x'],
+      'y' => (int) $tile['y'],
+    ];
+  }
 
   /* Creation of the tiles */
   public static function setupNewGame($players, $options)
@@ -17,14 +30,16 @@ class Tiles extends \CAV\Helpers\Pieces
     $tiles = [];
     foreach ($players as $pId => $player) {
       $tiles[] = [
-        'type' => 'cavern',
+        'type' => \TILE_CAVERN,
         'player_id' => $pId,
+        'asset' => '',
         'x' => 7,
         'y' => 7,
       ];
       $tiles[] = [
-        'type' => 'cavern',
+        'type' => \TILE_CAVERN,
         'player_id' => $pId,
+        'asset' => '',
         'x' => 7,
         'y' => 5,
       ];
@@ -42,6 +57,20 @@ class Tiles extends \CAV\Helpers\Pieces
   public static function getOfPlayer($pId, $type = null)
   {
     return self::getFilteredQuery($pId, 'inPlay', $type)->get();
+  }
+
+  public static function createTileOnBoard($tileType, $tileAsset, $pId, $x, $y)
+  {
+    $tile = [
+      'location' => 'inPlay',
+      'type' => $tileType,
+      'player_id' => $pId,
+      'asset' => $tileAsset,
+      'x' => $x,
+      'y' => $y,
+    ];
+
+    return self::singleCreate($tile);
   }
 
   /**

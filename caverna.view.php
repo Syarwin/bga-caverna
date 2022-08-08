@@ -22,8 +22,5 @@ class view_caverna_caverna extends game_view
   }
   function build_page($viewArgs)
   {
-    $this->tpl['YOUR_HAND'] = self::_("Your hand");
-    $this->tpl['DRAFT'] = self::_("Draft pool");
-
   }
 }

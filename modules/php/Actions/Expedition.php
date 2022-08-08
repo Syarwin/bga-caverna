@@ -40,7 +40,7 @@ class Expedition extends \CAV\Models\Action
         ],
       ],
     ],
-    'tunnel' => ['lvl' => 9, 'flow' => ['action' => CONSTRUCT]], // TODO
+    'tunnel' => ['lvl' => 9, 'flow' => ['action' => PLACE_TILE]], // TODO
     'smallPasture' => [
       'lvl' => 9,
       'flow' => [
@@ -82,7 +82,7 @@ class Expedition extends \CAV\Models\Action
     'meadow' => [
       'lvl' => 10,
       'flow' => [
-        'action' => CONSTRUCT,
+        'action' => PLACE_TILE,
         'args' => [
           'tiles' => [TILE_MEADOW_FIELD], // TODO: prairie only
         ],
@@ -98,14 +98,14 @@ class Expedition extends \CAV\Models\Action
     'field' => [
       'lvl' => 12,
       'flow' => [
-        'action' => CONSTRUCT,
+        'action' => PLACE_TILE,
         'args' => [
           'tiles' => [TILE_MEADOW_FIELD], // TODO : field only
         ],
       ],
     ],
     'sow' => ['lvl' => 12, ['action' => SOW, 'args' => [\VEGETABLE => 2, GRAIN => 2]]], // TODO
-    'cavern' => ['lvl' => 14, ['action' => CONSTRUCT, 'args' => ['tiles' => []]]], // TODO: add cavern tile
+    'cavern' => ['lvl' => 14, ['action' => PLACE_TILE, 'args' => ['tiles' => []]]], // TODO: add cavern tile
     'breed' => ['lvl' => 14, ['special' => 'breed']], // TODO
   ];
 

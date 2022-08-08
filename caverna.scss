@@ -43,7 +43,7 @@ html {
 }
 
 @import 'modules/css/variables';
-@import 'modules/css/card';
+@import 'modules/css/tiles';
 @import 'modules/css/layout';
 @import 'modules/css/meeples';
 @import 'modules/css/playerPanel';
@@ -146,6 +146,34 @@ html {
       }
     }
   }
+}
+
+#page-subtitle:empty {
+  display: none;
+}
+
+#page-subtitle {
+  margin: -12px 100px 10px;
+  z-index: 0;
+  position: relative;
+  padding: 5px 15px;
+  background: #e3e2dd;
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.3);
+  box-sizing: content-box;
+  border-radius: 5px;
+
+  #subtitle-text {
+    margin-top: 5px;
+    text-align: center;
+
+    .bgabutton {
+      margin: 0px 0px 0px 10px;
+    }
+  }
+}
+
+#page-title.fixed-page-title ~ #page-subtitle {
+  margin-top: 0px;
 }
 
 #logs .log.notif_startNewTurn .roundedbox {

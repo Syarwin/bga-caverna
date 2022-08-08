@@ -34,7 +34,7 @@ class ActionSustenance extends \CAV\Models\ActionCard
         ['action' => COLLECT],
         ['action' => GAIN, 'args' => [GRAIN => 1]],
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'args' => [
             'tiles' => [TILE_MEADOW_FIELD],

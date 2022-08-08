@@ -33,7 +33,7 @@ class ActionSustenance4 extends \CAV\Models\ActionCard
       'childs' => [
         ['action' => COLLECT],
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'args' => [
             'tiles' => [TILE_MEADOW_FIELD],

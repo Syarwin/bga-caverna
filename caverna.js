@@ -66,6 +66,7 @@ define([
           'resolveChoice',
           'confirmTurn',
           'confirmPartialTurn',
+          'placeTile',
           // UNCHECKED
           'construct',
           'exchange',
@@ -92,6 +93,7 @@ define([
           ['equipWeapon', null],
           ['upgradeWeapon', 500],
           ['furnish', 500],
+          ['placeTile', 1000],
           // UNCHECKED
           ['addFences', null],
           ['addStables', null],
@@ -100,8 +102,6 @@ define([
           ['firstPlayer', 800],
           ['plow', 1000],
           ['sow', null],
-          ['construct', 1000],
-          ['renovate', 1000],
           ['returnHome', null],
           ['updateDropZones', 1],
           ['reorganize', null],
@@ -153,10 +153,11 @@ define([
           $('generalactions'),
           'after',
         );
-
         // 3D ribbon
         dojo.place('<div id="page-title-left-ribbon" class="ribbon-effect"></div>', 'page-title');
         dojo.place('<div id="page-title-right-ribbon" class="ribbon-effect"></div>', 'page-title');
+        // Create a new div for subtitle (placeTile action)
+        dojo.place("<div id='page-subtitle'></div>", 'page-title', 'after');
 
         // // Add Harvest Icons
         // [4, 7, 9, 11, 13, 14].forEach((turn) => {
@@ -172,6 +173,7 @@ define([
         this.setupActionCards();
         this.setupPlayers();
         // this.setupBuildings();
+        this.setupTiles();
         this.setupMeeples();
         // this.setupAnimalsDropZones();
         this.updatePrefs();
@@ -236,10 +238,11 @@ define([
       notif_refreshUI(n) {
         debug('Notif: refreshing UI', n);
         //        ['meeples', 'players', 'scores', 'playerCards'].forEach((value) => {
-        ['meeples', 'players', 'scores'].forEach((value) => {
+        ['meeples', 'tiles', 'players', 'scores'].forEach((value) => {
           this.gamedatas[value] = n.args.datas[value];
         });
         this.setupMeeples();
+        this.setupTiles();
         this.setupAnimalsDropZones();
         this.updateBuildings();
         this.updatePlayersCounters();
@@ -273,6 +276,8 @@ define([
         this.clearSowRadios();
         this.disableAnimalControls();
         dojo.empty('anytimeActions');
+        dojo.empty('page-subtitle');
+        dojo.query('.square-selector').forEach(dojo.destroy);
         dojo.query('.player-board-wrapper.current.harvest').removeClass('harvest');
         dojo.query('.phantom').removeClass('.phantom');
         this._isHarvest = false;
@@ -474,14 +479,6 @@ define([
         this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actFence', [zones]));
       },
 
-      onEnteringStatePlow(args) {
-        this.promptPlayerBoardZones(args.zones, 1, null, (zone) => this.takeAtomicAction('actPlow', [zone]));
-      },
-
-      onEnteringStateConstruct(args) {
-        // TODOOOOO
-//        this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actConstruct', [zones]));
-      },
 
       onEnteringStateStables(args) {
         this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actStables', [zones]));

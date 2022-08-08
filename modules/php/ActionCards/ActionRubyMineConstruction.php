@@ -25,7 +25,7 @@ class ActionRubyMineConstruction extends \CAV\Models\ActionCard
   protected function getFlow($player, $dwarf)
   {
     return [
-      'action' => CONSTRUCT,
+      'action' => PLACE_TILE,
       'args' => [
         'tiles' => [TILE_RUBY_MINE],
         'bonusIfDeep' => true,
