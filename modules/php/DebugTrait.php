@@ -18,12 +18,7 @@ trait DebugTrait
   function tp()
   {
     $player = Players::getCurrent();
-    Buildings::setupNewGame(
-      [
-        $player->getId() => $player,
-      ],
-      []
-    );
+    Buildings::setupNewGame(Players::getAll(), []);
   }
 
   function dv()
@@ -75,6 +70,10 @@ trait DebugTrait
     ActionCards::setupNewGame(
       [
         $player->getId() => $player,
+        0 => 1,
+        2 => 3,
+        4 => 4,
+        5 => 5,
       ],
       []
     );

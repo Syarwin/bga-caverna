@@ -122,8 +122,6 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
   public function payGainNode($cost, $gain, $sourceName = null, $optional = true, $pId = null)
   {
-    $pId = $pId ?? $this->pId;
-
     return [
       'type' => NODE_SEQ,
       'optional' => $optional,
@@ -134,7 +132,7 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
   public function gainNode($gain, $pId = null)
   {
-    $gain['pId'] = $pId ?? $this->pId;
+    $gain['pId'] = $pId;
     return [
       'action' => GAIN,
       'args' => $gain,
@@ -148,7 +146,7 @@ class ActionCard extends \CAV\Helpers\DB_Model
     return [
       'action' => PAY,
       'args' => [
-        'pId' => $pId ?? $this->pId,
+        'pId' => $pId,
         'nb' => $nb,
         'costs' => Utils::formatCost($cost),
         'source' => $sourceName ?? $this->name,

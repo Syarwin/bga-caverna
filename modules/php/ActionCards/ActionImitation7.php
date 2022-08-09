@@ -9,7 +9,7 @@ class ActionImitation7 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionImitation7';
-    $this->actionCardType = 'ActionImitation';
+    // $this->actionCardType = 'ActionImitation';
     $this->name = clienttranslate('Imitation');
     $this->tooltip = [
       clienttranslate('Use an Action space occupied by one of your opponents'),
@@ -33,6 +33,6 @@ class ActionImitation7 extends \CAV\Models\ActionCard
 
   public function getDesc()
   {
-    return '2 <FOOD>';
+    return ['2 <FOOD>'];
   }
 }
