@@ -25,7 +25,10 @@ class ActionImitation extends \CAV\Models\ActionCard
     return [
       'type' => NODE_SEQ,
       'childs' => [
-        ['action' => PAY, 'args' => ['nb' => 1, 'costs' => Utils::formatCost([FOOD => $playersMap[Players::count()]])]],
+        [
+          'action' => PAY,
+          'args' => ['nb' => 1, 'costs' => Utils::formatCost([FOOD => $playersMap[Players::count()] ?? 0])],
+        ],
         ['action' => IMITATE],
       ],
     ];
@@ -34,6 +37,6 @@ class ActionImitation extends \CAV\Models\ActionCard
   public function getDesc()
   {
     $playersMap = [3 => 4, 4 => 2, 5 => 2, 6 => 1, 7 => 0];
-    return $playersMap[Players::count()] . ' <FOOD>';
+    return $playersMap[Players::count()] ?? 0 . ' <FOOD>';
   }
 }
