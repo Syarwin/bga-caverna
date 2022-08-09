@@ -29,13 +29,14 @@ class ActionSlash extends \CAV\Models\ActionCard
       'type' => NODE_SEQ,
       'childs' => [
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'args' => [
             'tiles' => [TILE_MEADOW_FIELD],
           ],
         ],
         [
           'action' => SOW,
+          'optional' => true,
         ],
       ],
     ];

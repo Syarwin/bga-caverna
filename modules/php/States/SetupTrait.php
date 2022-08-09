@@ -2,6 +2,7 @@
 namespace CAV\States;
 use CAV\Managers\ActionCards;
 use CAV\Managers\Buildings;
+use CAV\Managers\Tiles;
 use CAV\Managers\Players;
 use CAV\Managers\Meeples;
 use CAV\Core\Notifications;
@@ -22,6 +23,7 @@ trait SetupTrait
     Preferences::setupNewGame($players, $this->player_preferences);
     ActionCards::setupNewGame($players, $options);
     Buildings::setupNewGame($players, $options);
+    Tiles::setupNewGame($players, $options);
     Stats::checkExistence();
 
     $this->setGameStateInitialValue('logging', false);

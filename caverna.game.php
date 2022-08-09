@@ -35,13 +35,13 @@ require_once APP_GAMEMODULE_PATH . 'module/table/table.game.php';
 use CAV\Managers\Meeples;
 use CAV\Managers\ActionCards;
 use CAV\Managers\Buildings;
+use CAV\Managers\Tiles;
 use CAV\Managers\Players;
 use CAV\Managers\Scores;
 use CAV\Core\Globals;
 use CAV\Core\Preferences;
 use CAV\Core\Stats;
 use CAV\Core\Engine;
-use CAV\Managers\Fences;
 use CAV\Helpers\Log;
 
 class caverna extends Table
@@ -85,6 +85,7 @@ class caverna extends Table
       'players' => Players::getUiData($pId),
       'cards' => ActionCards::getUiData(),
       'meeples' => Meeples::getUiData(),
+      'tiles' => Tiles::getUiData(),
       'scores' => Globals::isLiveScoring() ? Scores::compute() : null,
       'canceledNotifIds' => Log::getCanceledNotifIds(),
 

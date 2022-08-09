@@ -24,7 +24,7 @@ class ActionRubyMining extends \CAV\Models\ActionCard
 
   public function accumulate()
   {
-    if (Players::count() == 2 && Globals::getRound() <= 2) {
+    if (Players::count() == 2 && Globals::getTurn() <= 2) {
       return [];
     }
     return parent::accumulate();

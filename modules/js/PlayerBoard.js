@@ -23,6 +23,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       return document.querySelector(`#board-${pId} .board-cell[data-x='${pos.x}'][data-y='${pos.y}']`);
     },
 
+    getAllCells(pId = null) {
+      if (pId == null) {
+        pId = this.player_id;
+      }
+
+      return [...document.querySelectorAll(`#board-${pId} .board-cell`)];
+    },
+
     /**
      * Player board tpl
      */
@@ -210,6 +218,221 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     notif_addStables(n) {
       debug('Notif: adding stables', n);
       this.slideResources(n.args.stables, {});
+    },
+
+    ///////////////////////////////
+    //  _____ _ _
+    // |_   _(_) | ___  ___
+    //   | | | | |/ _ \/ __|
+    //   | | | | |  __/\__ \
+    //   |_| |_|_|\___||___/
+    //
+    ///////////////////////////////
+
+    setupTiles() {
+      // This function is refreshUI compatible
+      let tileIds = this.gamedatas.tiles.map((tile) => {
+        if (!$('tile-' + tile.id)) {
+          this.addTile(tile);
+        }
+
+        let o = $('tile-' + tile.id);
+        let container = this.getTileContainer(tile);
+        if (o.parentNode != $(container)) {
+          dojo.place(o, container);
+        }
+
+        return tile.id;
+      });
+      console.log(tileIds);
+      document.querySelectorAll('.caverna-tile').forEach((oTile) => {
+        if (!tileIds.includes(parseInt(oTile.getAttribute('data-id')))) {
+          dojo.destroy(oTile);
+        }
+      });
+    },
+
+    addTile(tile, location = null) {
+      if ($('tile-' + tile.id)) return;
+      this.place('tplTile', tile, location == null ? this.getTileContainer(tile) : location);
+    },
+
+    tplTile(tile) {
+      let t = tile.asset.split('_');
+      let rotation = t.length == 2 ? t[1] : 0;
+      return `<div class="caverna-tile" id="tile-${tile.id}" data-id="${tile.id}" data-tile="${t[0]}" data-rotation="${rotation}"></div>`;
+    },
+
+    getTileContainer(tile) {
+      return this.getCell(tile);
+    },
+
+    /****************
+     ** PLACE TILE **
+     ****************/
+    onEnteringStatePlaceTile(args) {
+      const TILES_MAPPING = {
+        tileTunnelCavern: ['tunnel', 'cavern'],
+        tileCavernCavern: ['cavern', 'cavern'],
+        tileMeadowField: ['meadow', 'field'],
+        tileMineDeepTunnel: ['deep', 'oreMine'],
+        tileRubyMine: ['rubyMine'],
+        tileMeadow: ['meadow'],
+        tileField: ['field'],
+        tileCavern: ['cavern'],
+        tileTunnel: ['tunnel'],
+      };
+
+      // Clear function
+      let selectedTile = null;
+      let selectedIndex = null;
+      let firstSelectedCell = null;
+      let selectedPos = [];
+      let clearSelection = () => {
+        dojo.query('#tiles-selector .tile-selector-cell').removeClass('selected done');
+        dojo.query('.square-selector').forEach((selector) => {
+          delete selector.dataset.tile;
+          delete selector.dataset.rotation;
+        });
+        $('subtitle-text').innerHTML = _('Click on a tile square to place it');
+
+        selectedTile = null;
+        selectedIndex = null;
+        firstSelectedCell = null;
+        selectedPos = [];
+        updateSelectable();
+      };
+
+      // Add subtitle
+      $('page-subtitle').innerHTML = `<h4 id='subtitle-text'></h4><div id='tiles-selector'></div>`;
+
+      // Add tiles selectors
+      Object.keys(args.zones).forEach((tile) => {
+        dojo.place(`<div class='tile-selector' id='tile-selector-${tile}'></div>`, 'tiles-selector');
+        TILES_MAPPING[tile].forEach((tileType, i) => {
+          let square = dojo.place(
+            `<div class='tile-selector-cell' id='tile-selector-${tile}-${i}' data-tile='${tile}-${i}'></div>`,
+            `tile-selector-${tile}`,
+          );
+          this.onClick(square, () => {
+            if (square.classList.contains('selected')) return;
+
+            // Clear previous selection if any
+            if (selectedTile != null && selectedTile != tile) {
+              clearSelection();
+            }
+            $('subtitle-text').innerHTML = _('Click on your player board to place that square');
+            $(`tile-selector-${tile}-${i}`).classList.add('selected');
+            selectedTile = tile;
+            selectedIndex = i;
+            updateSelectable();
+          });
+        });
+      });
+
+      // Add listeners on cells
+      this.getAllCells().forEach((cell) => {
+        let squareSelector = dojo.place(`<div class='square-selector'></div>`, cell);
+
+        this.onClick(cell, () => {
+          if (!cell.classList.contains('selectable')) return false;
+
+          selectedPos[selectedIndex] = {
+            x: cell.dataset.x,
+            y: cell.dataset.y,
+          };
+          if (firstSelectedCell == null) {
+            firstSelectedCell = cell;
+          }
+          squareSelector.dataset.tile = `${selectedTile}-${selectedIndex}`;
+          $(`tile-selector-${selectedTile}-${selectedIndex}`).classList.add('done');
+
+          // If tile is only 1 square or the two squares are placed => confirm button
+          if (TILES_MAPPING[selectedTile].length == 1 || (selectedPos[0] && selectedPos[1])) {
+            selectedIndex = null;
+            $('subtitle-text').innerHTML = _('Confirm your placement');
+            this.addPrimaryActionButton(
+              'btnConfirmPlace',
+              _('Confirm'),
+              () => this.takeAtomicAction('actPlaceTile', [selectedTile, selectedPos]),
+              'subtitle-text',
+            );
+          }
+          // Otherwise, auto select other square
+          else {
+            selectedIndex = 1 - selectedIndex;
+            $(`tile-selector-${selectedTile}-${selectedIndex}`).classList.add('selected');
+          }
+          updateSelectable();
+        });
+
+        this.connect(cell, 'mouseenter', () => {
+          if (!cell.classList.contains('selectable')) return false;
+
+          squareSelector.dataset.tile = `${selectedTile}-${selectedIndex}`;
+          if (firstSelectedCell != null) {
+            let rotation = 0;
+            let dx = parseInt(firstSelectedCell.dataset.x) - parseInt(cell.dataset.x);
+            let dy = parseInt(firstSelectedCell.dataset.y) - parseInt(cell.dataset.y);
+            // Left/right
+            if (dy == 0) {
+              if ((dx > 0 && selectedIndex == 1) || (dx < 0 && selectedIndex == 0)) {
+                rotation = 2;
+              }
+            } else {
+              rotation = dy > 0 ? 1 : 3;
+              if (selectedIndex == 0) {
+                rotation = 4 - rotation;
+              }
+            }
+
+            firstSelectedCell.querySelector('.square-selector').dataset.rotation = rotation;
+            squareSelector.dataset.rotation = rotation;
+          }
+        });
+
+        this.connect(cell, 'mouseleave', () => {
+          if (!cell.classList.contains('selectable')) return false;
+
+          delete squareSelector.dataset.tile;
+          if (firstSelectedCell != null) {
+            delete firstSelectedCell.querySelector('.square-selector').dataset.rotation;
+            delete squareSelector.dataset.rotation;
+          }
+        });
+      });
+
+      // Class update for cells
+      let updateSelectable = () => {
+        this.getAllCells().forEach((cell) => {
+          let selectable = selectedTile != null && selectedIndex != null;
+          if (selectable) {
+            selectable = args.zones[selectedTile].reduce((carry, zone) => {
+              if (carry) return true;
+              if (selectedPos[0] !== undefined && (selectedPos[0].x != zone.pos1.x || selectedPos[0].y != zone.pos1.y))
+                return false;
+              if (selectedPos[1] !== undefined && (selectedPos[1].x != zone.pos2.x || selectedPos[1].y != zone.pos2.y))
+                return false;
+
+              let pos = selectedIndex == 0 ? zone.pos1 : zone.pos2;
+              return pos.x == cell.dataset.x && pos.y == cell.dataset.y;
+            }, false);
+          }
+          cell.classList.toggle('selectable', selectable);
+        });
+
+        if (selectedTile != null) {
+          this.addSecondaryActionButton('btnCancelPlace', _('Cancel'), () => clearSelection(), 'subtitle-text');
+        }
+      };
+
+      clearSelection();
+      updateSelectable();
+    },
+
+    notif_placeTile(n) {
+      debug('Notif: placing a tile', n);
+      // TODO
     },
   });
 });

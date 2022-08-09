@@ -9,6 +9,7 @@ class ActionSustenance4 extends \CAV\Models\ActionCard
     $this->id = 'ActionSustenance4';
     $this->actionCardType = 'ActionSustenance';
     $this->name = clienttranslate('Sustenance');
+    $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [
       clienttranslate(
         'Take all the goods that have accumulated on this Action space. (1 Vegetable will be added to it every round unless it is empty. Then 1 Grain will be added to it instead.)'
@@ -32,7 +33,7 @@ class ActionSustenance4 extends \CAV\Models\ActionCard
       'childs' => [
         ['action' => COLLECT],
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'args' => [
             'tiles' => [TILE_MEADOW_FIELD],

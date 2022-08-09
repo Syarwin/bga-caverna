@@ -8,6 +8,7 @@ class ActionExcavation extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionExcavation';
     $this->name = clienttranslate('Excavation');
+    $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [
       clienttranslate(
         'Take all the Stone that has accumulated on this Action space. (1 Stone will be added to this Action space every round)'
@@ -30,10 +31,10 @@ class ActionExcavation extends \CAV\Models\ActionCard
       'childs' => [
         ['action' => COLLECT],
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'args' => [
-            'tiles' => [TILE_CAVERN_TUNNEL, TILE_CAVERN_CAVERN],
+            'tiles' => [TILE_TUNNEL_CAVERN, TILE_CAVERN_CAVERN],
           ],
         ],
       ],

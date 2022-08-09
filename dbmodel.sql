@@ -49,6 +49,19 @@ CREATE TABLE IF NOT EXISTS `buildings` (
   PRIMARY KEY (`building_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `tiles` (
+  `tile_id`  int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tile_location` varchar(32) NOT NULL,
+  `tile_state` int(10) DEFAULT 0,
+  `player_id` int(10) DEFAULT 0,
+  `type` varchar(100) NOT NULL,
+  `asset` varchar(100) NOT NULL,
+  `x` varchar(100) NULL,
+  `y` varchar(100) NULL,
+  PRIMARY KEY (`tile_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 CREATE TABLE IF NOT EXISTS `user_preferences` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

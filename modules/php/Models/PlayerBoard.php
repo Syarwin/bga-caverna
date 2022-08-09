@@ -4,6 +4,7 @@ use CAV\Managers\Meeples;
 use CAV\Managers\Stables;
 use CAV\Managers\Players;
 use CAV\Managers\Buildings;
+use CAV\Managers\Tiles;
 use CAV\Helpers\UserException;
 use CAV\Helpers\Utils;
 
@@ -24,6 +25,34 @@ define('INSIDE', 1);
 define('BORDER', 2);
 define('CURRENT_WORK', 3);
 
+define('BONUSES', [
+  [
+    'x' => 5,
+    'y' => 1,
+    'gain' => [PIG => 1],
+  ],
+  [
+    'x' => 1,
+    'y' => 5,
+    'gain' => [PIG => 1],
+  ],
+  [
+    'x' => 3,
+    'y' => 7,
+    'gain' => [FOOD => 1],
+  ],
+  [
+    'x' => 9,
+    'y' => 7,
+    'gain' => [FOOD => 1],
+  ],
+  [
+    'x' => 11,
+    'y' => 1,
+    'gain' => [FOOD => 2],
+  ],
+]);
+
 class PlayerBoard
 {
   protected $player = null;
@@ -31,10 +60,12 @@ class PlayerBoard
   protected $grid = []; // grid that holds 'nodes' (room/field/empty) + 'edges' (fences) + virtual intersections
   protected $stablesGrid = []; // same grid for stables
   protected $buildings = [];
+  protected $tiles = [];
   protected $stables = [];
-  protected $fields = [];
   protected $pastures = null; // Array of all current pastures
   protected $arePasturesUpToDate = false;
+
+  private $isExtended = false; // TODO : handle building
   public function __construct($player)
   {
     $this->player = $player;
@@ -59,18 +90,17 @@ class PlayerBoard
    */
   protected function fetchDatas()
   {
-    $this->grid = self::createEmptyGrid();
-    $this->stablesGrid = self::createEmptyGrid();
+    $this->grid = $this->createEmptyGrid();
+    $this->stablesGrid = $this->createEmptyGrid();
 
-    // Separating mountain from the plain
-    $this->grid[6][1] = true;
-    $this->grid[6][3] = true;
-    $this->grid[6][5] = true;
-    $this->grid[6][7] = true;
-
-    $this->buildings = Buildings::getbuildings($this->pId)->toArray();
+    $this->buildings = Buildings::getOfPlayer($this->pId)->toArray();
     foreach ($this->buildings as $building) {
       $this->grid[$building->getX()][$building->getY()] = $building;
+    }
+
+    $this->tiles = Tiles::getOfPlayer($this->pId);
+    foreach ($this->tiles as $tile) {
+      $this->grid[$tile['x']][$tile['y']] = $tile;
     }
 
     // $this->fields = Meeples::getFields($this->pId)->toArray();
@@ -92,12 +122,27 @@ class PlayerBoard
 
   public function getFields()
   {
-    return $this->fields;
+    return $this->tiles->filter(function ($tile) {
+      return $tile['type'] == 'field';
+    });
   }
 
-  /*************************
-   ********* ADDERS *********
-   *************************/
+  public function getBonus($pos)
+  {
+    foreach (BONUSES as $cell) {
+      if ($cell['x'] == $pos['x'] && $cell['y'] == $pos['y']) {
+        return $cell['gain'];
+      }
+    }
+    return null;
+  }
+  ////////////////////////////////////////
+  //     _       _     _
+  //    / \   __| | __| | ___ _ __ ___
+  //   / _ \ / _` |/ _` |/ _ \ '__/ __|
+  //  / ___ \ (_| | (_| |  __/ |  \__ \
+  // /_/   \_\__,_|\__,_|\___|_|  |___/
+  ////////////////////////////////////////
 
   /**
    * Add a stable at a given position
@@ -105,7 +150,7 @@ class PlayerBoard
    */
   public function addStable(&$stable)
   {
-    self::checkNodePos($stable['x'], $stable['y']);
+    $this->checkNodePos($stable['x'], $stable['y']);
 
     if (!Stables::hasAvailable($this->pId)) {
       throw new \BgaVisibleSystemException('You do not have any stable available');
@@ -123,21 +168,19 @@ class PlayerBoard
   }
 
   /**
-   * Add a field at a given position
-   * This only check that the spot is free
+   * Add a tile square at a given position
    */
-  public function addField(&$field)
+  public function addTileSquare($tileType, $tileAsset, $pos)
   {
-    self::checkNodePos($field['x'], $field['y']);
-    if (!$this->isFree($field)) {
-      throw new \BgaVisibleSystemException('This node is not free');
-    }
+    $this->checkNodePos($pos['x'], $pos['y']);
 
     // Create the field meeple and update the variable
-    $id = Meeples::createResourceInLocation('field', 'board', $this->pId, $field['x'], $field['y']);
-    $field = Meeples::get($id); // Update $field value
-    $this->fields[] = $field;
-    $this->grid[$field['x']][$field['y']] = $field;
+    $tile = Tiles::createTileOnBoard($tileType, $tileAsset, $this->pId, $pos['x'], $pos['y']);
+    $this->tiles[] = $tile;
+    // Check bonus under the tile
+    $bonus = is_null($this->grid[$pos['x']][$pos['y']]) ? $this->getBonus($pos) : null;
+    $this->grid[$pos['x']][$pos['y']] = $tile;
+    return [$tile, $bonus];
   }
 
   /**
@@ -146,7 +189,7 @@ class PlayerBoard
    */
   public function addBuilding($buildingType, &$building)
   {
-    self::checkNodePos($building['x'], $building['y']);
+    $this->checkNodePos($building['x'], $building['y']);
     if (!$this->isFree($building)) {
       throw new \BgaVisibleSystemException('This node is not free');
     }
@@ -158,19 +201,14 @@ class PlayerBoard
     $this->grid[$building->getX()][$building->getY()] = $building;
   }
 
-  /****************************
-   ******* SANITY CHECKS *******
-   ****************************/
-
-   public function isPlainZone($coord)
-   {
-     return $coord['x'] < 7;
-   }
-
-  public function isMoutainZone($coord)
-  {
-    return $coord['x'] >= 7;
-  }
+  ///////////////////////////////////////////////////////////////////////
+  //  ____              _ _            ____ _               _
+  // / ___|  __ _ _ __ (_) |_ _   _   / ___| |__   ___  ___| | _____
+  // \___ \ / _` | '_ \| | __| | | | | |   | '_ \ / _ \/ __| |/ / __|
+  //  ___) | (_| | | | | | |_| |_| | | |___| | | |  __/ (__|   <\__ \
+  // |____/ \__,_|_| |_|_|\__|\__, |  \____|_| |_|\___|\___|_|\_\___/
+  //                          |___/
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Check whether the current board is valid wrt to pastures
@@ -185,7 +223,7 @@ class PlayerBoard
     // TODO
     // Check adjacency of pastures
     $marks = $this->getPasturesMarks();
-    if (!self::isConnex($marks)) {
+    if (!$this->isConnex($marks)) {
       if ($raiseException) {
         throw new UserException(totranslate('Some pastures are not adjacent'));
       }
@@ -201,8 +239,8 @@ class PlayerBoard
   public function areFieldsValid($raiseException = false)
   {
     // Check adjacency of fields
-    $marks = self::getSubgraphMarks($this->getFieldTiles());
-    if (!self::isConnex($marks)) {
+    $marks = $this->getSubgraphMarks($this->getFieldTiles());
+    if (!$this->isConnex($marks)) {
       if ($raiseException) {
         throw new UserException(totranslate('Some fields are not adjacent'));
       }
@@ -218,8 +256,8 @@ class PlayerBoard
   public function areBuildingsValid($raiseException = false)
   {
     // Check adjacency of fields
-    $marks = self::getSubgraphMarks($this->buildings);
-    if (!self::isConnex($marks)) {
+    $marks = $this->getSubgraphMarks($this->buildings);
+    if (!$this->isConnex($marks)) {
       if ($raiseException) {
         throw new UserException(totranslate('Some buildings are not adjacent'));
       }
@@ -312,101 +350,14 @@ class PlayerBoard
     return $animals;
   }
 
-  /**************************
-   **************************
-   ******* ARGS UTILS *******
-   **************************
-   *************************/
-
-  /**
-   * Return all free nodes
-   */
-  public function getFreeZones($bNotInsidePasture = true, $bForestOnly = true)
-  {
-    $nodes = self::getAllNodes();
-
-    // Should be free and not in a pasture
-    $marks = $this->getPasturesMarks();
-    Utils::filter($nodes, function ($pos) use ($marks, $bNotInsidePasture, $bForestOnly) {
-      return ($this->isFree($pos) || !$this->containsStable($pos)) &&
-        (!$bNotInsidePasture || $marks[$pos['x']][$pos['y']] != INSIDE) &&
-        (!$bForestOnly || $pos['x'] < 7);
-    });
-
-    return $nodes;
-  }
-
-  /**
-   * Return all nodes that could receive a specific type, ie free and adjacent to existing same type
-   * Used for fields and buildings that share similar constraints
-   * Buildings must be in the same zone (forest / cave)
-   */
-  protected function getAdjacentZones($existingNodes)
-  {
-    $nodes = $this->getFreeZones();
-
-    // Compute adjacent zones to existing fields
-    $adjZones = [];
-    foreach ($existingNodes as $pos) {
-      if (isset($pos['ignore']) && $pos['ignore'] == true) {
-        continue;
-      }
-
-      foreach (self::getNodesAround($pos) as $zone) {
-        $adjZones[] = $zone;
-      }
-    }
-    // If non empty, intersect
-    if (!empty($adjZones)) {
-      $nodes = Utils::intersectZones($nodes, $adjZones);
-    }
-
-    return $nodes;
-  }
-
-  /**
-   * Return all nodes that could receive a field
-   */
-  public function getPlowableZones()
-  {
-    // TODO
-    return []; //$this->getAdjacentZones($this->getFieldTiles());
-  }
-
-  public function canPlow()
-  {
-    return !empty($this->getPlowableZones());
-  }
-
-  /**
-   * Return all nodes that could receive a room
-   */
-  public function getBuildableZones()
-  {
-    return $this->getAdjacentZones($this->buildings);
-  }
-
-  public function canConstruct($tiles = [])
-  {
-    $zones = [];
-    if ($tiles == []) {
-      return !empty($this->getBuildableZones());
-    }
-    foreach ($tiles as $tile) {
-      if (in_array($tile, \CAVE_TILES)) {
-        $zones['cave'] = true;
-      } else {
-        $zones['forest'] = true;
-      }
-    }
-    if (count(array_keys($zones)) == 2) {
-      return !empty($this->getBuildableZones());
-    } elseif ($zones['cave'] ?? null == true) {
-      return !empty($this->getBuildableZones('cave'));
-    } else {
-      return !empty($this->getBuildableZones('forest'));
-    }
-  }
+  /////////////////////////////////////////////////
+  //     _                    _   _ _   _ _
+  //    / \   _ __ __ _ ___  | | | | |_(_) |___
+  //   / _ \ | '__/ _` / __| | | | | __| | / __|
+  //  / ___ \| | | (_| \__ \ | |_| | |_| | \__ \
+  // /_/   \_\_|  \__, |___/  \___/ \__|_|_|___/
+  //              |___/
+  /////////////////////////////////////////////////
 
   /**
    * Return all fields that could receive a crop
@@ -471,7 +422,7 @@ class PlayerBoard
         $zones[] = [
           'type' => 'stable',
           'capacity' => 1,
-          'locations' => [self::extractPos($stable)],
+          'locations' => [$this->extractPos($stable)],
         ];
       }
     }
@@ -531,11 +482,162 @@ class PlayerBoard
     return $coveredZones;
   }
 
-  /******************************
-   ******************************
-   ***** FIELDS/CROPS UTILS *****
-   ******************************
-   *****************************/
+  //////////////////////////////
+  //  _____ _ _
+  // |_   _(_) | ___  ___
+  //   | | | | |/ _ \/ __|
+  //   | | | | |  __/\__ \
+  //   |_| |_|_|\___||___/
+  //
+  //////////////////////////////
+
+  /**
+   * Return all free nodes
+   */
+  public function getFreeZones($type = null)
+  {
+    $nodes = $this->getAllNodes();
+
+    // Should be free and of the given type
+    Utils::filter($nodes, function ($pos) use ($type) {
+      return $this->isFree($pos) &&
+        ($type != MOUNTAIN || $this->isMoutainZone($pos)) &&
+        ($type != FOREST || $this->isForestZone($pos));
+    });
+
+    return $nodes;
+  }
+
+  /**
+   * Return all free nodes adjacent to given nodes
+   */
+  protected function getAdjacentZones($nodes, $existingNodes = null)
+  {
+    if (is_null($existingNodes)) {
+      $existingNodes = $this->tiles;
+    }
+
+    // Compute adjacent zones to existing fields
+    $adjZones = [];
+    foreach ($existingNodes as $pos) {
+      if (isset($pos['ignore']) && $pos['ignore'] == true) {
+        continue;
+      }
+
+      foreach ($this->getNodesAround($pos) as $zone) {
+        $adjZones[] = $zone;
+      }
+    }
+    // If non empty, intersect
+    if (!empty($adjZones)) {
+      $nodes = Utils::intersectZones($nodes, $adjZones);
+    }
+
+    return $nodes;
+  }
+
+  /**
+   * Return all nodes that could receive a single tile
+   */
+  public function getBuildableZones($tile, $checkAdjacency = true)
+  {
+    $nodes = [];
+    if (in_array($tile, [TILE_FIELD, TILE_MEADOW])) {
+      $nodes = $this->getFreeZones(FOREST);
+    } elseif (in_array($tile, [TILE_CAVERN, TILE_TUNNEL])) {
+      $nodes = $this->getFreeZones(MOUNTAIN);
+    } else {
+      return [];
+      die('TODO : getBuildableZones : ' . $tile);
+    }
+
+    return $checkAdjacency ? $this->getAdjacentZones($nodes) : $nodes;
+  }
+
+  /**
+   * Return all placement option for a tile
+   */
+  public function getPlacementOptions($tile)
+  {
+    // Decompose any twin tile into two squares
+    $tiles = TILE_SQUARES_MAPPING[$tile];
+
+    // Get buildable zone
+    if (count($tiles) == 1) {
+      return $this->getBuildableZones($tiles[0]);
+    } elseif (count($tiles) == 2) {
+      $zones = [];
+      for ($i = 0; $i <= 1; $i++) {
+        foreach ($this->getBuildableZones($tiles[$i]) as $pos) {
+          $neighbours = $this->getAdjacentZones($this->getBuildableZones($tiles[1 - $i], false), [$pos]);
+          foreach ($neighbours as $pos2) {
+            $zones[] = [
+              'pos1' => $i == 0 ? $pos : $pos2,
+              'pos2' => $i == 0 ? $pos2 : $pos,
+            ];
+          }
+        }
+      }
+      return $zones;
+    } else {
+      return [];
+      die('TODO : getPlacementOptions');
+    }
+  }
+
+  public function canPlace($tiles)
+  {
+    foreach ($tiles as $tile) {
+      if (!empty($this->getPlacementOptions($tile))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Add a tile at a given position(s)
+   */
+  public function addTile($tile, $positions)
+  {
+    $tiles = TILE_SQUARES_MAPPING[$tile];
+
+    // Get buildable zone
+    if (count($tiles) == 1) {
+      die('TODO');
+    } elseif (count($tiles) == 2) {
+      // Compute rotation
+      $rotation = 0;
+      $dx = $positions[0]['x'] - $positions[1]['x'];
+      $dy = $positions[0]['y'] - $positions[1]['y'];
+      // Left/right
+      if ($dy == 0) {
+        $rotation = $dx > 0 ? 2 : 0;
+      } else {
+        $rotation = $dy > 0 ? 1 : 3;
+      }
+
+      $squares = [];
+      $bonus = null;
+      for ($i = 0; $i <= 1; $i++) {
+        $tileAsset = $tile . '-' . $i . '_' . $rotation;
+        list($square, $coveredBonus) = $this->addTileSquare($tiles[$i], $tileAsset, $positions[$i]);
+        $squares[] = $square;
+        $bonus = $bonus ?? $coveredBonus;
+      }
+      return [$squares, $bonus];
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////
+  //  _____ _      _     _        ______
+  // |  ___(_) ___| | __| |___   / / ___|_ __ ___  _ __  ___
+  // | |_  | |/ _ \ |/ _` / __| / / |   | '__/ _ \| '_ \/ __|
+  // |  _| | |  __/ | (_| \__ \/ /| |___| | | (_) | |_) \__ \
+  // |_|   |_|\___|_|\__,_|___/_/  \____|_|  \___/| .__/|___/
+  //                                              |_|
+  ///////////////////////////////////////////////////////////////////
+
   public function getGrowingCrops($keepOnlyThisType = null)
   {
     $crops = Meeples::getGrowingCrops($this->pId);
@@ -552,7 +654,7 @@ class PlayerBoard
   public function getFieldsAndCrops($keepOnlyThisType = null)
   {
     $fields = [];
-    foreach ($this->fields as $field) {
+    foreach ($this->getFields() as $field) {
       $field['crops'] = [];
       $field['fieldType'] = null;
       $fields[$field['uid']] = $field;
@@ -599,11 +701,14 @@ class PlayerBoard
     return $this->getFieldsAndCrops(VEGETABLE);
   }
 
-  /******************************
-   ******************************
-   ******* PASTURES UTILS *******
-   ******************************
-   *****************************/
+  //////////////////////////////////////////////////////////////////
+  //  ____           _                         _   _ _   _ _
+  // |  _ \ __ _ ___| |_ _   _ _ __ ___  ___  | | | | |_(_) |___
+  // | |_) / _` / __| __| | | | '__/ _ \/ __| | | | | __| | / __|
+  // |  __/ (_| \__ \ |_| |_| | | |  __/\__ \ | |_| | |_| | \__ \
+  // |_|   \__,_|___/\__|\__,_|_|  \___||___/  \___/ \__|_|_|___/
+  //
+  //////////////////////////////////////////////////////////////////
 
   /**
    * Public function to get the list of all pastures
@@ -626,7 +731,7 @@ class PlayerBoard
     // TODO
     $this->pastures = [];
     // $visited = [];
-    // foreach (self::getAllNodes() as $pos) {
+    // foreach ($this->getAllNodes() as $pos) {
     //   if (isset($visited[$pos['x']][$pos['y']]) || !$this->isFreeOrStable($pos)) {
     //     continue;
     //   }
@@ -656,7 +761,7 @@ class PlayerBoard
     //       }
     //
     //       $npos = $this->nextNodeInDirection($pos, $i);
-    //       if (!self::isValid($npos) || isset($visited[$npos['x']][$npos['y']])) {
+    //       if (!$this->isValid($npos) || isset($visited[$npos['x']][$npos['y']])) {
     //         continue;
     //       }
     //
@@ -694,11 +799,25 @@ class PlayerBoard
     return false;
   }
 
-  /***********************************
-   ***********************************
-   *********** GRID UTILS ************
-   ***********************************
-   ***********************************/
+  /////////////////////////////////////////////////
+  //   ____      _     _   _   _ _   _ _
+  //  / ___|_ __(_) __| | | | | | |_(_) |___
+  // | |  _| '__| |/ _` | | | | | __| | / __|
+  // | |_| | |  | | (_| | | |_| | |_| | \__ \
+  //  \____|_|  |_|\__,_|  \___/ \__|_|_|___/
+  //
+  /////////////////////////////////////////////////
+
+  public static function isForestZone($coord)
+  {
+    return $coord['x'] <= 5;
+  }
+
+  public static function isMoutainZone($coord)
+  {
+    return $coord['x'] >= 7;
+  }
+
   protected static function createEmptyGrid()
   {
     $t = [];
@@ -734,29 +853,33 @@ class PlayerBoard
       $y = $x['y'];
       $x = $x['x'];
     }
-    if ($checkValidity && !self::isValid($x, $y)) {
-      throw new \feException('Trying to access a position out of bounds :' . self::posToStr($x, $y));
+    if ($checkValidity && !$this->isValid($x, $y, true)) {
+      throw new \feException('Trying to access a position out of bounds :' . $this->posToStr($x, $y));
     }
   }
 
-  protected static function isValid($x, $y = null)
+  protected function isValid($x, $y = null, $checkExtented = false)
   {
     if ($y === null) {
       $y = $x['y'];
       $x = $x['x'];
     }
-    return $x >= -1 && $x <= 13 && $y >= -1 && $y <= 9;
-  }
-
-  protected static function checkNodePos(&$x, &$y = null)
-  {
-    self::checkPos($x, $y);
-    if (($x + 2) % 2 != 1 || ($y + 2) % 2 != 1) {
-      throw new \feException('Trying to ask node of an edge or a virtual intersection :' . self::posToStr($x, $y));
+    if ($this->isExtended || $checkExtented) {
+      return $x >= -1 && $x <= 13 && $y >= -1 && $y <= 9;
+    } else {
+      return $x >= 0 && $x <= 12 && $y >= 0 && $y <= 8;
     }
   }
 
-  public static function extractPos($mixed)
+  protected function checkNodePos(&$x, &$y = null)
+  {
+    $this->checkPos($x, $y);
+    if (($x + 2) % 2 != 1 || ($y + 2) % 2 != 1) {
+      throw new \feException('Trying to ask node of an edge or a virtual intersection :' . $this->posToStr($x, $y));
+    }
+  }
+
+  public function extractPos($mixed)
   {
     $r = [
       'x' => $mixed['x'],
@@ -770,14 +893,8 @@ class PlayerBoard
    *****************/
   protected function isFree($x, $y = null)
   {
-    self::checkPos($x, $y);
+    $this->checkPos($x, $y);
     return is_null($this->grid[$x][$y]);
-  }
-
-  protected function isFreeOrStable($x, $y = null)
-  {
-    self::checkPos($x, $y);
-    return is_null($this->grid[$x][$y]) || $this->containsStable($x, $y);
   }
 
   /**
@@ -785,17 +902,18 @@ class PlayerBoard
    */
   protected function containsStable($x, $y = null)
   {
-    self::checkNodePos($x, $y);
-    return $this->grid[$x][$y] != null &&
-      ((is_array($this->grid[$x][$y]) && $this->grid[$x][$y]['type'] == 'stable') ||
-        $this->grid[$x][$y]->getType() == 'stable');
+    $this->checkNodePos($x, $y);
+    return $this->stablesGrid[$x][$y] != null;
   }
 
-  /***********************************
-   ***********************************
-   *********** DIRS UTILS ************
-   ***********************************
-   ***********************************/
+  /////////////////////////////////////////////
+  //  ____  _            _   _ _   _ _
+  // |  _ \(_)_ __ ___  | | | | |_(_) |___
+  // | | | | | '__/ __| | | | | __| | / __|
+  // | |_| | | |  \__ \ | |_| | |_| | \__ \
+  // |____/|_|_|  |___/  \___/ \__|_|_|___/
+  //
+  /////////////////////////////////////////////
 
   // The 8 directions
   protected static $dirs = [
@@ -820,7 +938,7 @@ class PlayerBoard
   /**
    * Return the next cell starting from one cell
    */
-  protected static function nextCellInDirection($pos, $dir, $steps = 1)
+  protected function nextCellInDirection($pos, $dir, $steps = 1)
   {
     return [
       'x' => $pos['x'] + $steps * self::$dirs[$dir]['x'],
@@ -831,42 +949,50 @@ class PlayerBoard
   /**
    * Return the next 'node' starting from one node and going into a direction
    */
-  protected static function nextNodeInDirection($pos, $dir)
+  protected function nextNodeInDirection($pos, $dir)
   {
     // Going two step into the direction to go over the intersection
     //  since we only care about nodes here
-    return self::nextCellInDirection($pos, $dir, 2);
+    return $this->nextCellInDirection($pos, $dir, 2);
   }
 
   /**
    * Return an associative array with 4 nodes around a node
    * @param $x,$y  coordinate of 'node'
    */
-  protected static function getNodesAround($x, $y = null)
+  protected function getNodesAround($x, $y = null)
   {
-    self::checkNodePos($x, $y);
+    $this->checkNodePos($x, $y);
     $result = [];
     foreach ([W, N, E, S] as $dir) {
-      $pos = self::nextNodeInDirection(['x' => $x, 'y' => $y], $dir);
-      if (self::isValid($pos)) {
+      $pos = $this->nextNodeInDirection(['x' => $x, 'y' => $y], $dir);
+      if ($this->isValid($pos)) {
+        // Consider nodes on the left and right of the middle border not-adjacent (unless it's bottom row)
+        if (in_array($dir, [W, E]) && $y != 7 && abs($x - 6) <= 1 && abs($pos['x'] - 6) <= 1) {
+          continue;
+        }
+
         $result[$dir] = $pos;
       }
     }
     return $result;
   }
 
-  /***********************************
-   ***********************************
-   ****** GENERIC GRAPH UTILS ********
-   ***********************************
-   ***********************************/
+  ///////////////////////////////////////////////////////////
+  //   ____                 _       _   _ _   _ _
+  //  / ___|_ __ __ _ _ __ | |__   | | | | |_(_) |___
+  // | |  _| '__/ _` | '_ \| '_ \  | | | | __| | / __|
+  // | |_| | | | (_| | |_) | | | | | |_| | |_| | \__ \
+  //  \____|_|  \__,_| .__/|_| |_|  \___/ \__|_|_|___/
+  //                 |_|
+  ///////////////////////////////////////////////////////////
 
   /**
    * Create a subgraph of the grids with specified nodes
    */
   protected function getSubgraphMarks($nodes)
   {
-    $marks = self::createEmptyGrid();
+    $marks = $this->createEmptyGrid();
     foreach ($nodes as $pos) {
       $marks[$pos['x']][$pos['y']] = INSIDE;
     }
@@ -891,7 +1017,7 @@ class PlayerBoard
       }
     }
 
-    return self::getSubgraphMarks($nodes);
+    return $this->getSubgraphMarks($nodes);
   }
 
   /**
@@ -902,7 +1028,7 @@ class PlayerBoard
   {
     // Search a starting node
     $pos = null;
-    foreach (self::getAllNodes() as $node) {
+    foreach ($this->getAllNodes() as $node) {
       if (!is_null($marks[$node['x']][$node['y']])) {
         $pos = $node;
         break;
@@ -921,7 +1047,7 @@ class PlayerBoard
       $pos = array_pop($queue);
       foreach ([W, N, E, S] as $i) {
         $npos = $this->nextNodeInDirection($pos, $i);
-        if (!self::isValid($npos) || is_null($marks[$npos['x']][$npos['y']])) {
+        if (!$this->isValid($npos) || is_null($marks[$npos['x']][$npos['y']])) {
           continue;
         }
 
@@ -931,7 +1057,7 @@ class PlayerBoard
     }
 
     // Now check whether some pasture nodes were still untouched by the graph exploration
-    foreach (self::getAllNodes() as $pos) {
+    foreach ($this->getAllNodes() as $pos) {
       if ($marks[$pos['x']][$pos['y']] == INSIDE) {
         return false;
       }

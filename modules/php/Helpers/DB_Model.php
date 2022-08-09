@@ -81,7 +81,7 @@ abstract class DB_Model extends \APP_DbObject implements \JsonSerializable
         }
       } elseif ($match[1] == 'is') {
         // Boolean getter
-        return (bool) ($this->$name == 1);
+        return (bool) ($this->$name != 0);
       } elseif ($match[1] == 'set') {
         // Setters in DB and update cache
         $value = $args[0];

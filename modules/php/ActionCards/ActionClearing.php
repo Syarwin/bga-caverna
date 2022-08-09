@@ -8,6 +8,7 @@ class ActionClearing extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionClearing';
     $this->name = clienttranslate('Clearing');
+    $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [
       clienttranslate(
         'Take all the Wood that has accumulated on this Action space. (1 Wood will be added to this Action space every round)'
@@ -31,7 +32,7 @@ class ActionClearing extends \CAV\Models\ActionCard
       'childs' => [
         ['action' => COLLECT],
         [
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'args' => [
             'tiles' => [TILE_MEADOW_FIELD],

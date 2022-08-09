@@ -219,41 +219,19 @@
 }
 
 .action-card-holder {
-  // TODO : add back
-  // position: absolute;
-  // left: 30px;
-
-  // TODO : remove
   width: 150px;
   height: 180px;
-  background-color: white;
-  background-image: url('img/background_card.jpg');
-  background-size: 100% 100%;
-  border: 1px solid black;
   box-shadow: 2px 2px 6px -1px black;
   border-radius: 10px;
   position: relative;
-
-  $actionCards: 'ActionAdventure' 'ActionBlacksmithing' 'ActionDepot' 'ActionDonkeyFarming' 'ActionDriftMining'
-    'ActionExploration' 'ActionFamilyLife' 'ActionFenceBuilding' 'ActionHardwareRental' 'ActionHousework'
-    'ActionImitation' 'ActionOreDelivery' 'ActionOreMineConstruction' 'ActionOreTrading' 'ActionRubyDelivery'
-    'ActionRubyMineConstruction' 'ActionRubyMining' 'ActionSheepFarming' 'ActionSlash' 'ActionSmallDriftMining'
-    'ActionUrgentWish' 'ActionWeeklyMarket' 'ActionWishChildren';
-  @each $cId in $actionCards {
-    $i: index($actionCards, $cId) - 1;
-    &[data-id='#{$cId}'] {
-      background-image: url('img/action_cards.jpg');
-      background-size: 500% 500%;
-      background-position-x: ($i % 5) * 100% / 4;
-      background-position-y: (($i - ($i % 5)) / 5) * 100% / 4;
-    }
-  }
 
   #ebd-body:not(.help-mode) & {
     &.selectable {
       cursor: pointer;
       &:hover {
         transform: scale(1.15);
+        position: relative;
+        z-index: 20;
       }
       .action-card {
         filter: none;
@@ -269,18 +247,22 @@
     filter: grayscale(75%);
   }
 
-  .farmer-holder {
+  .dwarf-holder {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     pointer-events: none;
+    z-index: 25;
 
-    &:not([data-n='0']) {
+    &:not(:empty) {
+      background: #c8c8c875;
+
       #ebd-body:not(.mobile_version) & ~ .action-card {
         filter: grayscale(75%);
       }
@@ -289,6 +271,7 @@
 
   .resource-holder {
     position: absolute;
+    z-index: 20;
     // TODO : remove
     bottom: 30px;
     left: 30px;
@@ -346,6 +329,11 @@
     flex-flow: column;
     position: relative;
     z-index: 10;
+    border-radius: 10px;
+
+    background-image: url('img/background_card.jpg');
+    background-size: 100% 100%;
+    border: 1px solid black;
 
     /*
     &.action-card {
@@ -375,12 +363,39 @@
     }
 
     .action-desc {
+      text-align: center;
       font-size: 11px;
       font-family: var(--caverna-font-family);
     }
+
+    .action-background {
+      background-image: url('img/action_cards.jpg');
+      background-size: 700% 700%;
+      height: 144px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
   }
+  $actionCards: 'ActionAdventure' 'ActionBlacksmithing' 'ActionClearing4' 'ActionClearing' 'ActionDepot'
+    'ActionDonkeyFarming' 'ActionDriftMining4' 'ActionDriftMining' 'ActionExcavation4' 'ActionExcavation'
+    'ActionExploration' 'ActionExtension' 'ActionFamilyLife' 'ActionFenceBuilding6' 'ActionFenceBuilding'
+    'ActionForestExploration3' 'ActionForestExploration' 'ActionHardwareRental6' 'ActionHardwareRental'
+    'ActionHousework' 'ActionImitation' 'ActionLargeDepot' 'ActionLogging4' 'ActionLogging' 'ActionOreDelivery'
+    'ActionOreMineConstruction' 'ActionOreMining4' 'ActionOreMining' 'ActionOreTrading' 'ActionRubyDelivery'
+    'ActionRubyMineConstruction' 'ActionRubyMining' 'ActionSheepFarming' 'ActionSlash' 'ActionSmallDriftMining'
+    'ActionFirstPlayer4' 'ActionFirstPlayer' 'ActionStripMining' 'ActionSupplies4' 'ActionSupplies' 'ActionSustenance4'
+    'ActionSustenance' 'ActionUrgentWish' 'ActionWeeklyMarket' 'ActionWishChildren' 'ActionWoodGathering';
+  @each $cId in $actionCards {
+    $i: index($actionCards, $cId) - 1;
+    &[data-id='#{$cId}'] .action-card .action-background {
+      background-position-x: ($i % 7) * 100% / 6;
+      background-position-y: (($i - ($i % 7)) / 7) * 100% / 6;
+    }
+  }
+
   &[data-id='ActionRubyMining'] {
     .action-desc {
+      text-align: left;
       margin-top: 34px;
 
       & > div:nth-child(1) {
@@ -408,26 +423,22 @@
   }
   &[data-id='ActionHousework'] {
     .action-desc {
-      text-align: center;
       margin-top: 58px;
     }
   }
 
   &[data-id='ActionBlacksmithing'] {
     .action-desc {
-      text-align: center;
       margin-top: 65px;
     }
   }
   &[data-id='ActionOreMineConstruction'] {
     .action-desc {
-      text-align: center;
       margin-top: 65px;
     }
   }
   &[data-id='ActionSheepFarming'] {
     .action-desc {
-      text-align: center;
       margin-top: 72px;
     }
 
@@ -438,7 +449,6 @@
   }
   &[data-id='ActionDonkeyFarming'] {
     .action-desc {
-      text-align: center;
       margin-top: 72px;
     }
 
@@ -449,13 +459,15 @@
   }
   &[data-id='ActionRubyMineConstruction'] {
     .action-desc {
-      text-align: center;
       margin-top: 65px;
     }
   }
-  &[data-id='ActionOreDelivery'] {
+  &[data-id='ActionOreDelivery'],
+  &[data-id='ActionOreMining'],
+  &[data-id='ActionOreMining4'] {
     .action-desc {
       margin-top: 102px;
+      text-align: left;
       & > div:nth-child(1) {
         text-align: right;
         margin-left: 5px;
@@ -471,18 +483,17 @@
   }
   &[data-id='ActionFamilyLife'] {
     .action-desc {
-      text-align: center;
-      margin-top: 65px;
+      margin-top: 59px;
     }
   }
   &[data-id='ActionAdventure'] {
     .action-desc {
-      text-align: center;
       margin-top: 71px;
     }
   }
   &[data-id='ActionRubyDelivery'] {
     .action-desc {
+      text-align: left;
       margin-top: 102px;
 
       & > div:nth-child(1) {
@@ -501,8 +512,65 @@
   }
   &[data-id='ActionSlash'] {
     .action-desc {
-      text-align: center;
       margin-top: 63px;
+    }
+  }
+  &[data-id='ActionClearing'],
+  &[data-id='ActionClearing4'],
+  &[data-id='ActionDriftMining'],
+  &[data-id='ActionDriftMining4'],
+  &[data-id='ActionExcavation'],
+  &[data-id='ActionExcavation4'] {
+    .action-desc {
+      margin-top: 52px;
+    }
+
+    .resource-holder {
+      bottom: 96px;
+      left: 100px;
+    }
+  }
+  &[data-id='ActionFirstPlayer'] {
+    .resource-holder {
+      bottom: 86px;
+      left: 95px;
+    }
+  }
+  &[data-id='ActionLogging'],
+  &[data-id='ActionLogging4'] {
+    .action-desc {
+      margin-top: 69px;
+    }
+
+    .resource-holder {
+      bottom: 86px;
+      left: 104px;
+    }
+  }
+  &[data-id='ActionSustenance'],
+  &[data-id='ActionSustenance4'] {
+    .action-desc {
+      margin-top: 64px;
+      font-size: 10px;
+    }
+
+    .resource-holder {
+      bottom: 95px;
+      left: 99px;
+    }
+  }
+}
+
+[data-actionCardName='0'] #central-board .action-card-holder {
+  height: 144px;
+
+  .action-card {
+    .action-header {
+      display: none;
+    }
+
+    .action-background {
+      border-radius: 10px;
     }
   }
 }

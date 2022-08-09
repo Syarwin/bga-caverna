@@ -10,7 +10,7 @@ class Actions
     ACTIVATE_BUILDING => 'ActivateBuilding',
     BLACKSMITH => 'Blacksmith',
     COLLECT => 'Collect',
-    CONSTRUCT => 'Construct',
+    PLACE_TILE => 'PlaceTile',
     EXCHANGE => 'Exchange',
     EXPEDITION => 'Expedition',
     FENCING => 'Fencing',

@@ -1,0 +1,174 @@
+#tiles-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .tile-selector {
+    margin: 0px 10px;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 5px;
+
+    .tile-selector-cell {
+      width: 90px;
+      height: 90px;
+      background-image: url('img/tiles.jpg');
+      background-size: 400% 400%;
+      box-sizing: border-box;
+      background-origin: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.selectable {
+        cursor: pointer;
+        &:hover {
+          border: 2px solid red;
+        }
+      }
+
+      &.selected,
+      &.selected:hover {
+        border: 2px dashed yellow;
+      }
+
+      &.done {
+        border: 2px solid yellow;
+        &::before {
+          content: '✓';
+          color: yellow;
+          font-size: 70px;
+        }
+      }
+    }
+  }
+}
+
+.board-cell.cell-node .square-selector,
+.caverna-player-board .player-board-grid .board-cell .caverna-tile {
+  width: 94px;
+  height: 94px;
+  margin: -2px;
+  background-image: url('img/tiles.jpg');
+  background-size: 400% 400%;
+  box-sizing: border-box;
+  background-origin: border-box;
+  border: 1px solid black;
+
+  &:not([data-tile]) {
+    background: none;
+    border: none;
+    display: none;
+  }
+
+  &[data-rotation='1'] {
+    transform: rotate(-90deg);
+  }
+  &[data-rotation='2'] {
+    transform: rotate(180deg);
+  }
+  &[data-rotation='3'] {
+    transform: rotate(90deg);
+  }
+
+  &[data-tile='tileTunnelCavern-0'],
+  &[data-tile='tileCavernCavern-0'],
+  &[data-tile='tileMeadowField-0'],
+  &[data-tile='tileMineDeepTunnel-0'] {
+    border-right: none;
+  }
+  &[data-tile='tileTunnelCavern-1'],
+  &[data-tile='tileCavernCavern-1'],
+  &[data-tile='tileMeadowField-1'],
+  &[data-tile='tileMineDeepTunnel-1'] {
+    border-left: none;
+  }
+}
+
+.caverna-player-board .player-board-grid {
+  .board-cell .caverna-tile {
+    position: absolute;
+    margin: 0px;
+    left: -2px;
+    top: -2px;
+  }
+  &.office-room {
+  }
+}
+
+[data-tile=''] {
+  display: none;
+}
+[data-tile='tileTunnelCavern-0'] {
+  background-position-x: 1 * 100% / 3;
+  background-position-y: 3 * 100% / 3;
+  border-radius: 5px 0px 0px 5px;
+}
+[data-tile='tileTunnelCavern-1'] {
+  background-position-x: 2 * 100% / 3;
+  background-position-y: 3 * 100% / 3;
+  border-radius: 0px 5px 5px 0px;
+}
+
+[data-tile='tileCavernCavern-0'] {
+  background-position-x: 0 * 100% / 3;
+  background-position-y: 0 * 100% / 3;
+  border-radius: 5px 0px 0px 5px;
+}
+[data-tile='tileCavernCavern-1'] {
+  background-position-x: 1 * 100% / 3;
+  background-position-y: 0 * 100% / 3;
+  border-radius: 0px 5px 5px 0px;
+}
+
+[data-tile='tileMeadowField-0'] {
+  background-position-x: 0 * 100% / 3;
+  background-position-y: 2 * 100% / 3;
+  border-radius: 5px 0px 0px 5px;
+}
+[data-tile='tileMeadowField-1'] {
+  background-position-x: 1 * 100% / 3;
+  background-position-y: 2 * 100% / 3;
+  border-radius: 0px 5px 5px 0px;
+}
+
+[data-tile='tileMineDeepTunnel-0'] {
+  background-position-x: 2 * 100% / 3;
+  background-position-y: 0 * 100% / 3;
+  border-radius: 5px 0px 0px 5px;
+}
+[data-tile='tileMineDeepTunnel-1'] {
+  background-position-x: 3 * 100% / 3;
+  background-position-y: 0 * 100% / 3;
+  border-radius: 0px 5px 5px 0px;
+}
+
+[data-tile='tileRubyMine-0'] {
+  background-position-x: 2 * 100% / 3;
+  background-position-y: 3 * 100% / 3;
+  border-radius: 5px;
+}
+
+[data-tile='tileMeadow-0'] {
+  background-position-x: 2 * 100% / 3;
+  background-position-y: 2 * 100% / 3;
+  border-radius: 5px;
+}
+
+[data-tile='tileField-0'] {
+  background-position-x: 1 * 100% / 3;
+  background-position-y: 1 * 100% / 3;
+  border-radius: 5px;
+}
+
+[data-tile='tileCavern-0'] {
+  background-position-x: 0 * 100% / 3;
+  background-position-y: 1 * 100% / 3;
+  border-radius: 5px;
+}
+
+[data-tile='tileTunnel-0'] {
+  background-position-x: 3 * 100% / 3;
+  background-position-y: 3 * 100% / 3;
+  border-radius: 5px;
+}

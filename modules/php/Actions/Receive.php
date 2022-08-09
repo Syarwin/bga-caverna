@@ -84,7 +84,7 @@ class Receive extends \CAV\Models\Action
     if ($meeple['type'] == 'roomStone') {
       if ($player->board()->canConstruct() && $player->getRoomType() == 'roomStone') {
         Engine::insertAsChild([
-          'action' => CONSTRUCT,
+          'action' => PLACE_TILE,
           'optional' => true,
           'pId' => $player->getId(),
           'args' => ['costs' => Utils::formatCost(['max' => 1]), 'max' => 1],

@@ -49,1875 +49,148 @@ html {
   .dijitTooltipContainer .player-card .player-card-resizable .player-card-inner .card-frame {
     box-shadow: none; }
 
-.player-card {
-  transition: transform 0.8s;
-  transform: scale(1);
-  width: var(--cavernaCardWidth);
-  height: var(--cavernaCardHeight);
-  /* Cards with stacked resources */
-  /* Field cards */
-  /* Cards that farmers grow onto */
-  /** Animal holder cards **/ }
-  .player-card.mini {
-    height: var(--cavernaCardWidth); }
-  .player-card.selectable {
-    cursor: pointer; }
-    .player-card.selectable:hover {
-      transform: scale(1.1); }
-  .player-card.unselectable {
-    cursor: not-allowed; }
-  #ebd-body:not(.mobile_version) .player-card.unselectable {
-    filter: grayscale(70%); }
-  .player-card.mini .player-card-resizable .player-card-inner {
-    height: 235px; }
-    .player-card.mini .player-card-resizable .player-card-inner .card-desc {
-      top: 223.25px;
-      bottom: 18.8px; }
-  .player-card.phantom {
-    visibility: hidden; }
-  .player-card.animalHolder {
-    z-index: 2; }
-  .player-card .player-card-field-cell {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; }
-    .player-card .player-card-field-cell.active {
+#tiles-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #tiles-selector .tile-selector {
+    margin: 0px 10px;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 5px; }
+    #tiles-selector .tile-selector .tile-selector-cell {
+      width: 90px;
+      height: 90px;
+      background-image: url("img/tiles.jpg");
+      background-size: 400% 400%;
+      box-sizing: border-box;
+      background-origin: border-box;
       display: flex;
       justify-content: center;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 19.505px; }
-      #ebd-body:not(.help-mode) .player-card .player-card-field-cell.active.selectable {
-        cursor: pointer; }
-        #ebd-body:not(.help-mode) .player-card .player-card-field-cell.active.selectable:hover {
-          background-color: rgba(255, 0, 0, 0.3); }
-      #ebd-body:not(.help-mode) .player-card .player-card-field-cell.active.selected {
-        background-color: rgba(0, 255, 0, 0.5); }
-        #ebd-body:not(.help-mode) .player-card .player-card-field-cell.active.selected:hover {
-          background-color: rgba(0, 255, 0, 0.9); }
-  .player-card .player-card-zoom {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 19.505px;
-    justify-content: center;
-    align-items: center;
-    cursor: zoom-in; }
-    .player-card .player-card-zoom svg {
-      width: 50%;
-      height: 50%; }
-  .player-card.mini:not(.phantom):not(.selectable) .player-card-resizable:hover .player-card-zoom {
-    display: flex; }
-  .player-card .player-card-resizable {
-    transform: scale(var(--cavernaCardScale));
-    transform-origin: top left;
-    width: 235px; }
-    .player-card .player-card-resizable .player-card-inner {
-      width: 235px;
-      height: 374px;
-      background-size: 100%;
-      position: relative;
-      transition: height 0.8s;
-      transform-origin: top left; }
-      .player-card .player-card-resizable .player-card-inner .card-icon,
-      .player-card .player-card-resizable .player-card-inner .card-frame {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-size: 100% 100%; }
-      .player-card .player-card-resizable .player-card-inner .card-frame {
-        background-image: url("img/card_frames.jpg");
-        background-size: 300% 374px;
-        border-radius: 19.505px;
-        box-shadow: 2px 2px 5px -1px black;
-        border: 5px solid white;
-        box-sizing: border-box; }
-      .player-card .player-card-resizable .player-card-inner .card-title {
-        position: absolute;
-        left: 29%;
-        right: 29%;
-        top: 10.34px;
-        height: 43.475px;
-        font-family: var(--caverna-font-family);
-        font-size: 16px;
-        line-height: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center; }
-      .player-card .player-card-resizable .player-card-inner .card-numbering {
-        position: absolute;
-        left: 3.7%;
-        top: 91.65px;
-        width: 23.5px;
-        height: 11.75px;
-        font-family: 'Calibri';
-        font-size: 13px;
-        text-align: center; }
-      .player-card .player-card-resizable .player-card-inner .card-score {
-        position: absolute;
-        left: 4%;
-        top: 164.5px;
-        width: 39.95px;
-        height: 39.95px;
-        font-weight: bold;
-        font-family: 'CalibriB';
-        font-size: 27px;
-        background-image: url("img/meeples.png");
-        background-position: 53.3644% 15.0026%;
-        background-size: 1765.52%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center; }
-      .player-card .player-card-resizable .player-card-inner .card-extra-score {
-        position: absolute;
-        left: 19.5%;
-        top: 188px;
-        width: 23.5px;
-        height: 23.5px;
-        background-image: url("img/meeples.png");
-        background-position: 91.0282% 21.623%;
-        background-size: 3200%; }
-      .player-card .player-card-resizable .player-card-inner .card-deck {
-        position: absolute;
-        top: 158.625px;
-        width: 35.8375px;
-        height: 35.8375px;
-        left: 190.35px;
-        background-image: url("img/meeples.png"); }
-        .player-card .player-card-resizable .player-card-inner .card-deck[data-deck='A'] {
-          background-position: 59.7624% 14.9793%;
-          background-size: 1828.57%; }
-        .player-card .player-card-resizable .player-card-inner .card-deck[data-deck='B'] {
-          background-position: 66.064% 14.9793%;
-          background-size: 1828.57%; }
-        .player-card .player-card-resizable .player-card-inner .card-deck[data-deck='C'] {
-          background-image: url("img/deckC/deckC.png");
-          background-size: contain; }
-        .player-card .player-card-resizable .player-card-inner .card-deck[data-deck='D'] {
-          background-image: url("img/deckD/deckD.png");
-          background-size: contain; }
-      .player-card .player-card-resizable .player-card-inner .card-players {
-        position: absolute;
-        top: 160.975px;
-        width: 35.8375px;
-        height: 35.8375px;
-        left: 4.5%;
-        background-image: url("img/meeples.png"); }
-        .player-card .player-card-resizable .player-card-inner .card-players[data-n='1+'] {
-          background-position: 99.3846% 0.512821%;
-          background-size: 2089.8%; }
-        .player-card .player-card-resizable .player-card-inner .card-players[data-n='2+'] {
-          background-position: 86.8205% 14.8718%;
-          background-size: 2089.8%; }
-        .player-card .player-card-resizable .player-card-inner .card-players[data-n='3+'] {
-          background-position: 92.359% 14.8718%;
-          background-size: 2089.8%; }
-        .player-card .player-card-resizable .player-card-inner .card-players[data-n='4+'] {
-          background-position: 97.8974% 14.8718%;
-          background-size: 2089.8%; }
-      .player-card .player-card-resizable .player-card-inner .card-category {
-        position: absolute;
-        left: 71.5%;
-        top: 183.3px;
-        width: 25.85px;
-        height: 25.85px;
-        background-image: url("img/card_categories.png");
-        background-size: 800% 100%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='BoosterCategory'] {
-          background-position-x: 0%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='LivestockCategory'] {
-          background-position-x: 14.2857142857%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='ResourceCategory'] {
-          background-position-x: 28.5714285714%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='FarmCategory'] {
-          background-position-x: 42.8571428571%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='CropCategory'] {
-          background-position-x: 57.1428571429%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='FoodCategory'] {
-          background-position-x: 71.4285714286%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='GoodsCategory'] {
-          background-position-x: 85.7142857143%; }
-        .player-card .player-card-resizable .player-card-inner .card-category[data-category='PointsCategory'] {
-          background-position-x: 100%; }
-      .player-card .player-card-resizable .player-card-inner .card-bonus-vp-counter {
-        position: absolute;
-        left: 78%;
-        top: 159.8px;
-        width: 47px;
-        height: 47px;
-        font-weight: bold;
-        font-family: 'CalibriB';
-        font-size: 25px;
-        background-image: url("img/meeples.png");
-        background-position: 53.3644% 15.0026%;
-        background-size: 1765.52%;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        display: flex;
-        visibility: hidden; }
-        .player-card .player-card-resizable .player-card-inner .card-bonus-vp-counter:not(:empty) {
-          visibility: visible; }
-          .player-card .player-card-resizable .player-card-inner .card-bonus-vp-counter:not(:empty):before {
-            content: '+'; }
-          .player-card .player-card-resizable .player-card-inner .card-bonus-vp-counter:not(:empty) ~ .card-deck, .player-card .player-card-resizable .player-card-inner .card-bonus-vp-counter:not(:empty) ~ .card-category {
-            display: none; }
-      .player-card .player-card-resizable .player-card-inner .card-cost {
-        position: absolute;
-        left: 68%;
-        right: 3.5%;
-        top: 8.225px;
-        height: 96.35px;
-        text-align: right;
-        font-family: 'CalibriB';
-        font-size: 26px;
-        text-shadow: -1px 0px 0px white, 0px -1px 0px white, 1px 0px 0px white, 0px 1px 0px white;
-        font-weight: bolder; }
-        .player-card .player-card-resizable .player-card-inner .card-cost .card-cost-text {
-          height: 57%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-align: right;
-          padding: 2px 6px 2px 15px;
-          font-family: var(--caverna-font-family);
-          text-shadow: none;
-          font-size: 12px;
-          line-height: 13px;
-          font-weight: normal; }
-        .player-card .player-card-resizable .player-card-inner .card-cost .card-cost-separator {
-          width: 100%;
-          height: 30%;
-          position: relative; }
-          .player-card .player-card-resizable .player-card-inner .card-cost .card-cost-separator::after {
-            content: '';
-            border-top: 2px solid black;
-            width: 75%;
-            display: block;
-            transform: rotate(-22deg);
-            position: absolute;
-            top: 46%;
-            left: 25%; }
-        .player-card .player-card-resizable .player-card-inner .card-cost .card-cost-fee-separator {
-          text-align: center;
-          font-size: 20px;
-          padding: 0px;
-          line-height: 12px; }
-      .player-card .player-card-resizable .player-card-inner .card-prerequisite {
-        position: absolute;
-        right: 68%;
-        left: 3.5%;
-        top: 8.225px;
-        height: 96.35px;
-        background-image: url("img/meeples.png");
-        background-position: 89.6801% 0.526316%;
-        background-size: 1861.82%; }
-        .player-card .player-card-resizable .player-card-inner .card-prerequisite .prerequisite-text {
-          height: 86%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 2px 15px 2px 6px;
-          font-size: 12px;
-          line-height: 13px;
-          font-family: var(--caverna-font-family);
-          text-align: left;
-          word-wrap: anywhere; }
-      .player-card .player-card-resizable .player-card-inner .card-desc {
-        position: absolute;
-        top: 211.5px;
-        bottom: 8.225px;
-        left: 4%;
-        right: 4%;
-        padding: 0 0.5rem;
-        background-image: url("img/action_frame_bg.jpg");
-        background-size: 100%;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-        box-shadow: inset 0px 0px 1px 1px black, inset 0px 0px 5px 1px black;
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-family: var(--caverna-font-family);
-        font-size: 17px;
-        overflow: hidden;
-        transition: bottom 0.8s, top 0.8s, clip-path 0.8s; }
-        .player-card .player-card-resizable .player-card-inner .card-desc div.card-desc-scroller {
-          height: 142.2925px;
-          overflow-y: auto;
-          display: flex;
-          flex-flow: column; }
-          .player-card .player-card-resizable .player-card-inner .card-desc div.card-desc-scroller > div {
-            margin: auto; }
-  .player-card[data-cook='true'] .card-desc::before {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 29px;
-    height: 20px;
-    background-image: url("img/meeples.png");
-    background-position: 82.0225% 21.6886%;
-    background-size: 2275.56%; }
-  .player-card[data-cook='true'] .card-bottom-left-corner {
-    position: absolute;
-    bottom: 8px;
-    left: 9px;
-    width: 24px;
-    height: 17px;
-    background-image: url("img/meeples.png");
-    background-position: 13.3132% 26.2165%;
-    background-size: 3150.77%; }
-  .player-card[data-bread='true'] .card-desc::after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 28px;
-    height: 20px;
-    background-image: url("img/meeples.png");
-    background-position: 87.1297% 21.6886%;
-    background-size: 2275.56%; }
-  .player-card[data-bread='true'] .card-bottom-right-corner {
-    position: absolute;
-    bottom: 8px;
-    right: 12px;
-    width: 21px;
-    height: 18px;
-    background-image: url("img/meeples.png");
-    background-position: 17.0266% 26.1905%;
-    background-size: 3592.98%; }
-  .player-card.major .player-card-resizable .card-icon {
-    width: 152.75px;
-    height: 155.1px;
-    top: 49.35px;
-    left: 42.3px;
-    background-image: url("img/majors_icons.jpg");
-    background-size: 500% 200%;
-    clip-path: polygon(0% 54.4%, 24% 11%, 74% 11%, 99% 55%, 74% 98%, 24% 98%, 0% 55%); }
-  .player-card.major .player-card-resizable .card-frame {
-    background-position-x: 0%; }
-  .player-card.major .player-card-resizable .card-category {
-    filter: invert(85%); }
-  .player-card.major .player-card-resizable .card-cost-text {
-    background-image: url("img/meeples.png");
-    background-position: 76.3186% 0.52687%;
-    background-size: 1106.89% 1328%; }
-  .player-card.major[data-id='Major_Fireplace1'] .card-icon {
-    background-position-x: 0%;
-    background-position-y: 0%; }
-  .player-card.major[data-id='Major_Fireplace2'] .card-icon {
-    background-position-x: 25%;
-    background-position-y: 0%; }
-  .player-card.major[data-id='Major_CookingHearth1'] .card-icon {
-    background-position-x: 50%;
-    background-position-y: 0%; }
-  .player-card.major[data-id='Major_CookingHearth2'] .card-icon {
-    background-position-x: 75%;
-    background-position-y: 0%; }
-  .player-card.major[data-id='Major_ClayOven'] .card-icon {
-    background-position-x: 100%;
-    background-position-y: 0%; }
-  .player-card.major[data-id='Major_StoneOven'] .card-icon {
-    background-position-x: 0%;
-    background-position-y: 100%; }
-  .player-card.major[data-id='Major_Joinery'] .card-icon {
-    background-position-x: 25%;
-    background-position-y: 100%; }
-  .player-card.major[data-id='Major_Pottery'] .card-icon {
-    background-position-x: 50%;
-    background-position-y: 100%; }
-  .player-card.major[data-id='Major_Basket'] .card-icon {
-    background-position-x: 75%;
-    background-position-y: 100%; }
-  .player-card.major[data-id='Major_Well'] .card-icon {
-    background-position-x: 100%;
-    background-position-y: 100%; }
-  .player-card.minor .player-card-resizable .card-frame {
-    background-position-x: 50%; }
-  .player-card.minor .player-card-resizable .card-icon {
-    width: 182.125px;
-    height: 189.9975px;
-    top: 37.0125px;
-    left: 11.5%; }
-  .player-card.minor .player-card-resizable .card-frame-left-leaves,
-  .player-card.minor .player-card-resizable .card-frame-right-leaves {
-    position: absolute;
-    top: 112px;
-    width: 53px;
-    height: 40px;
-    background-size: 100% 100%; }
-  .player-card.minor .player-card-resizable .card-frame-left-leaves {
-    background-position: 73.2741% 14.9254%;
-    background-size: 1505.88%;
-    background-image: url("img/meeples.png");
-    left: 1px; }
-  .player-card.minor .player-card-resizable .card-frame-right-leaves {
-    background-position: 80.91% 14.91%;
-    background-size: 1505.88%;
-    background-image: url("img/meeples.png");
-    right: 1px; }
-  .player-card.minor .player-card-resizable .card-desc {
-    line-height: 20px; }
-  .player-card.minor .player-card-resizable .card-cost .card-cost-text {
-    height: 97%;
-    background-image: url("img/meeples.png");
-    background-position: 83.4881% 0.526316%;
-    background-size: 1861.82%; }
-  .player-card.occupation .player-card-resizable .card-frame {
-    background-position-x: 100%; }
-  .player-card.occupation .player-card-resizable .card-icon {
-    width: 180.95px;
-    height: 189.645px;
-    top: 37.0125px;
-    left: 11.5%; }
-  .player-card.occupation .player-card-resizable .card-title {
-    left: 10%;
-    right: 10%;
-    height: 47px; }
-  .player-card.occupation .player-card-resizable .card-desc {
-    line-height: 19px; }
-  .player-card[data-numbering='A001'] .card-icon {
-    background-image: url("img/deckA/A001.png"); }
-  .player-card[data-numbering='A002'] .card-icon {
-    background-image: url("img/deckA/A002.png"); }
-  .player-card[data-numbering='A003'] .card-icon {
-    background-image: url("img/deckA/A003.png"); }
-  .player-card[data-numbering='A004'] .card-icon {
-    background-image: url("img/deckA/A004.png"); }
-  .player-card[data-numbering='A005'] .card-icon {
-    background-image: url("img/deckA/A005.png"); }
-  .player-card[data-numbering='A006'] .card-icon {
-    background-image: url("img/deckA/A006.png"); }
-  .player-card[data-numbering='A007'] .card-icon {
-    background-image: url("img/deckA/A007.png"); }
-  .player-card[data-numbering='A008'] .card-icon {
-    background-image: url("img/deckA/A008.png"); }
-  .player-card[data-numbering='A009'] .card-icon {
-    background-image: url("img/deckA/A009.png"); }
-  .player-card[data-numbering='A010'] .card-icon {
-    background-image: url("img/deckA/A010.png"); }
-  .player-card[data-numbering='A011'] .card-icon {
-    background-image: url("img/deckA/A011.png"); }
-  .player-card[data-numbering='A012'] .card-icon {
-    background-image: url("img/deckA/A012.png"); }
-  .player-card[data-numbering='A013'] .card-icon {
-    background-image: url("img/deckA/A013.png"); }
-  .player-card[data-numbering='A014'] .card-icon {
-    background-image: url("img/deckA/A014.png"); }
-  .player-card[data-numbering='A015'] .card-icon {
-    background-image: url("img/deckA/A015.png"); }
-  .player-card[data-numbering='A016'] .card-icon {
-    background-image: url("img/deckA/A016.png"); }
-  .player-card[data-numbering='A017'] .card-icon {
-    background-image: url("img/deckA/A017.png"); }
-  .player-card[data-numbering='A018'] .card-icon {
-    background-image: url("img/deckA/A018.png"); }
-  .player-card[data-numbering='A019'] .card-icon {
-    background-image: url("img/deckA/A019.png"); }
-  .player-card[data-numbering='A020'] .card-icon {
-    background-image: url("img/deckA/A020.png"); }
-  .player-card[data-numbering='A021'] .card-icon {
-    background-image: url("img/deckA/A021.png"); }
-  .player-card[data-numbering='A022'] .card-icon {
-    background-image: url("img/deckA/A022.png"); }
-  .player-card[data-numbering='A023'] .card-icon {
-    background-image: url("img/deckA/A023.png"); }
-  .player-card[data-numbering='A024'] .card-icon {
-    background-image: url("img/deckA/A024.png"); }
-  .player-card[data-numbering='A025'] .card-icon {
-    background-image: url("img/deckA/A025.png"); }
-  .player-card[data-numbering='A026'] .card-icon {
-    background-image: url("img/deckA/A026.png"); }
-  .player-card[data-numbering='A027'] .card-icon {
-    background-image: url("img/deckA/A027.png"); }
-  .player-card[data-numbering='A028'] .card-icon {
-    background-image: url("img/deckA/A028.png"); }
-  .player-card[data-numbering='A029'] .card-icon {
-    background-image: url("img/deckA/A029.png"); }
-  .player-card[data-numbering='A030'] .card-icon {
-    background-image: url("img/deckA/A030.png"); }
-  .player-card[data-numbering='A031'] .card-icon {
-    background-image: url("img/deckA/A031.png"); }
-  .player-card[data-numbering='A032'] .card-icon {
-    background-image: url("img/deckA/A032.png"); }
-  .player-card[data-numbering='A033'] .card-icon {
-    background-image: url("img/deckA/A033.png"); }
-  .player-card[data-numbering='A034'] .card-icon {
-    background-image: url("img/deckA/A034.png"); }
-  .player-card[data-numbering='A035'] .card-icon {
-    background-image: url("img/deckA/A035.png"); }
-  .player-card[data-numbering='A036'] .card-icon {
-    background-image: url("img/deckA/A036.png"); }
-  .player-card[data-numbering='A037'] .card-icon {
-    background-image: url("img/deckA/A037.png"); }
-  .player-card[data-numbering='A038'] .card-icon {
-    background-image: url("img/deckA/A038.png"); }
-  .player-card[data-numbering='A039'] .card-icon {
-    background-image: url("img/deckA/A039.png"); }
-  .player-card[data-numbering='A040'] .card-icon {
-    background-image: url("img/deckA/A040.png"); }
-  .player-card[data-numbering='A041'] .card-icon {
-    background-image: url("img/deckA/A041.png"); }
-  .player-card[data-numbering='A042'] .card-icon {
-    background-image: url("img/deckA/A042.png"); }
-  .player-card[data-numbering='A043'] .card-icon {
-    background-image: url("img/deckA/A043.png"); }
-  .player-card[data-numbering='A044'] .card-icon {
-    background-image: url("img/deckA/A044.png"); }
-  .player-card[data-numbering='A045'] .card-icon {
-    background-image: url("img/deckA/A045.png"); }
-  .player-card[data-numbering='A046'] .card-icon {
-    background-image: url("img/deckA/A046.png"); }
-  .player-card[data-numbering='A047'] .card-icon {
-    background-image: url("img/deckA/A047.png"); }
-  .player-card[data-numbering='A048'] .card-icon {
-    background-image: url("img/deckA/A048.png"); }
-  .player-card[data-numbering='A049'] .card-icon {
-    background-image: url("img/deckA/A049.png"); }
-  .player-card[data-numbering='A050'] .card-icon {
-    background-image: url("img/deckA/A050.png"); }
-  .player-card[data-numbering='A051'] .card-icon {
-    background-image: url("img/deckA/A051.png"); }
-  .player-card[data-numbering='A052'] .card-icon {
-    background-image: url("img/deckA/A052.png"); }
-  .player-card[data-numbering='A053'] .card-icon {
-    background-image: url("img/deckA/A053.png"); }
-  .player-card[data-numbering='A054'] .card-icon {
-    background-image: url("img/deckA/A054.png"); }
-  .player-card[data-numbering='A055'] .card-icon {
-    background-image: url("img/deckA/A055.png"); }
-  .player-card[data-numbering='A056'] .card-icon {
-    background-image: url("img/deckA/A056.png"); }
-  .player-card[data-numbering='A057'] .card-icon {
-    background-image: url("img/deckA/A057.png"); }
-  .player-card[data-numbering='A058'] .card-icon {
-    background-image: url("img/deckA/A058.png"); }
-  .player-card[data-numbering='A059'] .card-icon {
-    background-image: url("img/deckA/A059.png"); }
-  .player-card[data-numbering='A060'] .card-icon {
-    background-image: url("img/deckA/A060.png"); }
-  .player-card[data-numbering='A061'] .card-icon {
-    background-image: url("img/deckA/A061.png"); }
-  .player-card[data-numbering='A062'] .card-icon {
-    background-image: url("img/deckA/A062.png"); }
-  .player-card[data-numbering='A063'] .card-icon {
-    background-image: url("img/deckA/A063.png"); }
-  .player-card[data-numbering='A064'] .card-icon {
-    background-image: url("img/deckA/A064.png"); }
-  .player-card[data-numbering='A065'] .card-icon {
-    background-image: url("img/deckA/A065.png"); }
-  .player-card[data-numbering='A066'] .card-icon {
-    background-image: url("img/deckA/A066.png"); }
-  .player-card[data-numbering='A067'] .card-icon {
-    background-image: url("img/deckA/A067.png"); }
-  .player-card[data-numbering='A068'] .card-icon {
-    background-image: url("img/deckA/A068.png"); }
-  .player-card[data-numbering='A069'] .card-icon {
-    background-image: url("img/deckA/A069.png"); }
-  .player-card[data-numbering='A070'] .card-icon {
-    background-image: url("img/deckA/A070.png"); }
-  .player-card[data-numbering='A071'] .card-icon {
-    background-image: url("img/deckA/A071.png"); }
-  .player-card[data-numbering='A072'] .card-icon {
-    background-image: url("img/deckA/A072.png"); }
-  .player-card[data-numbering='A073'] .card-icon {
-    background-image: url("img/deckA/A073.png"); }
-  .player-card[data-numbering='A074'] .card-icon {
-    background-image: url("img/deckA/A074.png"); }
-  .player-card[data-numbering='A075'] .card-icon {
-    background-image: url("img/deckA/A075.png"); }
-  .player-card[data-numbering='A076'] .card-icon {
-    background-image: url("img/deckA/A076.png"); }
-  .player-card[data-numbering='A077'] .card-icon {
-    background-image: url("img/deckA/A077.png"); }
-  .player-card[data-numbering='A078'] .card-icon {
-    background-image: url("img/deckA/A078.png"); }
-  .player-card[data-numbering='A079'] .card-icon {
-    background-image: url("img/deckA/A079.png"); }
-  .player-card[data-numbering='A080'] .card-icon {
-    background-image: url("img/deckA/A080.png"); }
-  .player-card[data-numbering='A081'] .card-icon {
-    background-image: url("img/deckA/A081.png"); }
-  .player-card[data-numbering='A082'] .card-icon {
-    background-image: url("img/deckA/A082.png"); }
-  .player-card[data-numbering='A083'] .card-icon {
-    background-image: url("img/deckA/A083.png"); }
-  .player-card[data-numbering='A084'] .card-icon {
-    background-image: url("img/deckA/A084.png"); }
-  .player-card[data-numbering='A085'] .card-icon {
-    background-image: url("img/deckA/A085.png"); }
-  .player-card[data-numbering='A086'] .card-icon {
-    background-image: url("img/deckA/A086.png"); }
-  .player-card[data-numbering='A087'] .card-icon {
-    background-image: url("img/deckA/A087.png"); }
-  .player-card[data-numbering='A088'] .card-icon {
-    background-image: url("img/deckA/A088.png"); }
-  .player-card[data-numbering='A089'] .card-icon {
-    background-image: url("img/deckA/A089.png"); }
-  .player-card[data-numbering='A090'] .card-icon {
-    background-image: url("img/deckA/A090.png"); }
-  .player-card[data-numbering='A091'] .card-icon {
-    background-image: url("img/deckA/A091.png"); }
-  .player-card[data-numbering='A092'] .card-icon {
-    background-image: url("img/deckA/A092.png"); }
-  .player-card[data-numbering='A093'] .card-icon {
-    background-image: url("img/deckA/A093.png"); }
-  .player-card[data-numbering='A094'] .card-icon {
-    background-image: url("img/deckA/A094.png"); }
-  .player-card[data-numbering='A095'] .card-icon {
-    background-image: url("img/deckA/A095.png"); }
-  .player-card[data-numbering='A096'] .card-icon {
-    background-image: url("img/deckA/A096.png"); }
-  .player-card[data-numbering='A097'] .card-icon {
-    background-image: url("img/deckA/A097.png"); }
-  .player-card[data-numbering='A098'] .card-icon {
-    background-image: url("img/deckA/A098.png"); }
-  .player-card[data-numbering='A099'] .card-icon {
-    background-image: url("img/deckA/A099.png"); }
-  .player-card[data-numbering='A100'] .card-icon {
-    background-image: url("img/deckA/A100.png"); }
-  .player-card[data-numbering='A101'] .card-icon {
-    background-image: url("img/deckA/A101.png"); }
-  .player-card[data-numbering='A102'] .card-icon {
-    background-image: url("img/deckA/A102.png"); }
-  .player-card[data-numbering='A103'] .card-icon {
-    background-image: url("img/deckA/A103.png"); }
-  .player-card[data-numbering='A104'] .card-icon {
-    background-image: url("img/deckA/A104.png"); }
-  .player-card[data-numbering='A105'] .card-icon {
-    background-image: url("img/deckA/A105.png"); }
-  .player-card[data-numbering='A106'] .card-icon {
-    background-image: url("img/deckA/A106.png"); }
-  .player-card[data-numbering='A107'] .card-icon {
-    background-image: url("img/deckA/A107.png"); }
-  .player-card[data-numbering='A108'] .card-icon {
-    background-image: url("img/deckA/A108.png"); }
-  .player-card[data-numbering='A109'] .card-icon {
-    background-image: url("img/deckA/A109.png"); }
-  .player-card[data-numbering='A110'] .card-icon {
-    background-image: url("img/deckA/A110.png"); }
-  .player-card[data-numbering='A111'] .card-icon {
-    background-image: url("img/deckA/A111.png"); }
-  .player-card[data-numbering='A112'] .card-icon {
-    background-image: url("img/deckA/A112.png"); }
-  .player-card[data-numbering='A113'] .card-icon {
-    background-image: url("img/deckA/A113.png"); }
-  .player-card[data-numbering='A114'] .card-icon {
-    background-image: url("img/deckA/A114.png"); }
-  .player-card[data-numbering='A115'] .card-icon {
-    background-image: url("img/deckA/A115.png"); }
-  .player-card[data-numbering='A116'] .card-icon {
-    background-image: url("img/deckA/A116.png"); }
-  .player-card[data-numbering='A117'] .card-icon {
-    background-image: url("img/deckA/A117.png"); }
-  .player-card[data-numbering='A118'] .card-icon {
-    background-image: url("img/deckA/A118.png"); }
-  .player-card[data-numbering='A119'] .card-icon {
-    background-image: url("img/deckA/A119.png"); }
-  .player-card[data-numbering='A120'] .card-icon {
-    background-image: url("img/deckA/A120.png"); }
-  .player-card[data-numbering='A121'] .card-icon {
-    background-image: url("img/deckA/A121.png"); }
-  .player-card[data-numbering='A122'] .card-icon {
-    background-image: url("img/deckA/A122.png"); }
-  .player-card[data-numbering='A123'] .card-icon {
-    background-image: url("img/deckA/A123.png"); }
-  .player-card[data-numbering='A124'] .card-icon {
-    background-image: url("img/deckA/A124.png"); }
-  .player-card[data-numbering='A125'] .card-icon {
-    background-image: url("img/deckA/A125.png"); }
-  .player-card[data-numbering='A126'] .card-icon {
-    background-image: url("img/deckA/A126.png"); }
-  .player-card[data-numbering='A127'] .card-icon {
-    background-image: url("img/deckA/A127.png"); }
-  .player-card[data-numbering='A128'] .card-icon {
-    background-image: url("img/deckA/A128.png"); }
-  .player-card[data-numbering='A129'] .card-icon {
-    background-image: url("img/deckA/A129.png"); }
-  .player-card[data-numbering='A130'] .card-icon {
-    background-image: url("img/deckA/A130.png"); }
-  .player-card[data-numbering='A131'] .card-icon {
-    background-image: url("img/deckA/A131.png"); }
-  .player-card[data-numbering='A132'] .card-icon {
-    background-image: url("img/deckA/A132.png"); }
-  .player-card[data-numbering='A133'] .card-icon {
-    background-image: url("img/deckA/A133.png"); }
-  .player-card[data-numbering='A134'] .card-icon {
-    background-image: url("img/deckA/A134.png"); }
-  .player-card[data-numbering='A135'] .card-icon {
-    background-image: url("img/deckA/A135.png"); }
-  .player-card[data-numbering='A136'] .card-icon {
-    background-image: url("img/deckA/A136.png"); }
-  .player-card[data-numbering='A137'] .card-icon {
-    background-image: url("img/deckA/A137.png"); }
-  .player-card[data-numbering='A138'] .card-icon {
-    background-image: url("img/deckA/A138.png"); }
-  .player-card[data-numbering='A139'] .card-icon {
-    background-image: url("img/deckA/A139.png"); }
-  .player-card[data-numbering='A140'] .card-icon {
-    background-image: url("img/deckA/A140.png"); }
-  .player-card[data-numbering='A141'] .card-icon {
-    background-image: url("img/deckA/A141.png"); }
-  .player-card[data-numbering='A142'] .card-icon {
-    background-image: url("img/deckA/A142.png"); }
-  .player-card[data-numbering='A143'] .card-icon {
-    background-image: url("img/deckA/A143.png"); }
-  .player-card[data-numbering='A144'] .card-icon {
-    background-image: url("img/deckA/A144.png"); }
-  .player-card[data-numbering='A145'] .card-icon {
-    background-image: url("img/deckA/A145.png"); }
-  .player-card[data-numbering='A146'] .card-icon {
-    background-image: url("img/deckA/A146.png"); }
-  .player-card[data-numbering='A147'] .card-icon {
-    background-image: url("img/deckA/A147.png"); }
-  .player-card[data-numbering='A148'] .card-icon {
-    background-image: url("img/deckA/A148.png"); }
-  .player-card[data-numbering='A149'] .card-icon {
-    background-image: url("img/deckA/A149.png"); }
-  .player-card[data-numbering='A150'] .card-icon {
-    background-image: url("img/deckA/A150.png"); }
-  .player-card[data-numbering='A151'] .card-icon {
-    background-image: url("img/deckA/A151.png"); }
-  .player-card[data-numbering='A152'] .card-icon {
-    background-image: url("img/deckA/A152.png"); }
-  .player-card[data-numbering='A153'] .card-icon {
-    background-image: url("img/deckA/A153.png"); }
-  .player-card[data-numbering='A154'] .card-icon {
-    background-image: url("img/deckA/A154.png"); }
-  .player-card[data-numbering='A155'] .card-icon {
-    background-image: url("img/deckA/A155.png"); }
-  .player-card[data-numbering='A156'] .card-icon {
-    background-image: url("img/deckA/A156.png"); }
-  .player-card[data-numbering='A157'] .card-icon {
-    background-image: url("img/deckA/A157.png"); }
-  .player-card[data-numbering='A158'] .card-icon {
-    background-image: url("img/deckA/A158.png"); }
-  .player-card[data-numbering='A159'] .card-icon {
-    background-image: url("img/deckA/A159.png"); }
-  .player-card[data-numbering='A160'] .card-icon {
-    background-image: url("img/deckA/A160.png"); }
-  .player-card[data-numbering='A161'] .card-icon {
-    background-image: url("img/deckA/A161.png"); }
-  .player-card[data-numbering='A162'] .card-icon {
-    background-image: url("img/deckA/A162.png"); }
-  .player-card[data-numbering='A163'] .card-icon {
-    background-image: url("img/deckA/A163.png"); }
-  .player-card[data-numbering='A164'] .card-icon {
-    background-image: url("img/deckA/A164.png"); }
-  .player-card[data-numbering='A165'] .card-icon {
-    background-image: url("img/deckA/A165.png"); }
-  .player-card[data-numbering='A166'] .card-icon {
-    background-image: url("img/deckA/A166.png"); }
-  .player-card[data-numbering='A167'] .card-icon {
-    background-image: url("img/deckA/A167.png"); }
-  .player-card[data-numbering='A168'] .card-icon {
-    background-image: url("img/deckA/A168.png"); }
-  .player-card[data-numbering='B001'] .card-icon {
-    background-image: url("img/deckB/B001.png"); }
-  .player-card[data-numbering='B002'] .card-icon {
-    background-image: url("img/deckB/B002.png"); }
-  .player-card[data-numbering='B003'] .card-icon {
-    background-image: url("img/deckB/B003.png"); }
-  .player-card[data-numbering='B004'] .card-icon {
-    background-image: url("img/deckB/B004.png"); }
-  .player-card[data-numbering='B005'] .card-icon {
-    background-image: url("img/deckB/B005.png"); }
-  .player-card[data-numbering='B006'] .card-icon {
-    background-image: url("img/deckB/B006.png"); }
-  .player-card[data-numbering='B007'] .card-icon {
-    background-image: url("img/deckB/B007.png"); }
-  .player-card[data-numbering='B008'] .card-icon {
-    background-image: url("img/deckB/B008.png"); }
-  .player-card[data-numbering='B009'] .card-icon {
-    background-image: url("img/deckB/B009.png"); }
-  .player-card[data-numbering='B010'] .card-icon {
-    background-image: url("img/deckB/B010.png"); }
-  .player-card[data-numbering='B011'] .card-icon {
-    background-image: url("img/deckB/B011.png"); }
-  .player-card[data-numbering='B012'] .card-icon {
-    background-image: url("img/deckB/B012.png"); }
-  .player-card[data-numbering='B013'] .card-icon {
-    background-image: url("img/deckB/B013.png"); }
-  .player-card[data-numbering='B014'] .card-icon {
-    background-image: url("img/deckB/B014.png"); }
-  .player-card[data-numbering='B015'] .card-icon {
-    background-image: url("img/deckB/B015.png"); }
-  .player-card[data-numbering='B016'] .card-icon {
-    background-image: url("img/deckB/B016.png"); }
-  .player-card[data-numbering='B017'] .card-icon {
-    background-image: url("img/deckB/B017.png"); }
-  .player-card[data-numbering='B018'] .card-icon {
-    background-image: url("img/deckB/B018.png"); }
-  .player-card[data-numbering='B019'] .card-icon {
-    background-image: url("img/deckB/B019.png"); }
-  .player-card[data-numbering='B020'] .card-icon {
-    background-image: url("img/deckB/B020.png"); }
-  .player-card[data-numbering='B021'] .card-icon {
-    background-image: url("img/deckB/B021.png"); }
-  .player-card[data-numbering='B022'] .card-icon {
-    background-image: url("img/deckB/B022.png"); }
-  .player-card[data-numbering='B023'] .card-icon {
-    background-image: url("img/deckB/B023.png"); }
-  .player-card[data-numbering='B024'] .card-icon {
-    background-image: url("img/deckB/B024.png"); }
-  .player-card[data-numbering='B025'] .card-icon {
-    background-image: url("img/deckB/B025.png"); }
-  .player-card[data-numbering='B026'] .card-icon {
-    background-image: url("img/deckB/B026.png"); }
-  .player-card[data-numbering='B027'] .card-icon {
-    background-image: url("img/deckB/B027.png"); }
-  .player-card[data-numbering='B028'] .card-icon {
-    background-image: url("img/deckB/B028.png"); }
-  .player-card[data-numbering='B029'] .card-icon {
-    background-image: url("img/deckB/B029.png"); }
-  .player-card[data-numbering='B030'] .card-icon {
-    background-image: url("img/deckB/B030.png"); }
-  .player-card[data-numbering='B031'] .card-icon {
-    background-image: url("img/deckB/B031.png"); }
-  .player-card[data-numbering='B032'] .card-icon {
-    background-image: url("img/deckB/B032.png"); }
-  .player-card[data-numbering='B033'] .card-icon {
-    background-image: url("img/deckB/B033.png"); }
-  .player-card[data-numbering='B034'] .card-icon {
-    background-image: url("img/deckB/B034.png"); }
-  .player-card[data-numbering='B035'] .card-icon {
-    background-image: url("img/deckB/B035.png"); }
-  .player-card[data-numbering='B036'] .card-icon {
-    background-image: url("img/deckB/B036.png"); }
-  .player-card[data-numbering='B037'] .card-icon {
-    background-image: url("img/deckB/B037.png"); }
-  .player-card[data-numbering='B038'] .card-icon {
-    background-image: url("img/deckB/B038.png"); }
-  .player-card[data-numbering='B039'] .card-icon {
-    background-image: url("img/deckB/B039.png"); }
-  .player-card[data-numbering='B040'] .card-icon {
-    background-image: url("img/deckB/B040.png"); }
-  .player-card[data-numbering='B041'] .card-icon {
-    background-image: url("img/deckB/B041.png"); }
-  .player-card[data-numbering='B042'] .card-icon {
-    background-image: url("img/deckB/B042.png"); }
-  .player-card[data-numbering='B043'] .card-icon {
-    background-image: url("img/deckB/B043.png"); }
-  .player-card[data-numbering='B044'] .card-icon {
-    background-image: url("img/deckB/B044.png"); }
-  .player-card[data-numbering='B045'] .card-icon {
-    background-image: url("img/deckB/B045.png"); }
-  .player-card[data-numbering='B046'] .card-icon {
-    background-image: url("img/deckB/B046.png"); }
-  .player-card[data-numbering='B047'] .card-icon {
-    background-image: url("img/deckB/B047.png"); }
-  .player-card[data-numbering='B048'] .card-icon {
-    background-image: url("img/deckB/B048.png"); }
-  .player-card[data-numbering='B049'] .card-icon {
-    background-image: url("img/deckB/B049.png"); }
-  .player-card[data-numbering='B050'] .card-icon {
-    background-image: url("img/deckB/B050.png"); }
-  .player-card[data-numbering='B051'] .card-icon {
-    background-image: url("img/deckB/B051.png"); }
-  .player-card[data-numbering='B052'] .card-icon {
-    background-image: url("img/deckB/B052.png"); }
-  .player-card[data-numbering='B053'] .card-icon {
-    background-image: url("img/deckB/B053.png"); }
-  .player-card[data-numbering='B054'] .card-icon {
-    background-image: url("img/deckB/B054.png"); }
-  .player-card[data-numbering='B055'] .card-icon {
-    background-image: url("img/deckB/B055.png"); }
-  .player-card[data-numbering='B056'] .card-icon {
-    background-image: url("img/deckB/B056.png"); }
-  .player-card[data-numbering='B057'] .card-icon {
-    background-image: url("img/deckB/B057.png"); }
-  .player-card[data-numbering='B058'] .card-icon {
-    background-image: url("img/deckB/B058.png"); }
-  .player-card[data-numbering='B059'] .card-icon {
-    background-image: url("img/deckB/B059.png"); }
-  .player-card[data-numbering='B060'] .card-icon {
-    background-image: url("img/deckB/B060.png"); }
-  .player-card[data-numbering='B061'] .card-icon {
-    background-image: url("img/deckB/B061.png"); }
-  .player-card[data-numbering='B062'] .card-icon {
-    background-image: url("img/deckB/B062.png"); }
-  .player-card[data-numbering='B063'] .card-icon {
-    background-image: url("img/deckB/B063.png"); }
-  .player-card[data-numbering='B064'] .card-icon {
-    background-image: url("img/deckB/B064.png"); }
-  .player-card[data-numbering='B065'] .card-icon {
-    background-image: url("img/deckB/B065.png"); }
-  .player-card[data-numbering='B066'] .card-icon {
-    background-image: url("img/deckB/B066.png"); }
-  .player-card[data-numbering='B067'] .card-icon {
-    background-image: url("img/deckB/B067.png"); }
-  .player-card[data-numbering='B068'] .card-icon {
-    background-image: url("img/deckB/B068.png"); }
-  .player-card[data-numbering='B069'] .card-icon {
-    background-image: url("img/deckB/B069.png"); }
-  .player-card[data-numbering='B070'] .card-icon {
-    background-image: url("img/deckB/B070.png"); }
-  .player-card[data-numbering='B071'] .card-icon {
-    background-image: url("img/deckB/B071.png"); }
-  .player-card[data-numbering='B072'] .card-icon {
-    background-image: url("img/deckB/B072.png"); }
-  .player-card[data-numbering='B073'] .card-icon {
-    background-image: url("img/deckB/B073.png"); }
-  .player-card[data-numbering='B074'] .card-icon {
-    background-image: url("img/deckB/B074.png"); }
-  .player-card[data-numbering='B075'] .card-icon {
-    background-image: url("img/deckB/B075.png"); }
-  .player-card[data-numbering='B076'] .card-icon {
-    background-image: url("img/deckB/B076.png"); }
-  .player-card[data-numbering='B077'] .card-icon {
-    background-image: url("img/deckB/B077.png"); }
-  .player-card[data-numbering='B078'] .card-icon {
-    background-image: url("img/deckB/B078.png"); }
-  .player-card[data-numbering='B079'] .card-icon {
-    background-image: url("img/deckB/B079.png"); }
-  .player-card[data-numbering='B080'] .card-icon {
-    background-image: url("img/deckB/B080.png"); }
-  .player-card[data-numbering='B081'] .card-icon {
-    background-image: url("img/deckB/B081.png"); }
-  .player-card[data-numbering='B082'] .card-icon {
-    background-image: url("img/deckB/B082.png"); }
-  .player-card[data-numbering='B083'] .card-icon {
-    background-image: url("img/deckB/B083.png"); }
-  .player-card[data-numbering='B084'] .card-icon {
-    background-image: url("img/deckB/B084.png"); }
-  .player-card[data-numbering='B085'] .card-icon {
-    background-image: url("img/deckB/B085.png"); }
-  .player-card[data-numbering='B086'] .card-icon {
-    background-image: url("img/deckB/B086.png"); }
-  .player-card[data-numbering='B087'] .card-icon {
-    background-image: url("img/deckB/B087.png"); }
-  .player-card[data-numbering='B088'] .card-icon {
-    background-image: url("img/deckB/B088.png"); }
-  .player-card[data-numbering='B089'] .card-icon {
-    background-image: url("img/deckB/B089.png"); }
-  .player-card[data-numbering='B090'] .card-icon {
-    background-image: url("img/deckB/B090.png"); }
-  .player-card[data-numbering='B091'] .card-icon {
-    background-image: url("img/deckB/B091.png"); }
-  .player-card[data-numbering='B092'] .card-icon {
-    background-image: url("img/deckB/B092.png"); }
-  .player-card[data-numbering='B093'] .card-icon {
-    background-image: url("img/deckB/B093.png"); }
-  .player-card[data-numbering='B094'] .card-icon {
-    background-image: url("img/deckB/B094.png"); }
-  .player-card[data-numbering='B095'] .card-icon {
-    background-image: url("img/deckB/B095.png"); }
-  .player-card[data-numbering='B096'] .card-icon {
-    background-image: url("img/deckB/B096.png"); }
-  .player-card[data-numbering='B097'] .card-icon {
-    background-image: url("img/deckB/B097.png"); }
-  .player-card[data-numbering='B098'] .card-icon {
-    background-image: url("img/deckB/B098.png"); }
-  .player-card[data-numbering='B099'] .card-icon {
-    background-image: url("img/deckB/B099.png"); }
-  .player-card[data-numbering='B100'] .card-icon {
-    background-image: url("img/deckB/B100.png"); }
-  .player-card[data-numbering='B101'] .card-icon {
-    background-image: url("img/deckB/B101.png"); }
-  .player-card[data-numbering='B102'] .card-icon {
-    background-image: url("img/deckB/B102.png"); }
-  .player-card[data-numbering='B103'] .card-icon {
-    background-image: url("img/deckB/B103.png"); }
-  .player-card[data-numbering='B104'] .card-icon {
-    background-image: url("img/deckB/B104.png"); }
-  .player-card[data-numbering='B105'] .card-icon {
-    background-image: url("img/deckB/B105.png"); }
-  .player-card[data-numbering='B106'] .card-icon {
-    background-image: url("img/deckB/B106.png"); }
-  .player-card[data-numbering='B107'] .card-icon {
-    background-image: url("img/deckB/B107.png"); }
-  .player-card[data-numbering='B108'] .card-icon {
-    background-image: url("img/deckB/B108.png"); }
-  .player-card[data-numbering='B109'] .card-icon {
-    background-image: url("img/deckB/B109.png"); }
-  .player-card[data-numbering='B110'] .card-icon {
-    background-image: url("img/deckB/B110.png"); }
-  .player-card[data-numbering='B111'] .card-icon {
-    background-image: url("img/deckB/B111.png"); }
-  .player-card[data-numbering='B112'] .card-icon {
-    background-image: url("img/deckB/B112.png"); }
-  .player-card[data-numbering='B113'] .card-icon {
-    background-image: url("img/deckB/B113.png"); }
-  .player-card[data-numbering='B114'] .card-icon {
-    background-image: url("img/deckB/B114.png"); }
-  .player-card[data-numbering='B115'] .card-icon {
-    background-image: url("img/deckB/B115.png"); }
-  .player-card[data-numbering='B116'] .card-icon {
-    background-image: url("img/deckB/B116.png"); }
-  .player-card[data-numbering='B117'] .card-icon {
-    background-image: url("img/deckB/B117.png"); }
-  .player-card[data-numbering='B118'] .card-icon {
-    background-image: url("img/deckB/B118.png"); }
-  .player-card[data-numbering='B119'] .card-icon {
-    background-image: url("img/deckB/B119.png"); }
-  .player-card[data-numbering='B120'] .card-icon {
-    background-image: url("img/deckB/B120.png"); }
-  .player-card[data-numbering='B121'] .card-icon {
-    background-image: url("img/deckB/B121.png"); }
-  .player-card[data-numbering='B122'] .card-icon {
-    background-image: url("img/deckB/B122.png"); }
-  .player-card[data-numbering='B123'] .card-icon {
-    background-image: url("img/deckB/B123.png"); }
-  .player-card[data-numbering='B124'] .card-icon {
-    background-image: url("img/deckB/B124.png"); }
-  .player-card[data-numbering='B125'] .card-icon {
-    background-image: url("img/deckB/B125.png"); }
-  .player-card[data-numbering='B126'] .card-icon {
-    background-image: url("img/deckB/B126.png"); }
-  .player-card[data-numbering='B127'] .card-icon {
-    background-image: url("img/deckB/B127.png"); }
-  .player-card[data-numbering='B128'] .card-icon {
-    background-image: url("img/deckB/B128.png"); }
-  .player-card[data-numbering='B129'] .card-icon {
-    background-image: url("img/deckB/B129.png"); }
-  .player-card[data-numbering='B130'] .card-icon {
-    background-image: url("img/deckB/B130.png"); }
-  .player-card[data-numbering='B131'] .card-icon {
-    background-image: url("img/deckB/B131.png"); }
-  .player-card[data-numbering='B132'] .card-icon {
-    background-image: url("img/deckB/B132.png"); }
-  .player-card[data-numbering='B133'] .card-icon {
-    background-image: url("img/deckB/B133.png"); }
-  .player-card[data-numbering='B134'] .card-icon {
-    background-image: url("img/deckB/B134.png"); }
-  .player-card[data-numbering='B135'] .card-icon {
-    background-image: url("img/deckB/B135.png"); }
-  .player-card[data-numbering='B136'] .card-icon {
-    background-image: url("img/deckB/B136.png"); }
-  .player-card[data-numbering='B137'] .card-icon {
-    background-image: url("img/deckB/B137.png"); }
-  .player-card[data-numbering='B138'] .card-icon {
-    background-image: url("img/deckB/B138.png"); }
-  .player-card[data-numbering='B139'] .card-icon {
-    background-image: url("img/deckB/B139.png"); }
-  .player-card[data-numbering='B140'] .card-icon {
-    background-image: url("img/deckB/B140.png"); }
-  .player-card[data-numbering='B141'] .card-icon {
-    background-image: url("img/deckB/B141.png"); }
-  .player-card[data-numbering='B142'] .card-icon {
-    background-image: url("img/deckB/B142.png"); }
-  .player-card[data-numbering='B143'] .card-icon {
-    background-image: url("img/deckB/B143.png"); }
-  .player-card[data-numbering='B144'] .card-icon {
-    background-image: url("img/deckB/B144.png"); }
-  .player-card[data-numbering='B145'] .card-icon {
-    background-image: url("img/deckB/B145.png"); }
-  .player-card[data-numbering='B146'] .card-icon {
-    background-image: url("img/deckB/B146.png"); }
-  .player-card[data-numbering='B147'] .card-icon {
-    background-image: url("img/deckB/B147.png"); }
-  .player-card[data-numbering='B148'] .card-icon {
-    background-image: url("img/deckB/B148.png"); }
-  .player-card[data-numbering='B149'] .card-icon {
-    background-image: url("img/deckB/B149.png"); }
-  .player-card[data-numbering='B150'] .card-icon {
-    background-image: url("img/deckB/B150.png"); }
-  .player-card[data-numbering='B151'] .card-icon {
-    background-image: url("img/deckB/B151.png"); }
-  .player-card[data-numbering='B152'] .card-icon {
-    background-image: url("img/deckB/B152.png"); }
-  .player-card[data-numbering='B153'] .card-icon {
-    background-image: url("img/deckB/B153.png"); }
-  .player-card[data-numbering='B154'] .card-icon {
-    background-image: url("img/deckB/B154.png"); }
-  .player-card[data-numbering='B155'] .card-icon {
-    background-image: url("img/deckB/B155.png"); }
-  .player-card[data-numbering='B156'] .card-icon {
-    background-image: url("img/deckB/B156.png"); }
-  .player-card[data-numbering='B157'] .card-icon {
-    background-image: url("img/deckB/B157.png"); }
-  .player-card[data-numbering='B158'] .card-icon {
-    background-image: url("img/deckB/B158.png"); }
-  .player-card[data-numbering='B159'] .card-icon {
-    background-image: url("img/deckB/B159.png"); }
-  .player-card[data-numbering='B160'] .card-icon {
-    background-image: url("img/deckB/B160.png"); }
-  .player-card[data-numbering='B161'] .card-icon {
-    background-image: url("img/deckB/B161.png"); }
-  .player-card[data-numbering='B162'] .card-icon {
-    background-image: url("img/deckB/B162.png"); }
-  .player-card[data-numbering='B163'] .card-icon {
-    background-image: url("img/deckB/B163.png"); }
-  .player-card[data-numbering='B164'] .card-icon {
-    background-image: url("img/deckB/B164.png"); }
-  .player-card[data-numbering='B165'] .card-icon {
-    background-image: url("img/deckB/B165.png"); }
-  .player-card[data-numbering='B166'] .card-icon {
-    background-image: url("img/deckB/B166.png"); }
-  .player-card[data-numbering='B167'] .card-icon {
-    background-image: url("img/deckB/B167.png"); }
-  .player-card[data-numbering='B168'] .card-icon {
-    background-image: url("img/deckB/B168.png"); }
-  .player-card[data-numbering='C001'] .card-icon {
-    background-image: url("img/deckC/C001.png"); }
-  .player-card[data-numbering='C002'] .card-icon {
-    background-image: url("img/deckC/C002.png"); }
-  .player-card[data-numbering='C003'] .card-icon {
-    background-image: url("img/deckC/C003.png"); }
-  .player-card[data-numbering='C004'] .card-icon {
-    background-image: url("img/deckC/C004.png"); }
-  .player-card[data-numbering='C005'] .card-icon {
-    background-image: url("img/deckC/C005.png"); }
-  .player-card[data-numbering='C006'] .card-icon {
-    background-image: url("img/deckC/C006.png"); }
-  .player-card[data-numbering='C007'] .card-icon {
-    background-image: url("img/deckC/C007.png"); }
-  .player-card[data-numbering='C008'] .card-icon {
-    background-image: url("img/deckC/C008.png"); }
-  .player-card[data-numbering='C009'] .card-icon {
-    background-image: url("img/deckC/C009.png"); }
-  .player-card[data-numbering='C010'] .card-icon {
-    background-image: url("img/deckC/C010.png"); }
-  .player-card[data-numbering='C011'] .card-icon {
-    background-image: url("img/deckC/C011.png"); }
-  .player-card[data-numbering='C012'] .card-icon {
-    background-image: url("img/deckC/C012.png"); }
-  .player-card[data-numbering='C013'] .card-icon {
-    background-image: url("img/deckC/C013.png"); }
-  .player-card[data-numbering='C014'] .card-icon {
-    background-image: url("img/deckC/C014.png"); }
-  .player-card[data-numbering='C015'] .card-icon {
-    background-image: url("img/deckC/C015.png"); }
-  .player-card[data-numbering='C016'] .card-icon {
-    background-image: url("img/deckC/C016.png"); }
-  .player-card[data-numbering='C017'] .card-icon {
-    background-image: url("img/deckC/C017.png"); }
-  .player-card[data-numbering='C018'] .card-icon {
-    background-image: url("img/deckC/C018.png"); }
-  .player-card[data-numbering='C019'] .card-icon {
-    background-image: url("img/deckC/C019.png"); }
-  .player-card[data-numbering='C020'] .card-icon {
-    background-image: url("img/deckC/C020.png"); }
-  .player-card[data-numbering='C021'] .card-icon {
-    background-image: url("img/deckC/C021.png"); }
-  .player-card[data-numbering='C022'] .card-icon {
-    background-image: url("img/deckC/C022.png"); }
-  .player-card[data-numbering='C023'] .card-icon {
-    background-image: url("img/deckC/C023.png"); }
-  .player-card[data-numbering='C024'] .card-icon {
-    background-image: url("img/deckC/C024.png"); }
-  .player-card[data-numbering='C025'] .card-icon {
-    background-image: url("img/deckC/C025.png"); }
-  .player-card[data-numbering='C026'] .card-icon {
-    background-image: url("img/deckC/C026.png"); }
-  .player-card[data-numbering='C027'] .card-icon {
-    background-image: url("img/deckC/C027.png"); }
-  .player-card[data-numbering='C028'] .card-icon {
-    background-image: url("img/deckC/C028.png"); }
-  .player-card[data-numbering='C029'] .card-icon {
-    background-image: url("img/deckC/C029.png"); }
-  .player-card[data-numbering='C030'] .card-icon {
-    background-image: url("img/deckC/C030.png"); }
-  .player-card[data-numbering='C031'] .card-icon {
-    background-image: url("img/deckC/C031.png"); }
-  .player-card[data-numbering='C032'] .card-icon {
-    background-image: url("img/deckC/C032.png"); }
-  .player-card[data-numbering='C033'] .card-icon {
-    background-image: url("img/deckC/C033.png"); }
-  .player-card[data-numbering='C034'] .card-icon {
-    background-image: url("img/deckC/C034.png"); }
-  .player-card[data-numbering='C035'] .card-icon {
-    background-image: url("img/deckC/C035.png"); }
-  .player-card[data-numbering='C036'] .card-icon {
-    background-image: url("img/deckC/C036.png"); }
-  .player-card[data-numbering='C037'] .card-icon {
-    background-image: url("img/deckC/C037.png"); }
-  .player-card[data-numbering='C038'] .card-icon {
-    background-image: url("img/deckC/C038.png"); }
-  .player-card[data-numbering='C039'] .card-icon {
-    background-image: url("img/deckC/C039.png"); }
-  .player-card[data-numbering='C040'] .card-icon {
-    background-image: url("img/deckC/C040.png"); }
-  .player-card[data-numbering='C041'] .card-icon {
-    background-image: url("img/deckC/C041.png"); }
-  .player-card[data-numbering='C042'] .card-icon {
-    background-image: url("img/deckC/C042.png"); }
-  .player-card[data-numbering='C043'] .card-icon {
-    background-image: url("img/deckC/C043.png"); }
-  .player-card[data-numbering='C044'] .card-icon {
-    background-image: url("img/deckC/C044.png"); }
-  .player-card[data-numbering='C045'] .card-icon {
-    background-image: url("img/deckC/C045.png"); }
-  .player-card[data-numbering='C046'] .card-icon {
-    background-image: url("img/deckC/C046.png"); }
-  .player-card[data-numbering='C047'] .card-icon {
-    background-image: url("img/deckC/C047.png"); }
-  .player-card[data-numbering='C048'] .card-icon {
-    background-image: url("img/deckC/C048.png"); }
-  .player-card[data-numbering='C049'] .card-icon {
-    background-image: url("img/deckC/C049.png"); }
-  .player-card[data-numbering='C050'] .card-icon {
-    background-image: url("img/deckC/C050.png"); }
-  .player-card[data-numbering='C051'] .card-icon {
-    background-image: url("img/deckC/C051.png"); }
-  .player-card[data-numbering='C052'] .card-icon {
-    background-image: url("img/deckC/C052.png"); }
-  .player-card[data-numbering='C053'] .card-icon {
-    background-image: url("img/deckC/C053.png"); }
-  .player-card[data-numbering='C054'] .card-icon {
-    background-image: url("img/deckC/C054.png"); }
-  .player-card[data-numbering='C055'] .card-icon {
-    background-image: url("img/deckC/C055.png"); }
-  .player-card[data-numbering='C056'] .card-icon {
-    background-image: url("img/deckC/C056.png"); }
-  .player-card[data-numbering='C057'] .card-icon {
-    background-image: url("img/deckC/C057.png"); }
-  .player-card[data-numbering='C058'] .card-icon {
-    background-image: url("img/deckC/C058.png"); }
-  .player-card[data-numbering='C059'] .card-icon {
-    background-image: url("img/deckC/C059.png"); }
-  .player-card[data-numbering='C060'] .card-icon {
-    background-image: url("img/deckC/C060.png"); }
-  .player-card[data-numbering='C061'] .card-icon {
-    background-image: url("img/deckC/C061.png"); }
-  .player-card[data-numbering='C062'] .card-icon {
-    background-image: url("img/deckC/C062.png"); }
-  .player-card[data-numbering='C063'] .card-icon {
-    background-image: url("img/deckC/C063.png"); }
-  .player-card[data-numbering='C064'] .card-icon {
-    background-image: url("img/deckC/C064.png"); }
-  .player-card[data-numbering='C065'] .card-icon {
-    background-image: url("img/deckC/C065.png"); }
-  .player-card[data-numbering='C066'] .card-icon {
-    background-image: url("img/deckC/C066.png"); }
-  .player-card[data-numbering='C067'] .card-icon {
-    background-image: url("img/deckC/C067.png"); }
-  .player-card[data-numbering='C068'] .card-icon {
-    background-image: url("img/deckC/C068.png"); }
-  .player-card[data-numbering='C069'] .card-icon {
-    background-image: url("img/deckC/C069.png"); }
-  .player-card[data-numbering='C070'] .card-icon {
-    background-image: url("img/deckC/C070.png"); }
-  .player-card[data-numbering='C071'] .card-icon {
-    background-image: url("img/deckC/C071.png"); }
-  .player-card[data-numbering='C072'] .card-icon {
-    background-image: url("img/deckC/C072.png"); }
-  .player-card[data-numbering='C073'] .card-icon {
-    background-image: url("img/deckC/C073.png"); }
-  .player-card[data-numbering='C074'] .card-icon {
-    background-image: url("img/deckC/C074.png"); }
-  .player-card[data-numbering='C075'] .card-icon {
-    background-image: url("img/deckC/C075.png"); }
-  .player-card[data-numbering='C076'] .card-icon {
-    background-image: url("img/deckC/C076.png"); }
-  .player-card[data-numbering='C077'] .card-icon {
-    background-image: url("img/deckC/C077.png"); }
-  .player-card[data-numbering='C078'] .card-icon {
-    background-image: url("img/deckC/C078.png"); }
-  .player-card[data-numbering='C079'] .card-icon {
-    background-image: url("img/deckC/C079.png"); }
-  .player-card[data-numbering='C080'] .card-icon {
-    background-image: url("img/deckC/C080.png"); }
-  .player-card[data-numbering='C081'] .card-icon {
-    background-image: url("img/deckC/C081.png"); }
-  .player-card[data-numbering='C082'] .card-icon {
-    background-image: url("img/deckC/C082.png"); }
-  .player-card[data-numbering='C083'] .card-icon {
-    background-image: url("img/deckC/C083.png"); }
-  .player-card[data-numbering='C084'] .card-icon {
-    background-image: url("img/deckC/C084.png"); }
-  .player-card[data-numbering='C085'] .card-icon {
-    background-image: url("img/deckC/C085.png"); }
-  .player-card[data-numbering='C086'] .card-icon {
-    background-image: url("img/deckC/C086.png"); }
-  .player-card[data-numbering='C087'] .card-icon {
-    background-image: url("img/deckC/C087.png"); }
-  .player-card[data-numbering='C088'] .card-icon {
-    background-image: url("img/deckC/C088.png"); }
-  .player-card[data-numbering='C089'] .card-icon {
-    background-image: url("img/deckC/C089.png"); }
-  .player-card[data-numbering='C090'] .card-icon {
-    background-image: url("img/deckC/C090.png"); }
-  .player-card[data-numbering='C091'] .card-icon {
-    background-image: url("img/deckC/C091.png"); }
-  .player-card[data-numbering='C092'] .card-icon {
-    background-image: url("img/deckC/C092.png"); }
-  .player-card[data-numbering='C093'] .card-icon {
-    background-image: url("img/deckC/C093.png"); }
-  .player-card[data-numbering='C094'] .card-icon {
-    background-image: url("img/deckC/C094.png"); }
-  .player-card[data-numbering='C095'] .card-icon {
-    background-image: url("img/deckC/C095.png"); }
-  .player-card[data-numbering='C096'] .card-icon {
-    background-image: url("img/deckC/C096.png"); }
-  .player-card[data-numbering='C097'] .card-icon {
-    background-image: url("img/deckC/C097.png"); }
-  .player-card[data-numbering='C098'] .card-icon {
-    background-image: url("img/deckC/C098.png"); }
-  .player-card[data-numbering='C099'] .card-icon {
-    background-image: url("img/deckC/C099.png"); }
-  .player-card[data-numbering='C100'] .card-icon {
-    background-image: url("img/deckC/C100.png"); }
-  .player-card[data-numbering='C101'] .card-icon {
-    background-image: url("img/deckC/C101.png"); }
-  .player-card[data-numbering='C102'] .card-icon {
-    background-image: url("img/deckC/C102.png"); }
-  .player-card[data-numbering='C103'] .card-icon {
-    background-image: url("img/deckC/C103.png"); }
-  .player-card[data-numbering='C104'] .card-icon {
-    background-image: url("img/deckC/C104.png"); }
-  .player-card[data-numbering='C105'] .card-icon {
-    background-image: url("img/deckC/C105.png"); }
-  .player-card[data-numbering='C106'] .card-icon {
-    background-image: url("img/deckC/C106.png"); }
-  .player-card[data-numbering='C107'] .card-icon {
-    background-image: url("img/deckC/C107.png"); }
-  .player-card[data-numbering='C108'] .card-icon {
-    background-image: url("img/deckC/C108.png"); }
-  .player-card[data-numbering='C109'] .card-icon {
-    background-image: url("img/deckC/C109.png"); }
-  .player-card[data-numbering='C110'] .card-icon {
-    background-image: url("img/deckC/C110.png"); }
-  .player-card[data-numbering='C111'] .card-icon {
-    background-image: url("img/deckC/C111.png"); }
-  .player-card[data-numbering='C112'] .card-icon {
-    background-image: url("img/deckC/C112.png"); }
-  .player-card[data-numbering='C113'] .card-icon {
-    background-image: url("img/deckC/C113.png"); }
-  .player-card[data-numbering='C114'] .card-icon {
-    background-image: url("img/deckC/C114.png"); }
-  .player-card[data-numbering='C115'] .card-icon {
-    background-image: url("img/deckC/C115.png"); }
-  .player-card[data-numbering='C116'] .card-icon {
-    background-image: url("img/deckC/C116.png"); }
-  .player-card[data-numbering='C117'] .card-icon {
-    background-image: url("img/deckC/C117.png"); }
-  .player-card[data-numbering='C118'] .card-icon {
-    background-image: url("img/deckC/C118.png"); }
-  .player-card[data-numbering='C119'] .card-icon {
-    background-image: url("img/deckC/C119.png"); }
-  .player-card[data-numbering='C120'] .card-icon {
-    background-image: url("img/deckC/C120.png"); }
-  .player-card[data-numbering='C121'] .card-icon {
-    background-image: url("img/deckC/C121.png"); }
-  .player-card[data-numbering='C122'] .card-icon {
-    background-image: url("img/deckC/C122.png"); }
-  .player-card[data-numbering='C123'] .card-icon {
-    background-image: url("img/deckC/C123.png"); }
-  .player-card[data-numbering='C124'] .card-icon {
-    background-image: url("img/deckC/C124.png"); }
-  .player-card[data-numbering='C125'] .card-icon {
-    background-image: url("img/deckC/C125.png"); }
-  .player-card[data-numbering='C126'] .card-icon {
-    background-image: url("img/deckC/C126.png"); }
-  .player-card[data-numbering='C127'] .card-icon {
-    background-image: url("img/deckC/C127.png"); }
-  .player-card[data-numbering='C128'] .card-icon {
-    background-image: url("img/deckC/C128.png"); }
-  .player-card[data-numbering='C129'] .card-icon {
-    background-image: url("img/deckC/C129.png"); }
-  .player-card[data-numbering='C130'] .card-icon {
-    background-image: url("img/deckC/C130.png"); }
-  .player-card[data-numbering='C131'] .card-icon {
-    background-image: url("img/deckC/C131.png"); }
-  .player-card[data-numbering='C132'] .card-icon {
-    background-image: url("img/deckC/C132.png"); }
-  .player-card[data-numbering='C133'] .card-icon {
-    background-image: url("img/deckC/C133.png"); }
-  .player-card[data-numbering='C134'] .card-icon {
-    background-image: url("img/deckC/C134.png"); }
-  .player-card[data-numbering='C135'] .card-icon {
-    background-image: url("img/deckC/C135.png"); }
-  .player-card[data-numbering='C136'] .card-icon {
-    background-image: url("img/deckC/C136.png"); }
-  .player-card[data-numbering='C137'] .card-icon {
-    background-image: url("img/deckC/C137.png"); }
-  .player-card[data-numbering='C138'] .card-icon {
-    background-image: url("img/deckC/C138.png"); }
-  .player-card[data-numbering='C139'] .card-icon {
-    background-image: url("img/deckC/C139.png"); }
-  .player-card[data-numbering='C140'] .card-icon {
-    background-image: url("img/deckC/C140.png"); }
-  .player-card[data-numbering='C141'] .card-icon {
-    background-image: url("img/deckC/C141.png"); }
-  .player-card[data-numbering='C142'] .card-icon {
-    background-image: url("img/deckC/C142.png"); }
-  .player-card[data-numbering='C143'] .card-icon {
-    background-image: url("img/deckC/C143.png"); }
-  .player-card[data-numbering='C144'] .card-icon {
-    background-image: url("img/deckC/C144.png"); }
-  .player-card[data-numbering='C145'] .card-icon {
-    background-image: url("img/deckC/C145.png"); }
-  .player-card[data-numbering='C146'] .card-icon {
-    background-image: url("img/deckC/C146.png"); }
-  .player-card[data-numbering='C147'] .card-icon {
-    background-image: url("img/deckC/C147.png"); }
-  .player-card[data-numbering='C148'] .card-icon {
-    background-image: url("img/deckC/C148.png"); }
-  .player-card[data-numbering='C149'] .card-icon {
-    background-image: url("img/deckC/C149.png"); }
-  .player-card[data-numbering='C150'] .card-icon {
-    background-image: url("img/deckC/C150.png"); }
-  .player-card[data-numbering='C151'] .card-icon {
-    background-image: url("img/deckC/C151.png"); }
-  .player-card[data-numbering='C152'] .card-icon {
-    background-image: url("img/deckC/C152.png"); }
-  .player-card[data-numbering='C153'] .card-icon {
-    background-image: url("img/deckC/C153.png"); }
-  .player-card[data-numbering='C154'] .card-icon {
-    background-image: url("img/deckC/C154.png"); }
-  .player-card[data-numbering='C155'] .card-icon {
-    background-image: url("img/deckC/C155.png"); }
-  .player-card[data-numbering='C156'] .card-icon {
-    background-image: url("img/deckC/C156.png"); }
-  .player-card[data-numbering='C157'] .card-icon {
-    background-image: url("img/deckC/C157.png"); }
-  .player-card[data-numbering='C158'] .card-icon {
-    background-image: url("img/deckC/C158.png"); }
-  .player-card[data-numbering='C159'] .card-icon {
-    background-image: url("img/deckC/C159.png"); }
-  .player-card[data-numbering='C160'] .card-icon {
-    background-image: url("img/deckC/C160.png"); }
-  .player-card[data-numbering='C161'] .card-icon {
-    background-image: url("img/deckC/C161.png"); }
-  .player-card[data-numbering='C162'] .card-icon {
-    background-image: url("img/deckC/C162.png"); }
-  .player-card[data-numbering='C163'] .card-icon {
-    background-image: url("img/deckC/C163.png"); }
-  .player-card[data-numbering='C164'] .card-icon {
-    background-image: url("img/deckC/C164.png"); }
-  .player-card[data-numbering='C165'] .card-icon {
-    background-image: url("img/deckC/C165.png"); }
-  .player-card[data-numbering='C166'] .card-icon {
-    background-image: url("img/deckC/C166.png"); }
-  .player-card[data-numbering='C167'] .card-icon {
-    background-image: url("img/deckC/C167.png"); }
-  .player-card[data-numbering='C168'] .card-icon {
-    background-image: url("img/deckC/C168.png"); }
-  .player-card[data-numbering='D001'] .card-icon {
-    background-image: url("img/deckD/D001.png"); }
-  .player-card[data-numbering='D002'] .card-icon {
-    background-image: url("img/deckD/D002.png"); }
-  .player-card[data-numbering='D003'] .card-icon {
-    background-image: url("img/deckD/D003.png"); }
-  .player-card[data-numbering='D004'] .card-icon {
-    background-image: url("img/deckD/D004.png"); }
-  .player-card[data-numbering='D005'] .card-icon {
-    background-image: url("img/deckD/D005.png"); }
-  .player-card[data-numbering='D006'] .card-icon {
-    background-image: url("img/deckD/D006.png"); }
-  .player-card[data-numbering='D007'] .card-icon {
-    background-image: url("img/deckD/D007.png"); }
-  .player-card[data-numbering='D008'] .card-icon {
-    background-image: url("img/deckD/D008.png"); }
-  .player-card[data-numbering='D009'] .card-icon {
-    background-image: url("img/deckD/D009.png"); }
-  .player-card[data-numbering='D010'] .card-icon {
-    background-image: url("img/deckD/D010.png"); }
-  .player-card[data-numbering='D011'] .card-icon {
-    background-image: url("img/deckD/D011.png"); }
-  .player-card[data-numbering='D012'] .card-icon {
-    background-image: url("img/deckD/D012.png"); }
-  .player-card[data-numbering='D013'] .card-icon {
-    background-image: url("img/deckD/D013.png"); }
-  .player-card[data-numbering='D014'] .card-icon {
-    background-image: url("img/deckD/D014.png"); }
-  .player-card[data-numbering='D015'] .card-icon {
-    background-image: url("img/deckD/D015.png"); }
-  .player-card[data-numbering='D016'] .card-icon {
-    background-image: url("img/deckD/D016.png"); }
-  .player-card[data-numbering='D017'] .card-icon {
-    background-image: url("img/deckD/D017.png"); }
-  .player-card[data-numbering='D018'] .card-icon {
-    background-image: url("img/deckD/D018.png"); }
-  .player-card[data-numbering='D019'] .card-icon {
-    background-image: url("img/deckD/D019.png"); }
-  .player-card[data-numbering='D020'] .card-icon {
-    background-image: url("img/deckD/D020.png"); }
-  .player-card[data-numbering='D021'] .card-icon {
-    background-image: url("img/deckD/D021.png"); }
-  .player-card[data-numbering='D022'] .card-icon {
-    background-image: url("img/deckD/D022.png"); }
-  .player-card[data-numbering='D023'] .card-icon {
-    background-image: url("img/deckD/D023.png"); }
-  .player-card[data-numbering='D024'] .card-icon {
-    background-image: url("img/deckD/D024.png"); }
-  .player-card[data-numbering='D025'] .card-icon {
-    background-image: url("img/deckD/D025.png"); }
-  .player-card[data-numbering='D026'] .card-icon {
-    background-image: url("img/deckD/D026.png"); }
-  .player-card[data-numbering='D027'] .card-icon {
-    background-image: url("img/deckD/D027.png"); }
-  .player-card[data-numbering='D028'] .card-icon {
-    background-image: url("img/deckD/D028.png"); }
-  .player-card[data-numbering='D029'] .card-icon {
-    background-image: url("img/deckD/D029.png"); }
-  .player-card[data-numbering='D030'] .card-icon {
-    background-image: url("img/deckD/D030.png"); }
-  .player-card[data-numbering='D031'] .card-icon {
-    background-image: url("img/deckD/D031.png"); }
-  .player-card[data-numbering='D032'] .card-icon {
-    background-image: url("img/deckD/D032.png"); }
-  .player-card[data-numbering='D033'] .card-icon {
-    background-image: url("img/deckD/D033.png"); }
-  .player-card[data-numbering='D034'] .card-icon {
-    background-image: url("img/deckD/D034.png"); }
-  .player-card[data-numbering='D035'] .card-icon {
-    background-image: url("img/deckD/D035.png"); }
-  .player-card[data-numbering='D036'] .card-icon {
-    background-image: url("img/deckD/D036.png"); }
-  .player-card[data-numbering='D037'] .card-icon {
-    background-image: url("img/deckD/D037.png"); }
-  .player-card[data-numbering='D038'] .card-icon {
-    background-image: url("img/deckD/D038.png"); }
-  .player-card[data-numbering='D039'] .card-icon {
-    background-image: url("img/deckD/D039.png"); }
-  .player-card[data-numbering='D040'] .card-icon {
-    background-image: url("img/deckD/D040.png"); }
-  .player-card[data-numbering='D041'] .card-icon {
-    background-image: url("img/deckD/D041.png"); }
-  .player-card[data-numbering='D042'] .card-icon {
-    background-image: url("img/deckD/D042.png"); }
-  .player-card[data-numbering='D043'] .card-icon {
-    background-image: url("img/deckD/D043.png"); }
-  .player-card[data-numbering='D044'] .card-icon {
-    background-image: url("img/deckD/D044.png"); }
-  .player-card[data-numbering='D045'] .card-icon {
-    background-image: url("img/deckD/D045.png"); }
-  .player-card[data-numbering='D046'] .card-icon {
-    background-image: url("img/deckD/D046.png"); }
-  .player-card[data-numbering='D047'] .card-icon {
-    background-image: url("img/deckD/D047.png"); }
-  .player-card[data-numbering='D048'] .card-icon {
-    background-image: url("img/deckD/D048.png"); }
-  .player-card[data-numbering='D049'] .card-icon {
-    background-image: url("img/deckD/D049.png"); }
-  .player-card[data-numbering='D050'] .card-icon {
-    background-image: url("img/deckD/D050.png"); }
-  .player-card[data-numbering='D051'] .card-icon {
-    background-image: url("img/deckD/D051.png"); }
-  .player-card[data-numbering='D052'] .card-icon {
-    background-image: url("img/deckD/D052.png"); }
-  .player-card[data-numbering='D053'] .card-icon {
-    background-image: url("img/deckD/D053.png"); }
-  .player-card[data-numbering='D054'] .card-icon {
-    background-image: url("img/deckD/D054.png"); }
-  .player-card[data-numbering='D055'] .card-icon {
-    background-image: url("img/deckD/D055.png"); }
-  .player-card[data-numbering='D056'] .card-icon {
-    background-image: url("img/deckD/D056.png"); }
-  .player-card[data-numbering='D057'] .card-icon {
-    background-image: url("img/deckD/D057.png"); }
-  .player-card[data-numbering='D058'] .card-icon {
-    background-image: url("img/deckD/D058.png"); }
-  .player-card[data-numbering='D059'] .card-icon {
-    background-image: url("img/deckD/D059.png"); }
-  .player-card[data-numbering='D060'] .card-icon {
-    background-image: url("img/deckD/D060.png"); }
-  .player-card[data-numbering='D061'] .card-icon {
-    background-image: url("img/deckD/D061.png"); }
-  .player-card[data-numbering='D062'] .card-icon {
-    background-image: url("img/deckD/D062.png"); }
-  .player-card[data-numbering='D063'] .card-icon {
-    background-image: url("img/deckD/D063.png"); }
-  .player-card[data-numbering='D064'] .card-icon {
-    background-image: url("img/deckD/D064.png"); }
-  .player-card[data-numbering='D065'] .card-icon {
-    background-image: url("img/deckD/D065.png"); }
-  .player-card[data-numbering='D066'] .card-icon {
-    background-image: url("img/deckD/D066.png"); }
-  .player-card[data-numbering='D067'] .card-icon {
-    background-image: url("img/deckD/D067.png"); }
-  .player-card[data-numbering='D068'] .card-icon {
-    background-image: url("img/deckD/D068.png"); }
-  .player-card[data-numbering='D069'] .card-icon {
-    background-image: url("img/deckD/D069.png"); }
-  .player-card[data-numbering='D070'] .card-icon {
-    background-image: url("img/deckD/D070.png"); }
-  .player-card[data-numbering='D071'] .card-icon {
-    background-image: url("img/deckD/D071.png"); }
-  .player-card[data-numbering='D072'] .card-icon {
-    background-image: url("img/deckD/D072.png"); }
-  .player-card[data-numbering='D073'] .card-icon {
-    background-image: url("img/deckD/D073.png"); }
-  .player-card[data-numbering='D074'] .card-icon {
-    background-image: url("img/deckD/D074.png"); }
-  .player-card[data-numbering='D075'] .card-icon {
-    background-image: url("img/deckD/D075.png"); }
-  .player-card[data-numbering='D076'] .card-icon {
-    background-image: url("img/deckD/D076.png"); }
-  .player-card[data-numbering='D077'] .card-icon {
-    background-image: url("img/deckD/D077.png"); }
-  .player-card[data-numbering='D078'] .card-icon {
-    background-image: url("img/deckD/D078.png"); }
-  .player-card[data-numbering='D079'] .card-icon {
-    background-image: url("img/deckD/D079.png"); }
-  .player-card[data-numbering='D080'] .card-icon {
-    background-image: url("img/deckD/D080.png"); }
-  .player-card[data-numbering='D081'] .card-icon {
-    background-image: url("img/deckD/D081.png"); }
-  .player-card[data-numbering='D082'] .card-icon {
-    background-image: url("img/deckD/D082.png"); }
-  .player-card[data-numbering='D083'] .card-icon {
-    background-image: url("img/deckD/D083.png"); }
-  .player-card[data-numbering='D084'] .card-icon {
-    background-image: url("img/deckD/D084.png"); }
-  .player-card[data-numbering='D085'] .card-icon {
-    background-image: url("img/deckD/D085.png"); }
-  .player-card[data-numbering='D086'] .card-icon {
-    background-image: url("img/deckD/D086.png"); }
-  .player-card[data-numbering='D087'] .card-icon {
-    background-image: url("img/deckD/D087.png"); }
-  .player-card[data-numbering='D088'] .card-icon {
-    background-image: url("img/deckD/D088.png"); }
-  .player-card[data-numbering='D089'] .card-icon {
-    background-image: url("img/deckD/D089.png"); }
-  .player-card[data-numbering='D090'] .card-icon {
-    background-image: url("img/deckD/D090.png"); }
-  .player-card[data-numbering='D091'] .card-icon {
-    background-image: url("img/deckD/D091.png"); }
-  .player-card[data-numbering='D092'] .card-icon {
-    background-image: url("img/deckD/D092.png"); }
-  .player-card[data-numbering='D093'] .card-icon {
-    background-image: url("img/deckD/D093.png"); }
-  .player-card[data-numbering='D094'] .card-icon {
-    background-image: url("img/deckD/D094.png"); }
-  .player-card[data-numbering='D095'] .card-icon {
-    background-image: url("img/deckD/D095.png"); }
-  .player-card[data-numbering='D096'] .card-icon {
-    background-image: url("img/deckD/D096.png"); }
-  .player-card[data-numbering='D097'] .card-icon {
-    background-image: url("img/deckD/D097.png"); }
-  .player-card[data-numbering='D098'] .card-icon {
-    background-image: url("img/deckD/D098.png"); }
-  .player-card[data-numbering='D099'] .card-icon {
-    background-image: url("img/deckD/D099.png"); }
-  .player-card[data-numbering='D100'] .card-icon {
-    background-image: url("img/deckD/D100.png"); }
-  .player-card[data-numbering='D101'] .card-icon {
-    background-image: url("img/deckD/D101.png"); }
-  .player-card[data-numbering='D102'] .card-icon {
-    background-image: url("img/deckD/D102.png"); }
-  .player-card[data-numbering='D103'] .card-icon {
-    background-image: url("img/deckD/D103.png"); }
-  .player-card[data-numbering='D104'] .card-icon {
-    background-image: url("img/deckD/D104.png"); }
-  .player-card[data-numbering='D105'] .card-icon {
-    background-image: url("img/deckD/D105.png"); }
-  .player-card[data-numbering='D106'] .card-icon {
-    background-image: url("img/deckD/D106.png"); }
-  .player-card[data-numbering='D107'] .card-icon {
-    background-image: url("img/deckD/D107.png"); }
-  .player-card[data-numbering='D108'] .card-icon {
-    background-image: url("img/deckD/D108.png"); }
-  .player-card[data-numbering='D109'] .card-icon {
-    background-image: url("img/deckD/D109.png"); }
-  .player-card[data-numbering='D110'] .card-icon {
-    background-image: url("img/deckD/D110.png"); }
-  .player-card[data-numbering='D111'] .card-icon {
-    background-image: url("img/deckD/D111.png"); }
-  .player-card[data-numbering='D112'] .card-icon {
-    background-image: url("img/deckD/D112.png"); }
-  .player-card[data-numbering='D113'] .card-icon {
-    background-image: url("img/deckD/D113.png"); }
-  .player-card[data-numbering='D114'] .card-icon {
-    background-image: url("img/deckD/D114.png"); }
-  .player-card[data-numbering='D115'] .card-icon {
-    background-image: url("img/deckD/D115.png"); }
-  .player-card[data-numbering='D116'] .card-icon {
-    background-image: url("img/deckD/D116.png"); }
-  .player-card[data-numbering='D117'] .card-icon {
-    background-image: url("img/deckD/D117.png"); }
-  .player-card[data-numbering='D118'] .card-icon {
-    background-image: url("img/deckD/D118.png"); }
-  .player-card[data-numbering='D119'] .card-icon {
-    background-image: url("img/deckD/D119.png"); }
-  .player-card[data-numbering='D120'] .card-icon {
-    background-image: url("img/deckD/D120.png"); }
-  .player-card[data-numbering='D121'] .card-icon {
-    background-image: url("img/deckD/D121.png"); }
-  .player-card[data-numbering='D122'] .card-icon {
-    background-image: url("img/deckD/D122.png"); }
-  .player-card[data-numbering='D123'] .card-icon {
-    background-image: url("img/deckD/D123.png"); }
-  .player-card[data-numbering='D124'] .card-icon {
-    background-image: url("img/deckD/D124.png"); }
-  .player-card[data-numbering='D125'] .card-icon {
-    background-image: url("img/deckD/D125.png"); }
-  .player-card[data-numbering='D126'] .card-icon {
-    background-image: url("img/deckD/D126.png"); }
-  .player-card[data-numbering='D127'] .card-icon {
-    background-image: url("img/deckD/D127.png"); }
-  .player-card[data-numbering='D128'] .card-icon {
-    background-image: url("img/deckD/D128.png"); }
-  .player-card[data-numbering='D129'] .card-icon {
-    background-image: url("img/deckD/D129.png"); }
-  .player-card[data-numbering='D130'] .card-icon {
-    background-image: url("img/deckD/D130.png"); }
-  .player-card[data-numbering='D131'] .card-icon {
-    background-image: url("img/deckD/D131.png"); }
-  .player-card[data-numbering='D132'] .card-icon {
-    background-image: url("img/deckD/D132.png"); }
-  .player-card[data-numbering='D133'] .card-icon {
-    background-image: url("img/deckD/D133.png"); }
-  .player-card[data-numbering='D134'] .card-icon {
-    background-image: url("img/deckD/D134.png"); }
-  .player-card[data-numbering='D135'] .card-icon {
-    background-image: url("img/deckD/D135.png"); }
-  .player-card[data-numbering='D136'] .card-icon {
-    background-image: url("img/deckD/D136.png"); }
-  .player-card[data-numbering='D137'] .card-icon {
-    background-image: url("img/deckD/D137.png"); }
-  .player-card[data-numbering='D138'] .card-icon {
-    background-image: url("img/deckD/D138.png"); }
-  .player-card[data-numbering='D139'] .card-icon {
-    background-image: url("img/deckD/D139.png"); }
-  .player-card[data-numbering='D140'] .card-icon {
-    background-image: url("img/deckD/D140.png"); }
-  .player-card[data-numbering='D141'] .card-icon {
-    background-image: url("img/deckD/D141.png"); }
-  .player-card[data-numbering='D142'] .card-icon {
-    background-image: url("img/deckD/D142.png"); }
-  .player-card[data-numbering='D143'] .card-icon {
-    background-image: url("img/deckD/D143.png"); }
-  .player-card[data-numbering='D144'] .card-icon {
-    background-image: url("img/deckD/D144.png"); }
-  .player-card[data-numbering='D145'] .card-icon {
-    background-image: url("img/deckD/D145.png"); }
-  .player-card[data-numbering='D146'] .card-icon {
-    background-image: url("img/deckD/D146.png"); }
-  .player-card[data-numbering='D147'] .card-icon {
-    background-image: url("img/deckD/D147.png"); }
-  .player-card[data-numbering='D148'] .card-icon {
-    background-image: url("img/deckD/D148.png"); }
-  .player-card[data-numbering='D149'] .card-icon {
-    background-image: url("img/deckD/D149.png"); }
-  .player-card[data-numbering='D150'] .card-icon {
-    background-image: url("img/deckD/D150.png"); }
-  .player-card[data-numbering='D151'] .card-icon {
-    background-image: url("img/deckD/D151.png"); }
-  .player-card[data-numbering='D152'] .card-icon {
-    background-image: url("img/deckD/D152.png"); }
-  .player-card[data-numbering='D153'] .card-icon {
-    background-image: url("img/deckD/D153.png"); }
-  .player-card[data-numbering='D154'] .card-icon {
-    background-image: url("img/deckD/D154.png"); }
-  .player-card[data-numbering='D155'] .card-icon {
-    background-image: url("img/deckD/D155.png"); }
-  .player-card[data-numbering='D156'] .card-icon {
-    background-image: url("img/deckD/D156.png"); }
-  .player-card[data-numbering='D157'] .card-icon {
-    background-image: url("img/deckD/D157.png"); }
-  .player-card[data-numbering='D158'] .card-icon {
-    background-image: url("img/deckD/D158.png"); }
-  .player-card[data-numbering='D159'] .card-icon {
-    background-image: url("img/deckD/D159.png"); }
-  .player-card[data-numbering='D160'] .card-icon {
-    background-image: url("img/deckD/D160.png"); }
-  .player-card[data-numbering='D161'] .card-icon {
-    background-image: url("img/deckD/D161.png"); }
-  .player-card[data-numbering='D162'] .card-icon {
-    background-image: url("img/deckD/D162.png"); }
-  .player-card[data-numbering='D163'] .card-icon {
-    background-image: url("img/deckD/D163.png"); }
-  .player-card[data-numbering='D164'] .card-icon {
-    background-image: url("img/deckD/D164.png"); }
-  .player-card[data-numbering='D165'] .card-icon {
-    background-image: url("img/deckD/D165.png"); }
-  .player-card[data-numbering='D166'] .card-icon {
-    background-image: url("img/deckD/D166.png"); }
-  .player-card[data-numbering='D167'] .card-icon {
-    background-image: url("img/deckD/D167.png"); }
-  .player-card[data-numbering='D168'] .card-icon {
-    background-image: url("img/deckD/D168.png"); }
-  .player-card .resource-holder {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 1px solid black;
-    border-radius: 7px;
-    padding: 2px;
-    font-size: 1.5em; }
-    .player-card .resource-holder[data-n='0'] {
-      visibility: hidden; }
-    .player-card .resource-holder .caverna-meeple {
-      margin: 4px; }
-  .player-card[data-id='B19_MoldboardPlow'] .resource-holder {
-    top: 23px;
-    left: 8px; }
-  .player-card[data-id='A102_Grocer'] .resource-holder, .player-card[data-id='B83_MuddyPuddles'] .resource-holder, .player-card[data-id='C120_AgriculturalLabourer'] .resource-holder {
-    top: 20px;
-    left: 8px;
-    display: flex;
-    flex-flow: column-reverse;
-    align-items: center;
-    font-size: 45px; }
-    .player-card[data-id='A102_Grocer'] .resource-holder .caverna-meeple, .player-card[data-id='B83_MuddyPuddles'] .resource-holder .caverna-meeple, .player-card[data-id='C120_AgriculturalLabourer'] .resource-holder .caverna-meeple {
-      margin-top: -16px; }
-      .player-card[data-id='A102_Grocer'] .resource-holder .caverna-meeple:last-of-type, .player-card[data-id='B83_MuddyPuddles'] .resource-holder .caverna-meeple:last-of-type, .player-card[data-id='C120_AgriculturalLabourer'] .resource-holder .caverna-meeple:last-of-type {
-        margin-top: 4px; }
-  .player-card[data-id='B68_Beanfield'] .resource-holder, .player-card[data-id='B113_PatchCaregiver'] .resource-holder, .player-card[data-id='B141_FieldCaretaker'] .resource-holder, .player-card[data-id='C70_LettucePatch'] .resource-holder {
-    top: 20px;
-    left: 8px;
-    display: flex;
-    flex-flow: column-reverse;
-    align-items: center; }
-    .player-card[data-id='B68_Beanfield'] .resource-holder .caverna-meeple, .player-card[data-id='B113_PatchCaregiver'] .resource-holder .caverna-meeple, .player-card[data-id='B141_FieldCaretaker'] .resource-holder .caverna-meeple, .player-card[data-id='C70_LettucePatch'] .resource-holder .caverna-meeple {
-      margin-top: -16px; }
-      .player-card[data-id='B68_Beanfield'] .resource-holder .caverna-meeple:last-of-type, .player-card[data-id='B113_PatchCaregiver'] .resource-holder .caverna-meeple:last-of-type, .player-card[data-id='B141_FieldCaretaker'] .resource-holder .caverna-meeple:last-of-type, .player-card[data-id='C70_LettucePatch'] .resource-holder .caverna-meeple:last-of-type {
-        margin-top: 4px; }
-  .player-card[data-id='A21_FamilyFriendHome'] .farmer-holder, .player-card[data-id='B92_LittleStickKnitter'] .farmer-holder, .player-card[data-id='B10_Caravan'] .farmer-holder, .player-card[data-id='B127_Seducer'] .farmer-holder, .player-card[data-id='C127_Lover'] .farmer-holder, .player-card[data-id='C21_HeartofStone'] .farmer-holder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    background: none;
-    border: none; }
-    #ebd-body:not(.mobile_version) .player-card[data-id='A21_FamilyFriendHome'] .farmer-holder:not([data-n='0']) ~ .action-card, #ebd-body:not(.mobile_version) .player-card[data-id='B92_LittleStickKnitter'] .farmer-holder:not([data-n='0']) ~ .action-card, #ebd-body:not(.mobile_version) .player-card[data-id='B10_Caravan'] .farmer-holder:not([data-n='0']) ~ .action-card, #ebd-body:not(.mobile_version) .player-card[data-id='B127_Seducer'] .farmer-holder:not([data-n='0']) ~ .action-card, #ebd-body:not(.mobile_version) .player-card[data-id='C127_Lover'] .farmer-holder:not([data-n='0']) ~ .action-card, #ebd-body:not(.mobile_version) .player-card[data-id='C21_HeartofStone'] .farmer-holder:not([data-n='0']) ~ .action-card {
-      filter: grayscale(75%); }
-    .player-card[data-id='A21_FamilyFriendHome'] .farmer-holder .caverna-meeple, .player-card[data-id='B92_LittleStickKnitter'] .farmer-holder .caverna-meeple, .player-card[data-id='B10_Caravan'] .farmer-holder .caverna-meeple, .player-card[data-id='B127_Seducer'] .farmer-holder .caverna-meeple, .player-card[data-id='C127_Lover'] .farmer-holder .caverna-meeple, .player-card[data-id='C21_HeartofStone'] .farmer-holder .caverna-meeple {
-      transform: scale(1.5); }
-      .player-card[data-id='A21_FamilyFriendHome'] .farmer-holder .caverna-meeple.child, .player-card[data-id='B92_LittleStickKnitter'] .farmer-holder .caverna-meeple.child, .player-card[data-id='B10_Caravan'] .farmer-holder .caverna-meeple.child, .player-card[data-id='B127_Seducer'] .farmer-holder .caverna-meeple.child, .player-card[data-id='C127_Lover'] .farmer-holder .caverna-meeple.child, .player-card[data-id='C21_HeartofStone'] .farmer-holder .caverna-meeple.child {
-        transform: scale(1); }
-  .player-card[data-id='C44_ChickenCoop'] .card-cost .card-cost-fee-separator + div {
-    margin-bottom: -21%;
-    text-align: left;
-    font-size: 20px;
-    padding-left: 10px; }
-  .player-card[data-id='C44_ChickenCoop'] .card-cost .card-cost-separator + div {
-    margin-top: -17%;
-    font-size: 20px; }
-  .player-card[data-id='D96_Furnisher'] .player-card-resizable .player-card-inner .card-desc {
-    line-height: 15px;
-    font-size: 13px; }
-  .player-card[data-id='D75_WoodField'] .player-card-field-cell {
-    flex-flow: column;
-    row-gap: 5px; }
-  .player-card[data-id='D75_WoodField'] .resource-holder {
-    display: flex;
-    flex-flow: row; }
-    .player-card[data-id='D75_WoodField'] .resource-holder .subholder {
-      display: flex;
-      flex-flow: column-reverse;
       align-items: center; }
-      .player-card[data-id='D75_WoodField'] .resource-holder .subholder .caverna-meeple {
-        margin-top: -16px; }
-        .player-card[data-id='D75_WoodField'] .resource-holder .subholder .caverna-meeple:last-of-type {
-          margin-top: 4px; }
-  .player-card .animal-holder {
-    font-size: 20px; }
-  .player-card .animals-control-wrapper .animals-control {
-    bottom: -36px; }
+      #tiles-selector .tile-selector .tile-selector-cell.selectable {
+        cursor: pointer; }
+        #tiles-selector .tile-selector .tile-selector-cell.selectable:hover {
+          border: 2px solid red; }
+      #tiles-selector .tile-selector .tile-selector-cell.selected, #tiles-selector .tile-selector .tile-selector-cell.selected:hover {
+        border: 2px dashed yellow; }
+      #tiles-selector .tile-selector .tile-selector-cell.done {
+        border: 2px solid yellow; }
+        #tiles-selector .tile-selector .tile-selector-cell.done::before {
+          content: '✓';
+          color: yellow;
+          font-size: 70px; }
+
+.board-cell.cell-node .square-selector,
+.caverna-player-board .player-board-grid .board-cell .caverna-tile {
+  width: 94px;
+  height: 94px;
+  margin: -2px;
+  background-image: url("img/tiles.jpg");
+  background-size: 400% 400%;
+  box-sizing: border-box;
+  background-origin: border-box;
+  border: 1px solid black; }
+  .board-cell.cell-node .square-selector:not([data-tile]),
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile:not([data-tile]) {
+    background: none;
+    border: none;
+    display: none; }
+  .board-cell.cell-node .square-selector[data-rotation='1'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation='1'] {
+    transform: rotate(-90deg); }
+  .board-cell.cell-node .square-selector[data-rotation='2'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation='2'] {
+    transform: rotate(180deg); }
+  .board-cell.cell-node .square-selector[data-rotation='3'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation='3'] {
+    transform: rotate(90deg); }
+  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-0'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-0'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileTunnelCavern-0'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileCavernCavern-0'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMeadowField-0'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-0'] {
+    border-right: none; }
+  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-1'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-1'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileTunnelCavern-1'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileCavernCavern-1'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMeadowField-1'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-1'] {
+    border-left: none; }
+
+.caverna-player-board .player-board-grid .board-cell .caverna-tile {
+  position: absolute;
+  margin: 0px;
+  left: -2px;
+  top: -2px; }
+
+[data-tile=''] {
+  display: none; }
+
+[data-tile='tileTunnelCavern-0'] {
+  background-position-x: 33.3333333333%;
+  background-position-y: 100%;
+  border-radius: 5px 0px 0px 5px; }
+
+[data-tile='tileTunnelCavern-1'] {
+  background-position-x: 66.6666666667%;
+  background-position-y: 100%;
+  border-radius: 0px 5px 5px 0px; }
+
+[data-tile='tileCavernCavern-0'] {
+  background-position-x: 0%;
+  background-position-y: 0%;
+  border-radius: 5px 0px 0px 5px; }
+
+[data-tile='tileCavernCavern-1'] {
+  background-position-x: 33.3333333333%;
+  background-position-y: 0%;
+  border-radius: 0px 5px 5px 0px; }
+
+[data-tile='tileMeadowField-0'] {
+  background-position-x: 0%;
+  background-position-y: 66.6666666667%;
+  border-radius: 5px 0px 0px 5px; }
+
+[data-tile='tileMeadowField-1'] {
+  background-position-x: 33.3333333333%;
+  background-position-y: 66.6666666667%;
+  border-radius: 0px 5px 5px 0px; }
+
+[data-tile='tileMineDeepTunnel-0'] {
+  background-position-x: 66.6666666667%;
+  background-position-y: 0%;
+  border-radius: 5px 0px 0px 5px; }
+
+[data-tile='tileMineDeepTunnel-1'] {
+  background-position-x: 100%;
+  background-position-y: 0%;
+  border-radius: 0px 5px 5px 0px; }
+
+[data-tile='tileRubyMine-0'] {
+  background-position-x: 66.6666666667%;
+  background-position-y: 100%;
+  border-radius: 5px; }
+
+[data-tile='tileMeadow-0'] {
+  background-position-x: 66.6666666667%;
+  background-position-y: 66.6666666667%;
+  border-radius: 5px; }
+
+[data-tile='tileField-0'] {
+  background-position-x: 33.3333333333%;
+  background-position-y: 33.3333333333%;
+  border-radius: 5px; }
+
+[data-tile='tileCavern-0'] {
+  background-position-x: 0%;
+  background-position-y: 33.3333333333%;
+  border-radius: 5px; }
+
+[data-tile='tileTunnel-0'] {
+  background-position-x: 100%;
+  background-position-y: 100%;
+  border-radius: 5px; }
 
 #left-side {
   margin-left: 0px !important;
@@ -1936,62 +209,6 @@ html {
       height: calc(var(--cavernaCentralBoardScale) * 965px); }
     [data-additional='1'][data-players='3'] #position-wrapper #main-boards {
       height: calc(var(--cavernaCentralBoardScale) * 890px); }
-
-#draft-wrapper {
-  width: 98%;
-  margin: auto;
-  flex-flow: row;
-  display: none; }
-  #draft-wrapper.active {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 20px; }
-  #draft-wrapper .draft-title h4 {
-    display: inline-block;
-    margin: 0px;
-    margin-left: 20px;
-    padding: 4px 20px;
-    border: 1px solid black;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom: none;
-    font-family: var(--caverna-font-family);
-    font-weight: normal;
-    font-size: 23px;
-    background: rgba(231, 226, 142, 0.66); }
-  #draft-wrapper #draft-container,
-  #draft-wrapper #hand-container {
-    height: auto;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-content: flex-start;
-    min-width: 30vw;
-    background: rgba(231, 226, 142, 0.66); }
-  #draft-wrapper #hand-container-minor,
-  #draft-wrapper #hand-container-occupation {
-    flex: 1; }
-  #draft-wrapper .player-card {
-    transition: none;
-    margin: 5px 2px;
-    border: 5px solid transparent;
-    border-radius: 17px; }
-    #draft-wrapper .player-card.pending {
-      border-color: red; }
-  #draft-wrapper #draft-container {
-    overflow: hidden; }
-    #draft-wrapper #draft-container .player-card {
-      position: relative;
-      left: 0;
-      opacity: 1;
-      transition: left 0.7s, opacity 0.7s; }
-    #draft-wrapper #draft-container .player-card.minor {
-      order: 3; }
-    #draft-wrapper #draft-container .player-card.occupation {
-      order: 4; }
 
 #add-board-holder {
   display: none;
@@ -2156,155 +373,43 @@ html {
 .action-card-holder {
   width: 150px;
   height: 180px;
-  background-color: white;
-  background-image: url("img/background_card.jpg");
-  background-size: 100% 100%;
-  border: 1px solid black;
   box-shadow: 2px 2px 6px -1px black;
   border-radius: 10px;
   position: relative;
   /*
    * ACTION CARD FRAME
    */ }
-  .action-card-holder[data-id='ActionAdventure'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 0%;
-    background-position-y: 0%; }
-  .action-card-holder[data-id='ActionBlacksmithing'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 25%;
-    background-position-y: 0%; }
-  .action-card-holder[data-id='ActionDepot'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 50%;
-    background-position-y: 0%; }
-  .action-card-holder[data-id='ActionDonkeyFarming'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 75%;
-    background-position-y: 0%; }
-  .action-card-holder[data-id='ActionDriftMining'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 100%;
-    background-position-y: 0%; }
-  .action-card-holder[data-id='ActionExploration'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 0%;
-    background-position-y: 25%; }
-  .action-card-holder[data-id='ActionFamilyLife'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 25%;
-    background-position-y: 25%; }
-  .action-card-holder[data-id='ActionFenceBuilding'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 50%;
-    background-position-y: 25%; }
-  .action-card-holder[data-id='ActionHardwareRental'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 75%;
-    background-position-y: 25%; }
-  .action-card-holder[data-id='ActionHousework'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 100%;
-    background-position-y: 25%; }
-  .action-card-holder[data-id='ActionImitation'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 0%;
-    background-position-y: 50%; }
-  .action-card-holder[data-id='ActionOreDelivery'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 25%;
-    background-position-y: 50%; }
-  .action-card-holder[data-id='ActionOreMineConstruction'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 50%;
-    background-position-y: 50%; }
-  .action-card-holder[data-id='ActionOreTrading'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 75%;
-    background-position-y: 50%; }
-  .action-card-holder[data-id='ActionRubyDelivery'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 100%;
-    background-position-y: 50%; }
-  .action-card-holder[data-id='ActionRubyMineConstruction'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 0%;
-    background-position-y: 75%; }
-  .action-card-holder[data-id='ActionRubyMining'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 25%;
-    background-position-y: 75%; }
-  .action-card-holder[data-id='ActionSheepFarming'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 50%;
-    background-position-y: 75%; }
-  .action-card-holder[data-id='ActionSlash'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 75%;
-    background-position-y: 75%; }
-  .action-card-holder[data-id='ActionSmallDriftMining'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 100%;
-    background-position-y: 75%; }
-  .action-card-holder[data-id='ActionUrgentWish'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 0%;
-    background-position-y: 100%; }
-  .action-card-holder[data-id='ActionWeeklyMarket'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 25%;
-    background-position-y: 100%; }
-  .action-card-holder[data-id='ActionWishChildren'] {
-    background-image: url("img/action_cards.jpg");
-    background-size: 500% 500%;
-    background-position-x: 50%;
-    background-position-y: 100%; }
   #ebd-body:not(.help-mode) .action-card-holder.selectable {
     cursor: pointer; }
     #ebd-body:not(.help-mode) .action-card-holder.selectable:hover {
-      transform: scale(1.15); }
+      transform: scale(1.15);
+      position: relative;
+      z-index: 20; }
     #ebd-body:not(.help-mode) .action-card-holder.selectable .action-card {
       filter: none; }
   #ebd-body:not(.help-mode) .action-card-holder.unselectable {
     cursor: not-allowed; }
   #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable {
     filter: grayscale(75%); }
-  .action-card-holder .farmer-holder {
+  .action-card-holder .dwarf-holder {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none; }
-    #ebd-body:not(.mobile_version) .action-card-holder .farmer-holder:not([data-n='0']) ~ .action-card {
-      filter: grayscale(75%); }
+    pointer-events: none;
+    z-index: 25; }
+    .action-card-holder .dwarf-holder:not(:empty) {
+      background: #c8c8c875; }
+      #ebd-body:not(.mobile_version) .action-card-holder .dwarf-holder:not(:empty) ~ .action-card {
+        filter: grayscale(75%); }
   .action-card-holder .resource-holder {
     position: absolute;
+    z-index: 20;
     bottom: 30px;
     left: 30px;
     padding: 4px;
@@ -2362,6 +467,10 @@ html {
     flex-flow: column;
     position: relative;
     z-index: 10;
+    border-radius: 10px;
+    background-image: url("img/background_card.jpg");
+    background-size: 100% 100%;
+    border: 1px solid black;
     /*
     &.action-card {
       width: 134px;
@@ -2387,9 +496,155 @@ html {
       font-size: 11px;
       font-family: var(--caverna-font-family); }
     .action-card-holder .action-card .action-desc {
+      text-align: center;
       font-size: 11px;
       font-family: var(--caverna-font-family); }
+    .action-card-holder .action-card .action-background {
+      background-image: url("img/action_cards.jpg");
+      background-size: 700% 700%;
+      height: 144px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px; }
+  .action-card-holder[data-id='ActionAdventure'] .action-card .action-background {
+    background-position-x: 0%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionBlacksmithing'] .action-card .action-background {
+    background-position-x: 16.6666666667%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionClearing4'] .action-card .action-background {
+    background-position-x: 33.3333333333%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionClearing'] .action-card .action-background {
+    background-position-x: 50%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionDepot'] .action-card .action-background {
+    background-position-x: 66.6666666667%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionDonkeyFarming'] .action-card .action-background {
+    background-position-x: 83.3333333333%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionDriftMining4'] .action-card .action-background {
+    background-position-x: 100%;
+    background-position-y: 0%; }
+  .action-card-holder[data-id='ActionDriftMining'] .action-card .action-background {
+    background-position-x: 0%;
+    background-position-y: 16.6666666667%; }
+  .action-card-holder[data-id='ActionExcavation4'] .action-card .action-background {
+    background-position-x: 16.6666666667%;
+    background-position-y: 16.6666666667%; }
+  .action-card-holder[data-id='ActionExcavation'] .action-card .action-background {
+    background-position-x: 33.3333333333%;
+    background-position-y: 16.6666666667%; }
+  .action-card-holder[data-id='ActionExploration'] .action-card .action-background {
+    background-position-x: 50%;
+    background-position-y: 16.6666666667%; }
+  .action-card-holder[data-id='ActionExtension'] .action-card .action-background {
+    background-position-x: 66.6666666667%;
+    background-position-y: 16.6666666667%; }
+  .action-card-holder[data-id='ActionFamilyLife'] .action-card .action-background {
+    background-position-x: 83.3333333333%;
+    background-position-y: 16.6666666667%; }
+  .action-card-holder[data-id='ActionFenceBuilding6'] .action-card .action-background {
+    background-position-x: 100%;
+    background-position-y: 16.6666666667%; }
+  .action-card-holder[data-id='ActionFenceBuilding'] .action-card .action-background {
+    background-position-x: 0%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionForestExploration3'] .action-card .action-background {
+    background-position-x: 16.6666666667%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionForestExploration'] .action-card .action-background {
+    background-position-x: 33.3333333333%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionHardwareRental6'] .action-card .action-background {
+    background-position-x: 50%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionHardwareRental'] .action-card .action-background {
+    background-position-x: 66.6666666667%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionHousework'] .action-card .action-background {
+    background-position-x: 83.3333333333%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionImitation'] .action-card .action-background {
+    background-position-x: 100%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionLargeDepot'] .action-card .action-background {
+    background-position-x: 0%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionLogging4'] .action-card .action-background {
+    background-position-x: 16.6666666667%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionLogging'] .action-card .action-background {
+    background-position-x: 33.3333333333%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreDelivery'] .action-card .action-background {
+    background-position-x: 50%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreMineConstruction'] .action-card .action-background {
+    background-position-x: 66.6666666667%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreMining4'] .action-card .action-background {
+    background-position-x: 83.3333333333%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreMining'] .action-card .action-background {
+    background-position-x: 100%;
+    background-position-y: 50%; }
+  .action-card-holder[data-id='ActionOreTrading'] .action-card .action-background {
+    background-position-x: 0%;
+    background-position-y: 66.6666666667%; }
+  .action-card-holder[data-id='ActionRubyDelivery'] .action-card .action-background {
+    background-position-x: 16.6666666667%;
+    background-position-y: 66.6666666667%; }
+  .action-card-holder[data-id='ActionRubyMineConstruction'] .action-card .action-background {
+    background-position-x: 33.3333333333%;
+    background-position-y: 66.6666666667%; }
+  .action-card-holder[data-id='ActionRubyMining'] .action-card .action-background {
+    background-position-x: 50%;
+    background-position-y: 66.6666666667%; }
+  .action-card-holder[data-id='ActionSheepFarming'] .action-card .action-background {
+    background-position-x: 66.6666666667%;
+    background-position-y: 66.6666666667%; }
+  .action-card-holder[data-id='ActionSlash'] .action-card .action-background {
+    background-position-x: 83.3333333333%;
+    background-position-y: 66.6666666667%; }
+  .action-card-holder[data-id='ActionSmallDriftMining'] .action-card .action-background {
+    background-position-x: 100%;
+    background-position-y: 66.6666666667%; }
+  .action-card-holder[data-id='ActionFirstPlayer4'] .action-card .action-background {
+    background-position-x: 0%;
+    background-position-y: 83.3333333333%; }
+  .action-card-holder[data-id='ActionFirstPlayer'] .action-card .action-background {
+    background-position-x: 16.6666666667%;
+    background-position-y: 83.3333333333%; }
+  .action-card-holder[data-id='ActionStripMining'] .action-card .action-background {
+    background-position-x: 33.3333333333%;
+    background-position-y: 83.3333333333%; }
+  .action-card-holder[data-id='ActionSupplies4'] .action-card .action-background {
+    background-position-x: 50%;
+    background-position-y: 83.3333333333%; }
+  .action-card-holder[data-id='ActionSupplies'] .action-card .action-background {
+    background-position-x: 66.6666666667%;
+    background-position-y: 83.3333333333%; }
+  .action-card-holder[data-id='ActionSustenance4'] .action-card .action-background {
+    background-position-x: 83.3333333333%;
+    background-position-y: 83.3333333333%; }
+  .action-card-holder[data-id='ActionSustenance'] .action-card .action-background {
+    background-position-x: 100%;
+    background-position-y: 83.3333333333%; }
+  .action-card-holder[data-id='ActionUrgentWish'] .action-card .action-background {
+    background-position-x: 0%;
+    background-position-y: 100%; }
+  .action-card-holder[data-id='ActionWeeklyMarket'] .action-card .action-background {
+    background-position-x: 16.6666666667%;
+    background-position-y: 100%; }
+  .action-card-holder[data-id='ActionWishChildren'] .action-card .action-background {
+    background-position-x: 33.3333333333%;
+    background-position-y: 100%; }
+  .action-card-holder[data-id='ActionWoodGathering'] .action-card .action-background {
+    background-position-x: 50%;
+    background-position-y: 100%; }
   .action-card-holder[data-id='ActionRubyMining'] .action-desc {
+    text-align: left;
     margin-top: 34px; }
     .action-card-holder[data-id='ActionRubyMining'] .action-desc > div:nth-child(1) {
       text-align: center;
@@ -2409,46 +664,40 @@ html {
     bottom: 83px;
     left: 92px; }
   .action-card-holder[data-id='ActionHousework'] .action-desc {
-    text-align: center;
     margin-top: 58px; }
   .action-card-holder[data-id='ActionBlacksmithing'] .action-desc {
-    text-align: center;
     margin-top: 65px; }
   .action-card-holder[data-id='ActionOreMineConstruction'] .action-desc {
-    text-align: center;
     margin-top: 65px; }
   .action-card-holder[data-id='ActionSheepFarming'] .action-desc {
-    text-align: center;
     margin-top: 72px; }
   .action-card-holder[data-id='ActionSheepFarming'] .resource-holder {
     bottom: 12px;
     left: 92px; }
   .action-card-holder[data-id='ActionDonkeyFarming'] .action-desc {
-    text-align: center;
     margin-top: 72px; }
   .action-card-holder[data-id='ActionDonkeyFarming'] .resource-holder {
     bottom: 12px;
     left: 92px; }
   .action-card-holder[data-id='ActionRubyMineConstruction'] .action-desc {
-    text-align: center;
     margin-top: 65px; }
-  .action-card-holder[data-id='ActionOreDelivery'] .action-desc {
-    margin-top: 102px; }
-    .action-card-holder[data-id='ActionOreDelivery'] .action-desc > div:nth-child(1) {
+  .action-card-holder[data-id='ActionOreDelivery'] .action-desc, .action-card-holder[data-id='ActionOreMining'] .action-desc, .action-card-holder[data-id='ActionOreMining4'] .action-desc {
+    margin-top: 102px;
+    text-align: left; }
+    .action-card-holder[data-id='ActionOreDelivery'] .action-desc > div:nth-child(1), .action-card-holder[data-id='ActionOreMining'] .action-desc > div:nth-child(1), .action-card-holder[data-id='ActionOreMining4'] .action-desc > div:nth-child(1) {
       text-align: right;
       margin-left: 5px;
       width: 72px;
       font-size: 14px; }
-  .action-card-holder[data-id='ActionOreDelivery'] .resource-holder {
+  .action-card-holder[data-id='ActionOreDelivery'] .resource-holder, .action-card-holder[data-id='ActionOreMining'] .resource-holder, .action-card-holder[data-id='ActionOreMining4'] .resource-holder {
     bottom: 83px;
     left: 92px; }
   .action-card-holder[data-id='ActionFamilyLife'] .action-desc {
-    text-align: center;
-    margin-top: 65px; }
+    margin-top: 59px; }
   .action-card-holder[data-id='ActionAdventure'] .action-desc {
-    text-align: center;
     margin-top: 71px; }
   .action-card-holder[data-id='ActionRubyDelivery'] .action-desc {
+    text-align: left;
     margin-top: 102px; }
     .action-card-holder[data-id='ActionRubyDelivery'] .action-desc > div:nth-child(1) {
       text-align: right;
@@ -2460,8 +709,33 @@ html {
     bottom: 83px;
     left: 92px; }
   .action-card-holder[data-id='ActionSlash'] .action-desc {
-    text-align: center;
-    margin-top: 71px; }
+    margin-top: 63px; }
+  .action-card-holder[data-id='ActionClearing'] .action-desc, .action-card-holder[data-id='ActionClearing4'] .action-desc, .action-card-holder[data-id='ActionDriftMining'] .action-desc, .action-card-holder[data-id='ActionDriftMining4'] .action-desc, .action-card-holder[data-id='ActionExcavation'] .action-desc, .action-card-holder[data-id='ActionExcavation4'] .action-desc {
+    margin-top: 52px; }
+  .action-card-holder[data-id='ActionClearing'] .resource-holder, .action-card-holder[data-id='ActionClearing4'] .resource-holder, .action-card-holder[data-id='ActionDriftMining'] .resource-holder, .action-card-holder[data-id='ActionDriftMining4'] .resource-holder, .action-card-holder[data-id='ActionExcavation'] .resource-holder, .action-card-holder[data-id='ActionExcavation4'] .resource-holder {
+    bottom: 96px;
+    left: 100px; }
+  .action-card-holder[data-id='ActionFirstPlayer'] .resource-holder {
+    bottom: 86px;
+    left: 95px; }
+  .action-card-holder[data-id='ActionLogging'] .action-desc, .action-card-holder[data-id='ActionLogging4'] .action-desc {
+    margin-top: 69px; }
+  .action-card-holder[data-id='ActionLogging'] .resource-holder, .action-card-holder[data-id='ActionLogging4'] .resource-holder {
+    bottom: 86px;
+    left: 104px; }
+  .action-card-holder[data-id='ActionSustenance'] .action-desc, .action-card-holder[data-id='ActionSustenance4'] .action-desc {
+    margin-top: 64px;
+    font-size: 10px; }
+  .action-card-holder[data-id='ActionSustenance'] .resource-holder, .action-card-holder[data-id='ActionSustenance4'] .resource-holder {
+    bottom: 95px;
+    left: 99px; }
+
+[data-actionCardName='0'] #central-board .action-card-holder {
+  height: 144px; }
+  [data-actionCardName='0'] #central-board .action-card-holder .action-card .action-header {
+    display: none; }
+  [data-actionCardName='0'] #central-board .action-card-holder .action-card .action-background {
+    border-radius: 10px; }
 
 /**
  * TOOLTIPS
@@ -2562,16 +836,16 @@ html {
       right: 30px;
       border-bottom: 1px solid black !important; }
     .player-board-wrapper .player-board-holder .caverna-player-board {
-      width: 628px;
-      height: 387px;
+      width: 623px;
+      height: 383px;
       position: relative;
       border-top: 1px solid black; }
       .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid {
         background-image: url("img/player-board-small.jpg");
         background-size: 100% 100%;
         display: grid;
-        grid-template-columns: 8px repeat(3, 5px 90px) 50px repeat(3, 90px 5px) 0px;
-        grid-template-rows: 2px repeat(4, 5px 90px) 5px 0px;
+        grid-template-columns: 8px repeat(3, 4px 90px) 50px repeat(3, 90px 4px) 0px;
+        grid-template-rows: 2px repeat(4, 4px 90px) 4px 0px;
         grid-gap: 0px;
         position: relative;
         border-bottom-right-radius: 10px;
@@ -2597,280 +871,15 @@ html {
             display: flex;
             justify-content: center;
             align-items: center; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='1'][data-y='1'] .empty-node {
-            background-position-x: 66.6666666667%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='3'][data-y='1'] .empty-node {
-            background-position-x: 0%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='5'][data-y='1'] .empty-node {
-            background-position-x: 16.6666666667%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='7'][data-y='1'] .empty-node {
-            background-position-x: 33.3333333333%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='9'][data-y='1'] .empty-node {
-            background-position-x: 100%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='3'][data-y='3'] .empty-node {
-            background-position-x: 16.6666666667%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='5'][data-y='3'] .empty-node {
-            background-position-x: 100%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='7'][data-y='3'] .empty-node {
-            background-position-x: 83.3333333333%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='9'][data-y='3'] .empty-node {
-            background-position-x: 66.6666666667%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='3'][data-y='5'] .empty-node {
-            background-position-x: 50%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='5'][data-y='5'] .empty-node {
-            background-position-x: 33.3333333333%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='7'][data-y='5'] .empty-node {
-            background-position-x: 16.6666666667%; }
-          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell[data-x='9'][data-y='5'] .empty-node {
-            background-position-x: 0%; }
           #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selectable {
-            cursor: pointer; }
+            cursor: pointer;
+            background-color: rgba(255, 0, 0, 0.2); }
             #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selectable:hover {
               background-color: rgba(255, 0, 0, 0.3); }
           #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selected {
             background-color: rgba(0, 255, 0, 0.5); }
             #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selected:hover {
               background-color: rgba(0, 255, 0, 0.9); }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='1'] .meeple-roomStone::after {
-        background-position: 0% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='1'] .meeple-roomStone::after {
-        background-position: 0% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='1'] .meeple-roomStone::after {
-        background-position: 0% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='1'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='3'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='3'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='1'][data-y='5'] .meeple-roomStone::after {
-        background-position: 100% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='3'][data-y='5'] .meeple-roomStone::after {
-        background-position: 100% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='5'][data-y='5'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='ff0000'] .board-cell[data-x='7'][data-y='5'] .meeple-roomStone::after {
-        background-position: 0% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='1'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='1'] .meeple-roomStone::after {
-        background-position: 100% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='1'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='1'] .meeple-roomStone::after {
-        background-position: 0% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='3'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='1'][data-y='5'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='3'][data-y='5'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='5'][data-y='5'] .meeple-roomStone::after {
-        background-position: 0% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='008000'] .board-cell[data-x='7'][data-y='5'] .meeple-roomStone::after {
-        background-position: 0% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='1'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='1'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='1'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='1'] .meeple-roomStone::after {
-        background-position: 0% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='3'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='3'] .meeple-roomStone::after {
-        background-position: 0% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='3'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='1'][data-y='5'] .meeple-roomStone::after {
-        background-position: 100% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='3'][data-y='5'] .meeple-roomStone::after {
-        background-position: 100% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='5'][data-y='5'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='72c3b1'] .board-cell[data-x='7'][data-y='5'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='1'] .meeple-roomStone::after {
-        background-position: 100% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='1'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='1'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='1'] .meeple-roomStone::after {
-        background-position: 100% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='3'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='3'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='3'] .meeple-roomStone::after {
-        background-position: 0% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='1'][data-y='5'] .meeple-roomStone::after {
-        background-position: 0% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='3'][data-y='5'] .meeple-roomStone::after {
-        background-position: 100% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='5'][data-y='5'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='982fff'] .board-cell[data-x='7'][data-y='5'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='1'] .meeple-roomStone::after {
-        background-position: 0% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='1'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='1'] .meeple-roomStone::after {
-        background-position: 0% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='1'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='1'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='1'] .meeple-roomStone::after {
-        background-position: 100% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='3'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='3'] .meeple-roomStone::after {
-        background-position: 33.3333333333% 66.6666666667%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='3'] .meeple-roomStone::after {
-        background-position: 100% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='3'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='3'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='3'] .meeple-roomStone::after {
-        background-position: 0% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='1'][data-y='5'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 33.3333333333%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='3'][data-y='5'] .meeple-roomStone::after {
-        background-position: 100% 0%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='5'][data-y='5'] .meeple-roomStone::after {
-        background-position: 66.6666666667% 100%; }
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='5'] .meeple-roomWood::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='5'] .meeple-roomClay::after,
-      .player-board-wrapper .player-board-holder .caverna-player-board[data-color='7b7b7b'] .board-cell[data-x='7'][data-y='5'] .meeple-roomStone::after {
-        background-position: 0% 66.6666666667%; }
 
 #player-boards {
   margin-top: calc(-1 * var(--cavernaCentralBoardScale) * 795px);
@@ -4742,6 +2751,27 @@ html {
       #page-title:not(.fixed-page-title) .ribbon-effect#page-title-right-ribbon::before {
         left: 0;
         clip-path: polygon(0% 100%, 100% calc(100% - 12px), 0% 0%); }
+
+#page-subtitle:empty {
+  display: none; }
+
+#page-subtitle {
+  margin: -12px 100px 10px;
+  z-index: 0;
+  position: relative;
+  padding: 5px 15px;
+  background: #e3e2dd;
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.3);
+  box-sizing: content-box;
+  border-radius: 5px; }
+  #page-subtitle #subtitle-text {
+    margin-top: 5px;
+    text-align: center; }
+    #page-subtitle #subtitle-text .bgabutton {
+      margin: 0px 0px 0px 10px; }
+
+#page-title.fixed-page-title ~ #page-subtitle {
+  margin-top: 0px; }
 
 #logs .log.notif_startNewTurn .roundedbox {
   background: #f2d1ae;

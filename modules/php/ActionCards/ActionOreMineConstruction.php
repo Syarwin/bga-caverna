@@ -33,7 +33,7 @@ class ActionOreMineConstruction extends \CAV\Models\ActionCard
           'optional' => true,
           'childs' => [
             [
-              'action' => CONSTRUCT,
+              'action' => PLACE_TILE,
               'args' => [
                 'tiles' => [TILE_MINE_DEEP_TUNNEL],
               ],
