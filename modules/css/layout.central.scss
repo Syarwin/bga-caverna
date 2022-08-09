@@ -383,7 +383,7 @@
     'ActionHousework' 'ActionImitation' 'ActionLargeDepot' 'ActionLogging4' 'ActionLogging' 'ActionOreDelivery'
     'ActionOreMineConstruction' 'ActionOreMining4' 'ActionOreMining' 'ActionOreTrading' 'ActionRubyDelivery'
     'ActionRubyMineConstruction' 'ActionRubyMining' 'ActionSheepFarming' 'ActionSlash' 'ActionSmallDriftMining'
-    'ActionFirstPlayer4' 'ActionFirstPlayer' 'ActionStripMining' 'ActionSupplies4' 'ActionSupplies' 'ActionSustenance4'
+    'ActionFirstPlayer4' 'ActionFirstPlayer' 'ActionStripMining' 'ActionGrowth' 'ActionSupplies' 'ActionSustenance4'
     'ActionSustenance' 'ActionUrgentWish' 'ActionWeeklyMarket' 'ActionWishChildren' 'ActionWoodGathering';
   @each $cId in $actionCards {
     $i: index($actionCards, $cId) - 1;
@@ -391,6 +391,16 @@
       background-position-x: ($i % 7) * 100% / 6;
       background-position-y: (($i - ($i % 7)) / 7) * 100% / 6;
     }
+  }
+
+  &[data-id='ActionImitation5'] {
+    background-position-x: 100%;
+    background-position-y: 33.3333333333%;
+  }
+
+  &[data-id='ActionImitation7'] {
+    background-position-x: 100%;
+    background-position-y: 33.3333333333%;
   }
 
   &[data-id='ActionRubyMining'] {

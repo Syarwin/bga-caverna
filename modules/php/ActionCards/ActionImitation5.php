@@ -3,12 +3,13 @@ namespace CAV\ActionCards;
 use CAV\Managers\Players;
 use CAV\Helpers\Utils;
 
-class ActionImitation extends \CAV\Models\ActionCard
+class ActionImitation5 extends \CAV\Models\ActionCard
 {
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->id = 'ActionImitation';
+    $this->id = 'ActionImitation5';
+    $this->actionCardType = 'ActionImitation';
     $this->name = clienttranslate('Imitation');
     $this->tooltip = [
       clienttranslate('Use an Action space occupied by one of your opponents'),
@@ -16,12 +17,12 @@ class ActionImitation extends \CAV\Models\ActionCard
         'Special case: You may not imitate an Imitation action that is occupied by your opponent only to imitate another Action space that is occupied by one of your Dwarfs'
       ),
     ];
-    $this->players = [3, 4, 5, 6, 7];
+    $this->players = [5, 6, 7];
   }
 
   public function getFlow($player, $dwarf)
   {
-    $playersMap = [3 => 4, 4 => 2, 5 => 2, 6 => 1, 7 => 0];
+    $playersMap = [5 => 4, 6 => 2, 7 => 1];
     return [
       'type' => NODE_SEQ,
       'childs' => [
@@ -33,7 +34,7 @@ class ActionImitation extends \CAV\Models\ActionCard
 
   public function getDesc()
   {
-    $playersMap = [3 => 4, 4 => 2, 5 => 2, 6 => 1, 7 => 0];
+    $playersMap = [5 => 4, 6 => 2, 7 => 1];
     return $playersMap[Players::count()] . ' <FOOD>';
   }
 }

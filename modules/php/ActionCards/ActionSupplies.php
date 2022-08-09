@@ -17,7 +17,7 @@ class ActionSupplies extends \CAV\Models\ActionCard
         WOOD => 1,
         STONE => 1,
         ORE => 1,
-        FOOD => 2,
+        FOOD => 1,
         GOLD => 2,
       ],
     ];
