@@ -389,7 +389,7 @@ html {
       filter: none; }
   #ebd-body:not(.help-mode) .action-card-holder.unselectable {
     cursor: not-allowed; }
-  #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable {
+  #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable .action-card {
     filter: grayscale(75%); }
   .action-card-holder .dwarf-holder {
     position: absolute;

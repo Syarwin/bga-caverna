@@ -243,7 +243,7 @@
     cursor: not-allowed;
   }
 
-  #ebd-body:not(.help-mode):not(.mobile_version) &.unselectable {
+  #ebd-body:not(.help-mode):not(.mobile_version) &.unselectable .action-card {
     filter: grayscale(75%);
   }
 

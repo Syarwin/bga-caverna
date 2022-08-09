@@ -302,6 +302,11 @@ class AbstractNode
         ];
         $choices[$id] = $choice;
       }
+      // **** ENFORCE ORDER FOR THEN_OR NODE ****
+      elseif ($child->isResolved() && $this->getType() == \NODE_THEN_OR) {
+        $choices = [];
+        $choice = null;
+      }
     }
 
     if ($this->isOptional()) {

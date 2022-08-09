@@ -117,6 +117,7 @@ const NODE_OR = 'or';
 const NODE_XOR = 'xor';
 const NODE_PARALLEL = 'parallel';
 const NODE_LEAF = 'leaf';
+const NODE_THEN_OR = 'thenOr';
 
 const ZOMBIE = 98;
 const PASS = 99;
