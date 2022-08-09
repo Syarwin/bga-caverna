@@ -41,7 +41,7 @@ class ActionCards extends \CAV\Helpers\Pieces
     'RubyMining',
     'Slash',
     'Supplies',
-    'Supplies4',
+    'Growth',
     'Sustenance',
     'Sustenance4',
     'WoodGathering',

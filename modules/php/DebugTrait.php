@@ -6,6 +6,7 @@ use CAV\Managers\Meeples;
 use CAV\Managers\Fences;
 use CAV\Managers\Actions;
 use CAV\Managers\Buildings;
+use CAV\Managers\ActionCards;
 use CAV\Core\Engine;
 use CAV\Core\Game;
 use CAV\Models\PlayerBoard;
@@ -60,7 +61,7 @@ trait DebugTrait
     // $engine = Globals::getEngine();
     // self::loadDebugUpdateEngine($engine, $map);
     // var_dump($engine);
-    $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
+    // $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
     // Engine::insertAsChild([
     //   'action' => STABLES,
     //   'args' => [
@@ -70,6 +71,13 @@ trait DebugTrait
     // ]);
     // Engine::resolveAction();
     // Engine::proceed();
+    $player = Players::getCurrent();
+    ActionCards::setupNewGame(
+      [
+        $player->getId() => $player,
+      ],
+      []
+    );
   }
 
   public function dd()

@@ -49,7 +49,7 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
       'accumulate' => count($this->accumulation) > 0,
       'component' => $this->isBoardComponent(),
-      'desc' => $this->desc,
+      'desc' => $this->getDesc(),
       'container' => $this->container,
     ];
   }
@@ -68,7 +68,12 @@ class ActionCard extends \CAV\Helpers\DB_Model
   {
     // TODO
     return 'board';
-//    return $this->stage == 0 ? 'board' : ['deck', $this->stage];
+    //    return $this->stage == 0 ? 'board' : ['deck', $this->stage];
+  }
+
+  public function getDesc()
+  {
+    return $this->desc;
   }
 
   public function getTurn()
@@ -113,6 +118,43 @@ class ActionCard extends \CAV\Helpers\DB_Model
       }
     }
     return $ids;
+  }
+
+  public function payGainNode($cost, $gain, $sourceName = null, $optional = true, $pId = null)
+  {
+    $pId = $pId ?? $this->pId;
+
+    return [
+      'type' => NODE_SEQ,
+      'optional' => $optional,
+      'pId' => $pId,
+      'childs' => [$this->payNode($cost, $sourceName), $this->gainNode($gain, $pId)],
+    ];
+  }
+
+  public function gainNode($gain, $pId = null)
+  {
+    $gain['pId'] = $pId ?? $this->pId;
+    return [
+      'action' => GAIN,
+      'args' => $gain,
+      'source' => $this->name,
+      'cardId' => $this->getId(),
+    ];
+  }
+
+  public function payNode($cost, $sourceName = null, $nb = 1, $to = null, $pId = null)
+  {
+    return [
+      'action' => PAY,
+      'args' => [
+        'pId' => $pId ?? $this->pId,
+        'nb' => $nb,
+        'costs' => Utils::formatCost($cost),
+        'source' => $sourceName ?? $this->name,
+        'to' => $to,
+      ],
+    ];
   }
 
   public function canBePlayed($player, $dwarf, $onlyCheckSpecificPlayer = null, $ignoreResources = false)
