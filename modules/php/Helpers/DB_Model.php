@@ -151,6 +151,16 @@ abstract class DB_Model extends \APP_DbObject implements \JsonSerializable
     return $data;
   }
 
+  public function getUiData()
+  {
+    $data = $this->jsonSerialize();
+    foreach ($this->staticAttributes as $attribute) {
+      $data[$attribute] = $this->$attribute;
+    }
+
+    return $data;
+  }
+
   /**
    * Private DB call
    */

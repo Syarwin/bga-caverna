@@ -10,21 +10,18 @@ class Buildings extends \CAV\Helpers\Pieces
   protected static $table = 'buildings';
   protected static $prefix = 'building_';
   protected static $customFields = ['player_id', 'extra_datas', 'type', 'x', 'y'];
-  protected static $autoIncrement = true;
+  protected static $autoremovePrefix = false;
 
   protected static function cast($building)
   {
-    $building['building_id'] = $building['id'];
-
-    return self::getBuildingInstance($building['id'], $building);
+    return self::getBuildingInstance($building['type'], $building);
   }
 
-  public static function getBuildingInstance($id, $data = null)
+  public static function getBuildingInstance($type, $data = null)
   {
-    $type = $data['type'] ?? $id;
     $t = explode('_', $type);
     // First part before _ specify the type of Building
-    // Eg: Major_Fireplace1,  A24_ThreshingBoard, ...
+    // Eg: D for Dwellings
     $prefix = $t[0];
     $className = "\CAV\Buildings\\$prefix\\$type";
     return new $className($data);
@@ -43,7 +40,6 @@ class Buildings extends \CAV\Helpers\Pieces
         $buildings[] = [
           'type' => $building->getType(),
           'location' => 'board',
-          'nbr' => $building->getNbInBox(),
         ];
       }
     }
@@ -60,7 +56,7 @@ class Buildings extends \CAV\Helpers\Pieces
     }
 
     // Create the buildings
-    self::create($buildings, null);
+    self::create($buildings);
   }
 
   public static function getUiData()
@@ -68,6 +64,25 @@ class Buildings extends \CAV\Helpers\Pieces
     return self::getInLocationOrdered('board')
       ->merge(self::getInLocationOrdered('inPlay'))
       ->ui();
+  }
+
+  /**
+   * Generic base query
+   */
+  public function getFilteredQuery($pId, $location, $type)
+  {
+    $query = self::getSelectQuery()->wherePlayer($pId);
+    if ($location != null) {
+      $query = $query->where('building_location', $location);
+    }
+    if ($type != null) {
+      if (is_array($type)) {
+        $query = $query->whereIn('type', $type);
+      } else {
+        $query = $query->where('type', strpos($type, '%') === false ? '=' : 'LIKE', $type);
+      }
+    }
+    return $query;
   }
 
   public static function getOfPlayer($pId)
@@ -83,23 +98,6 @@ class Buildings extends \CAV\Helpers\Pieces
       ['player_id' => $player->getId(), 'building_location' => 'inPlay', 'x' => $tile['x'], 'y' => $tile['y']],
       $tile['id']
     );
-  }
-
-  /**************************** Caverns *****************************************/
-  protected function getCavernsQ($pId)
-  {
-    return self::getFilteredQuery($pId, 'board', 'cavern%');
-  }
-
-  public function getCaverns($pId)
-  {
-    return self::getCavernsQ($pId)->get();
-  }
-
-  // countRooms
-  public function countCaverns($pId)
-  {
-    return self::getCavernsQ($pId)->count();
   }
 
   /**************************** Dwellings *****************************************/
@@ -120,42 +118,6 @@ class Buildings extends \CAV\Helpers\Pieces
     return self::getDwellingsQ($pId)->accumulate($room, function ($b) {
       return $b->getDwellingCapacity();
     });
-  }
-
-  // /**
-  //  *
-  //  * Provides the type of room constructed
-  //  * @param number $player_id
-  //  * @return string rommType (roomWood, roomClay, roomStone)
-  //  */
-  // public function getRoomType($pId)
-  // {
-  //   return null;
-  //
-  //   $roomsType = array_unique(
-  //     self::getRooms($pId)
-  //       ->map(function ($token) {
-  //         return $token['type'];
-  //       })
-  //       ->toArray()
-  //   );
-  //
-  //   if (count($roomsType) != 1) {
-  //     throw new \feException('multiple Room type, should not happen');
-  //   }
-  //   return $roomsType[0];
-  // }
-
-  public static function drawCards(&$buildings, $pId, $n, $location = 'hand')
-  {
-    $pool = array_filter($buildings, function ($building) {
-      return $building['location'] == 'box';
-    });
-    $hand = array_rand($pool, $n);
-    foreach ($hand as $cId) {
-      $buildings[$cId]['location'] = $location;
-      $buildings[$cId]['player_id'] = $pId;
-    }
   }
 
   public static function getAvailables($type = null)
@@ -329,76 +291,57 @@ class Buildings extends \CAV\Helpers\Pieces
     return $res;
   }
 
-  /**
-   * Generate/load seed
-   */
-  public static function getSeed()
-  {
-    $res = '';
-    // TODO
-    // foreach (Players::getAll() as $player) {
-    //   $ids = $player
-    //     ->getHand()
-    //     ->map(function ($building) {
-    //       return $building->getDeck() . dechex($building->getNumber());
-    //     })
-    //     ->toArray();
-    //   $res .= ($res != '' ? '|' : '') . implode('', $ids);
-    // }
-    return $res;
-  }
-
-  public static function preSeedClear()
-  {
-    self::DB()
-      ->delete()
-      ->whereNotNull('player_id')
-      ->run();
-  }
-
-  public static function setSeed($player, $seed)
-  {
-    // Extract the list of (deck, number) identifiers
-    preg_match_all('/([ABCD][0-9a-f]+)/', $seed, $out, PREG_PATTERN_ORDER);
-    $buildings = [];
-    foreach ($out[1] as $building) {
-      $deck = $building[0];
-      $number = hexdec(\substr($building, 1));
-      $buildings[] = $deck . $number;
-    }
-
-    // Create the cards
-    $values = [];
-    include dirname(__FILE__) . '/../Cards/list.inc.php';
-    foreach ($buildingIds as $cId) {
-      $building = self::getCardInstance($cId);
-      if (in_array($building->getDeck() . $building->getNumber(), $buildings)) {
-        $values[] = [
-          'id' => $building->getId(),
-          'location' => 'hand',
-          'player_id' => $player->getId(),
-        ];
-      }
-    }
-    self::create($values, null);
-  }
-
-  /**
-   * Generic base query
-   */
-  public function getFilteredQuery($pId, $location, $type)
-  {
-    $query = self::getSelectQuery()->wherePlayer($pId);
-    if ($location != null) {
-      $query = $query->where('building_location', $location);
-    }
-    if ($type != null) {
-      if (is_array($type)) {
-        $query = $query->whereIn('type', $type);
-      } else {
-        $query = $query->where('type', strpos($type, '%') === false ? '=' : 'LIKE', $type);
-      }
-    }
-    return $query;
-  }
+  // /**
+  //  * Generate/load seed
+  //  */
+  // public static function getSeed()
+  // {
+  //   $res = '';
+  //   // TODO
+  //   // foreach (Players::getAll() as $player) {
+  //   //   $ids = $player
+  //   //     ->getHand()
+  //   //     ->map(function ($building) {
+  //   //       return $building->getDeck() . dechex($building->getNumber());
+  //   //     })
+  //   //     ->toArray();
+  //   //   $res .= ($res != '' ? '|' : '') . implode('', $ids);
+  //   // }
+  //   return $res;
+  // }
+  //
+  // public static function preSeedClear()
+  // {
+  //   self::DB()
+  //     ->delete()
+  //     ->whereNotNull('player_id')
+  //     ->run();
+  // }
+  //
+  // public static function setSeed($player, $seed)
+  // {
+  //   // Extract the list of (deck, number) identifiers
+  //   preg_match_all('/([ABCD][0-9a-f]+)/', $seed, $out, PREG_PATTERN_ORDER);
+  //   $buildings = [];
+  //   foreach ($out[1] as $building) {
+  //     $deck = $building[0];
+  //     $number = hexdec(\substr($building, 1));
+  //     $buildings[] = $deck . $number;
+  //   }
+  //
+  //   // Create the cards
+  //   $values = [];
+  //   include dirname(__FILE__) . '/../Cards/list.inc.php';
+  //   foreach ($buildingIds as $cId) {
+  //     $building = self::getCardInstance($cId);
+  //     if (in_array($building->getDeck() . $building->getNumber(), $buildings)) {
+  //       $values[] = [
+  //         'id' => $building->getId(),
+  //         'location' => 'hand',
+  //         'player_id' => $player->getId(),
+  //       ];
+  //     }
+  //   }
+  //   self::create($values, null);
+  // }
 }

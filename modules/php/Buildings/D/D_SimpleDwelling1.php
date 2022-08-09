@@ -18,10 +18,16 @@ class D_SimpleDwelling1 extends \CAV\Models\Building
   {
     parent::__construct($row);
     $this->type = 'D_SimpleDwelling1';
+    $this->category = 'dwelling';
     $this->name = clienttranslate('Simple Dwelling');
-    $this->dwelling = 1;
-    $this->nbInBox = 1;
     $this->desc = [clienttranslate('Room for exactly 1 Dwarf')];
+    $this->tooltip = [
+      clienttranslate(
+        'The Simple dwellings are cheaper than the ordinary Dwellings by 1 building material (here: 1 Stone) but therefore they are not worth any Gold points.'
+      ),
+      clienttranslate('They provide room for exactly 1 Dwarf'),
+    ];
+    $this->dwelling = 1;
     $this->costs = [[WOOD => 4], [STONE => 2]];
   }
 }

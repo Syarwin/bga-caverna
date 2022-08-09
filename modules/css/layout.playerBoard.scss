@@ -108,6 +108,7 @@
       height: 383px;
       position: relative;
       border-top: 1px solid black;
+      --cavernaBuildingScale: 0.45;
 
       .player-board-grid {
         background-image: url('img/player-board-small.jpg');
@@ -134,6 +135,10 @@
           justify-content: center;
           align-items: center;
           position: relative;
+
+          .caverna-building {
+            position: absolute;
+          }
 
           .stable-holder {
             position: absolute;

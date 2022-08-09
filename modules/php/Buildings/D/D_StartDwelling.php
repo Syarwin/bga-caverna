@@ -24,4 +24,9 @@ class D_StartDwelling extends \CAV\Models\Building
     $this->animalHolder = 2;
     $this->desc = [clienttranslate('Room for exactly 2 Dwarves and 1 pair of anima')];
   }
+
+  public function isSupported($players, $options)
+  {
+    return false; // Make sure StartDwelling are not created on building boards
+  }
 }

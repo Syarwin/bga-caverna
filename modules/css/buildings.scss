@@ -1,0 +1,81 @@
+.caverna-building {
+  width: calc(var(--cavernaBuildingScale) * 200px);
+  height: calc(var(--cavernaBuildingScale) * 200px);
+  position: relative;
+
+  .building-resizable {
+    transform: scale(var(--cavernaBuildingScale));
+    transform-origin: top left;
+    width: 200px;
+    height: 200px;
+    background-image: url('img/buildings.jpg');
+    background-size: 600% 1000%;
+    box-sizing: border-box;
+    background-origin: border-box;
+    border-radius: 15px;
+    border: 2px solid black;
+  }
+
+  $buildings: 'BroomChamber' 'FodderChamber' 'FoodChamber' 'MainStorage' 'OreStorage' 'PrayerChamber' 'SparePartStorage'
+    'StoneStorage' 'SuppliesStorage' 'TreasureChamber' 'WeaponStorage' 'WritingChamber' 'Blacksmith' 'Builder'
+    'Carpenter' 'DogSchool' 'Miner' 'Quarry' 'RubySupplier' 'Seam' 'StoneCarver' 'StoneSupplier' 'Trader' 'WoodSupplier'
+    'BeerParlor' 'BlacksmithingParlor' 'BreedingCave' 'CookingCave' 'HuntingParlor' 'MilkingParlor' 'MiningCave'
+    'PeacefulCave' 'SlaughteringCave' 'StateParlor' 'WeavingParlor' 'WorkingCave' 'AddDwelling' 'BreakfastRoom'
+    'CoupleDwelling' 'CuddleRoom' 'GuestRoom' 'MixedDwelling' 'OfficeRoom' 'SimpleDwelling2' 'SimpleDwelling1'
+    'StubbleRoom' 'WorkRoom' 'Dwelling';
+  @each $cId in $buildings {
+    $i: index($buildings, $cId) - 1;
+    &[data-type='#{$cId}'] .building-resizable {
+      background-position-x: ($i % 6) * 100% / 5;
+      background-position-y: (($i - ($i % 6)) / 6) * 100% / 9;
+    }
+  }
+  &[data-type='StartDwelling'] .building-resizable {
+    background: none;
+    border: none;
+  }
+
+  .building-title {
+    height: 40px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-family: var(--caverna-font-family);
+  }
+
+  .building-desc {
+  }
+}
+
+#buildings-test {
+  display: flex;
+
+  .caverna-building {
+    margin: 5px;
+  }
+}
+
+/**
+ * TOOLTIPS
+ */
+.action-card-help-tooltip {
+  display: flex;
+}
+
+.building-tooltip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .building-holder {
+    height: 220px;
+    width: 220px;
+    flex-shrink: 0;
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

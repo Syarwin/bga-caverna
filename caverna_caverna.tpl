@@ -1,5 +1,8 @@
 {OVERALL_GAME_HEADER}
 
+<div id="buildings-test"></div>
+
+
 <div id="position-wrapper">
   <div id="main-boards">
     <div id="add-board-holder"><div id="add-board"></div></div>

@@ -1,21 +1,12 @@
-$cardW: 235px; // 110px mini
-$cardH: 374px;
-
-
 :root {
-  --tokenScale: 1;
-  --cavernaCardWidth: $cardW;
-  --cavernaCardHeight: $cardH;
-  --cavernaCardScale: 1;
+  --cavernaBuildingScale: 0.8;
 
   --cavernaCentralBoardScale: 1;
   --cavernaPlayerBoardScale: 1;
 }
 
 .dijitTooltipContainer {
-  --cavernaCardWidth: $cardW;
-  --cavernaCardHeight: $cardH;
-  --cavernaCardScale: 1;
+  --cavernaBuildingScale: 1;
 
   .player-card .player-card-resizable .player-card-inner .card-frame {
     box-shadow: none;

@@ -35,17 +35,12 @@ html {
   --caverna-font-family: Roboto, Arial, sans-serif; }
 
 :root {
-  --tokenScale: 1;
-  --cavernaCardWidth: $cardW;
-  --cavernaCardHeight: $cardH;
-  --cavernaCardScale: 1;
+  --cavernaBuildingScale: 0.8;
   --cavernaCentralBoardScale: 1;
   --cavernaPlayerBoardScale: 1; }
 
 .dijitTooltipContainer {
-  --cavernaCardWidth: $cardW;
-  --cavernaCardHeight: $cardH;
-  --cavernaCardScale: 1; }
+  --cavernaBuildingScale: 1; }
   .dijitTooltipContainer .player-card .player-card-resizable .player-card-inner .card-frame {
     box-shadow: none; }
 
@@ -191,6 +186,201 @@ html {
   background-position-x: 100%;
   background-position-y: 100%;
   border-radius: 5px; }
+
+.caverna-building {
+  width: calc(var(--cavernaBuildingScale) * 200px);
+  height: calc(var(--cavernaBuildingScale) * 200px);
+  position: relative; }
+  .caverna-building .building-resizable {
+    transform: scale(var(--cavernaBuildingScale));
+    transform-origin: top left;
+    width: 200px;
+    height: 200px;
+    background-image: url("img/buildings.jpg");
+    background-size: 600% 1000%;
+    box-sizing: border-box;
+    background-origin: border-box;
+    border-radius: 15px;
+    border: 2px solid black; }
+  .caverna-building[data-type='BroomChamber'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 0%; }
+  .caverna-building[data-type='FodderChamber'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 0%; }
+  .caverna-building[data-type='FoodChamber'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 0%; }
+  .caverna-building[data-type='MainStorage'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 0%; }
+  .caverna-building[data-type='OreStorage'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 0%; }
+  .caverna-building[data-type='PrayerChamber'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 0%; }
+  .caverna-building[data-type='SparePartStorage'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 11.1111111111%; }
+  .caverna-building[data-type='StoneStorage'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 11.1111111111%; }
+  .caverna-building[data-type='SuppliesStorage'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 11.1111111111%; }
+  .caverna-building[data-type='TreasureChamber'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 11.1111111111%; }
+  .caverna-building[data-type='WeaponStorage'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 11.1111111111%; }
+  .caverna-building[data-type='WritingChamber'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 11.1111111111%; }
+  .caverna-building[data-type='Blacksmith'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 22.2222222222%; }
+  .caverna-building[data-type='Builder'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 22.2222222222%; }
+  .caverna-building[data-type='Carpenter'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 22.2222222222%; }
+  .caverna-building[data-type='DogSchool'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 22.2222222222%; }
+  .caverna-building[data-type='Miner'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 22.2222222222%; }
+  .caverna-building[data-type='Quarry'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 22.2222222222%; }
+  .caverna-building[data-type='RubySupplier'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 33.3333333333%; }
+  .caverna-building[data-type='Seam'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 33.3333333333%; }
+  .caverna-building[data-type='StoneCarver'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 33.3333333333%; }
+  .caverna-building[data-type='StoneSupplier'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 33.3333333333%; }
+  .caverna-building[data-type='Trader'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 33.3333333333%; }
+  .caverna-building[data-type='WoodSupplier'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 33.3333333333%; }
+  .caverna-building[data-type='BeerParlor'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 44.4444444444%; }
+  .caverna-building[data-type='BlacksmithingParlor'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 44.4444444444%; }
+  .caverna-building[data-type='BreedingCave'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 44.4444444444%; }
+  .caverna-building[data-type='CookingCave'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 44.4444444444%; }
+  .caverna-building[data-type='HuntingParlor'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 44.4444444444%; }
+  .caverna-building[data-type='MilkingParlor'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 44.4444444444%; }
+  .caverna-building[data-type='MiningCave'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 55.5555555556%; }
+  .caverna-building[data-type='PeacefulCave'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 55.5555555556%; }
+  .caverna-building[data-type='SlaughteringCave'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 55.5555555556%; }
+  .caverna-building[data-type='StateParlor'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 55.5555555556%; }
+  .caverna-building[data-type='WeavingParlor'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 55.5555555556%; }
+  .caverna-building[data-type='WorkingCave'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 55.5555555556%; }
+  .caverna-building[data-type='AddDwelling'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 66.6666666667%; }
+  .caverna-building[data-type='BreakfastRoom'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 66.6666666667%; }
+  .caverna-building[data-type='CoupleDwelling'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 66.6666666667%; }
+  .caverna-building[data-type='CuddleRoom'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 66.6666666667%; }
+  .caverna-building[data-type='GuestRoom'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 66.6666666667%; }
+  .caverna-building[data-type='MixedDwelling'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 66.6666666667%; }
+  .caverna-building[data-type='OfficeRoom'] .building-resizable {
+    background-position-x: 0%;
+    background-position-y: 77.7777777778%; }
+  .caverna-building[data-type='SimpleDwelling2'] .building-resizable {
+    background-position-x: 20%;
+    background-position-y: 77.7777777778%; }
+  .caverna-building[data-type='SimpleDwelling1'] .building-resizable {
+    background-position-x: 40%;
+    background-position-y: 77.7777777778%; }
+  .caverna-building[data-type='StubbleRoom'] .building-resizable {
+    background-position-x: 60%;
+    background-position-y: 77.7777777778%; }
+  .caverna-building[data-type='WorkRoom'] .building-resizable {
+    background-position-x: 80%;
+    background-position-y: 77.7777777778%; }
+  .caverna-building[data-type='Dwelling'] .building-resizable {
+    background-position-x: 100%;
+    background-position-y: 77.7777777778%; }
+  .caverna-building[data-type='StartDwelling'] .building-resizable {
+    background: none;
+    border: none; }
+  .caverna-building .building-title {
+    height: 40px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-family: var(--caverna-font-family); }
+
+#buildings-test {
+  display: flex; }
+  #buildings-test .caverna-building {
+    margin: 5px; }
+
+/**
+ * TOOLTIPS
+ */
+.action-card-help-tooltip {
+  display: flex; }
+
+.building-tooltip {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .building-tooltip .building-holder {
+    height: 220px;
+    width: 220px;
+    flex-shrink: 0;
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
 
 #left-side {
   margin-left: 0px !important;
@@ -623,7 +813,7 @@ html {
   .action-card-holder[data-id='ActionStripMining'] .action-card .action-background {
     background-position-x: 33.3333333333%;
     background-position-y: 83.3333333333%; }
-  .action-card-holder[data-id='ActionSupplies4'] .action-card .action-background {
+  .action-card-holder[data-id='ActionGrowth'] .action-card .action-background {
     background-position-x: 50%;
     background-position-y: 83.3333333333%; }
   .action-card-holder[data-id='ActionSupplies'] .action-card .action-background {
@@ -647,6 +837,12 @@ html {
   .action-card-holder[data-id='ActionWoodGathering'] .action-card .action-background {
     background-position-x: 50%;
     background-position-y: 100%; }
+  .action-card-holder[data-id='ActionImitation5'] {
+    background-position-x: 100%;
+    background-position-y: 33.3333333333%; }
+  .action-card-holder[data-id='ActionImitation7'] {
+    background-position-x: 100%;
+    background-position-y: 33.3333333333%; }
   .action-card-holder[data-id='ActionRubyMining'] .action-desc {
     text-align: left;
     margin-top: 34px; }
@@ -843,7 +1039,8 @@ html {
       width: 623px;
       height: 383px;
       position: relative;
-      border-top: 1px solid black; }
+      border-top: 1px solid black;
+      --cavernaBuildingScale: 0.45; }
       .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid {
         background-image: url("img/player-board-small.jpg");
         background-size: 100% 100%;
@@ -866,6 +1063,8 @@ html {
           justify-content: center;
           align-items: center;
           position: relative; }
+          .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell .caverna-building {
+            position: absolute; }
           .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell .stable-holder {
             position: absolute;
             top: 0;
@@ -2804,38 +3003,5 @@ html {
 /* Mobile logs */
 .log.cancel.roundedbox {
   background-color: #ef9a9a; }
-
-/* Check combos */
-.checkCombos {
-  background-size: 20% auto; }
-  .checkCombos h1 {
-    font-family: var(--caverna-font-family);
-    text-align: center;
-    background: #eee;
-    border-top-right-radius: 8px;
-    margin: 0px 2px;
-    border-top-left-radius: 8px;
-    border-bottom: 1px solid black;
-    padding: 5px 0px; }
-  .checkCombos > div {
-    margin: 20px;
-    display: flex;
-    flex-wrap: wrap; }
-    .checkCombos > div .player-card {
-      margin: 5px; }
-  .checkCombos table {
-    border: 1px solid black;
-    margin: auto;
-    border-collapse: collapse;
-    font-size: 14px; }
-    .checkCombos table th {
-      padding: 2px 3px;
-      border: 1px solid black;
-      font-weight: bold; }
-    .checkCombos table td {
-      width: 20px;
-      height: 20px;
-      border: 1px solid black;
-      text-align: center; }
 
 /*# sourceMappingURL=caverna.css.map */

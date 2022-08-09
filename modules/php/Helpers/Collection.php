@@ -69,7 +69,7 @@ class Collection extends \ArrayObject
   public function ui()
   {
     return $this->map(function ($elem) {
-      return $elem->jsonSerialize();
+      return $elem->getUiData();
     })->toArray();
   }
 }

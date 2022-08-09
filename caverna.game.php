@@ -86,6 +86,7 @@ class caverna extends Table
       'cards' => ActionCards::getUiData(),
       'meeples' => Meeples::getUiData(),
       'tiles' => Tiles::getUiData(),
+      'buildings' => Buildings::getUiData(),
       'scores' => Globals::isLiveScoring() ? Scores::compute() : null,
       'canceledNotifIds' => Log::getCanceledNotifIds(),
 

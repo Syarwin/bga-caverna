@@ -31,7 +31,7 @@ define([
   g_gamethemeurl + 'modules/js/Players.js',
   g_gamethemeurl + 'modules/js/PlayerBoard.js',
   g_gamethemeurl + 'modules/js/Meeples.js',
-  g_gamethemeurl + 'modules/js/Cards.js',
+  g_gamethemeurl + 'modules/js/Buildings.js',
   g_gamethemeurl + 'modules/js/States/Sow.js',
   g_gamethemeurl + 'modules/js/States/ReorganizeAnimals.js',
   g_gamethemeurl + 'modules/js/States/Exchange.js',
@@ -52,7 +52,7 @@ define([
       caverna.playerBoard,
       caverna.meeples,
       caverna.sow,
-      caverna.cards,
+      caverna.buildings,
       caverna.reorganize,
       caverna.exchange,
       caverna.specialEffect,
@@ -125,8 +125,7 @@ define([
         ];
 
         this._canReorganize = false;
-        this._isDraft = false;
-        this._cardStorage = {};
+        this._buildingStorage = {};
 
         // Fix mobile viewport (remove CSS zoom)
         this.default_viewport = 'width=1000';
@@ -172,8 +171,8 @@ define([
         // this.setupScoresModal();
         this.setupActionCards();
         this.setupPlayers();
-        // this.setupBuildings();
         this.setupTiles();
+        this.setupBuildings();
         this.setupMeeples();
         // this.setupAnimalsDropZones();
         this.updatePrefs();

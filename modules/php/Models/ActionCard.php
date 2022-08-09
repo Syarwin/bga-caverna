@@ -26,11 +26,11 @@ class ActionCard extends \CAV\Helpers\DB_Model
    * STATIC INFORMATIONS
    *  they are overwritten by children
    */
-  protected $staticAttributes = ['name', 'tooltip', 'text'];
+  protected $staticAttributes = ['name', 'tooltip', 'desc'];
   protected $name = '';
   protected $tooltip = [];
   protected $desc = []; // UI
-  protected $text = []; // Text of the card, needed for front
+
   protected $actionCardType = null; // Useful to declare Hollow4 as an Hollow action
   protected $stage = 0;
   protected $accumulation = []; // Array of resource => amount
@@ -38,20 +38,14 @@ class ActionCard extends \CAV\Helpers\DB_Model
   // Constraints
   protected $players = null; // Players requirements => null if none, integer if only one, array otherwise
 
-  public function jsonSerialize()
+  public function getUiData()
   {
-    return [
-      'id' => $this->id,
-      'name' => $this->name,
-      'location' => $this->location,
-      'state' => $this->state,
-      'tooltip' => $this->tooltip,
-
+    return array_merge(parent::getUiData(), [
       'accumulate' => count($this->accumulation) > 0,
       'component' => $this->isBoardComponent(),
       'desc' => $this->getDesc(),
       'container' => $this->container,
-    ];
+    ]);
   }
 
   public function isSupported($players, $options)

@@ -70,20 +70,27 @@ class Notifications
       'meeples' => $datas['meeples'],
       'players' => $datas['players'],
       'scores' => $datas['scores'],
-      'playerCards' => $datas['playerCards'],
+      'buildings' => $datas['buildings'],
+      'tiles' => $datas['tiles'],
     ];
 
     foreach ($fDatas['playerCards'] as $i => $card) {
       $fDatas['playerCards'][$i] = self::filterCardDatas($card);
-    }
-    foreach ($fDatas['players'] as &$player) {
-      $player['hand'] = []; // Hide hand !
     }
 
     self::notifyAll('refreshUI', '', [
       'datas' => $fDatas,
     ]);
   }
+
+  /////////////////////////////////////////////////////////
+  //  _   _            _               _            _
+  // | | | |_ __   ___| |__   ___  ___| | _____  __| |
+  // | | | | '_ \ / __| '_ \ / _ \/ __| |/ / _ \/ _` |
+  // | |_| | | | | (__| | | |  __/ (__|   <  __/ (_| |
+  //  \___/|_| |_|\___|_| |_|\___|\___|_|\_\___|\__,_|
+  //
+  /////////////////////////////////////////////////////////
 
   public static function startNewTurn($turn)
   {
@@ -228,7 +235,6 @@ class Notifications
       'sows' => $sows,
     ]);
   }
-
 
   public static function placeTile($player, $tile, $squares)
   {
@@ -469,39 +475,6 @@ class Notifications
     ]);
   }
 
-  public static function buyCard($card, $player)
-  {
-    self::notifyAll('buyCard', clienttranslate('${player_name} buys ${card_name} (${card_type})'), [
-      'player' => $player,
-      'card' => $card,
-    ]);
-  }
-
-  public static function buyAndPassCard($card, $player, $nextPlayer)
-  {
-    self::notifyAll(
-      'buyAndPassCard',
-      clienttranslate('${player_name} buys ${card_name} (${card_type}) and pass it to ${player_name2}'),
-      [
-        'player' => $player,
-        'player2' => $nextPlayer,
-        'card' => $card,
-      ]
-    );
-  }
-
-  public static function buyAndDestroyCard($card, $player)
-  {
-    self::notifyAll(
-      'buyAndDestroyCard',
-      clienttranslate('${player_name} buys ${card_name} (${card_type}) and remove it from the game'),
-      [
-        'player' => $player,
-        'card' => $card,
-      ]
-    );
-  }
-
   public static function placeMeeplesForFuture($player, $resources, $turns, $meeples)
   {
     $msg =
@@ -656,14 +629,9 @@ class Notifications
       unset($data['player2']);
     }
 
-    if (isset($data['card'])) {
+    if (isset($data['building'])) {
       $data['i18n'][] = 'card_name';
-      $data['card_name'] = $data['card']->getName();
-
-      if ($data['card'] instanceof \CAV\Models\PlayerCard) {
-        $data['i18n'][] = 'card_type';
-        $data['card_type'] = $data['card']->getTypeStr();
-      }
+      $data['building_name'] = $data['building']->getName();
     }
 
     if (isset($data['resources'])) {

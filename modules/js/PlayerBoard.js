@@ -244,7 +244,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
         return tile.id;
       });
-      console.log(tileIds);
+
       document.querySelectorAll('.caverna-tile').forEach((oTile) => {
         if (!tileIds.includes(parseInt(oTile.getAttribute('data-id')))) {
           dojo.destroy(oTile);
