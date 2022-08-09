@@ -108,7 +108,9 @@ class ActionCard extends \CAV\Helpers\DB_Model
           $n = Meeples::getResourcesOnCard(self::getId())->count();
           $amount = $n == 0 ? $amount[0] : $amount[1];
         }
-        $ids = array_merge($ids, Meeples::createResourceOnCard($resource, self::getId(), $amount));
+        if ($amount > 0) {
+          $ids = array_merge($ids, Meeples::createResourceOnCard($resource, self::getId(), $amount));
+        }
       }
     }
     return $ids;

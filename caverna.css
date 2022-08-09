@@ -837,10 +837,10 @@ html {
   .action-card-holder[data-id='ActionWoodGathering'] .action-card .action-background {
     background-position-x: 50%;
     background-position-y: 100%; }
-  .action-card-holder[data-id='ActionImitation5'] {
+  .action-card-holder[data-id='ActionImitation5'] .action-card .action-background {
     background-position-x: 100%;
     background-position-y: 33.3333333333%; }
-  .action-card-holder[data-id='ActionImitation7'] {
+  .action-card-holder[data-id='ActionImitation7'] .action-card .action-background {
     background-position-x: 100%;
     background-position-y: 33.3333333333%; }
   .action-card-holder[data-id='ActionRubyMining'] .action-desc {
