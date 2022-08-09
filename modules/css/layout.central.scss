@@ -277,11 +277,14 @@
     left: 30px;
     padding: 4px;
     font-size: 30px;
-    background-color: rgba(230, 216, 142, 0.9);
+    background-color: rgba(249, 246, 127, 0.9);
     border: 1px solid #222;
     border-radius: 5px;
     display: flex;
     flex-flow: column-reverse;
+    box-shadow: 2px 2px 2px -1px black;
+    min-width: 10px;
+    min-height: 10px;
 
     .caverna-meeple {
       margin: -0.6em auto 0;
@@ -307,7 +310,7 @@
       position: absolute;
       bottom: -13px;
       right: -13px;
-      background-color: #f9a63b;
+      background-color: #eeb124;
       border-radius: 50%;
       text-align: center;
       line-height: 20px;
@@ -316,6 +319,7 @@
       font-weight: bold;
       z-index: 200;
       color: black;
+      box-shadow: 2px 2px 3px -1px black;
     }
   }
 
