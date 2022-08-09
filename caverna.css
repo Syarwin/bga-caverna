@@ -414,11 +414,14 @@ html {
     left: 30px;
     padding: 4px;
     font-size: 30px;
-    background-color: rgba(230, 216, 142, 0.9);
+    background-color: rgba(249, 246, 127, 0.9);
     border: 1px solid #222;
     border-radius: 5px;
     display: flex;
-    flex-flow: column-reverse; }
+    flex-flow: column-reverse;
+    box-shadow: 2px 2px 2px -1px black;
+    min-width: 10px;
+    min-height: 10px; }
     .action-card-holder .resource-holder .caverna-meeple {
       margin: -0.6em auto 0; }
       .action-card-holder .resource-holder .caverna-meeple:last-child {
@@ -451,7 +454,7 @@ html {
       position: absolute;
       bottom: -13px;
       right: -13px;
-      background-color: #f9a63b;
+      background-color: #eeb124;
       border-radius: 50%;
       text-align: center;
       line-height: 20px;
@@ -459,7 +462,8 @@ html {
       font-size: 14px;
       font-weight: bold;
       z-index: 200;
-      color: black; }
+      color: black;
+      box-shadow: 2px 2px 3px -1px black; }
   .action-card-holder .action-card {
     width: 100%;
     height: 100%;
@@ -989,7 +993,7 @@ html {
     background-position: 41.0714% 32.1759%;
     background-size: 800%; }
   .caverna-meeple.meeple-ore {
-    width: 0.9154em;
+    width: 0.91em;
     height: 0.7062em;
     background-position: 39.3665% 48.2533%;
     background-size: 731.429%; }
@@ -1020,7 +1024,7 @@ html {
     background-size: 522.449%; }
   .caverna-meeple.meeple-pig {
     width: 1.118em;
-    height: 0.78em;
+    height: 0.77em;
     background-position: 81.9797% 32.0276%;
     background-size: 433.898%; }
   .caverna-meeple.meeple-cattle {
