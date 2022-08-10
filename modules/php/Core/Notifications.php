@@ -59,7 +59,6 @@ class Notifications
       'id' => $card['id'],
       'location' => $card['location'],
       'pId' => $card['pId'],
-      'state' => $card['state'],
       'bonusVp' => $card['bonusVp'],
     ];
   }

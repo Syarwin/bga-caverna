@@ -357,9 +357,17 @@ html {
     justify-content: center;
     font-size: 17px;
     font-family: var(--caverna-font-family); }
+  .caverna-building .building-desc {
+    height: 85px;
+    margin: 57px 14px;
+    font-size: 15px;
+    font-family: var(--caverna-font-family); }
+    .caverna-building .building-desc > div {
+      text-align: center; }
 
 #buildings-test {
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap; }
   #buildings-test .caverna-building {
     margin: 5px; }
 

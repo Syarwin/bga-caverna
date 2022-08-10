@@ -87,9 +87,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Smarter buffering of building details (to not resend them over notification again)
      */
     loadSaveBuilding(building) {
-      if (building.text) {
+      if (building.desc) {
         // Building contains all info => save it in buildingStorage
-        building.description = this.formatCardDesc(building.text);
+        building.description = this.formatCardDesc(building.desc);
         this._buildingStorage[building.id] = building;
       } else {
         // Building is missing information : load it from buildingStorage

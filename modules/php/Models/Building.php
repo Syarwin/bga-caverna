@@ -36,9 +36,9 @@ class Building extends \CAV\Helpers\DB_Model
    * STATIC INFORMATIONS
    *  they are overwritten by children
    */
-  protected $staticAttributes = ['name', 'text', 'tooltip', 'vp', 'category', 'dwelling'];
+  protected $staticAttributes = ['name', 'desc', 'tooltip', 'vp', 'category', 'dwelling'];
   protected $name = ''; // UI
-  protected $text = []; // UI
+  protected $desc = []; // UI
   protected $tooltip = [];
   protected $vp = 0;
   protected $category = null; // Useful for location on board

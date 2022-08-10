@@ -1,0 +1,26 @@
+<?php
+namespace CAV\Buildings\D;
+
+class D_AddDwelling extends \CAV\Models\Building
+{
+  public function __construct($row)
+  {
+    parent::__construct($row);
+    $this->type = 'D_AddDwelling';
+    $this->category = 'dwelling';
+    $this->name = clienttranslate('Additional Dwelling');
+    $this->desc = [clienttranslate('room for the sixth dwarf only')];
+    $this->tooltip = [
+      clienttranslate(
+        'The Additional dwelling provides room for a sixth Dwarf. Until you do not have 6 Dwarfs, this Dwelling stays empty.'
+      ),
+      clienttranslate('You can build it even if you do not have 5 Dwarfs at the time you build it.'),
+      clienttranslate(
+        'Once you have 5 Dwarfs, you can use a Family growth action to get a sixth Dwarf (see also “Family chamber”).'
+      ),
+    ];
+    $this->dwelling = 1;
+    $this->costs = [[WOOD => 4, STONE => 3]];
+    $this->vp = 5;
+  }
+}

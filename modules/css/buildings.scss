@@ -46,11 +46,20 @@
   }
 
   .building-desc {
+    height: 85px;
+    margin: 57px 14px;
+    font-size: 15px;
+    font-family: var(--caverna-font-family);
+
+    & > div {
+      text-align: center;
+    }
   }
 }
 
 #buildings-test {
   display: flex;
+  flex-wrap: wrap;
 
   .caverna-building {
     margin: 5px;
