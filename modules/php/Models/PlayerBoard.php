@@ -94,9 +94,6 @@ class PlayerBoard
     $this->stablesGrid = $this->createEmptyGrid();
 
     $this->buildings = Buildings::getOfPlayer($this->pId)->toArray();
-    foreach ($this->buildings as $building) {
-      $this->grid[$building->getX()][$building->getY()] = $building;
-    }
 
     $this->tiles = Tiles::getOfPlayer($this->pId);
     foreach ($this->tiles as $tile) {
@@ -187,18 +184,17 @@ class PlayerBoard
    * Add a building at a given position
    * This only check that the spot is free
    */
-  public function addBuilding($buildingType, &$building)
+  public function addBuilding($buildingId, $pos)
   {
-    $this->checkNodePos($building['x'], $building['y']);
-    if (!$this->isFree($building)) {
-      throw new \BgaVisibleSystemException('This node is not free');
+    $this->checkNodePos($pos['x'], $pos['y']);
+
+    $building = Buildings::get($buildingId);
+    if($building->getType() == 'D_Dwelling'){
+      $building = Buildings::createDwelling();
     }
 
-    // Create the building meeple and update the variable
-    $id = Buildings::createResourceInLocation($buildingType, 'board', $this->pId, $room['x'], $room['y']);
-    $building = Buildings::get($id);
     $this->buildings[] = $building;
-    $this->grid[$building->getX()][$building->getY()] = $building;
+    return $building;
   }
 
   ///////////////////////////////////////////////////////////////////////

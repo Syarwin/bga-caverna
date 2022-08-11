@@ -208,11 +208,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     /**
      * Notification when someone bought a building
      */
-    notif_buyBuilding(n) {
+    notif_furnish(n) {
       debug('Notif: buying a building', n);
       let building = n.args.building;
-
-      dojo.query('.buildings-wrapper .player-building.phantom').removeClass('phantom');
+      return; // TODO
 
       let duration = 700;
       let waitingTime = 80000 / this._buildingAnimationSpeed;
@@ -231,23 +230,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           .then(() => this.notifqueue.setSynchronousDuration(10));
       }
 
-      // If the building was already existing, make sure to add event listener for zooming
-      if (exists) {
-        dojo.addClass(building.id, 'mini');
-        $(building.id)
-          .querySelector('.player-building-zoom')
-          .addEventListener('click', () => {
-            this.zoomOnBuilding(building.id);
-          });
-      }
-
       // Close major modal if open
       if (this._majorsDialog.isDisplayed()) {
         this._majorsDialog.hide();
-      }
-      // Close hand modal if open
-      if (this._handDialog.isDisplayed()) {
-        this._handDialog.hide();
       }
 
       return null;

@@ -18,4 +18,9 @@ class G_DogSchool extends \CAV\Models\Building
     $this->cost = [];
     $this->vp = 0;
   }
+
+  public function getCosts($player, $args = [])
+  {
+    return NO_COST;
+  }
 }

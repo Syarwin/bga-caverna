@@ -485,8 +485,8 @@ define([
       onEnteringStateFurnishSelectZone(args) {
         this.addCancelStateBtn();
         $(`building-${args.buildingId}`).classList.add('selected');
-        this.promptPlayerBoardZones(args.zones, 1, 1, (zone) => {
-          this.takeAtomicAction('actFurnish', [args.buildingId, zone]);
+        this.promptPlayerBoardZones(args.zones, 1, 1, (zones) => {
+          this.takeAtomicAction('actFurnish', [args.buildingId, zones[0]]);
         });
       },
 

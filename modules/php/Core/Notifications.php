@@ -187,14 +187,11 @@ class Notifications
     self::updateDropZones($player);
   }
 
-  public static function furnish($player, $building, $deletedCavern)
+  public static function furnish($player, $building)
   {
-    self::notifyAll('furnish', clienttranslate('${player_name} furnishes the cavern with ${building_name}'), [
+    self::notifyAll('furnish', clienttranslate('${player_name} furnishes its cavern with ${building_name}'), [
       'player' => $player,
-      'i18n' => ['building_name'],
-      'building_name' => $building->getName(),
       'building' => $building,
-      'deletedCavern' => $deletedCavern,
     ]);
   }
 

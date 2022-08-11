@@ -156,19 +156,10 @@ class Building extends \CAV\Helpers\DB_Model
     //Stats::setCardPlayed($player->getId(), $this->getCode(), Globals::getTurn());
 
     // Update location
-    self::DB()->update(
-      [
-        'player_id' => $player->getId(),
-        'building_location' => 'inPlay',
-        'x' => $x,
-        'y' => $y,
-      ],
-      $this->id
-    );
-    $this->location = 'inPlay';
-    $this->x = $x;
-    $this->y = $y;
-    $this->pId = $player->getId();
+    $this->setPId($player->getId());
+    $this->setLocation('inPlay');
+    $this->setX($x);
+    $this->setY($y);
 
     // Trigger of Pay if needed
     $cost = $this->getCosts($player, $args);

@@ -201,7 +201,8 @@ html {
     box-sizing: border-box;
     background-origin: border-box;
     border-radius: 15px;
-    border: 2px solid black; }
+    border: 2px solid black;
+    box-shadow: 2px 2px 1px 0px #555; }
   .caverna-building.selectable {
     cursor: pointer; }
     .caverna-building.selectable .building-resizable {
@@ -374,6 +375,24 @@ html {
     font-family: var(--caverna-font-family); }
     .caverna-building .building-desc > div {
       text-align: center; }
+
+.board-cell .caverna-building {
+  position: relative; }
+  .board-cell .caverna-building::before {
+    content: '';
+    display: block;
+    width: 92px;
+    height: 21px;
+    background: black;
+    position: absolute;
+    border-radius: 7px 7px 0px 0px;
+    left: -1px;
+    top: -1px; }
+  .board-cell .caverna-building[data-type='StartDwelling']::before {
+    display: none; }
+  .board-cell .caverna-building .building-resizable {
+    border: none;
+    box-shadow: none; }
 
 #buildings-test {
   display: flex;

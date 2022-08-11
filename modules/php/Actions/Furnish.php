@@ -70,32 +70,25 @@ class Furnish extends \CAV\Models\Action
     self::checkAction('actFurnish');
 
     $player = Players::getCurrent();
-    $buildings = $this->getAvailableBuildings();
+    $buildings = $this->getBuyableBuildings($player);
     if (!array_key_exists($buildingId, $buildings)) {
       throw new \feException('Building cannot be bought. Should not happen');
     }
-    if (!in_array($pos, $buildings[$buildingId])) {
+    if (!in_array($zone, $buildings[$buildingId])) {
       throw new \feException('You can\'t put that building here. Should not happen');
     }
 
-    var_dump($buildingId, $zone);
-    die('test');
-    // TODO
-
     // Replace cavern with the new building
-    Buildings::addBuilding($tile, $cavernId, $player);
-    Notifications::furnish($player, Buildings::get($tile['id']), $cavernId);
+    $building = $player->board()->addBuilding($buildingId, $zone);
+    Notifications::furnish($player, $building);
 
-    // Trigger of Pay if needed
-    $cost = $building->getCosts($player, $this->getCtxArgs());
-    if ($cost != NO_COST) {
-      $player->pay(1, $cost, $building->getName());
-    }
-    $playerBoard->refresh();
+    // Trigger effects
+    $building->actFurnish($player, $zone['x'], $zone['y']);
 
     // Listeners for cards
     $eventData = [
-      'building' => $tile,
+      'buildingId' => $buildingId,
+      'pos' => $zone,
     ];
     $this->checkAfterListeners($player, $eventData);
 

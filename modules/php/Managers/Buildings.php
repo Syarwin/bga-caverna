@@ -59,6 +59,14 @@ class Buildings extends \CAV\Helpers\Pieces
     self::create($buildings);
   }
 
+  public static function createDwelling()
+  {
+    return self::singleCreate([
+      'type' => 'D_Dwelling',
+      'location' => 'inPlay',
+    ]);
+  }
+
   public static function getUiData()
   {
     return self::getInLocationOrdered('board')
@@ -88,16 +96,6 @@ class Buildings extends \CAV\Helpers\Pieces
   public static function getOfPlayer($pId)
   {
     return self::getFilteredQuery($pId, 'inPlay', null)->get();
-  }
-
-  /**************************** Buildings *****************************************/
-  public function addBuilding($tile, $cavernId, $player)
-  {
-    self::DB()->delete($cavernId);
-    self::DB()->update(
-      ['player_id' => $player->getId(), 'building_location' => 'inPlay', 'x' => $tile['x'], 'y' => $tile['y']],
-      $tile['id']
-    );
   }
 
   /**************************** Dwellings *****************************************/
