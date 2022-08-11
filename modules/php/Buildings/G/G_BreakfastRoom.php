@@ -11,7 +11,7 @@ class G_BreakfastRoom extends \CAV\Models\Building
     $this->name = clienttranslate('Breakfast Room');
     $this->desc = [clienttranslate('room for up to')];
     $this->tooltip = [clienttranslate('The Breakfast room can hold up to 3 Cattle but no other Farm animals.')];
-    $this->costs = [[WOOD => 1]];
+    $this->cost = [WOOD => 1];
     $this->vp = 0;
   }
 }

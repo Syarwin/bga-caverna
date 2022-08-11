@@ -16,7 +16,7 @@ class G_StoneSupplier extends \CAV\Models\Building
       ),
       clienttranslate('At the beginning of these rounds, you receive the Wood.'),
     ];
-    $this->costs = [[WOOD => 1]];
+    $this->cost = [WOOD => 1];
     $this->vp = 1;
   }
 }

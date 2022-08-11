@@ -14,7 +14,7 @@ class G_Quarry extends \CAV\Models\Building
       clienttranslate('From now on, you will immediately get 1 Stone from the general supply for each newborn Donkey.'),
       clienttranslate('(This does not apply to Donkeys that you get from game boards or for Rubies.)'),
     ];
-    $this->costs = [[WOOD => 1]];
+    $this->cost = [WOOD => 1];
     $this->vp = 2;
   }
 }

@@ -14,7 +14,7 @@ class D_MixedDwelling extends \CAV\Models\Building
       clienttranslate('The Mixed dwelling provides room for exactly 1 Dwarf and 2 animals of the same type.'),
     ];
     $this->dwelling = 1;
-    $this->costs = [[WOOD => 5, STONE => 4]];
+    $this->cost = [WOOD => 5, STONE => 4];
     $this->vp = 4;
   }
 }

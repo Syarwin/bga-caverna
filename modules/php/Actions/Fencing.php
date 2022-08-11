@@ -82,26 +82,6 @@ class Fencing extends \CAV\Models\Action
     $playerBoard->arePasturesValid(true);
 
     $pastures = $playerBoard->getPastures(true);
-    $newPastures = [
-      // Useful for ShepherdsCrook
-      'all' => Utils::diffPastures($pastures, $oldPastures, false),
-      'new' => Utils::diffPastures($pastures, $oldPastures, true),
-    ];
-
-    if ($this->isMiniPasture()) {
-      // throw new \feException(print_r($newPastures));
-      $miniPastureError = totranslate('You must fence exactly one farmyard space');
-      if (count($newPastures['new']) != 1 || count($newPastures['all']) != 1) {
-        throw new UserException($miniPastureError);
-      }
-
-      foreach ($newPastures['new'] as $pasture) {
-        if (isset($pasture['nodes']) && count($pasture['nodes']) != 1) {
-          throw new \BgaUserException($miniPastureError);
-        }
-      }
-    }
-
     if (!$player->board()->areAnimalsValid(false)) {
       Engine::insertAsChild([
         'action' => REORGANIZE,

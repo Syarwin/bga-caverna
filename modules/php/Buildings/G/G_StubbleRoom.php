@@ -15,7 +15,7 @@ class G_StubbleRoom extends \CAV\Models\Building
         'You can keep (exactly) 1 Farm animal on each of your empty Fields (i.e. that currently do not have any Grain or Vegetables sown on them).'
       ),
     ];
-    $this->costs = [[WOOD => 1, ORE => 1]];
+    $this->cost = [WOOD => 1, ORE => 1];
     $this->vp = 1;
   }
 }

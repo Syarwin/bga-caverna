@@ -16,7 +16,7 @@ class G_RubySupplier extends \CAV\Models\Building
       ),
       clienttranslate('At the beginning of these rounds, you receive the Wood.'),
     ];
-    $this->costs = [[WOOD => 2, STONE => 2]];
+    $this->cost = [WOOD => 2, STONE => 2];
     $this->vp = 2;
   }
 }

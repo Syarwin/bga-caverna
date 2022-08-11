@@ -16,6 +16,25 @@
     border: 2px solid black;
   }
 
+  &.selectable {
+    cursor: pointer;
+
+    .building-resizable {
+      border: 2px dashed red;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+
+      .building-resizable {
+        border: 2px solid red;
+      }
+    }
+  }
+  &.selected .building-resizable {
+    border: 2px solid red;
+  }
+
   $buildings: 'BroomChamber' 'FodderChamber' 'FoodChamber' 'MainStorage' 'OreStorage' 'PrayerChamber' 'SparePartStorage'
     'StoneStorage' 'SuppliesStorage' 'TreasureChamber' 'WeaponStorage' 'WritingChamber' 'Blacksmith' 'Builder'
     'Carpenter' 'DogSchool' 'Miner' 'Quarry' 'RubySupplier' 'Seam' 'StoneCarver' 'StoneSupplier' 'Trader' 'WoodSupplier'

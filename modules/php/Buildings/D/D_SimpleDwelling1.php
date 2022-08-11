@@ -17,6 +17,6 @@ class D_SimpleDwelling1 extends \CAV\Models\Building
       clienttranslate('They provide room for exactly 1 Dwarf'),
     ];
     $this->dwelling = 1;
-    $this->costs = [[WOOD => 4, STONE => 2]];
+    $this->cost = [WOOD => 4, STONE => 2];
   }
 }

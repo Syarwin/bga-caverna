@@ -13,7 +13,7 @@ class G_Carpenter extends \CAV\Models\Building
     $this->tooltip = [
       clienttranslate('Every time you furnish a Cavern or carry out a Build fences action, you may pay 1 fewer Wood.'),
     ];
-    $this->costs = [[STONE => 1]];
+    $this->cost = [STONE => 1];
     $this->vp = 0;
   }
 }

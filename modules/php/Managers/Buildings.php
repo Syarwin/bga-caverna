@@ -120,24 +120,10 @@ class Buildings extends \CAV\Helpers\Pieces
     });
   }
 
-  public static function getAvailables($type = null)
+  public static function getAvailables($types = null)
   {
-    $location = 'board';
-    $dwelling = false;
-
-    return self::getInLocation($location)->filter(function ($building) use ($type, &$dwelling) {
-      if ($dwelling === true && $building->getType() == 'D_Dwelling') {
-        return false;
-      }
-
-      // to manage infinite dwelling
-      if (!$dwelling && !$building->isPlayed() && $building->getType() == 'D_Dwelling') {
-        $dwelling = true;
-      }
-
-      return !$building->isPlayed() &&
-        ($type == null || $building->getType() == $type) &&
-        $building instanceof \CAV\Models\Building;
+    return self::getInLocation('board')->filter(function ($building) use ($types) {
+      return $types == null || in_array($building->getType(), $types);
     });
   }
 

@@ -890,5 +890,24 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
       o.setValue(defaultValue);
       return o;
     },
+
+    clientState(name, descriptionmyturn, args) {
+      this.setClientState(name, {
+        descriptionmyturn,
+        args,
+      });
+    },
+
+    addCancelStateBtn(text = null) {
+      if (text == null) {
+        text = _('Cancel');
+      }
+
+      this.addSecondaryActionButton('btnCancel', text, () => this.clearClientState());
+    },
+
+    clearClientState() {
+      this.restoreServerGameState();
+    },
   });
 });

@@ -19,7 +19,7 @@ class D_CoupleDwelling extends \CAV\Models\Building
       ),
     ];
     $this->dwelling = 2;
-    $this->costs = [[WOOD => 8, STONE => 6]];
+    $this->cost = [WOOD => 8, STONE => 6];
     $this->vp = 5;
   }
 }

@@ -51,6 +51,14 @@ class Building extends \CAV\Helpers\DB_Model
     return $data;
   }
 
+  public function getPos()
+  {
+    return [
+      'x' => $this->getX(),
+      'y' => $this->getY(),
+    ];
+  }
+
   public function getPlayer($checkPlayed = false)
   {
     if (!$this->isPlayed() && $checkPlayed) {
@@ -121,10 +129,6 @@ class Building extends \CAV\Helpers\DB_Model
 
     foreach ($this->getBaseCosts() as $cost) {
       $costs['trades'][] = array_merge(['max' => 1], $cost);
-    }
-
-    if (!is_null($this->fee)) {
-      $costs['fee'] = $this->fee;
     }
 
     // Apply card effects

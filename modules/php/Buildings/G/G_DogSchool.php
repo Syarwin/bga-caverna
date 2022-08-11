@@ -15,7 +15,7 @@ class G_DogSchool extends \CAV\Models\Building
         'From now on, you will immediately get 1 Wood from the general supply for each new Dog you place on your Home board.'
       ),
     ];
-    $this->costs = [NO_COST];
+    $this->cost = [];
     $this->vp = 0;
   }
 }

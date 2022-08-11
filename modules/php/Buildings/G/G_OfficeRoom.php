@@ -16,7 +16,7 @@ class G_OfficeRoom extends \CAV\Models\Building
       ),
       clienttranslate('Every time you do so, take 2 Gold from the general supply.'),
     ];
-    $this->costs = [[STONE => 1]];
+    $this->cost = [STONE => 1];
     $this->vp = 0;
   }
 }

@@ -67,8 +67,8 @@ define([
           'confirmTurn',
           'confirmPartialTurn',
           'placeTile',
+          'furnish',
           // UNCHECKED
-          'construct',
           'exchange',
           'fencing',
           'improvement',
@@ -470,6 +470,26 @@ define([
         addLoot(14, 'breed', _('Breed two types of animals'));
       },
 
+      onEnteringStateFurnish(args) {
+        // TODO : add grey filter on other buildings
+        Object.keys(args.buildings).forEach((buildingId) => {
+          this.onClick(`building-${buildingId}`, () => {
+            this.clientState('furnishSelectZone', _('Click on your player board to place the building'), {
+              buildingId,
+              zones: args.buildings[buildingId],
+            });
+          });
+        });
+      },
+
+      onEnteringStateFurnishSelectZone(args) {
+        this.addCancelStateBtn();
+        $(`building-${args.buildingId}`).classList.add('selected');
+        this.promptPlayerBoardZones(args.zones, 1, 1, (zone) => {
+          this.takeAtomicAction('actFurnish', [args.buildingId, zone]);
+        });
+      },
+
       //////////////////////////
       //////// UNCHECKED ////////////
       //////////////////////////
@@ -478,20 +498,8 @@ define([
         this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actFence', [zones]));
       },
 
-
       onEnteringStateStables(args) {
         this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actStables', [zones]));
-      },
-
-      onEnteringStateImprovement(args) {
-        if (args._private.cards.length != 0)
-          this.promptCard(args.types, args._private.cards, (cardId) =>
-            this.takeAtomicAction('actImprovement', [cardId]),
-          );
-      },
-
-      onEnteringStateOccupation(args) {
-        this.promptCard(args.types, args._private.cards, (cardId) => this.takeAtomicAction('actOccupation', [cardId]));
       },
 
       onEnteringStatePayResources(args) {

@@ -16,7 +16,7 @@ class G_CuddleRoom extends \CAV\Models\Building
       ),
       clienttranslate('(Both Dwarf discs on a “Family growth“ action count towards this number.)'),
     ];
-    $this->costs = [[WOOD => 1]];
+    $this->cost = [WOOD => 1];
     $this->vp = 2;
   }
 }

@@ -360,6 +360,38 @@ class PlayerBoard
   /////////////////////////////////////////////////
 
   /**
+   * Return all buildable zones for a building (furnish action)
+   */
+  // caching buildable zones
+  protected $buildableZones = null;
+  public function getBuildableZones($building)
+  {
+    if (is_null($this->buildableZones)) {
+      // Compute all caverns (+ tunnel if player played the XXX building TODO)
+      $this->buildableZones = [];
+      foreach ($this->tiles as $tile) {
+        if ($tile['type'] == TILE_CAVERN) {
+          // TODO : handle that building that add other buildable zones as well
+          $this->buildableZones[] = $this->extractPos($tile);
+        }
+      }
+      // Remove zone with a building already placed on them
+      $occupiedZones = array_map(function ($building) {
+        return $building->getPos();
+      }, $this->buildings);
+      $this->buildableZones = Utils::diffZones($this->buildableZones, $occupiedZones);
+    }
+
+    $zones = $this->buildableZones;
+    // TODO : handle that pair of buildings
+    // if(...){
+    //   ...
+    // }
+
+    return $zones;
+  }
+
+  /**
    * Return all fields that could receive a crop
    */
   public function getSowableFields($reserve = null, $ignoreResources = false)
@@ -539,7 +571,7 @@ class PlayerBoard
   /**
    * Return all nodes that could receive a single tile
    */
-  public function getBuildableZones($tile, $checkAdjacency = true)
+  public function getPlacableZones($tile, $checkAdjacency = true)
   {
     $nodes = [];
     if (in_array($tile, [TILE_FIELD, TILE_MEADOW])) {
@@ -548,7 +580,7 @@ class PlayerBoard
       $nodes = $this->getFreeZones(MOUNTAIN);
     } else {
       return [];
-      die('TODO : getBuildableZones : ' . $tile);
+      die('TODO : getPlacableZones : ' . $tile);
     }
 
     return $checkAdjacency ? $this->getAdjacentZones($nodes) : $nodes;
@@ -564,12 +596,12 @@ class PlayerBoard
 
     // Get buildable zone
     if (count($tiles) == 1) {
-      return $this->getBuildableZones($tiles[0]);
+      return $this->getPlacableZones($tiles[0]);
     } elseif (count($tiles) == 2) {
       $zones = [];
       for ($i = 0; $i <= 1; $i++) {
-        foreach ($this->getBuildableZones($tiles[$i]) as $pos) {
-          $neighbours = $this->getAdjacentZones($this->getBuildableZones($tiles[1 - $i], false), [$pos]);
+        foreach ($this->getPlacableZones($tiles[$i]) as $pos) {
+          $neighbours = $this->getAdjacentZones($this->getPlacableZones($tiles[1 - $i], false), [$pos]);
           foreach ($neighbours as $pos2) {
             $zones[] = [
               'pos1' => $i == 0 ? $pos : $pos2,

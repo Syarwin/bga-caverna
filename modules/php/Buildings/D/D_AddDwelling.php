@@ -20,7 +20,7 @@ class D_AddDwelling extends \CAV\Models\Building
       ),
     ];
     $this->dwelling = 1;
-    $this->costs = [[WOOD => 4, STONE => 3]];
+    $this->cost = [WOOD => 4, STONE => 3];
     $this->vp = 5;
   }
 }

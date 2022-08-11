@@ -20,7 +20,7 @@ class G_Miner extends \CAV\Models\Building
       ),
       clienttranslate('(This does not apply to Ruby mines with Donkeys.).'),
     ];
-    $this->costs = [[WOOD => 1, STONE => 1]];
+    $this->cost = [WOOD => 1, STONE => 1];
     $this->vp = 3;
   }
 }

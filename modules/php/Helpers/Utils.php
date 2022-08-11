@@ -75,35 +75,16 @@ abstract class Utils extends \APP_DbObject
     );
   }
 
-  // $onlyNew allow to distinguish subdivided pastures from fresh new pasture
-  public static function diffPastures($newP, $oldP, $onlyNew)
+  /**
+   * Diff two arrays of obj with keys x,y
+   */
+  public static function diffZones($arr1, $arr2)
   {
-    $pastures = [];
-    foreach ($newP as $p1) {
-      $found = false;
-      foreach ($oldP as $p2) {
-        if ($onlyNew || count($p1['nodes']) == count($p2['nodes'])) {
-          $allIn = true;
-          foreach ($p1['nodes'] as $n) {
-            if (!in_array($n, $p2['nodes'])) {
-              $allIn = false;
-              break;
-            }
-          }
-
-          if ($allIn) {
-            $found = true;
-            break;
-          }
-        }
-      }
-
-      if (!$found) {
-        $pastures[] = $p1;
-      }
-    }
-
-    return $pastures;
+    return array_values(
+      array_udiff($arr1, $arr2, function ($a, $b) {
+        return $a['x'] == $b['x'] ? $a['y'] - $b['y'] : $a['x'] - $b['x'];
+      })
+    );
   }
 
   public static function formatCost($cost)

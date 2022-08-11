@@ -17,7 +17,7 @@ class G_Blacksmith extends \CAV\Models\Building
       ),
       clienttranslate('(You cannot apply the ability of the Blacksmith to the “Ore trading” action.)'),
     ];
-    $this->costs = [[WOOD => 1, STONE => 2]];
+    $this->cost = [WOOD => 1, STONE => 2];
     $this->vp = 3;
   }
 }

@@ -19,7 +19,7 @@ class G_GuestRoom extends \CAV\Models\Building
         'In a 7-player game, you may use the Guest room on the Extension Action space to get both twin tiles (and goods) but only once per game'
       ),
     ];
-    $this->costs = [[WOOD => 1, STONE => 1]];
+    $this->cost = [WOOD => 1, STONE => 1];
     $this->vp = 0;
   }
 }

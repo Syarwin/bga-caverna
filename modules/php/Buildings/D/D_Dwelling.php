@@ -18,7 +18,7 @@ class D_Dwelling extends \CAV\Models\Building
         'If you use the "Furnish an ordinary dwelling for 2 Wood and 2 Stone" Expedition loot item (requires strength 12 or more), you can only build one of these Dwellings*.'
       ),
     ];
-    $this->costs = [[WOOD => 4, STONE => 3]];
+    $this->cost = [WOOD => 4, STONE => 3];
     $this->vp = 3;
   }
 }

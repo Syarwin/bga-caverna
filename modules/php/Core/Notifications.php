@@ -53,13 +53,13 @@ class Notifications
   }
 
   // Remove extra information from cards
-  protected function filterCardDatas($card)
+  protected function filterBuildingdDatas($building)
   {
     return [
-      'id' => $card['id'],
-      'location' => $card['location'],
-      'pId' => $card['pId'],
-      'bonusVp' => $card['bonusVp'],
+      'id' => $building['id'],
+      'location' => $building['location'],
+      'pId' => $building['pId'],
+      'bonusVp' => $building['bonusVp'],
     ];
   }
   public static function refreshUI($datas)
@@ -73,8 +73,8 @@ class Notifications
       'tiles' => $datas['tiles'],
     ];
 
-    foreach ($fDatas['playerCards'] as $i => $card) {
-      $fDatas['playerCards'][$i] = self::filterCardDatas($card);
+    foreach ($fDatas['buildings'] as $i => $building) {
+      $fDatas['buildings'][$i] = self::filterBuildingdDatas($building);
     }
 
     self::notifyAll('refreshUI', '', [
@@ -628,8 +628,13 @@ class Notifications
       unset($data['player2']);
     }
 
-    if (isset($data['building'])) {
+    if (isset($data['card'])) {
       $data['i18n'][] = 'card_name';
+      $data['card_name'] = $data['card']->getName();
+    }
+
+    if (isset($data['building'])) {
+      $data['i18n'][] = 'building_name';
       $data['building_name'] = $data['building']->getName();
     }
 

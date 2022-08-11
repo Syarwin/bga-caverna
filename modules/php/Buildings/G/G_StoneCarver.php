@@ -17,7 +17,7 @@ class G_StoneCarver extends \CAV\Models\Building
       clienttranslate('Every time you furnish a Cavern or build a Stable, you may pay 1 fewer Stone.'),
       clienttranslate('(Consequently, you can build Stables for free.)'),
     ];
-    $this->costs = [[WOOD => 1]];
+    $this->cost = [WOOD => 1];
     $this->vp = 1;
   }
 }

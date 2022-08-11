@@ -21,7 +21,7 @@ class G_Trader extends \CAV\Models\Building
         'He cannot use the Spare part storage any longer and does not get any points at the end of the game for it. The same applies if a player has already built the Trader and decides to build the Spare part storage. (In general, Furnishing tiles cannot be overbuilt.)'
       ),
     ];
-    $this->costs = [[WOOD => 1]];
+    $this->cost = [WOOD => 1];
     $this->vp = 2;
   }
 }

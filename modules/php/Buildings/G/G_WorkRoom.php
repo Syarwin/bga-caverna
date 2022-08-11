@@ -18,7 +18,7 @@ class G_WorkRoom extends \CAV\Models\Building
         '(Remember you can spend 1 Ruby to get a Tunnel tile. You cannot build the Work room on a Tunnel tile.)'
       ),
     ];
-    $this->costs = [[STONE => 1]];
+    $this->cost = [STONE => 1];
     $this->vp = 2;
   }
 }

@@ -15,7 +15,7 @@ class Furnish extends \CAV\Models\Action
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->description = clienttranslate('Furnish your Cavern)');
+    $this->description = clienttranslate('Furnish your Cavern');
   }
 
   public function getState()
@@ -23,17 +23,14 @@ class Furnish extends \CAV\Models\Action
     return ST_FURNISH;
   }
 
+  // Return the list of available buildings (type might be enforced, eg : Dwelling)
   public function getAvailableBuildings()
   {
-    $buildings = new Collection();
-    $types = $this->getCtxArgs()['types'] ?? [null];
-
-    foreach ($types as $type) {
-      $buildings = $buildings->merge(Buildings::getAvailables($type));
-    }
-    return $buildings;
+    $types = $this->getCtxArgs()['types'] ?? null;
+    return Buildings::getAvailables($types);
   }
 
+  // Return the list of building that can be purchased and have a valid placement zone
   public function getBuyableBuildings($player, $ignoreResources = false)
   {
     $args = [
@@ -41,59 +38,49 @@ class Furnish extends \CAV\Models\Action
       'costs' => $this->getCtxArgs()['costs'] ?? null,
     ];
 
-    $buy = $this->getAvailableBuildings()->filter(function ($imp) use ($player, $ignoreResources, $args) {
-      return $imp->isBuyable($player, $ignoreResources, $args);
-    });
+    $buildings = [];
+    foreach ($this->getAvailableBuildings() as $building) {
+      if (!$building->isBuyable($player, $ignoreResources, $args)) {
+        continue;
+      }
 
-    return $buy;
+      // We have to loop because of that pair of building that replace each other...
+      $zones = $player->board()->getBuildableZones($building);
+      if (!empty($zones)) {
+        $buildings[$building->getId()] = $zones;
+      }
+    }
+
+    return $buildings;
   }
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return !$this->getBuyableBuildings($player, $ignoreResources)->empty();
+    return !empty($this->getBuyableBuildings($player, $ignoreResources));
   }
 
-  public function argsFurnish($full = false)
+  public function argsFurnish()
   {
     $player = Players::getActive();
-
-    if (!$full) {
-      $buildings = $this->getBuyableBuildings($player)->getIds();
-    } else {
-      $buildings = $this->getBuyableBuildings($player);
-    }
-    return ['buildings' => $buildings];
+    return ['buildings' => $this->getBuyableBuildings($player)];
   }
 
-  public function actFurnish($tile)
+  public function actFurnish($buildingId, $zone)
   {
     self::checkAction('actFurnish');
 
-    // $tile = ['id' , 'x', 'y'];
-    $args = $this->argsFurnish(true);
     $player = Players::getCurrent();
-
-    // checking card is buyable
-    if (!in_array($tile['id'], $args['buildings']->getIds())) {
-      throw new \feException('Tile cannot be bought. Should not happen');
+    $buildings = $this->getAvailableBuildings();
+    if (!array_key_exists($buildingId, $buildings)) {
+      throw new \feException('Building cannot be bought. Should not happen');
+    }
+    if (!in_array($pos, $buildings[$buildingId])) {
+      throw new \feException('You can\'t put that building here. Should not happen');
     }
 
-    $playerBoard = $player->board();
-    $building = $args['buildings'][$tile['id']];
-
-    // check on mountain (not sure it's necessary)
-    if (!$playerBoard->isMoutainZone($tile)) {
-      throw new \feException('Cannot furnish outside of the mountain');
-    }
-    // checking than we have a cavern
-    $cavern = array_filter($playerBoard->getBuildings(), function ($c) use ($tile) {
-      return $c->getType() == CAVERN && $tile['x'] == $c->getX() && $tile['y'] == $c->getY();
-    });
-
-    if (empty($cavern)) {
-      throw new \feException('No cavern on this spot. Cannot furnish. Should not happen');
-    }
-    $cavernId = $cavern[0]->getId();
+    var_dump($buildingId, $zone);
+    die('test');
+    // TODO
 
     // Replace cavern with the new building
     Buildings::addBuilding($tile, $cavernId, $player);

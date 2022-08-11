@@ -202,6 +202,16 @@ html {
     background-origin: border-box;
     border-radius: 15px;
     border: 2px solid black; }
+  .caverna-building.selectable {
+    cursor: pointer; }
+    .caverna-building.selectable .building-resizable {
+      border: 2px dashed red; }
+    .caverna-building.selectable:hover {
+      transform: scale(1.05); }
+      .caverna-building.selectable:hover .building-resizable {
+        border: 2px solid red; }
+  .caverna-building.selected .building-resizable {
+    border: 2px solid red; }
   .caverna-building[data-type='BroomChamber'] .building-resizable {
     background-position-x: 0%;
     background-position-y: 0%; }
