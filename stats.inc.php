@@ -90,7 +90,7 @@ $stats_type = [
       'name' => totranslate('Number of points earned by stone house rooms'),
       'type' => 'int',
     ],
-    'scoreDwarves' => [
+    'scoreDwarfs' => [
       'id' => STAT_SCORE_FARMERS,
       'name' => totranslate('Number of points earned by family size'),
       'type' => 'int',
@@ -116,7 +116,7 @@ $stats_type = [
       'name' => totranslate('Number of times being first player of a round'),
       'type' => 'int',
     ],
-    'placedDwarves' => [
+    'placedDwarfs' => [
       'id' => STAT_PLACED_FARMER,
       'name' => totranslate('Number of people placed on an action during the game'),
       'type' => 'int',

@@ -11,7 +11,7 @@ use CAV\Managers\ActionCards;
 use CAV\Managers\Players;
 use CAV\Managers\Buildings;
 use CAV\Managers\Meeples;
-use CAV\Managers\Dwarves;
+use CAV\Managers\Dwarfs;
 
 /*
  * Building

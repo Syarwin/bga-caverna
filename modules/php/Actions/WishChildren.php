@@ -27,7 +27,7 @@ class WishChildren extends \CAV\Models\Action
   public function isDoable($player, $ignoreResources = false)
   {
     return false;
-    
+
     if (!$player->hasFarmerInReserve()) {
       return false;
     }
@@ -38,13 +38,13 @@ class WishChildren extends \CAV\Models\Action
       if (
         $player->hasPlayedCard('B10_Caravan') &&
         $c == 'freeRoom' &&
-        $player->countDwarves() >= $player->countRooms() + 1
+        $player->countDwarfs() >= $player->countRooms() + 1
       ) {
         return false;
       } elseif (
         !$player->hasPlayedCard('B10_Caravan') &&
         $c == 'freeRoom' &&
-        $player->countDwarves() >= $player->countRooms()
+        $player->countDwarfs() >= $player->countRooms()
       ) {
         return false;
       }
@@ -64,22 +64,15 @@ class WishChildren extends \CAV\Models\Action
 
     $type = $args['type'] ?? null;
     $player = Players::getActive();
-    if ($args['insideHouse'] ?? false) {
-      $room = $player->getFreeRoom(); // Get a free room
-      $meep = $player->growFamily([$room['x'], $room['y']], 'board');
-    } elseif ($args['cardLocation'] ?? false) {
-      $meep = $player->growFamily($args['cardLocation']);
-    } else {
-      $cardId = $this->ctx->getCardId(); // CardId is tagged in the flow tree associated to the action
-      $meep = $player->growFamily($cardId);
-    }
+    $cardId = $this->ctx->getCardId(); // CardId is tagged in the flow tree associated to the action
+    $meep = $player->growFamily($cardId);
 
     Notifications::growFamily($player, $meep);
     Notifications::updateHarvestCosts();
 
     // Listeners for cards
     $eventData = [
-      'farmers' => $player->countDwarves(),
+      'farmers' => $player->countDwarfs(),
     ];
     $this->checkAfterListeners($player, $eventData);
 

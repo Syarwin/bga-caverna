@@ -4,16 +4,16 @@ use CAV\Core\Globals;
 
 /* Class to manage all the famers for Agricola */
 
-class Dwarves extends Meeples
+class Dwarfs extends Meeples
 {
   /* Creation of various meeples */
   public static function setupNewGame($players, $options)
   {
     $meeples = [];
     foreach ($players as $pId => $player) {
-      // Dwarves in reserve
+      // Dwarfs in reserve
       $meeples[] = ['type' => 'dwarf', 'player_id' => $pId, 'location' => 'reserve', 'nbr' => 3];
-      // Dwarves in position
+      // Dwarfs in position
       $meeples[] = [
         'type' => 'dwarf',
         'player_id' => $pId,
@@ -27,25 +27,25 @@ class Dwarves extends Meeples
     self::create($meeples);
   }
 
-  /* Add the weapons to a collection of dwarves */
-  protected function addWeapons(&$dwarves, $pId = null)
+  /* Add the weapons to a collection of dwarfs */
+  protected function addWeapons(&$dwarfs, $pId = null)
   {
     $weapons = Meeples::getFilteredQuery($pId, null, 'weapon')->get();
     foreach ($weapons as $w) {
-      if (isset($dwarves[$w['location']])) {
-        $dwarves[$w['location']]['weapon'] = $w['state'];
-        $dwarves[$w['location']]['weaponId'] = $w['id'];
+      if (isset($dwarfs[$w['location']])) {
+        $dwarfs[$w['location']]['weapon'] = $w['state'];
+        $dwarfs[$w['location']]['weaponId'] = $w['id'];
       }
     }
   }
 
-  /* Automatically Add the weapons when fetching dwarves */
+  /* Automatically Add the weapons when fetching dwarfs */
 
   public static function getMany($ids, $raiseExceptionIfNotEnough = true)
   {
-    $dwarves = parent::getMany($ids, $raiseExceptionIfNotEnough);
-    self::addWeapons($dwarves);
-    return $dwarves;
+    $dwarfs = parent::getMany($ids, $raiseExceptionIfNotEnough);
+    self::addWeapons($dwarfs);
+    return $dwarfs;
   }
 
   /* Partial query for a given player */
@@ -55,17 +55,17 @@ class Dwarves extends Meeples
   }
 
   /**
-   * Get all the dwarves not in reserve
-   * @return Collection of dwarves
+   * Get all the dwarfs not in reserve
+   * @return Collection of dwarfs
    * @param number $pId Id of player
    */
   public function getAllOfPlayer($pId)
   {
-    $dwarves = self::qPlayer($pId, null)
+    $dwarfs = self::qPlayer($pId, null)
       ->where('meeple_location', '<>', 'reserve')
       ->get();
-    self::addWeapons($dwarves, $pId);
-    return $dwarves;
+    self::addWeapons($dwarfs, $pId);
+    return $dwarfs;
   }
 
   /**
@@ -80,14 +80,14 @@ class Dwarves extends Meeples
 
   public function getAllAvailable($pId = null)
   {
-    $dwarves = self::qPlayer($pId, 'board')->get();
-    self::addWeapons($dwarves, $pId);
-    return $dwarves;
+    $dwarfs = self::qPlayer($pId, 'board')->get();
+    self::addWeapons($dwarfs, $pId);
+    return $dwarfs;
   }
 
   /**
    * @param number $pId
-   * @return int number of dwarves
+   * @return int number of dwarfs
    **/
   public function count($pId, $type = null)
   {
@@ -121,7 +121,7 @@ class Dwarves extends Meeples
   }
 
   /**
-   * Return all dwarves on a card
+   * Return all dwarfs on a card
    * @param number $cId card Id
    * @param number $pId (opt)
    */

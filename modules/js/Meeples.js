@@ -107,7 +107,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this.updateAnimalsPlayerCounters(type);
         this.updateDropZonesStatus();
       } else if (type == 'dwarf') {
-        this.updateDwarvesPlayerCounters();
+        this.updateDwarfsPlayerCounters();
       }
     },
 
@@ -139,7 +139,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         let container = this.getCell(meeple);
 
         if (['vegetable', 'grain'].includes(meeple.type)) {
-          let field = container.querySelector('.meeple-field');
+          let field = container.querySelector('.caverna-tile');
           container = this.getSeedContainer({ id: field.getAttribute('data-id') });
         }
 
@@ -341,11 +341,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     /**
-     * All dwarves return home
+     * All dwarfs return home
      */
     notif_returnHome(n) {
       debug('Notif: returning home', n);
-      this.slideResources(n.args.dwarves, {
+      this.slideResources(n.args.dwarfs, {
         delay: 0,
         duration: 1200,
       });

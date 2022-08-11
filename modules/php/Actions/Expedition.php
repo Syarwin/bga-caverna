@@ -170,7 +170,7 @@ class Expedition extends \CAV\Models\Action
     // Upgrade the weapon of the Dwarf making the expedition
     $childs[] = [
       'action' => \WEAPON_INCREASE,
-      'args' => ['dwarves' => [$this->getDwarf()]],
+      'args' => ['dwarfs' => [$this->getDwarf()]],
     ];
     Engine::insertAsChild(['type' => NODE_SEQ, 'childs' => $childs]);
 

@@ -2,7 +2,7 @@
 namespace CAV\Actions;
 use CAV\Managers\Meeples;
 use CAV\Managers\Players;
-use CAV\Managers\Dwarves;
+use CAV\Managers\Dwarfs;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Core\Stats;
@@ -19,20 +19,20 @@ class WeaponIncrease extends \CAV\Models\Action
   {
     $player = Players::getActive();
     $args = $this->getCtxArgs();
-    if (!isset($args['dwarves'])) {
-      $dwarves = $player->getAllDwarves();
+    if (!isset($args['dwarfs'])) {
+      $dwarfs = $player->getAllDwarfs();
     } else {
-      $dwarves = $args['dwarves'];
+      $dwarfs = $args['dwarfs'];
     }
     $increase = $args['increase'] ?? 1;
 
-    $upgradedDwarves = [];
-    foreach ($dwarves as $dwarf) {
+    $upgradedDwarfs = [];
+    foreach ($dwarfs as $dwarf) {
       // we take the last version of the dwarf as the one in args may be updated
-      $nDwarf = Dwarves::get($dwarf['id']);
+      $nDwarf = Dwarfs::get($dwarf['id']);
       if (isset($nDwarf['weapon']) && $nDwarf['weapon'] > 0) {
-        Dwarves::upgradeWeapon($nDwarf, $increase);
-        $upgradedDwarves[] = $dwarf['id'];
+        Dwarfs::upgradeWeapon($nDwarf, $increase);
+        $upgradedDwarfs[] = $dwarf['id'];
       }
     }
     $source = $args['source'] ?? null;
@@ -40,8 +40,8 @@ class WeaponIncrease extends \CAV\Models\Action
       $source = clienttranslate('Expedition\'s loot');
     }
 
-    if (!empty($upgradedDwarves)) {
-      Notifications::upgradeWeapon($player, Dwarves::getMany($upgradedDwarves), $source);
+    if (!empty($upgradedDwarfs)) {
+      Notifications::upgradeWeapon($player, Dwarfs::getMany($upgradedDwarfs), $source);
     }
 
     $this->resolveAction();

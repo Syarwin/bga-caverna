@@ -38,9 +38,9 @@ class PlaceDwarf extends \CAV\Models\Action
     $constraints = $this->getCtxArgs()['constraints'] ?? null;
 
     // Compute possible weapons for dwarf
-    $dwarves = $player->getAvailableDwarves();
+    $dwarfs = $player->getAvailableDwarfs();
     $possibleWeapons = [];
-    foreach ($dwarves as $d) {
+    foreach ($dwarfs as $d) {
       $weapon = $d['weapon'] ?? 0;
       if (!isset($possibleWeapons[$weapon])) {
         $possibleWeapons[$weapon] = $d;
@@ -100,7 +100,7 @@ class PlaceDwarf extends \CAV\Models\Action
     $dwarfId = $dwarf['id'];
     Meeples::moveToCoords($dwarfId, $cardId);
     Notifications::placeDwarf($player, $dwarfId, $card, $this->ctx->getSource());
-    Stats::incPlacedDwarves($player);
+    Stats::incPlacedDwarfs($player);
 
     // Are there cards triggered by the placement ?
     $this->checkListeners('PlaceDwarf', $player, $eventData);

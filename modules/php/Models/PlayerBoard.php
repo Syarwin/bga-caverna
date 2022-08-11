@@ -100,12 +100,6 @@ class PlayerBoard
       $this->grid[$tile['x']][$tile['y']] = $tile;
     }
 
-    // $this->fields = Meeples::getFields($this->pId)->toArray();
-    // foreach ($this->fields as &$field) {
-    //   $field['uid'] = $field['x'] . '_' . $field['y'];
-    //   $this->grid[$field['x']][$field['y']] = $field;
-    // }
-
     $this->stables = Stables::getOnBoard($this->pId)->toArray();
     foreach ($this->stables as $stable) {
       $this->stablesGrid[$stable['x']][$stable['y']] = $stable;
@@ -120,7 +114,7 @@ class PlayerBoard
   public function getFields()
   {
     return $this->tiles->filter(function ($tile) {
-      return $tile['type'] == 'field';
+      return $tile['type'] == TILE_FIELD;
     });
   }
 
@@ -683,6 +677,7 @@ class PlayerBoard
   {
     $fields = [];
     foreach ($this->getFields() as $field) {
+      $field['uid'] = $field['x'] . '_' . $field['y'];
       $field['crops'] = [];
       $field['fieldType'] = null;
       $fields[$field['uid']] = $field;
@@ -690,9 +685,6 @@ class PlayerBoard
 
     foreach ($this->getGrowingCrops($keepOnlyThisType) as $crop) {
       $uid = $crop['x'] < 0 || $crop['y'] < 0 ? $crop['location'] : $crop['x'] . '_' . $crop['y'];
-      if ($crop['location'] == 'D75_WoodField' && $crop['x'] == 0) {
-        $uid = 'D75_WoodField2';
-      }
       $fields[$uid]['crops'][] = $crop;
       $fields[$uid]['fieldType'] = $crop['type'];
     }

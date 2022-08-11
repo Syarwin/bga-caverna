@@ -94,7 +94,7 @@ class Players extends \CAV\Helpers\DB_Manager
     return self::DB()->count();
   }
 
-  public function countUnallocatedDwarves()
+  public function countUnallocatedDwarfs()
   {
     // Get zombie players ids
     $zombies = self::getAll()
@@ -104,7 +104,7 @@ class Players extends \CAV\Helpers\DB_Manager
       ->getIds();
 
     // Filter out farmers of zombies
-    return Dwarves::getAllAvailable()
+    return Dwarfs::getAllAvailable()
       ->filter(function ($meeple) use ($zombies) {
         return !in_array($meeple['pId'], $zombies);
       })
@@ -114,7 +114,7 @@ class Players extends \CAV\Helpers\DB_Manager
   public function returnHome()
   {
     foreach (self::getAll() as $player) {
-      $player->returnHomeDwarves();
+      $player->returnHomeDwarfs();
     }
   }
 

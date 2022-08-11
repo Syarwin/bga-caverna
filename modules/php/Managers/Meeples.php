@@ -60,7 +60,7 @@ class Meeples extends \CAV\Helpers\Pieces
     self::create($meeples);
 
     Stables::setupNewGame($players, $options);
-    Dwarves::setupNewGame($players, $options);
+    Dwarfs::setupNewGame($players, $options);
   }
 
   /**

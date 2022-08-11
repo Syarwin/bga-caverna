@@ -35,7 +35,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'stables',
     'clayRooms',
     'stoneRooms',
-    'dwarves',
+    'dwarfs',
     'beggings',
     'cards',
     'cardsBonus',
@@ -53,7 +53,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'stables',
     'clayRooms',
     'stoneRooms',
-    'dwarves',
+    'dwarfs',
     'beggings',
   ];
   const SCORE_MULTIPLE_ENTRIES = ['cards', 'cardsBonus'];
@@ -115,7 +115,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         dojo.toggleClass('resources-bar-holder-' + player.id, 'active', this.prefs[PLAYER_RESOURCES].value == 1);
       });
       this.updatePlayerBoardDimensions();
-      this.updateDwarvesPlayerCounters();
+      this.updateDwarfsPlayerCounters();
     },
 
     /**
@@ -173,7 +173,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         });
       });
       this.updateAnimalsPlayerCounters();
-      this.updateDwarvesPlayerCounters();
+      this.updateDwarfsPlayerCounters();
       this.updatePlayersHarvestCosts();
     },
 
@@ -194,7 +194,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       }
     },
 
-    updateDwarvesPlayerCounters() {
+    updateDwarfsPlayerCounters() {
       this.forEachPlayer((player) => {
         let boardWrapper = $(`board-wrapper-${player.id}`);
         let meeples = boardWrapper.querySelectorAll(`:not(.actionCard):not(.dwarf-holder) > .meeple-dwarf`);
@@ -237,7 +237,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         ` +
         // Specific counters for animals on board or reserve
         ANIMALS.map((res) => this.tplResourceCounter(player, res, 'board_')).join('') +
-        // Specific div to show remeaning dwarves
+        // Specific div to show remeaning dwarfs
         this.formatStringMeeples(`
             <div class='player-resource resource-dwarf' id='board_resource_${player.id}_dwarf'>
               <FARMER><FARMER><FARMER><FARMER><FARMER>
@@ -289,7 +289,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         stables: _('Fenced stables'),
         clayRooms: _('Clay hut rooms'),
         stoneRooms: _('Stone house rooms'),
-        dwarves: _('Family members'),
+        dwarfs: _('Family members'),
         cards: _('Points for cards'),
         cardsBonus: _('Bonus point'),
         beggings: _('Beggar cards'),

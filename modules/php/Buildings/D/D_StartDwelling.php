@@ -11,7 +11,7 @@ class D_StartDwelling extends \CAV\Models\Building
     $this->dwelling = 2;
     $this->nbInBox = 0;
     $this->animalHolder = 2;
-    $this->desc = [clienttranslate('room for exactly 2 Dwarves and 1 pair of anima')];
+    $this->desc = [clienttranslate('room for exactly 2 Dwarfs and 1 pair of anima')];
   }
 
   public function isSupported($players, $options)

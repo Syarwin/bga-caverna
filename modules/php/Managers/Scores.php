@@ -218,7 +218,7 @@ class Scores extends \CAV\Helpers\DB_Manager
 
     self::computeRooms($player);
 
-    self::computeDwarves($player);
+    self::computeDwarfs($player);
 
     self::computeCards($player);
     self::computeBeggings($player);
@@ -402,13 +402,13 @@ class Scores extends \CAV\Helpers\DB_Manager
     Stats::setScoreStoneRooms($player, $scoreStone);
   }
 
-  protected function computeDwarves($player)
+  protected function computeDwarfs($player)
   {
-    $n = $player->countDwarves();
+    $n = $player->countDwarfs();
     $score = 3 * $n;
     $desc = self::getQtyDesc($player, $n, $score, clienttranslate('person'), clienttranslate('people'));
     self::addEntry($player, SCORING_FARMERS, $score, $desc, $n);
-    Stats::setScoreDwarves($player, $score);
+    Stats::setScoreDwarfs($player, $score);
   }
 
   protected function computeCards($player)

@@ -5,7 +5,7 @@ use CAV\Core\Game;
 use CAV\Core\Globals;
 use CAV\Managers\Buildings;
 use CAV\Managers\Players;
-use CAV\Managers\Dwarves;
+use CAV\Managers\Dwarfs;
 
 /*
  * Action: base class to handle atomic action
@@ -90,7 +90,7 @@ class Action
 
   public function getDwarf()
   {
-    return Dwarves::get($this->ctx->getDwarfId());
+    return Dwarfs::get($this->ctx->getDwarfId());
   }
 
   public function getClassName()

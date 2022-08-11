@@ -3,7 +3,7 @@ namespace CAV\Actions;
 
 use CAV\Managers\Meeples;
 use CAV\Managers\Players;
-use CAV\Managers\Dwarves;
+use CAV\Managers\Dwarfs;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Core\Stats;
@@ -50,7 +50,7 @@ class Blacksmith extends \CAV\Models\Action
 
     $player = Players::getCurrent();
     $dwarf = $this->getDwarf();
-    $weapon = Dwarves::equipWeapon($dwarf, $force);
+    $weapon = Dwarfs::equipWeapon($dwarf, $force);
     Engine::insertAsChild([
       'action' => PAY,
       'args' => [

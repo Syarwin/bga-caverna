@@ -2,7 +2,7 @@
 namespace CAV\Models;
 
 use CAV\Managers\Meeples;
-use CAV\Managers\Dwarves;
+use CAV\Managers\Dwarfs;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Helpers\Utils;
@@ -158,12 +158,12 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
     // Is there a dwarf here ?
     foreach ($actionList as $action) {
-      $dwarves = Dwarves::getOnCard($action);
-      if ($dwarves->count() > 0 && $onlyCheckSpecificPlayer == null) {
+      $dwarfs = Dwarfs::getOnCard($action);
+      if ($dwarfs->count() > 0 && $onlyCheckSpecificPlayer == null) {
         return false;
       }
 
-      $pIds = $dwarves
+      $pIds = $dwarfs
         ->map(function ($dwarf) {
           return $dwarf['pId'];
         })

@@ -7,7 +7,7 @@ use CAV\Core\Stats;
 use CAV\Managers\Players;
 use CAV\Managers\ActionCards;
 use CAV\Managers\Meeples;
-use CAV\Managers\Dwarves;
+use CAV\Managers\Dwarfs;
 use CAV\Managers\Scores;
 use CAV\Managers\Actions;
 use CAV\Managers\Buildings;
@@ -21,7 +21,7 @@ trait TurnTrait
   function stBeforeStartOfTurn()
   {
     // 0) Make children grow up
-    // $children = Dwarves::growChildren();
+    // $children = Dwarfs::growChildren();
     // if (!empty($children)) {
     //   Notifications::growChildren($children);
     //   Notifications::updateHarvestCosts();
@@ -325,7 +325,7 @@ trait TurnTrait
   function stReturnHome()
   {
     Players::returnHome();
-    Notifications::returnHome(Dwarves::getAllAvailable());
+    Notifications::returnHome(Dwarfs::getAllAvailable());
     Globals::setWorkPhase(false);
 
     // Listen for buildings onReturnHome

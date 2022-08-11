@@ -59,7 +59,6 @@ class Notifications
       'id' => $building['id'],
       'location' => $building['location'],
       'pId' => $building['pId'],
-      'bonusVp' => $building['bonusVp'],
     ];
   }
   public static function refreshUI($datas)
@@ -149,7 +148,7 @@ class Notifications
     }
     self::notifyAll('upgradeWeapon', $msg, [
       'player' => $player,
-      'dwarves' => $dwarfes->toArray(),
+      'dwarfs' => $dwarfes->toArray(),
       'source' => $source,
     ]);
   }
@@ -420,7 +419,7 @@ class Notifications
 
   public static function returnHome($meeples)
   {
-    self::notifyAll('returnHome', clienttranslate('End of turn. All people come back home'), [
+    self::notifyAll('returnHome', clienttranslate('End of turn. All dwarfs come back home'), [
       'dwarfs' => $meeples->toArray(),
     ]);
   }
