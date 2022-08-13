@@ -240,33 +240,6 @@
   background-size: 731.429%;
 }
 
-.meeple-field {
-  background-image: url('img/field.png');
-  background-size: 100%;
-  width: 100%; // 112px
-  height: 100%; // 112px
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .seed-holder {
-    display: flex;
-    flex-flow: column-reverse;
-
-    .caverna-meeple {
-      margin: 0 auto -0.3em;
-      #ebd-body:not(.mobile_version) & {
-        filter: drop-shadow(1px 1px 1px black);
-      }
-
-      &:first-child {
-        margin: 0;
-      }
-    }
-  }
-}
-
 // SWITCH for the SOW action
 .switch-wrapper {
   width: 100px;

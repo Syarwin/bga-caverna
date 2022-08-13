@@ -55,6 +55,26 @@
   background-origin: border-box;
   border: 1px solid black;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .seed-holder {
+    display: flex;
+    flex-flow: column-reverse;
+
+    .caverna-meeple {
+      margin: 0 auto -0.3em;
+      #ebd-body:not(.mobile_version) & {
+        filter: drop-shadow(1px 1px 1px black);
+      }
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+  }
+
   &:not([data-tile]) {
     background: none;
     border: none;

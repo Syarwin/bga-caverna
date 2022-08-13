@@ -52,7 +52,7 @@ class Sow extends \CAV\Models\Action
     foreach ($args['zones'] as $field) {
       $fields[$field['uid'] ?? $field['id']] = $field;
     }
-    $choices = [GRAIN => 0, VEGETABLE => 0, WOOD => 0];
+    $choices = [GRAIN => 0, VEGETABLE => 0];
     foreach ($crops as $crop) {
       if (!array_key_exists($crop['id'], $fields)) {
         throw new \BgaVisibleSystemException('You can\'t sow a crop here');
@@ -60,7 +60,7 @@ class Sow extends \CAV\Models\Action
       $choices[$crop['crop']]++;
     }
 
-    if ($choices[GRAIN] + $choices[VEGETABLE] + $choices[WOOD] == 0) {
+    if ($choices[GRAIN] + $choices[VEGETABLE] == 0) {
       throw new \BgaVisibleSystemException('You must sow at least one crop');
     }
     if ($choices[GRAIN] > $args[GRAIN]) {
@@ -69,11 +69,7 @@ class Sow extends \CAV\Models\Action
     if ($choices[VEGETABLE] > $args[VEGETABLE]) {
       throw new \BgaVisibleSystemException('You can\'t sow that many vegetables');
     }
-    if ($choices[WOOD] > $args[WOOD]) {
-      throw new \BgaVisibleSystemException('You can\'t sow that much wood');
-    }
-
-    if ($choices[GRAIN] + $choices[VEGETABLE] + ($choices[WOOD] > 0) > $this->maxZones()) {
+    if ($choices[GRAIN] + $choices[VEGETABLE] > $this->maxZones()) {
       throw new \BgaVisibleSystemException("You can't sow this many fields");
     }
 
