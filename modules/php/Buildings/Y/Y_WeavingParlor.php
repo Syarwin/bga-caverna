@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Buildings\G;
+namespace CAV\Buildings\Y;
 
 class Y_WeavingParlor extends \CAV\Models\Building
 {

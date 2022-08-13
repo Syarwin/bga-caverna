@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Buildings\G;
+namespace CAV\Buildings\Y;
 
 class Y_FodderChamber extends \CAV\Models\Building
 {
