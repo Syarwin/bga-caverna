@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Buildings\G;
+namespace CAV\Buildings\Y;
 
 class Y_MainStorage extends \CAV\Models\Building
 {

@@ -1,5 +1,5 @@
 <?php
-namespace CAV\Buildings\G;
+namespace CAV\Buildings\Y;
 
 class Y_MilkingParlor extends \CAV\Models\Building
 {
