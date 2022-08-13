@@ -25,33 +25,36 @@ class ActionOreMineConstruction extends \CAV\Models\ActionCard
 
   protected function getFlow($player, $dwarf)
   {
-    return [
-      'type' => NODE_SEQ,
-      'childs' => [
-        [
-          'type' => NODE_SEQ,
-          'optional' => true,
-          'childs' => [
-            [
-              'action' => PLACE_TILE,
-              'args' => [
-                'tiles' => [TILE_MINE_DEEP_TUNNEL],
-              ],
-            ],
-            [
-              'action' => GAIN,
-              'args' => [ORE => 3],
+    $childs = [
+      [
+        'type' => NODE_SEQ,
+        'childs' => [
+          [
+            'action' => PLACE_TILE,
+            'args' => [
+              'tiles' => [TILE_MINE_DEEP_TUNNEL],
             ],
           ],
-        ],
-        [
-          'action' => EXPEDITION,
-          'optional' => true,
-          'args' => [
-            'lvl' => 2,
+          [
+            'action' => GAIN,
+            'args' => [ORE => 3],
           ],
         ],
       ],
+    ];
+
+    if (($dwarf['weapon'] ?? 0) > 0) {
+      $childs[] = [
+        'action' => EXPEDITION,
+        'args' => [
+          'lvl' => 2,
+        ],
+      ];
+    }
+
+    return [
+      'type' => NODE_THEN_OR,
+      'childs' => $childs,
     ];
   }
 }

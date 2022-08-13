@@ -200,27 +200,6 @@ $machinestates = [
     'possibleactions' => ['actWeaponIncrease', 'actRestart'],
   ],
 
-  ST_FENCING => [
-    'name' => 'fencing',
-    'description' => clienttranslate('${actplayer} must build fence(s)'),
-    'descriptionmyturn' => clienttranslate('${you} may construct up to ${max} fence(s)'),
-    'descriptionskippable' => clienttranslate('${actplayer} may build fence(s)'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may construct up to ${max} fence(s)'),
-
-    'descriptionmyturnnomore' => clienttranslate(
-      '${you} may construct up to ${max} fence(s) (quantity of fences in your reserve)'
-    ),
-
-    'descriptionminipasture' => clienttranslate('${actplayer} must fence a farmyard space'),
-    'descriptionmyturnminipasture' => clienttranslate('${you} must fence a farmyard space'),
-    'descriptionfieldfences' => clienttranslate('${actplayer} must build fence(s). Fences adjacent to fields are free'),
-    'descriptionmyturnfieldfences' => clienttranslate('${you} must build fence(s). Fences adjacent to fields are free'),
-    'args' => 'argsAtomicAction',
-    'action' => 'stAtomicAction',
-    'type' => 'activeplayer',
-    'possibleactions' => ['actFence', 'actPassOptionalAction', 'actRestart'],
-  ],
-
   ST_PAY => [
     'name' => 'payResources',
     'description' => clienttranslate('${actplayer} must choose how to pay for ${source}'),
@@ -238,30 +217,6 @@ $machinestates = [
     'description' => '',
     'action' => 'stAtomicAction',
     'type' => 'game',
-  ],
-
-  ST_OCCUPATION => [
-    'name' => 'occupation',
-    'description' => clienttranslate('${actplayer} must play an occupation'),
-    'descriptionmyturn' => clienttranslate('${you} must play an occupation'),
-    'descriptionskippable' => clienttranslate('${actplayer} may play an occupation'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may play an occupation'),
-    'args' => 'argsAtomicAction',
-    'action' => 'stAtomicAction',
-    'type' => 'activeplayer',
-    'possibleactions' => ['actOccupation', 'actPassOptionalAction', 'actRestart'],
-  ],
-
-  ST_PLOW => [
-    'name' => 'plow',
-    'description' => clienttranslate('${actplayer} must plow a field'),
-    'descriptionmyturn' => clienttranslate('${you} must plow a field'),
-    'descriptionskippable' => clienttranslate('${actplayer} may plow a field'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may plow a field'),
-    'args' => 'argsAtomicAction',
-    'action' => 'stAtomicAction',
-    'type' => 'activeplayer',
-    'possibleactions' => ['actPlow', 'actPassOptionalAction', 'actRestart'],
   ],
 
   ST_PLACE_TILE => [
@@ -313,30 +268,6 @@ $machinestates = [
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
     'possibleactions' => ['actStables', 'actPassOptionalAction', 'actRestart'],
-  ],
-
-  ST_RENOVATION => [
-    'name' => 'renovation',
-    'description' => clienttranslate('${actplayer} must renovate'),
-    'descriptionmyturn' => clienttranslate('${you} must renovate'),
-    'descriptionskippable' => clienttranslate('${actplayer} may renovate'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may renovate'),
-    'args' => 'argsAtomicAction',
-    'action' => 'stAtomicAction',
-    'type' => 'activeplayer',
-    'possibleactions' => ['actRenovation', 'actPassOptionalAction', 'actRestart'],
-  ],
-
-  ST_IMPROVEMENT => [
-    'name' => 'improvement',
-    'description' => clienttranslate('${actplayer} must play a ${strTypes} improvement'),
-    'descriptionmyturn' => clienttranslate('${you} must play a ${strTypes} improvement'),
-    'descriptionskippable' => clienttranslate('${actplayer} may play a ${strTypes} improvement'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may play a ${strTypes} improvement'),
-    'args' => 'argsAtomicAction',
-    'action' => 'stAtomicAction',
-    'type' => 'activeplayer',
-    'possibleactions' => ['actImprovement', 'actPassOptionalAction', 'actRestart'],
   ],
 
   ST_REORGANIZE => [

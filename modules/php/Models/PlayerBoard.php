@@ -183,7 +183,7 @@ class PlayerBoard
     $this->checkNodePos($pos['x'], $pos['y']);
 
     $building = Buildings::get($buildingId);
-    if($building->getType() == 'D_Dwelling'){
+    if ($building->getType() == 'D_Dwelling') {
       $building = Buildings::createDwelling();
     }
 
@@ -530,6 +530,22 @@ class PlayerBoard
     return $nodes;
   }
 
+  public function getUnbuiltTiles($tileType = null)
+  {
+    $zones = [];
+    foreach ($this->tiles as $tile) {
+      if (is_null($tileType) || $tile['type'] == $tileType) {
+        $zones[] = $this->extractPos($tile);
+      }
+    }
+    // Remove zone with a building already placed on them
+    $occupiedZones = array_map(function ($building) {
+      return $building->getPos();
+    }, $this->buildings);
+    $zones = Utils::diffZones($zones, $occupiedZones);
+    return $zones;
+  }
+
   /**
    * Return all free nodes adjacent to given nodes
    */
@@ -568,6 +584,10 @@ class PlayerBoard
       $nodes = $this->getFreeZones(FOREST);
     } elseif (in_array($tile, [TILE_CAVERN, TILE_TUNNEL])) {
       $nodes = $this->getFreeZones(MOUNTAIN);
+    } elseif (in_array($tile, [TILE_DEEP_TUNNEL, TILE_ORE_MINE])) {
+      $nodes = $this->getUnbuiltTiles(TILE_TUNNEL);
+    } else if(in_array($tile, [TILE_PASTURE])) {
+      $nodes = $this->getUnbuiltTiles(TILE_MEADOW);
     } else {
       return [];
       die('TODO : getPlacableZones : ' . $tile);

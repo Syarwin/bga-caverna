@@ -13,7 +13,7 @@ class PlaceTile extends \CAV\Models\Action
   {
     parent::__construct($row);
     $this->description = [
-      'log' => clienttranslate('Place a ${tiles}'),
+      'log' => clienttranslate('Place ${tiles}'),
       'args' => [
         'i18n' => ['tiles'],
         'tiles' => $this->getTilesMsg(),
@@ -42,6 +42,8 @@ class PlaceTile extends \CAV\Models\Action
       TILE_RUBY_MINE => clienttranslate('a Ruby mine tile'),
       TILE_MEADOW => clienttranslate('a Meadow tile'),
       TILE_FIELD => clienttranslate('a Field tile'),
+      TILE_PASTURE => clienttranslate('a Small Pasture'),
+      TILE_LARGE_PASTURE => clienttranslate('a Large Pasture'),
     ];
     return $tileNames[$tile];
   }
@@ -68,6 +70,7 @@ class PlaceTile extends \CAV\Models\Action
   public function isDoable($player, $ignoreResources = false)
   {
     // The player must be able place one of the tiles
+    // TODO : handle the cost
     return $player->board()->canPlace($this->getTiles());
   }
 

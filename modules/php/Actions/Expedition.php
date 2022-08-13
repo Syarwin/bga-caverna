@@ -40,43 +40,26 @@ class Expedition extends \CAV\Models\Action
         ],
       ],
     ],
-    'tunnel' => ['lvl' => 9, 'flow' => ['action' => PLACE_TILE]], // TODO
+    'tunnel' => [
+      'lvl' => 9,
+      'flow' => [
+        'action' => PLACE_TILE,
+        'tiles' => [TILE_TUNNEL],
+      ],
+    ],
     'smallPasture' => [
       'lvl' => 9,
       'flow' => [
-        'type' => NODE_SEQ,
-        'childs' => [
-          [
-            'action' => PAY,
-            'args' => [
-              'nb' => 1,
-              'costs' => [
-                'trades' => [[WOOD => 1]],
-              ],
-            ],
-          ],
-          ['action' => \FENCING, 'args' => ['size' => 1]], // TODO
-        ],
+        'action' => PLACE_TILE,
+        'args' => ['tiles' => [TILE_PASTURE], 'cost' => [WOOD => 1]],
       ],
     ],
     'cattle' => ['lvl' => 10, 'flow' => ['action' => GAIN, 'args' => [\CATTLE => 1]]],
     'largePasture' => [
       'lvl' => 10,
       'flow' => [
-        'type' => NODE_SEQ,
-        'childs' => [
-          [
-            'action' => PAY,
-            'args' => [
-              'nb' => 1,
-              'costs' => [
-                'trades' => [[WOOD => 2]],
-              ],
-            ],
-          ],
-
-          ['action' => \FENCING, 'args' => ['size' => 2]],
-        ],
+        'action' => PLACE_TILE,
+        'args' => ['tiles' => [TILE_LARGE_PASTURE], 'cost' => [WOOD => 2]],
       ],
     ],
     'meadow' => [
@@ -84,7 +67,7 @@ class Expedition extends \CAV\Models\Action
       'flow' => [
         'action' => PLACE_TILE,
         'args' => [
-          'tiles' => [TILE_MEADOW_FIELD], // TODO: prairie only
+          'tiles' => [TILE_MEADOW],
         ],
       ],
     ],
@@ -100,12 +83,21 @@ class Expedition extends \CAV\Models\Action
       'flow' => [
         'action' => PLACE_TILE,
         'args' => [
-          'tiles' => [TILE_MEADOW_FIELD], // TODO : field only
+          'tiles' => [TILE_FIELD],
         ],
       ],
     ],
-    'sow' => ['lvl' => 12, ['action' => SOW, 'args' => [\VEGETABLE => 2, GRAIN => 2]]], // TODO
-    'cavern' => ['lvl' => 14, ['action' => PLACE_TILE, 'args' => ['tiles' => []]]], // TODO: add cavern tile
+    'sow' => [
+      'lvl' => 12,
+      'flow' => ['action' => SOW],
+    ],
+    'cavern' => [
+      'lvl' => 14,
+      'flow' => [
+        'action' => PLACE_TILE,
+        'args' => ['tiles' => [TILE_CAVERN]],
+      ],
+    ],
     'breed' => ['lvl' => 14, ['special' => 'breed']], // TODO
   ];
 
@@ -132,7 +124,7 @@ class Expedition extends \CAV\Models\Action
 
     return [
       'n' => $args['lvl'],
-      'max' => $this->getDwarf()['weapon'],
+      'max' => $this->getDwarf()['weapon'] ?? 0,
       // TODO: add doable actions only
     ];
   }

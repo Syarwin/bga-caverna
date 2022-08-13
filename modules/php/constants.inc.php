@@ -68,17 +68,12 @@ const ST_RESOLVE_CHOICE = 11;
 
 const ST_PLACE_DWARF = 20;
 const ST_GAIN = 21;
-const ST_FENCING = 22;
 const ST_PAY = 23;
 const ST_COLLECT = 24;
 const ST_FIRSTPLAYER = 25;
-const ST_OCCUPATION = 26;
-const ST_PLOW = 27;
 const ST_PLACE_TILE = 28;
 const ST_SOW = 29;
 const ST_STABLE = 30;
-const ST_RENOVATION = 31;
-const ST_IMPROVEMENT = 32;
 const ST_WISHCHILDREN = 33;
 const ST_EXCHANGE = 34;
 const ST_ACTIVATE_BUILDING = 35;
@@ -185,15 +180,21 @@ const TILE_MEADOW = 'tileMeadow';
 const TILE_FIELD = 'tileField';
 const TILE_CAVERN = 'tileCavern';
 const TILE_TUNNEL = 'tileTunnel';
+const TILE_DEEP_TUNNEL = 'tileDeepTunnel';
+const TILE_ORE_MINE = 'tileOreMine';
+const TILE_PASTURE = 'tilePasture';
+const TILE_LARGE_PASTURE = 'tileLargePasture';
 
 const TILE_SQUARES_MAPPING = [
   TILE_TUNNEL_CAVERN => [TILE_TUNNEL, TILE_CAVERN],
   TILE_CAVERN_CAVERN => [TILE_CAVERN, TILE_CAVERN],
   TILE_MEADOW_FIELD => [TILE_MEADOW, TILE_FIELD],
-  TILE_MINE_DEEP_TUNNEL => [], // TODO
+  TILE_MINE_DEEP_TUNNEL => [TILE_DEEP_TUNNEL, TILE_ORE_MINE],
   TILE_RUBY_MINE => [TILE_RUBY_MINE],
   TILE_MEADOW => [TILE_MEADOW],
   TILE_FIELD => [TILE_FIELD],
+  TILE_PASTURE => [TILE_PASTURE],
+  TILE_LARGE_PASTURE => [TILE_PASTURE, TILE_PASTURE]
 ];
 
 // State to differentiate chah beh oui !ildren from grown ups
@@ -252,7 +253,6 @@ const COLLECT = 'COLLECT';
 const PLACE_TILE = 'PLACE_TILE';
 const EXCHANGE = 'EXCHANGE';
 const EXPEDITION = 'EXPEDITION';
-const FENCING = 'FENCING';
 const FIRSTPLAYER = 'FIRST_PLAYER';
 const FURNISH = 'FURNISH';
 const GAIN = 'GAIN';
@@ -260,7 +260,6 @@ const IMITATE = 'IMITATE';
 const PAY = 'PAY';
 const PLACE_DWARF = 'PLACE_DWARF';
 const PLACE_FUTURE_MEEPLES = 'PLACE_FUTURE_MEEPLES';
-const PLOW = 'PLOW';
 const REAP = 'REAP';
 const RECEIVE = 'RECEIVE';
 const REORGANIZE = 'REORGANIZE';

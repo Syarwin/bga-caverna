@@ -281,6 +281,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         tileField: ['field'],
         tileCavern: ['cavern'],
         tileTunnel: ['tunnel'],
+        tilePasture: ['pasture'],
+        tileLargePasture: ['pasture', 'pasture'],
       };
 
       // Clear function

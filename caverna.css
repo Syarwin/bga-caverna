@@ -76,6 +76,9 @@ html {
           color: yellow;
           font-size: 70px; }
 
+.board-cell.cell-node .square-selector {
+  z-index: 100; }
+
 .board-cell.cell-node .square-selector,
 .caverna-player-board .player-board-grid .board-cell .caverna-tile {
   width: 94px;
@@ -100,8 +103,9 @@ html {
         filter: drop-shadow(1px 1px 1px black); }
       .board-cell.cell-node .square-selector .seed-holder .caverna-meeple:first-child, .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder .caverna-meeple:first-child {
         margin: 0; }
-  .board-cell.cell-node .square-selector:not([data-tile]),
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile:not([data-tile]) {
+  .board-cell.cell-node .square-selector:not([data-tile]), .board-cell.cell-node .square-selector[data-tile=''],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile:not([data-tile]),
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile=''] {
     background: none;
     border: none;
     display: none; }
@@ -114,16 +118,18 @@ html {
   .board-cell.cell-node .square-selector[data-rotation='3'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation='3'] {
     transform: rotate(90deg); }
-  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-0'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-0'],
+  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-0'], .board-cell.cell-node .square-selector[data-tile='tileLargePasture-0'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-0'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileTunnelCavern-0'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileCavernCavern-0'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMeadowField-0'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileLargePasture-0'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-0'] {
     border-right: none; }
-  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-1'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-1'],
+  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-1'], .board-cell.cell-node .square-selector[data-tile='tileLargePasture-1'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-1'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileTunnelCavern-1'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileCavernCavern-1'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMeadowField-1'],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileLargePasture-1'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-1'] {
     border-left: none; }
 
@@ -132,6 +138,13 @@ html {
   margin: 0px;
   left: -2px;
   top: -2px; }
+
+.board-cell.cell-node.selectable .square-selector {
+  display: flex;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.2); }
+  .board-cell.cell-node.selectable .square-selector:hover {
+    background-color: rgba(255, 0, 0, 0.3); }
 
 [data-tile=''] {
   display: none; }
@@ -176,6 +189,16 @@ html {
   background-position-y: 0%;
   border-radius: 0px 5px 5px 0px; }
 
+[data-tile='tileLargePasture-0'] {
+  background-position-x: 66.6666666667%;
+  background-position-y: 33.3333333333%;
+  border-radius: 5px 0px 0px 5px; }
+
+[data-tile='tileLargePasture-1'] {
+  background-position-x: 100%;
+  background-position-y: 33.3333333333%;
+  border-radius: 0px 5px 5px 0px; }
+
 [data-tile='tileRubyMine-0'] {
   background-position-x: 66.6666666667%;
   background-position-y: 100%;
@@ -198,6 +221,11 @@ html {
 
 [data-tile='tileTunnel-0'] {
   background-position-x: 100%;
+  background-position-y: 100%;
+  border-radius: 5px; }
+
+[data-tile='tilePasture-0'] {
+  background-position-x: 0%;
   background-position-y: 100%;
   border-radius: 5px; }
 

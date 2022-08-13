@@ -44,6 +44,10 @@
   }
 }
 
+.board-cell.cell-node .square-selector {
+  z-index: 100;
+}
+
 .board-cell.cell-node .square-selector,
 .caverna-player-board .player-board-grid .board-cell .caverna-tile {
   width: 94px;
@@ -75,7 +79,8 @@
     }
   }
 
-  &:not([data-tile]) {
+  &:not([data-tile]),
+  &[data-tile=''] {
     background: none;
     border: none;
     display: none;
@@ -94,12 +99,14 @@
   &[data-tile='tileTunnelCavern-0'],
   &[data-tile='tileCavernCavern-0'],
   &[data-tile='tileMeadowField-0'],
+  &[data-tile='tileLargePasture-0'],
   &[data-tile='tileMineDeepTunnel-0'] {
     border-right: none;
   }
   &[data-tile='tileTunnelCavern-1'],
   &[data-tile='tileCavernCavern-1'],
   &[data-tile='tileMeadowField-1'],
+  &[data-tile='tileLargePasture-1'],
   &[data-tile='tileMineDeepTunnel-1'] {
     border-left: none;
   }
@@ -113,6 +120,15 @@
     top: -2px;
   }
   &.office-room {
+  }
+}
+
+.board-cell.cell-node.selectable .square-selector {
+  display: flex;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.2);
+  &:hover {
+    background-color: rgba(255, 0, 0, 0.3);
   }
 }
 
@@ -163,6 +179,17 @@
   border-radius: 0px 5px 5px 0px;
 }
 
+[data-tile='tileLargePasture-0'] {
+  background-position-x: 2 * 100% / 3;
+  background-position-y: 1 * 100% / 3;
+  border-radius: 5px 0px 0px 5px;
+}
+[data-tile='tileLargePasture-1'] {
+  background-position-x: 3 * 100% / 3;
+  background-position-y: 1 * 100% / 3;
+  border-radius: 0px 5px 5px 0px;
+}
+
 [data-tile='tileRubyMine-0'] {
   background-position-x: 2 * 100% / 3;
   background-position-y: 3 * 100% / 3;
@@ -189,6 +216,12 @@
 
 [data-tile='tileTunnel-0'] {
   background-position-x: 3 * 100% / 3;
+  background-position-y: 3 * 100% / 3;
+  border-radius: 5px;
+}
+
+[data-tile='tilePasture-0'] {
+  background-position-x: 0 * 100% / 3;
   background-position-y: 3 * 100% / 3;
   border-radius: 5px;
 }

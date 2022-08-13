@@ -35,12 +35,12 @@ class ActionFenceBuilding6 extends \CAV\Models\ActionCard
           'optional' => true,
           'childs' => [
             [
-              'action' => FENCING,
-              'args' => ['type' => 'small', 'cost' => [WOOD => 2]],
+              'action' => PLACE_TILE,
+              'args' => ['tiles' => [TILE_PASTURE], 'cost' => [WOOD => 2]],
             ],
             [
-              'action' => FENCING,
-              'args' => ['type' => 'large', 'cost' => [WOOD => 4]],
+              'action' => PLACE_TILE,
+              'args' => ['tiles' => [TILE_LARGE_PASTURE], 'cost' => [WOOD => 4]],
             ],
           ],
         ],
