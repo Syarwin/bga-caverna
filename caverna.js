@@ -93,7 +93,7 @@ define([
           ['equipWeapon', null],
           ['upgradeWeapon', 500],
           ['furnish', 500],
-          ['placeTile', 1000],
+          ['placeTile', 500],
           // UNCHECKED
           ['addFences', null],
           ['addStables', null],

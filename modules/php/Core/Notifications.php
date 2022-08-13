@@ -233,7 +233,7 @@ class Notifications
 
   public static function placeTile($player, $tile, $squares)
   {
-    self::notifyAll('construct', clienttranslate('${player_name} places ${tile_name}'), [
+    self::notifyAll('placeTile', clienttranslate('${player_name} places ${tile_name}'), [
       'i18n' => ['tile_name'],
       'tile_name' => \CAV\Actions\PlaceTile::getTileName($tile),
       'player' => $player,

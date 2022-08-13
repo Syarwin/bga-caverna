@@ -432,7 +432,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     notif_placeTile(n) {
       debug('Notif: placing a tile', n);
-      // TODO
+      if (n.args.player_id == this.player_id) {
+        dojo.query('.square-selector').forEach(dojo.destroy);
+        dojo.empty('page-subtitle');
+      }
+
+      n.args.squares.forEach((square) => {
+        this.addTile(square);
+      });
     },
   });
 });
