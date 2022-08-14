@@ -534,7 +534,10 @@ class PlayerBoard
   {
     $zones = [];
     foreach ($this->tiles as $tile) {
-      if (is_null($tileType) || $tile['type'] == $tileType) {
+      if (
+        is_null($tileType) ||
+        ($tile['type'] == $tileType && $this->grid[$tile['x']][$tile['y']]['type'] == $tileType)
+      ) {
         $zones[] = $this->extractPos($tile);
       }
     }
@@ -586,7 +589,7 @@ class PlayerBoard
       $nodes = $this->getFreeZones(MOUNTAIN);
     } elseif (in_array($tile, [TILE_DEEP_TUNNEL, TILE_ORE_MINE])) {
       $nodes = $this->getUnbuiltTiles(TILE_TUNNEL);
-    } else if(in_array($tile, [TILE_PASTURE])) {
+    } elseif (in_array($tile, [TILE_PASTURE])) {
       $nodes = $this->getUnbuiltTiles(TILE_MEADOW);
     } else {
       return [];
@@ -605,8 +608,13 @@ class PlayerBoard
     $tiles = TILE_SQUARES_MAPPING[$tile];
 
     // Get buildable zone
+    $zones = [];
     if (count($tiles) == 1) {
-      return $this->getPlacableZones($tiles[0]);
+      foreach ($this->getPlacableZones($tiles[0]) as $pos) {
+        $zones[] = [
+          'pos1' => $pos,
+        ];
+      }
     } elseif (count($tiles) == 2) {
       $zones = [];
       for ($i = 0; $i <= 1; $i++) {
@@ -620,11 +628,12 @@ class PlayerBoard
           }
         }
       }
-      return $zones;
     } else {
       return [];
       die('TODO : getPlacementOptions');
     }
+
+    return $zones;
   }
 
   public function canPlace($tiles)
