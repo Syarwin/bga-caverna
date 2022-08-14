@@ -153,24 +153,35 @@ class ActionCard extends \CAV\Helpers\DB_Model
 
   public function canBePlayed($player, $dwarf, $onlyCheckSpecificPlayer = null, $ignoreResources = false)
   {
-    // What cards should we check ?
-    $actionList = [$this->id];
-
     // Is there a dwarf here ?
-    foreach ($actionList as $action) {
-      $dwarfs = Dwarfs::getOnCard($action);
-      if ($dwarfs->count() > 0 && $onlyCheckSpecificPlayer == null) {
-        return false;
-      }
+    $dwarfs = Dwarfs::getOnCard($this->id);
+    if ($dwarfs->count() > 0 && $onlyCheckSpecificPlayer == null) {
+      return false;
+    }
 
-      $pIds = $dwarfs
-        ->map(function ($dwarf) {
-          return $dwarf['pId'];
-        })
-        ->toArray();
-      if (in_array($onlyCheckSpecificPlayer, $pIds)) {
-        return false;
-      }
+    $pIds = $dwarfs
+      ->map(function ($dwarf) {
+        return $dwarf['pId'];
+      })
+      ->toArray();
+    if (in_array($onlyCheckSpecificPlayer, $pIds)) {
+      return false;
+    }
+
+    // Check that the action is doable
+    $flow = $this->getTaggedFlow($player, $dwarf);
+    $flowTree = Engine::buildTree($flow);
+    return $flowTree->isDoable($player, $ignoreResources);
+  }
+
+  public function canBeCopied($player, $dwarf, $ignoreResources = false)
+  {
+    // Is there a dwarf here ?
+    $dwarfs = Dwarfs::getOnCard($this->id)->filter(function ($d) use ($player) {
+      return $d['pId'] != $player->getId();
+    });
+    if ($dwarfs->count() == 0) {
+      return false;
     }
 
     // Check that the action is doable
@@ -190,7 +201,7 @@ class ActionCard extends \CAV\Helpers\DB_Model
     return Utils::tagTree($this->getFlow($player, $dwarf), [
       'pId' => $player->getId(),
       'cardId' => $this->id,
-      'dwarfId' => $dwarf['id'],
+      'dwarfId' => $dwarf['id'] ?? null,
     ]);
   }
 }

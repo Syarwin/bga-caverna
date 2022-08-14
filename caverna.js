@@ -409,6 +409,9 @@ define([
       onEnteringStatePlaceDwarf(args) {
         this.promptActionCard(args.cards, (cId) => this.takeAtomicAction('actPlaceDwarf', [cId]), args.allCards);
       },
+      onEnteringStateImitate(args) {
+        this.promptActionCard(args.cards, (cId) => this.takeAtomicAction('actImitate', [cId]), args.allCards);
+      },
 
       onEnteringStateBlacksmith(args) {
         for (let i = 1; i <= args.max; i++) {

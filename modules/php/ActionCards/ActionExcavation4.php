@@ -7,7 +7,7 @@ class ActionExcavation4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionExcavation4';
-    $this->actionCardType = 'ActionExcavation';
+    $this->actionCardType = 'Excavation';
     $this->name = clienttranslate('Excavation');
     $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [

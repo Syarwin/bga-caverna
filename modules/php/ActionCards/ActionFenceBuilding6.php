@@ -8,7 +8,7 @@ class ActionFenceBuilding6 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionFenceBuilding6';
-    $this->actionCardType = 'ActionFenceBuilding';
+    $this->actionCardType = 'FenceBuilding';
     $this->name = clienttranslate('Fence Building');
     $this->desc = [clienttranslate('and then / or')];
     $this->tooltip = [

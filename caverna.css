@@ -137,7 +137,8 @@ html {
   position: absolute;
   margin: 0px;
   left: -2px;
-  top: -2px; }
+  top: -2px;
+  border: none; }
 
 .board-cell.cell-node.selectable .square-selector {
   display: flex;
@@ -437,7 +438,7 @@ html {
     box-shadow: none; }
 
 #buildings-test {
-  display: flex;
+  display: none;
   flex-wrap: wrap; }
   #buildings-test .caverna-building {
     margin: 5px; }
@@ -655,7 +656,7 @@ html {
       position: relative;
       z-index: 20; }
     #ebd-body:not(.help-mode) .action-card-holder.selectable .action-card {
-      filter: none; }
+      filter: none !important; }
   #ebd-body:not(.help-mode) .action-card-holder.unselectable {
     cursor: not-allowed; }
   #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable .action-card {

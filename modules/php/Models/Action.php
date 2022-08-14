@@ -90,7 +90,8 @@ class Action
 
   public function getDwarf()
   {
-    return Dwarfs::get($this->ctx->getDwarfId());
+    $dwarfId = $this->ctx->getDwarfId();
+    return is_null($dwarfId) ? null : Dwarfs::get($dwarfId);
   }
 
   public function getClassName()

@@ -7,7 +7,7 @@ class ActionSustenance4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionSustenance4';
-    $this->actionCardType = 'ActionSustenance';
+    $this->actionCardType = 'Sustenance';
     $this->name = clienttranslate('Sustenance');
     $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [

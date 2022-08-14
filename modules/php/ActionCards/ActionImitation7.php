@@ -9,7 +9,7 @@ class ActionImitation7 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionImitation7';
-    // $this->actionCardType = 'ActionImitation';
+    $this->actionCardType = 'Imitation';
     $this->name = clienttranslate('Imitation');
     $this->tooltip = [
       clienttranslate('Use an Action space occupied by one of your opponents'),
@@ -18,6 +18,11 @@ class ActionImitation7 extends \CAV\Models\ActionCard
       ),
     ];
     $this->players = [7];
+  }
+
+  public function canBeCopied($player, $dwarf, $ignoreResources = false)
+  {
+    return false;
   }
 
   public function getFlow($player, $dwarf)

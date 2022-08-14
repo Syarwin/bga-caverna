@@ -7,7 +7,7 @@ class ActionOreMining4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionOreMining4';
-    $this->actionCardType = 'ActionOreMining';
+    $this->actionCardType = 'OreMining';
     $this->name = clienttranslate('Ore Mining');
     $this->desc = [clienttranslate('for each')];
     $this->tooltip = [

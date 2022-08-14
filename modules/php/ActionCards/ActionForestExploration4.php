@@ -7,7 +7,7 @@ class ActionForestExploration4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionForestExploration4';
-    $this->actionCardType = 'ActionForestExploration';
+    $this->actionCardType = 'ForestExploration';
     $this->name = clienttranslate('Forest exploration');
     $this->tooltip = [
       clienttranslate(

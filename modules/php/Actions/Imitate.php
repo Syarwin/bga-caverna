@@ -1,11 +1,13 @@
 <?php
 namespace CAV\Actions;
 
-use CAV\Managers\Meeples;
 use CAV\Managers\Players;
+use CAV\Managers\ActionCards;
+use CAV\Managers\Buildings;
+use CAV\Managers\Meeples;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
-use CAV\Helpers\Utils;
+use CAV\Core\Globals;
 use CAV\Core\Stats;
 
 class Imitate extends \CAV\Models\Action
@@ -18,36 +20,62 @@ class Imitate extends \CAV\Models\Action
 
   public function getState()
   {
-    return ST_PLACE_TILE; // TODO
+    return ST_IMITATION;
   }
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return false;
+    return !empty($this->getCopiableCards($player, null, $ignoreResources));
+  }
+
+  function getCopiableCards($player, $dwarf, $ignoreResources = false)
+  {
+    $cards = ActionCards::getVisible($player);
+    return $cards
+      ->filter(function ($card) use ($player, $dwarf, $ignoreResources) {
+        return $card->canBeCopied($player, $dwarf, $ignoreResources);
+      })
+      ->getIds();
   }
 
   public function argsImitate()
   {
     $player = Players::getActive();
-
-    return [];
+    $dwarf = $this->getDwarf();
+    $cards = ActionCards::getVisible($player);
+    return [
+      'allCards' => $cards->getIds(),
+      'cards' => $this->getCopiableCards($player, $dwarf),
+    ];
   }
 
-  public function actImitate($rooms)
+  public function actImitate($cardId)
   {
     self::checkAction('actImitate');
-    die('NOT DONE YET');
-
     $player = Players::getCurrent();
 
-    // Listeners for cards
-    $eventData = [
-      'roomType' => $roomType,
-      'rooms' => $rooms,
-      'oldRoomCount' => $oldRoomCount,
-    ];
-    $this->checkAfterListeners($player, $eventData);
+    $args = self::argsImitate();
+    $cards = $args['cards'];
+    if (!\in_array($cardId, $cards)) {
+      throw new \BgaUserException(clienttranslate('You cannot imitate this card'));
+    }
 
-    $this->resolveAction();
+    $dwarf = $this->getDwarf();
+    $card = ActionCards::get($cardId);
+    $eventData = [
+      'actionCardId' => $card->getId(),
+      'actionCardType' => $card->getActionCardType(),
+      'imitate' => true,
+    ];
+
+    Notifications::imitate($player, $card);
+    
+    // Copy action card
+    $flow = $card->getTaggedFlow($player, $dwarf);
+    $this->checkModifiers('computePlaceDwarfFlow', $flow, 'flow', $player, $eventData);
+    Engine::insertAsChild($flow);
+
+    $this->checkAfterListeners($player, $eventData, false);
+    $this->resolveAction(['actionCardId' => $cardId]);
   }
 }

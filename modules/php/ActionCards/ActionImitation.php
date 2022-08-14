@@ -19,6 +19,11 @@ class ActionImitation extends \CAV\Models\ActionCard
     $this->players = [3, 4, 5, 6, 7];
   }
 
+  public function canBeCopied($player, $dwarf, $ignoreResources = false)
+  {
+    return false;
+  }
+
   public function getFlow($player, $dwarf)
   {
     $playersMap = [3 => 4, 4 => 2, 5 => 2, 6 => 1, 7 => 0];

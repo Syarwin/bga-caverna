@@ -7,6 +7,7 @@ class ActionLogging4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionLogging4';
+    $this->actionCardType = 'Logging';
     $this->name = clienttranslate('Logging');
     $this->desc = [clienttranslate('and then / or')];
     $this->tooltip = [

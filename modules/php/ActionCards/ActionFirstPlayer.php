@@ -29,4 +29,9 @@ class ActionFirstPlayer extends \CAV\Models\ActionCard
       ],
     ];
   }
+
+  public function canBeCopied($player, $dwarf, $ignoreResources = false)
+  {
+    return false;
+  }
 }

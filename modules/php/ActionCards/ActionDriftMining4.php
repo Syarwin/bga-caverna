@@ -7,7 +7,7 @@ class ActionDriftMining4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionDriftMining4';
-    $this->actionCardType = 'ActionDriftMining';
+    $this->actionCardType = 'DriftMining';
     $this->name = clienttranslate('Drift Mining');
     $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [

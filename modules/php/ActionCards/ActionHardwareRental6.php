@@ -7,7 +7,7 @@ class ActionHardwareRental6 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionHardwareRental6';
-    $this->actionCardType = 'ActionHardwareRental';
+    $this->actionCardType = 'HardwareRental';
     $this->name = clienttranslate('Hardware Rental');
     $this->desc = [clienttranslate('and then / or'), clienttranslate('and then / or')];
     $this->tooltip = [

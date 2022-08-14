@@ -7,7 +7,7 @@ class ActionClearing4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionClearing4';
-    $this->actionCardType = 'ActionClearing';
+    $this->actionCardType = 'Clearing';
     $this->name = clienttranslate('Clearing');
     $this->desc = [clienttranslate('and / or')];
     $this->tooltip = [

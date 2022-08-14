@@ -40,19 +40,20 @@ class Collect extends \CAV\Models\Action
     $this->checkListeners('Collect', $player, $eventData);
 
     $meeples = Meeples::collectResourcesOnCard($player, $cardId);
-    $eventData['meeples'] = $meeples;
+    if (!empty($meeples)) {
+      $eventData['meeples'] = $meeples;
+      foreach ($meeples as $meeple) {
+        $statName = 'incBoard' . ucfirst($meeple['type']);
+        Stats::$statName($player);
+      }
+      $reorganize = $player->checkAutoReorganize($meeples);
+      Notifications::collectResources($player, $meeples);
+      Notifications::updateDropZones($player);
 
-    foreach ($meeples as $meeple) {
-      $statName = 'incBoard' . ucfirst($meeple['type']);
-      Stats::$statName($player);
+      $this->checkListeners('ImmediatelyAfterCollect', $player, $eventData);
+      $player->checkAnimalsInReserve($reorganize);
+      $this->checkListeners('AfterCollect', $player, $eventData);
     }
-    $reorganize = $player->checkAutoReorganize($meeples);
-    Notifications::collectResources($player, $meeples);
-    Notifications::updateDropZones($player);
-
-    $this->checkListeners('ImmediatelyAfterCollect', $player, $eventData);
-    $player->checkAnimalsInReserve($reorganize);
-    $this->checkListeners('AfterCollect', $player, $eventData);
     $this->resolveAction();
   }
 

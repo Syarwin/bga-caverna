@@ -7,7 +7,7 @@ class ActionFirstPlayer4 extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionFirstPlayer4';
-    $this->actionCardType = 'ActionFirstPlayer';
+    $this->actionCardType = 'FirstPlayer';
     $this->name = clienttranslate('First Player');
     $this->tooltip = [
       clienttranslate(
@@ -29,5 +29,10 @@ class ActionFirstPlayer4 extends \CAV\Models\ActionCard
         ],
       ],
     ];
+  }
+
+  public function canBeCopied($player, $dwarf, $ignoreResources = false)
+  {
+    return false;
   }
 }
