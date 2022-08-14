@@ -20,4 +20,9 @@ class G_Blacksmith extends \CAV\Models\Building
     $this->cost = [WOOD => 1, STONE => 2];
     $this->vp = 3;
   }
+
+  protected function onBuy($player, $eventData)
+  {
+    return $this->gainNode([ORE => 2]);
+  }
 }

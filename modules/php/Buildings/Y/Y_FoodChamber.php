@@ -17,4 +17,14 @@ class Y_FoodChamber extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2, \VEGETABLE => 2];
   }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $vegetables = $player->countReserveAndGrowingResource(VEGETABLE);
+    $grains = $player->countReserveAndGrowingResource(GRAIN);
+    $sets = min($vegetables, $grains);
+    $bonus = 2 * $sets;
+    $this->addBonusScoringEntry($bonus);
+  }
 }

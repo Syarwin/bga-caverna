@@ -19,4 +19,17 @@ class Y_PrayerChamber extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2];
   }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $dwarfs = $player->getAllDwarfs();
+    foreach ($dwarfs as $d) {
+      if (($d['weapon'] ?? 0) > 0) {
+        return;
+      }
+    }
+
+    $this->addBonusScoringEntry(8);
+  }
 }

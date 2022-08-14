@@ -16,5 +16,18 @@ class G_CookingCave extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 2];
     $this->vp = 2;
+    $this->exchanges = [
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          GRAIN => 1,
+          VEGETABLE => 1,
+        ],
+        'to' => [
+          FOOD => 5,
+        ],
+      ],
+    ];
   }
 }

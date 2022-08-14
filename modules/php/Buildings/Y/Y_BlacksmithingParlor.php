@@ -16,5 +16,19 @@ class Y_BlacksmithingParlor extends \CAV\Models\Building
     ];
     $this->cost = [ORE => 3];
     $this->vp = 2;
+    $this->exchanges = [
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          RUBY => 1,
+          ORE => 1,
+        ],
+        'to' => [
+          GOLD => 2,
+          FOOD => 1,
+        ],
+      ],
+    ];
   }
 }

@@ -19,4 +19,16 @@ class Y_FodderChamber extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 1, GRAIN => 1];
   }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $animals = 0;
+    $reserve = $player->getExchangeResources();
+    foreach (ANIMALS as $type) {
+      $animals += $reserve[$type];
+    }
+    $bonus = floor($animals / 3);
+    $this->addBonusScoringEntry($bonus);
+  }
 }

@@ -29,8 +29,8 @@ class Blacksmith extends \CAV\Models\Action
 
   public function maximumForgeableWeapon($player)
   {
-    // TODO handle BlackSmith building
-    return min(8, $player->getReserveResource(ORE)->count());
+    $bonus = $player->hasPlayedBuilding('G_Blacksmith') ? 2 : 0;
+    return min(8, $player->getReserveResource(ORE)->count() + $bonus);
   }
 
   public function argsBlacksmith()

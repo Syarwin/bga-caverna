@@ -19,4 +19,17 @@ class Y_WeavingParlor extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2, STONE => 1];
   }
+
+  protected function onBuy($player, $eventData)
+  {
+    $sheep = $player->getExchangeResources()[SHEEP];
+    return $this->gainNode([FOOD => $sheep]);
+  }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $sheep = $player->getExchangeResources()[SHEEP];
+    $this->addBonusScoringEntry(floor($sheep / 2));
+  }
 }

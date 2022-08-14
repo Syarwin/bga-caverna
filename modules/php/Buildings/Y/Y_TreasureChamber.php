@@ -17,4 +17,10 @@ class Y_TreasureChamber extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 1, STONE => 1];
   }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $this->addBonusScoringEntry($player->countReserveResource(RUBY));
+  }
 }

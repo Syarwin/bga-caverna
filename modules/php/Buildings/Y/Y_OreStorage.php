@@ -15,4 +15,11 @@ class Y_OreStorage extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 1, STONE => 2];
   }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $ore = $player->countReserveResource(ORE);
+    $this->addBonusScoringEntry(floor($ore / 2));
+  }
 }

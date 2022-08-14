@@ -18,5 +18,18 @@ class Y_HuntingParlor extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2];
     $this->vp = 1;
+    $this->exchanges = [
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          PIG => 2,
+        ],
+        'to' => [
+          GOLD => 2,
+          FOOD => 2,
+        ],
+      ],
+    ];
   }
 }

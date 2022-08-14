@@ -19,4 +19,17 @@ class Y_MilkingParlor extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2, STONE => 2];
   }
+
+  protected function onBuy($player, $eventData)
+  {
+    $cattle = $player->getExchangeResources()[CATTLE];
+    return $this->gainNode([FOOD => $cattle]);
+  }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $cattle = $player->getExchangeResources()[CATTLE];
+    $this->addBonusScoringEntry($cattle);
+  }
 }

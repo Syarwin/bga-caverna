@@ -17,4 +17,17 @@ class Y_BroomChamber extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 1];
   }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $n = $player->countDwarfs();
+    $bonus = 0;
+    if ($n == 5) {
+      $bonus = 5;
+    } elseif ($n == 6) {
+      $bonus = 10;
+    }
+    $this->addBonusScoringEntry($bonus);
+  }
 }

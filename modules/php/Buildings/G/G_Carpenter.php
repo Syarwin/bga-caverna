@@ -16,4 +16,11 @@ class G_Carpenter extends \CAV\Models\Building
     $this->cost = [STONE => 1];
     $this->vp = 0;
   }
+
+  public function onPlayerComputeCostsFurnish($player, &$args)
+  {
+    Utils::addBonus($args['costs'], [WOOD => -1], $this->id);
+  }
+
+  // TODO : listen to placeTiles cost and check type of tile
 }

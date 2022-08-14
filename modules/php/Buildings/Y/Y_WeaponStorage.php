@@ -16,4 +16,18 @@ class Y_WeaponStorage extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 3, STONE => 2];
   }
+
+  public function computeBonusScore()
+  {
+    $player = $this->getPlayer();
+    $dwarfs = $player->getAllDwarfs();
+    $nArmedDwafs = 0;
+    foreach ($dwarfs as $d) {
+      if (($d['weapon'] ?? 0) > 0) {
+        $nArmedDwafs++;
+      }
+    }
+
+    $this->addBonusScoringEntry($nArmedDwafs * 3);
+  }
 }

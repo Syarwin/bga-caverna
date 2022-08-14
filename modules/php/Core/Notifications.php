@@ -129,6 +129,14 @@ class Notifications
     ]);
   }
 
+  public static function imitate($player, $card)
+  {
+    self::notifyAll('message', clienttranslate('${player_name} copies ${card_name}'), [
+      'card' => $card,
+      'player' => $player,
+    ]);
+  }
+
   public static function equipWeapon($player, $dwarf, $weapon)
   {
     self::notifyAll('equipWeapon', clienttranslate('${player_name} forges a weapon of strength ${strength}'), [

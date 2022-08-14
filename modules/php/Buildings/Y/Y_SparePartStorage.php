@@ -19,5 +19,19 @@ class Y_SparePartStorage extends \CAV\Models\Building
       ),
     ];
     $this->cost = [WOOD => 2];
+    $this->exchanges = [
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          WOOD => 1,
+          STONE => 1,
+          ORE => 1,
+        ],
+        'to' => [
+          GOLD => 2,
+        ],
+      ],
+    ];
   }
 }

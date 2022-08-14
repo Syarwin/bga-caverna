@@ -19,4 +19,9 @@ class G_WoodSupplier extends \CAV\Models\Building
     $this->cost = [STONE => 1];
     $this->vp = 2;
   }
+
+  protected function onBuy($player, $eventData)
+  {
+    return $this->futureMeeplesNode([WOOD => 1], 7);
+  }
 }
