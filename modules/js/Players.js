@@ -24,39 +24,26 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   const ALL_RESOURCES = RESOURCES.concat(PERSONAL_RESOURCES);
   const ANIMALS = ['sheep', 'pig', 'cattle', 'donkey', 'dog'];
   const SCORE_CATEGORIES = [
-    'fields',
-    'pastures',
+    'dog',
+    'sheep',
+    'pig',
+    'cattle',
+    'donkey',
     'grains',
     'vegetables',
-    'sheeps',
-    'pigs',
-    'cattles',
-    'empty',
-    'stables',
-    'clayRooms',
-    'stoneRooms',
+    'rubies',
     'dwarfs',
+    'empty',
+    'pastures',
+    'mines',
+    'buildings',
+    'buildingsBonus',
+    'gold',
     'beggings',
-    'cards',
-    'cardsBonus',
     'total',
   ];
-  const SCORE_QTY_CATEGORIES = [
-    'fields',
-    'pastures',
-    'grains',
-    'vegetables',
-    'sheeps',
-    'pigs',
-    'cattles',
-    'empty',
-    'stables',
-    'clayRooms',
-    'stoneRooms',
-    'dwarfs',
-    'beggings',
-  ];
-  const SCORE_MULTIPLE_ENTRIES = ['cards', 'cardsBonus'];
+  const SCORE_QTY_CATEGORIES = [];
+  const SCORE_MULTIPLE_ENTRIES = ['buildings', 'buildingsBonus'];
 
   return declare('caverna.players', null, {
     // Utils to iterate over players array/object
@@ -278,21 +265,22 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     setupScoresModal() {
       let content = this.format_string(jstpl_scoresModal, {
-        fields: _('Fields'),
-        pastures: _('Pastures'),
+        dog: _('Dogs'),
+        sheep: _('Sheep'),
+        pig: _('Wild boar'),
+        cattle: _('Cattle'),
+        donkey: _('Donkeys'),
         grains: _('Grain'),
         vegetables: _('Vegetables'),
-        sheeps: _('Sheep'),
-        pigs: _('Wild boar'),
-        cattles: _('Cattle'),
+        rubies: _('Rubies'),
+        dwarfs: _('Dwarfs'),
         empty: _('Unused spaces'),
-        stables: _('Fenced stables'),
-        clayRooms: _('Clay hut rooms'),
-        stoneRooms: _('Stone house rooms'),
-        dwarfs: _('Family members'),
-        cards: _('Points for cards'),
-        cardsBonus: _('Bonus point'),
-        beggings: _('Beggar cards'),
+        pastures: _('Pastures'),
+        mines: _('Ore and Ruby mines'),
+        buildings: _('Points for buildings'),
+        buildingsBonus: _('Bonus point'),
+        gold: _('Gold coins'),
+        beggings: _('Beggar tokens'),
         total: _('Total'),
       });
 
@@ -312,28 +300,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         SCORE_CATEGORIES.forEach((row) => {
           let scoreElt = '<div><span id="score-' + player.id + '-' + row + '"></span><i class="fa fa-star"></i></div>';
           let addClass = '';
-
-          // Scoring quantity ? Add a counter for the quantity
-          if (SCORE_QTY_CATEGORIES.includes(row)) {
-            let mapping = {
-              empty: 'empty',
-              clayRooms: 'room_clay',
-              stoneRooms: 'room_stone',
-              stables: 'barn',
-            };
-            let iconName = mapping[row] || row.slice(0, -1);
-            if (iconName == 'field') iconName = 'field_icon';
-
-            addClass = 'qty-scoring-entry';
-            scoreElt =
-              `<div>
-              <span id="score-quantity-${player.id}-${row}"></span>
-              <div class="meeple-container">
-                <div class="caverna-meeple meeple-${iconName}" data-color="${player.color}">
-                </div>
-              </div>
-            </div>` + scoreElt;
-          }
 
           // Wrap that into a scoring entry
           scoreElt = `<div class="scoring-entry ${addClass}">${scoreElt}</div>`;
@@ -375,12 +341,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
         SCORE_CATEGORIES.forEach((category) => {
           this._scoresCounters[player.id][category] = this.createCounter('score-' + player.id + '-' + category);
-
-          if (SCORE_QTY_CATEGORIES.includes(category)) {
-            this._scoresQtyCounters[player.id][category] = this.createCounter(
-              'score-quantity-' + player.id + '-' + category,
-            );
-          }
         });
       });
 
@@ -391,8 +351,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update score counters
      */
     updatePlayersScores(anim = true) {
-      return; // TODO
-
       if (this.gamedatas.scores !== null) {
         this.forEachPlayer((player) => {
           SCORE_CATEGORIES.forEach((category) => {
@@ -401,11 +359,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
                 ? this.gamedatas.scores[player.id]['total']
                 : this.gamedatas.scores[player.id][category]['total'];
             this._scoresCounters[player.id][category][anim ? 'toValue' : 'setValue'](value);
-
-            if (SCORE_QTY_CATEGORIES.includes(category)) {
-              let n = this.gamedatas.scores[player.id][category]['entries'][0]['quantity'];
-              this._scoresQtyCounters[player.id][category][anim ? 'toValue' : 'setValue'](n);
-            }
 
             if (SCORE_MULTIPLE_ENTRIES.includes(category)) {
               let container = $(`score-subentries-${player.id}-${category}`);

@@ -35,14 +35,29 @@ $stats_type = [
       'type' => 'int',
     ],
 
-    'scoreFields' => [
-      'id' => STAT_SCORE_FIELDS,
-      'name' => totranslate('Number of points earned by fields'),
+    'scoreDog' => [
+      'id' => STAT_SCORE_DOGS,
+      'name' => totranslate('Number of points earned by dogs'),
       'type' => 'int',
     ],
-    'scorePastures' => [
-      'id' => STAT_SCORE_PASTURES,
-      'name' => totranslate('Number of points earned by pastures'),
+    'scoreSheep' => [
+      'id' => STAT_SCORE_SHEEPS,
+      'name' => totranslate('Number of points earned by sheep'),
+      'type' => 'int',
+    ],
+    'scorePig' => [
+      'id' => STAT_SCORE_PIGS,
+      'name' => totranslate('Number of points earned by wild boar'),
+      'type' => 'int',
+    ],
+    'scoreCattle' => [
+      'id' => STAT_SCORE_CATTLES,
+      'name' => totranslate('Number of points earned by cattle'),
+      'type' => 'int',
+    ],
+    'scoreDonkey' => [
+      'id' => STAT_SCORE_DONKEYS,
+      'name' => totranslate('Number of points earned by donkeys'),
       'type' => 'int',
     ],
     'scoreGrains' => [
@@ -55,59 +70,54 @@ $stats_type = [
       'name' => totranslate('Number of points earned by vegetables'),
       'type' => 'int',
     ],
-    'scoreSheeps' => [
-      'id' => STAT_SCORE_SHEEPS,
-      'name' => totranslate('Number of points earned by sheep'),
+
+    'scoreRubies' => [
+      'id' => STAT_SCORE_RUBIES,
+      'name' => totranslate('Number of points earned by rubies'),
       'type' => 'int',
     ],
-    'scorePigs' => [
-      'id' => STAT_SCORE_PIGS,
-      'name' => totranslate('Number of points earned by wild boar'),
+    'scoreDwarfs' => [
+      'id' => STAT_SCORE_DWARFS,
+      'name' => totranslate('Number of points earned by dwarfs'),
       'type' => 'int',
     ],
-    'scoreCattles' => [
-      'id' => STAT_SCORE_CATTLES,
-      'name' => totranslate('Number of points earned by cattle'),
-      'type' => 'int',
-    ],
+
     'scoreUnused' => [
       'id' => STAT_SCORE_UNUSED,
       'name' => totranslate('Number of points lost by unused space'),
       'type' => 'int',
     ],
-    'scoreStables' => [
-      'id' => STAT_SCORE_STABLES,
-      'name' => totranslate('Number of points earned by fenced stables'),
+    'scorePastures' => [
+      'id' => STAT_SCORE_PASTURES,
+      'name' => totranslate('Number of points earned by pastures'),
       'type' => 'int',
     ],
-    'scoreClayRooms' => [
-      'id' => STAT_SCORE_CLAY_ROOMS,
-      'name' => totranslate('Number of points earned by clay hut rooms'),
-      'type' => 'int',
-    ],
-    'scoreStoneRooms' => [
-      'id' => STAT_SCORE_STONE_ROOMS,
+    'scoreMines' => [
+      'id' => STAT_SCORE_MINES,
       'name' => totranslate('Number of points earned by stone house rooms'),
       'type' => 'int',
     ],
-    'scoreDwarfs' => [
-      'id' => STAT_SCORE_FARMERS,
-      'name' => totranslate('Number of points earned by family size'),
+
+    'scoreBuildings' => [
+      'id' => STAT_SCORE_BUILDINGS,
+      'name' => totranslate('Number of points earned by buildings'),
       'type' => 'int',
     ],
+    'scoreBuildingsBonus' => [
+      'id' => STAT_SCORE_BUILDINGS_BONUS,
+      'name' => totranslate('Number of bonus points earned by buildings'),
+      'type' => 'int',
+    ],
+
+    'scoreGold' => [
+      'id' => STAT_SCORE_GOLD,
+      'name' => totranslate('Number of points earn by gold coins'),
+      'type' => 'int',
+    ],
+
     'scoreBeggings' => [
       'id' => STAT_SCORE_BEGGINGS,
       'name' => totranslate('Number of points lost by begging'),
-      'type' => 'int',
-    ],
-    'scoreCards' => [
-      'id' => STAT_SCORE_CARDS,
-      'name' => totranslate('Number of points earned by cards'),
-      'type' => 'int',
-    ],
-    'scoreCardsBonus' => [
-      'id' => STAT_SCORE_CARDS_BONUS,
-      'name' => totranslate('Number of bonus points earned by cards'),
       'type' => 'int',
     ],
 
@@ -117,7 +127,7 @@ $stats_type = [
       'type' => 'int',
     ],
     'placedDwarfs' => [
-      'id' => STAT_PLACED_FARMER,
+      'id' => STAT_PLACED_DWARF,
       'name' => totranslate('Number of people placed on an action during the game'),
       'type' => 'int',
     ],

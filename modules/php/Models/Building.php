@@ -228,7 +228,7 @@ class Building extends \CAV\Helpers\DB_Model
   // |____/ \___\___/|_|  \___||___/
   //
   ///////////////////////////////////////
-  protected function addScoringEntry($score, $desc, $isBonus = true, $player = null)
+  protected function addScoringEntry($score, $isBonus = true, $player = null)
   {
     if (!$this->isPlayed()) {
       throw new \feException("Trying to addScoringEntry for a non-played card : {$this->id}");
@@ -245,48 +245,21 @@ class Building extends \CAV\Helpers\DB_Model
     $desc['args']['card_name'] = $this->getName();
     $desc['args']['player_name'] = $player ?? $player->getName();
     $desc['args']['score'] = $score;
-    Scores::addEntry($player, $isBonus ? SCORING_CARDS_BONUS : SCORING_CARDS, $score, $desc, null, $this->getName());
+    Scores::addEntry($player, $isBonus ? SCORING_CARDS_BONUS : SCORING_CARDS, $score, null, $this->getName());
   }
 
-  protected function addBonusScoringEntry($score, $desc = null, $player = null)
+  protected function addBonusScoringEntry($score, $player = null)
   {
-    $desc = $desc ?? $this->getBonusDescription();
-    $this->addScoringEntry($score, $desc, true, $player);
-  }
-
-  protected function addQuantityScoringEntry($n, $scoresMap, $descSingular, $descPlural)
-  {
-    if (!$this->isPlayed()) {
-      throw new \feException("Trying to addScoringEntry for a non-played card : {$this->id}");
-    }
-
-    Scores::addQuantityEntry(
-      $this->getPlayer(),
-      SCORING_CARDS_BONUS,
-      $n,
-      $scoresMap,
-      $descSingular,
-      $descPlural,
-      $this->getName()
-    );
+    $this->addScoringEntry($score, true, $player);
   }
 
   public function computeScore()
   {
     if ($this->vp != 0) {
-      $this->addScoringEntry(
-        $this->vp,
-        clienttranslate('${player_name} earns ${score} for owning ${card_name}'),
-        false
-      );
+      $this->addScoringEntry($this->vp, false);
     }
 
     $this->computeBonusScore();
-  }
-
-  public function getBonusDescription()
-  {
-    return clienttranslate('${player_name} earns ${score} for bonus of ${card_name}');
   }
 
   public function computeBonusScore()

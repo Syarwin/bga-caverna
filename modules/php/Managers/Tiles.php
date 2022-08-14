@@ -56,7 +56,9 @@ class Tiles extends \CAV\Helpers\Pieces
 
   public static function getOfPlayer($pId, $type = null)
   {
-    return self::getFilteredQuery($pId, 'inPlay', $type)->get();
+    return self::getFilteredQuery($pId, 'inPlay', $type)
+      ->orderBy('tile_id')
+      ->get();
   }
 
   public static function createTileOnBoard($tileType, $tileAsset, $pId, $x, $y)

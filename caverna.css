@@ -2207,7 +2207,7 @@ html {
       height: 30px; }
       #popin_showScores #popin_showScores_contents table tbody tr:nth-child(odd) {
         background-color: #ccc; }
-      #popin_showScores #popin_showScores_contents table tbody tr#scores-row-pastures, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-vegetables, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-cattles, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-stables, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-stoneRooms, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-farmers {
+      #popin_showScores #popin_showScores_contents table tbody tr#scores-row-donkey, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-vegetables, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-dwarfs, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-mines, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-buildingsBonus {
         border-bottom: 1px solid black; }
       #popin_showScores #popin_showScores_contents table tbody tr td {
         vertical-align: top;

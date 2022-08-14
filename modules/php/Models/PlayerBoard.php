@@ -111,22 +111,30 @@ class PlayerBoard
     return $this->buildings;
   }
 
-  public function getFields()
+  public function getTilesOfType($type)
   {
-    return $this->tiles->filter(function ($tile) {
-      return $tile['type'] == TILE_FIELD;
+    return $this->tiles->filter(function ($tile) use ($type) {
+      return $tile['type'] == $type;
     });
   }
 
-  public function getBonus($pos)
+  public function getFields()
   {
-    foreach (BONUSES as $cell) {
-      if ($cell['x'] == $pos['x'] && $cell['y'] == $pos['y']) {
-        return $cell['gain'];
-      }
-    }
-    return null;
+    return $this->getTilesOfType(TILE_FIELD);
   }
+
+  public function countEmptyCell()
+  {
+    $nodes = $this->getAllNodes(true);
+
+    // Should be free and of the given type
+    Utils::filter($nodes, function ($pos) {
+      return is_null($this->grid[$pos['x']][$pos['y']]) && is_null($this->stablesGrid[$pos['x']][$pos['y']]);
+    });
+
+    return count($nodes);
+  }
+
   ////////////////////////////////////////
   //     _       _     _
   //    / \   __| | __| | ___ _ __ ___
@@ -172,6 +180,16 @@ class PlayerBoard
     $bonus = is_null($this->grid[$pos['x']][$pos['y']]) ? $this->getBonus($pos) : null;
     $this->grid[$pos['x']][$pos['y']] = $tile;
     return [$tile, $bonus];
+  }
+
+  public function getBonus($pos)
+  {
+    foreach (BONUSES as $cell) {
+      if ($cell['x'] == $pos['x'] && $cell['y'] == $pos['y']) {
+        return $cell['gain'];
+      }
+    }
+    return null;
   }
 
   /**
@@ -878,11 +896,11 @@ class PlayerBoard
     return $t;
   }
 
-  protected static function getAllNodes()
+  protected static function getAllNodes($smallOnly = false)
   {
     $result = [];
-    for ($x = -1; $x <= 13; $x += 2) {
-      for ($y = -1; $y <= 9; $y += 2) {
+    for ($x = $smallOnly ? 1 : -1; $x <= ($smallOnly ? 11 : 13); $x += 2) {
+      for ($y = $smallOnly ? 1 : -1; $y <= ($smallOnly ? 7 : 9); $y += 2) {
         $result[] = ['x' => $x, 'y' => $y];
       }
     }

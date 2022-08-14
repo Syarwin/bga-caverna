@@ -68,6 +68,7 @@ const ST_RESOLVE_CHOICE = 11;
 
 const ST_PLACE_DWARF = 20;
 const ST_GAIN = 21;
+const ST_IMITATION = 22;
 const ST_PAY = 23;
 const ST_COLLECT = 24;
 const ST_FIRSTPLAYER = 25;
@@ -162,7 +163,7 @@ const BEGGING = 'begging';
 const FIELD = 'field';
 
 const RESOURCES = [WOOD, STONE, ORE, RUBY, FOOD, GOLD, GRAIN, VEGETABLE, SHEEP, PIG, CATTLE, DOG, DONKEY, BEGGING];
-const ANIMALS = [SHEEP, PIG, CATTLE];
+const ANIMALS = [DOG, SHEEP, PIG, CATTLE, DONKEY];
 const ROOMS = ['roomStone', 'roomClay', 'roomWood'];
 const CAVERN = 'Cavern';
 
@@ -209,37 +210,42 @@ const HARVEST = 3;
 /*
  * Scoring categories
  */
-const SCORING_FIELDS = 'fields';
-const SCORING_PASTURES = 'pastures';
 const SCORING_GRAINS = 'grains';
 const SCORING_VEGETABLES = 'vegetables';
-const SCORING_SHEEPS = 'sheeps';
-const SCORING_PIGS = 'pigs';
-const SCORING_CATTLES = 'cattles';
+const SCORING_RUBIES = 'rubies';
+const SCORING_DWARFS = 'dwarfs';
+
 const SCORING_EMPTY = 'empty';
-const SCORING_STABLES = 'stables';
-const SCORING_CLAY_ROOMS = 'clayRooms';
-const SCORING_STONE_ROOMS = 'stoneRooms';
-const SCORING_FARMERS = 'farmers';
-const SCORING_CARDS = 'cards';
-const SCORING_CARDS_BONUS = 'cardsBonus';
+const SCORING_PASTURES = 'pastures';
+const SCORING_MINES = 'mines';
+
+const SCORING_BUILDINGS = 'buildings';
+const SCORING_BUILDINGS_BONUS = 'buildingsBonus';
+
+const SCORING_GOLD = 'gold';
 const SCORING_BEGGINGS = 'beggings';
 const SCORING_CATEGORIES = [
-  SCORING_FIELDS,
-  SCORING_PASTURES,
+  DOG,
+  SHEEP,
+  PIG,
+  CATTLE,
+  DONKEY,
+
   SCORING_GRAINS,
   SCORING_VEGETABLES,
-  SCORING_SHEEPS,
-  SCORING_PIGS,
-  SCORING_CATTLES,
+
+  SCORING_RUBIES,
+  SCORING_DWARFS,
+
   SCORING_EMPTY,
-  SCORING_STABLES,
-  SCORING_CLAY_ROOMS,
-  SCORING_STONE_ROOMS,
-  SCORING_FARMERS,
-  SCORING_CARDS,
-  SCORING_CARDS_BONUS,
+  SCORING_PASTURES,
+  SCORING_MINES,
+
+  SCORING_BUILDINGS,
+  SCORING_BUILDINGS_BONUS,
+
   SCORING_BEGGINGS,
+  SCORING_GOLD,
 ];
 
 const NO_COST = ['trades' => [['max' => 1]]];
@@ -276,24 +282,25 @@ const BONUS_VP = 'bonusVP';
  ****** STATS ******
  ******************/
 const STAT_POSITION = 10;
-const STAT_SCORE_FIELDS = 11;
-const STAT_SCORE_PASTURES = 12;
-const STAT_SCORE_GRAINS = 13;
-const STAT_SCORE_VEGETABLES = 14;
-const STAT_SCORE_SHEEPS = 15;
-const STAT_SCORE_PIGS = 16;
-const STAT_SCORE_CATTLES = 17;
-const STAT_SCORE_UNUSED = 18;
-const STAT_SCORE_STABLES = 19;
-const STAT_SCORE_CLAY_ROOMS = 20;
-const STAT_SCORE_STONE_ROOMS = 21;
-const STAT_SCORE_FARMERS = 22;
-const STAT_SCORE_BEGGINGS = 23;
-const STAT_SCORE_CARDS = 24;
-const STAT_SCORE_CARDS_BONUS = 25;
+const STAT_SCORE_DOGS = 11;
+const STAT_SCORE_SHEEPS = 12;
+const STAT_SCORE_PIGS = 13;
+const STAT_SCORE_CATTLES = 14;
+const STAT_SCORE_DONKEYS = 15;
+const STAT_SCORE_GRAINS = 16;
+const STAT_SCORE_VEGETABLES = 17;
+const STAT_SCORE_RUBIES = 18;
+const STAT_SCORE_DWARFS = 19;
+const STAT_SCORE_UNUSED = 20;
+const STAT_SCORE_PASTURES = 21;
+const STAT_SCORE_MINES = 22;
+const STAT_SCORE_BUILDINGS = 23;
+const STAT_SCORE_BUILDINGS_BONUS = 24;
+const STAT_SCORE_BEGGINGS = 25;
+const STAT_SCORE_GOLD = 26;
 
 const STAT_FIRST_PLAYER = 30;
-const STAT_PLACED_FARMER = 31;
+const STAT_PLACED_DWARF = 31;
 
 const STAT_WOOD_FROM_BOARD = 35;
 const STAT_STONE_FROM_BOARD = 36;

@@ -41,13 +41,12 @@ class Scores extends \CAV\Helpers\DB_Manager
   /**
    * Add a scoring entry in the corresponding category
    */
-  public static function addEntry($player, $category, $score, $description, $qty = null, $source = null)
+  public static function addEntry($player, $category, $score, $qty = null, $source = null)
   {
     $pId = is_int($player) ? $player : $player->getId();
     // Add entry
     $data = [
       'score' => $score,
-      //      'desc' => $description,
     ];
     if (!is_null($qty)) {
       $data['quantity'] = $qty;
@@ -60,98 +59,6 @@ class Scores extends \CAV\Helpers\DB_Manager
     // Update scores
     self::$scores[$pId][$category]['total'] += $score;
     self::$scores[$pId]['total'] += $score;
-  }
-
-  /**
-   * Generic case that covers scores that depends on number of STUFF
-   */
-  public static function addQuantityEntry(
-    $player,
-    $category,
-    $n,
-    $scoresMap,
-    $descSingular,
-    $descPlural,
-    $source = null
-  ) {
-    // Syntaxic sugar for basic categories that always have the same scoring sequence : -1, 1, 2, 3, 4
-    $map = [];
-    if (isSequential($scoresMap)) {
-      $map[$scoresMap[0]] = -1;
-      $map[$scoresMap[1]] = 1;
-      $map[$scoresMap[2]] = 2;
-      $map[$scoresMap[3]] = 3;
-      $map[$scoresMap[4]] = 4;
-    } else {
-      $map = $scoresMap; // Already of the form qtyDescription => score
-    }
-
-    // First we compute the score by going through the map which is an arry : qtyDescription => score
-    $score = null;
-    foreach ($map as $qty => $gain) {
-      $lower = 0;
-      $upper = null;
-
-      // Quantity of the form : X-Y
-      if (\stripos($qty, '-') !== false) {
-        $t = \explode('-', $qty);
-        $lower = (int) $t[0];
-        $upper = (int) $t[1];
-      }
-      // Quantity of the form : +X
-      elseif (\stripos($qty, '+') !== false) {
-        $t = \explode('+', $qty);
-        $lower = (int) $t[0];
-      }
-      // Quantity is just an int
-      else {
-        $lower = (int) $qty;
-        $upper = (int) $qty;
-      }
-
-      // Check $n against $lower and $upper
-      if ($n >= $lower && ($upper === null || $n <= $upper)) {
-        if ($score != null) {
-          throw new \feException("Duplicate score found for quantity entry : $category, $n");
-        }
-        $score = $gain;
-      }
-    }
-
-    if ($score == null) {
-      return;
-    }
-
-    // Now log the entry with default message
-    $desc = self::getQtyDesc($player, $n, $score, $descSingular, $descPlural);
-    self::addEntry($player, $category, $score, $desc, $n, $source);
-    return $score;
-  }
-
-  /**
-   * Get standard description for score that depends on quantity of STUFF
-   */
-  public function getQtyDesc($player, $n, $score, $descSingular, $descPlural)
-  {
-    $desc = [
-      'log' => '',
-      'args' => [
-        'player_name' => $player->getName(),
-        'n' => $n,
-        'category' => $n > 1 ? $descPlural : $descSingular,
-        'score' => $score,
-      ],
-    ];
-    if ($score < 0) {
-      $desc['log'] = clienttranslate('${player_name} has ${n} ${category} and hence loses ${score} point(s)');
-      $desc['args']['score'] = -$score;
-    } elseif ($score == 0) {
-      $desc['log'] = clienttranslate('${player_name} does not have any ${category} and hence earns no point');
-    } else {
-      $desc['log'] = clienttranslate('${player_name} has ${n} ${category} and hence earns ${score} point(s)');
-    }
-
-    return $desc;
   }
 
   /**
@@ -169,7 +76,6 @@ class Scores extends \CAV\Helpers\DB_Manager
     }
 
     Notifications::updateScores(self::$scores);
-    // TODO Stats::updateScores($scores);
   }
 
   /**
@@ -182,15 +88,10 @@ class Scores extends \CAV\Helpers\DB_Manager
       self::computePlayer($player);
     }
 
-    // Specific case of score computing
-    foreach (Players::getAll() as $pId => $player) {
-      // self::computeC135($player, self::$scores);
-    }
-
     // update of Stats
     foreach (Players::getAll() as $pId => $player) {
-      Stats::setScoreCards($player, self::$scores[$player->getId()][SCORING_CARDS]['total']);
-      Stats::setScoreCardsBonus($player, self::$scores[$player->getId()][SCORING_CARDS_BONUS]['total']);
+      Stats::setScoreBuildings($player, self::$scores[$player->getId()][SCORING_BUILDINGS]['total']);
+      Stats::setScoreBuildingsBonus($player, self::$scores[$player->getId()][SCORING_BUILDINGS_BONUS]['total']);
     }
 
     return self::$scores;
@@ -201,26 +102,21 @@ class Scores extends \CAV\Helpers\DB_Manager
    */
   public function computePlayer($player)
   {
-    return; // TODO
-
-    self::computeFields($player);
-    self::computePastures($player);
+    self::computeAnimals($player);
 
     self::computeGrains($player);
     self::computeVegetables($player);
 
-    self::computeSheeps($player);
-    self::computePigs($player);
-    self::computeCattles($player);
-
-    self::computeEmptyCells($player);
-    self::computeFencedStables($player);
-
-    self::computeRooms($player);
-
+    self::computeRuby($player);
     self::computeDwarfs($player);
 
-    self::computeCards($player);
+    self::computeEmptyCells($player);
+    self::computePastures($player);
+    self::computeMines($player);
+
+    self::computeBuildings($player);
+
+    self::computeGold($player);
     self::computeBeggings($player);
 
     self::computeAuxScore($player);
@@ -229,221 +125,97 @@ class Scores extends \CAV\Helpers\DB_Manager
   protected function computeAuxScore($player)
   {
     $aux = 0;
-    foreach ([WOOD, STONE, ORE] as $res) {
-      $aux += $player->countReserveResource($res);
-    }
+    // TODO
     self::DB()->update(['player_score_aux' => $aux], $player->getId());
   }
 
-  protected function computeFields($player)
+  protected function computeAnimals($player)
   {
-    $n = count($player->board()->getFieldTiles());
-    $map = ['0-1', '2', '3', '4', '5+'];
-    $score = self::addQuantityEntry(
-      $player,
-      SCORING_FIELDS,
-      $n,
-      $map,
-      clienttranslate('field'),
-      clienttranslate('fields')
-    );
-    Stats::setScoreFields($player, $score);
-  }
-
-  protected function computePastures($player)
-  {
-    $n = count($player->board()->getPastures());
-    $map = ['0', '1', '2', '3', '4+'];
-    $score = self::addQuantityEntry(
-      $player,
-      SCORING_PASTURES,
-      $n,
-      $map,
-      clienttranslate('pasture'),
-      clienttranslate('pastures')
-    );
-    Stats::setScorePastures($player, $score);
+    $reserve = $player->getExchangeResources();
+    foreach (ANIMALS as $type) {
+      $n = $reserve[$type];
+      $score = $n == 0 ? -2 : $n;
+      self::addEntry($player, $type, $score, $n);
+      $statName = 'setScore' . \ucfirst($type);
+      Stats::$statName($player, $score);
+    }
   }
 
   protected function computeGrains($player)
   {
-    $n =
-      $player->countReserveResource(GRAIN) +
-      $player
-        ->board()
-        ->getGrowingCrops(GRAIN)
-        ->count();
-    $map = ['0', '1-3', '4-5', '6-7', '8+'];
-    $score = self::addQuantityEntry(
-      $player,
-      SCORING_GRAINS,
-      $n,
-      $map,
-      clienttranslate('grain'),
-      clienttranslate('grains')
-    );
+    $n = $player->countReserveAndGrowingResource(GRAIN);
+    $score = ceil($n / 2);
+
+    self::addEntry($player, SCORING_GRAINS, $score, $n);
     Stats::setScoreGrains($player, $score);
   }
-
   protected function computeVegetables($player)
   {
-    $n =
-      $player->countReserveResource(VEGETABLE) +
-      $player
-        ->board()
-        ->getGrowingCrops(VEGETABLE)
-        ->count();
-    $map = ['0', '1', '2', '3', '4+'];
-    $score = self::addQuantityEntry(
-      $player,
-      SCORING_VEGETABLES,
-      $n,
-      $map,
-      clienttranslate('vegetable'),
-      clienttranslate('vegetables')
-    );
+    $n = $player->countReserveAndGrowingResource(VEGETABLE);
+    $score = $n;
+    self::addEntry($player, SCORING_VEGETABLES, $score, $n);
     Stats::setScoreVegetables($player, $score);
   }
 
-  protected function computeSheeps($player)
+  protected function computeRuby($player)
   {
-    $n = $player->getExchangeResources()[SHEEP];
-    $map = ['0', '1-3', '4-5', '6-7', '8+'];
-    $score = self::addQuantityEntry(
-      $player,
-      SCORING_SHEEPS,
-      $n,
-      $map,
-      clienttranslate('sheep'),
-      clienttranslate('sheeps')
-    );
-    Stats::setScoreSheeps($player, $score);
+    $n = $player->countReserveResource(RUBY);
+    $score = $n;
+    self::addEntry($player, SCORING_RUBIES, $score, $n);
+    Stats::setScoreRubies($player, $score);
   }
-  protected function computePigs($player)
+  protected function computeDwarfs($player)
   {
-    $n = $player->getExchangeResources()[PIG];
-    $map = ['0', '1-2', '3-4', '5-6', '7+'];
-    $score = self::addQuantityEntry($player, SCORING_PIGS, $n, $map, clienttranslate('pig'), clienttranslate('pigs'));
-    Stats::setScorePigs($player, $score);
-  }
-  protected function computeCattles($player)
-  {
-    $n = $player->getExchangeResources()[CATTLE];
-    $map = ['0', '1', '2-3', '4-5', '6+'];
-    $score = self::addQuantityEntry(
-      $player,
-      SCORING_CATTLES,
-      $n,
-      $map,
-      clienttranslate('cattle'),
-      clienttranslate('cattles')
-    );
-    Stats::setScoreCattles($player, $score);
+    $n = $player->countDwarfs();
+    $score = $n;
+    self::addEntry($player, SCORING_DWARFS, $score, $n);
+    Stats::setScoreDwarfs($player, $score);
   }
 
   protected function computeEmptyCells($player)
   {
-    $n = count($player->board()->getFreeZones());
-    if ($player->hasPlayedCard('D132_HideFarmer')) {
-      $card = Buildings::get('D132_HideFarmer');
-      $n -= $card->getExtraDatas('hiddenSpaces') ?? 0;
-    }
-
+    $n = $player->board()->countEmptyCell();
     $score = $n * -1;
-    $desc = self::getQtyDesc($player, $n, $score, clienttranslate('unused space'), clienttranslate('unused spaces'));
-    self::addEntry($player, SCORING_EMPTY, $score, $desc, $n);
+    self::addEntry($player, SCORING_EMPTY, $score, $n);
     Stats::setScoreUnused($player, -$score);
   }
-
-  protected function computeFencedStables($player)
+  protected function computePastures($player)
   {
-    // Go trhough all pastures and sum number of stables inside
-    $pastures = $player->board()->getPastures();
-    $n = \array_reduce(
-      $pastures,
-      function ($acc, $pasture) {
-        return $acc + count($pasture['stables']);
-      },
-      0
-    );
-    $score = $n;
-    $desc = self::getQtyDesc($player, $n, $score, clienttranslate('fenced stable'), clienttranslate('fenced stables'));
-    self::addEntry($player, SCORING_STABLES, $score, $desc, $n);
-    Stats::setScoreStables($player, $score);
-  }
-
-  protected function computeRooms($player)
-  {
-    $n = $player->countRooms();
-    $type = $player->getRoomType();
-
-    $nClay = $type == 'roomClay' ? $n : 0;
-    $scoreClay = $nClay * 1;
-    $descClay = self::getQtyDesc(
-      $player,
-      $nClay,
-      $scoreClay,
-      clienttranslate('clay room'),
-      clienttranslate('clay rooms')
-    );
-    self::addEntry($player, SCORING_CLAY_ROOMS, $scoreClay, $descClay, $nClay);
-    Stats::setScoreClayRooms($player, $scoreClay);
-
-    $nStone = $type == 'roomStone' ? $n : 0;
-    $scoreStone = $nStone * 2;
-    $descStone = self::getQtyDesc(
-      $player,
-      $nStone,
-      $scoreStone,
-      clienttranslate('stone room'),
-      clienttranslate('stone rooms')
-    );
-    self::addEntry($player, SCORING_STONE_ROOMS, $scoreStone, $descStone, $nStone);
-    Stats::setScoreStoneRooms($player, $scoreStone);
-  }
-
-  protected function computeDwarfs($player)
-  {
-    $n = $player->countDwarfs();
-    $score = 3 * $n;
-    $desc = self::getQtyDesc($player, $n, $score, clienttranslate('person'), clienttranslate('people'));
-    self::addEntry($player, SCORING_FARMERS, $score, $desc, $n);
-    Stats::setScoreDwarfs($player, $score);
-  }
-
-  protected function computeCards($player)
-  {
-    foreach ($player->getCards() as $card) {
-      if ($card->isPlayed()) {
-        $card->computeScore();
-      }
+    $score = 0;
+    foreach ($player->board()->getPastures() as $pasture) {
+      $score += $pasture['type'] == 'small' ? 2 : 4;
     }
-    Stats::setScoreCards($player, self::$scores[$player->getId()][SCORING_CARDS]['total']);
-    Stats::setScoreCardsBonus($player, self::$scores[$player->getId()][SCORING_CARDS_BONUS]['total']);
+    self::addEntry($player, SCORING_PASTURES, $score);
+    Stats::setScorePastures($player, $score);
+  }
+  protected function computeMines($player)
+  {
+    $score = 3 * $player->countOreMines() + 4 * $player->countRubyMines();
+    self::addEntry($player, SCORING_MINES, $score);
+    Stats::setScoreMines($player, $score);
   }
 
-  // protected function computeC135($player, $score)
-  // {
-  //   if ($player->hasPlayedCard('C135_Constable')) {
-  //     Buildings::get('C135_Constable')->computeSpecialScore($score);
-  //   }
-  // }
+  protected function computeBuildings($player)
+  {
+    foreach ($player->getBuildings() as $building) {
+      $building->computeScore();
+    }
+    Stats::setScoreBuildings($player, self::$scores[$player->getId()][SCORING_BUILDINGS]['total']);
+    Stats::setScoreBuildingsBonus($player, self::$scores[$player->getId()][SCORING_BUILDINGS_BONUS]['total']);
+  }
 
+  protected function computeGold($player)
+  {
+    $n = $player->countReserveResource(GOLD);
+    $score = $n;
+    self::addEntry($player, SCORING_GOLD, $score);
+    Stats::setScoreGold($player, $score);
+  }
   protected function computeBeggings($player)
   {
     $n = $player->countReserveResource(BEGGING);
     $score = -3 * $n;
-    $desc = self::getQtyDesc($player, $n, $score, clienttranslate('begging'), clienttranslate('beggings'));
-    self::addEntry($player, SCORING_BEGGINGS, $score, $desc, $n);
+    self::addEntry($player, SCORING_BEGGINGS, $score, $n);
     Stats::setScoreBeggings($player, -$score);
   }
-}
-
-// Utils
-function isSequential(array $arr)
-{
-  if ([] === $arr) {
-    return true;
-  }
-  return array_keys($arr) === range(0, count($arr) - 1);
 }

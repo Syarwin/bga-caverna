@@ -168,7 +168,7 @@ define([
         //
         dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
         this.setupInfoPanel();
-        // this.setupScoresModal();
+        this.setupScoresModal();
         this.setupActionCards();
         this.setupPlayers();
         this.setupTiles();
@@ -1107,57 +1107,6 @@ define([
               ${neverShowMe}
             </div>
           `;
-      },
-
-      /***********************************
-       ********* COMBO CHECKER ************
-       ***********************************/
-      onEnteringStateCheckCombos(args) {
-        dojo.style('position-wrapper', 'display', 'none');
-        if (!$('checkCombos')) {
-          dojo.place("<div id='checkCombos'></div>", 'game_play_area');
-        } else {
-          dojo.empty('checkCombos');
-        }
-
-        let constructTable = (data, container) => {
-          let firstRow = '<tr><th></th>';
-          data.cards.forEach((card) => (firstRow += '<th>' + card.numbering + '</th>'));
-          firstRow += '<tr>';
-          dojo.place(firstRow, container);
-
-          data.cards.forEach((card) => {
-            let row = '<tr>';
-            row += '<th>' + card.numbering + ' - ' + card.name + '</th>';
-            data.cards.forEach((card2) => {
-              let cId = card.id;
-              let cId2 = card2.id;
-              if (data.order[cId] && data.order[cId][cId2]) {
-                row += '<td>' + data.order[cId][cId2] + '</td>';
-              } else if (cId == cId2) {
-                row += '<td>X</td>';
-              } else {
-                row += '<td></td>';
-              }
-            });
-            row += '</tr>';
-            dojo.place(row, container);
-          });
-        };
-
-        dojo.place(
-          '<div class="player-board checkCombos"><h1>Construct</h1><div id="checkCombosConstruct"></div><table id="tableCombosConstruct"></table></div>',
-          'checkCombos',
-        );
-        args.construct.cards.forEach((card) => this.addCard(card, 'checkCombosConstruct'));
-        constructTable(args.construct, 'tableCombosConstruct');
-
-        dojo.place(
-          '<div class="player-board checkCombos"><h1>Renovation</h1><div id="checkCombosRenovate"></div><table id="tableCombosRenovate"></table></div>',
-          'checkCombos',
-        );
-        args.renovate.cards.forEach((card) => this.addCard(card, 'checkCombosRenovate'));
-        constructTable(args.renovate, 'tableCombosRenovate');
       },
     },
   );

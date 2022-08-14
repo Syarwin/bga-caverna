@@ -243,6 +243,16 @@ $machinestates = [
     'possibleactions' => ['actFurnish', 'actPassOptionalAction', 'actRestart'],
   ],
 
+  ST_IMITATION => [
+    'name' => 'imitate',
+    'description' => clienttranslate('${actplayer} must choose the action space they want to copy'),
+    'descriptionmyturn' => clienttranslate('${you} must choose the action space you want to copy'),
+    'args' => 'argsAtomicAction',
+    'action' => 'stAtomicAction',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actImitate', 'actPassOptionalAction', 'actRestart'],
+  ],
+
   ST_SOW => [
     'name' => 'sow',
     'description' => clienttranslate('${actplayer} must sow their fields'),

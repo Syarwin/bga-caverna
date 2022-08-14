@@ -122,20 +122,20 @@ class Player extends \CAV\Helpers\DB_Model
     return $this->getBuildings($type, true);
   }
 
-  public function hasPlayedBuilding($buildingId)
+  public function hasPlayedBuilding($buildingType)
   {
-    return $this->getPlayedBuildings()->reduce(function ($carry, $building) use ($buildingId) {
-      return $carry || $building->getId() == $buildingId;
+    return $this->getPlayedBuildings()->reduce(function ($carry, $building) use ($buildingType) {
+      return $carry || $building->getType() == $buildingType;
     }, false);
   }
 
   public function countOreMines()
   {
-    return 0; // TODO
+    return count($this->board()->getTilesOfType(TILE_ORE_MINE));
   }
   public function countRubyMines()
   {
-    return 0; // TODO
+    return count($this->board()->getTilesOfType(TILE_RUBY_MINE));
   }
 
   ////////////////////////////////////////////////////////////
@@ -169,6 +169,15 @@ class Player extends \CAV\Helpers\DB_Model
   //
   //   return $data;
   // }
+
+  public function countReserveAndGrowingResource($type)
+  {
+    return $this->countReserveResource($type) +
+      $this
+        ->board()
+        ->getGrowingCrops($type)
+        ->count();
+  }
 
   public function countReserveResource($type)
   {
