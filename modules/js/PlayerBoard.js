@@ -309,7 +309,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       $('page-subtitle').innerHTML = `<h4 id='subtitle-text'></h4><div id='tiles-selector'></div>`;
 
       // Add tiles selectors
-      Object.keys(args.zones).forEach((tile) => {
+      let tileIds = Object.keys(args.zones);
+      tileIds.forEach((tile) => {
         dojo.place(`<div class='tile-selector' id='tile-selector-${tile}'></div>`, 'tiles-selector');
         TILES_MAPPING[tile].forEach((tileType, i) => {
           let square = dojo.place(
@@ -406,6 +407,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       // Class update for cells
       let updateSelectable = () => {
+        let selectableCells = [];
         this.getAllCells().forEach((cell) => {
           let selectable = selectedTile != null && selectedIndex != null;
           if (selectable) {
@@ -421,15 +423,37 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             }, false);
           }
           cell.classList.toggle('selectable', selectable);
+          if (selectable) {
+            selectableCells.push(cell);
+          }
         });
 
         if (selectedTile != null) {
           this.addSecondaryActionButton('btnCancelPlace', _('Cancel'), () => clearSelection(), 'subtitle-text');
         }
+
+        if (selectableCells.length == 1) {
+          ['mouseover', 'mouseenter', 'click'].forEach(e => {
+            const ev = new Event(e);
+            selectableCells[0].dispatchEvent(ev);
+          })
+        }
       };
 
       clearSelection();
       updateSelectable();
+
+      // Auto select if only one
+      if (tileIds.length == 1) {
+        let tile = tileIds[0];
+        if (TILES_MAPPING[tile].length == 1 || tile == 'tileLargePasture' || tile == 'tileCavernCavern') {
+          $('subtitle-text').innerHTML = _('Click on your player board to place that square');
+          $(`tile-selector-${tile}-0`).classList.add('selected');
+          selectedTile = tile;
+          selectedIndex = 0;
+          updateSelectable();
+        }
+      }
     },
 
     notif_placeTile(n) {
