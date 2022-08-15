@@ -173,8 +173,7 @@ class Player extends \CAV\Helpers\DB_Model
   public function countReserveAndGrowingResource($type)
   {
     return $this->countReserveResource($type) +
-      $this
-        ->board()
+      $this->board()
         ->getGrowingCrops($type)
         ->count();
   }
@@ -263,7 +262,35 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getPossibleExchanges($trigger = ANYTIME, $removeAnytime = false)
   {
-    $exchanges = [Utils::formatExchange([GRAIN => [FOOD => 1]]), Utils::formatExchange([VEGETABLE => [FOOD => 1]])];
+    $exchanges = [
+      Utils::formatExchange([DOG => [FOOD => 0]]),
+
+      [
+        'from' => [GOLD => 2],
+        'to' => [FOOD => 1],
+      ],
+      Utils::formatExchange([DONKEY => [FOOD => 1]]),
+      Utils::formatExchange([SHEEP => [FOOD => 1]]),
+      Utils::formatExchange([GRAIN => [FOOD => 1]]),
+
+      [
+        'from' => [GOLD => 3],
+        'to' => [FOOD => 2],
+      ],
+      Utils::formatExchange([PIG => [FOOD => 2]]),
+      Utils::formatExchange([VEGETABLE => [FOOD => 2]]),
+      Utils::formatExchange([RUBY => [FOOD => 2]]),
+
+      [
+        'from' => [GOLD => 4],
+        'to' => [FOOD => 3],
+      ],
+      [
+        'from' => [DONKEY => 2],
+        'to' => [FOOD => 3],
+      ],
+      Utils::formatExchange([CATTLE => [FOOD => 3]]),
+    ];
 
     foreach ($this->getPlayedBuildings() as $building) {
       $exchanges = array_merge($exchanges, $building->getExchanges());
@@ -307,7 +334,7 @@ class Player extends \CAV\Helpers\DB_Model
    */
   public function countAnimalsInLocation($location, $res = null)
   {
-    $reserve = $res ?? [SHEEP => 0, PIG => 0, CATTLE => 0];
+    $reserve = $res ?? [DOG => 0, SHEEP => 0, PIG => 0, CATTLE => 0, DONKEY => 0];
     foreach (Meeples::getAnimals($this->id, $location) as $meeple) {
       $reserve[$meeple['type']]++;
     }

@@ -20,11 +20,7 @@ class Exchange extends \CAV\Models\Action
   public function getDescription($ignoreResources = false)
   {
     $trigger = $this->getCtxArgs()['trigger'] ?? ANYTIME;
-    if ($trigger == BREAD) {
-      return clienttranslate('Bake bread');
-    } else {
-      return clienttranslate('Cook / Exchange resources');
-    }
+    return clienttranslate('Cook / Exchange resources');
   }
 
   /**
@@ -50,6 +46,9 @@ class Exchange extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
+    if ($ignoreResources) {
+      return true;
+    }
     $exchanges = $this->getExchanges($player);
     $resources = $player->getExchangeResources();
 
@@ -60,7 +59,7 @@ class Exchange extends \CAV\Models\Action
         $ok = $ok && $resources[$type] >= $amount;
       }
 
-      if ($ok || $ignoreResources) {
+      if ($ok) {
         return true;
       }
     }
@@ -119,16 +118,12 @@ class Exchange extends \CAV\Models\Action
     $player = Players::getActive();
     $trigger = $this->getTrigger();
     $exchanges = $this->getExchanges($player);
-    $suffixes = [
-      BREAD => 'bread',
-    ];
     $mustCook = $this->getCtxArgs()['mustCook'] ?? false;
 
     return [
       'exchanges' => $exchanges,
       'resources' => $player->getExchangeResources(),
       'trigger' => $trigger,
-      'descSuffix' => $suffixes[$trigger] ?? '',
       'canGoToExchange' => false,
       'extraAnimals' => $player->countAnimalsInReserve(),
       'mandatory' => $this->isMandatory(),
@@ -205,7 +200,7 @@ class Exchange extends \CAV\Models\Action
 
       // Check that trade is not executed too much
       $nbExchanges[$tradeIndex]++;
-      if ($nbExchanges[$tradeIndex] > $exchange['max']) {
+      if ($nbExchanges[$tradeIndex] > ($exchange['max'] ?? INFTY)) {
         throw new \BgaUserException('Too many exchanges of type. Should not happen');
       }
 
@@ -253,11 +248,10 @@ class Exchange extends \CAV\Models\Action
       }
     }
 
-
     if ($this->isMandatory()) {
       // If it was mandatory, discard excess animals
       $animals = $player->getAllReserveResources();
-      foreach ([SHEEP, PIG, CATTLE] as $type) {
+      foreach (ANIMALS as $type) {
         if ($animals[$type] != 0) {
           Notifications::discardAnimals($player, $player->useResource($type, $animals[$type]));
         }

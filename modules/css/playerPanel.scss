@@ -49,6 +49,14 @@
     width: 20px;
   }
 
+  .player-resource {
+    .reserve {
+      & > div.caverna-meeple:not(.moving) {
+        display: none;
+      }
+    }
+  }
+
   .caverna-player-pannel {
     padding: 3px 1px;
 

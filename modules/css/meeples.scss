@@ -29,70 +29,70 @@
   &.meeple-wood {
     width: 0.6em;
     height: 0.78em;
-    background-position: 97.5664% 32.0276%;
+    background-position: 74.5575% 51.3825%;
     background-size: 853.333%;
   }
 
   &.meeple-stone {
     width: 0.64em;
     height: 0.8em;
-    background-position: 41.0714% 32.1759%;
+    background-position: 17.8571% 51.6204%;
     background-size: 800%;
   }
 
   &.meeple-ore {
     width: 0.91em;
     height: 0.7062em;
-    background-position: 39.3665% 48.2533%;
+    background-position: 73.3032% 66.1572%;
     background-size: 731.429%;
   }
 
   &.meeple-ruby {
     width: 0.9154em;
     height: 0.693em;
-    background-position: 55.2036% 48.1481%;
+    background-position: 89.1403% 66.0131%;
     background-size: 731.429%;
   }
 
   &.meeple-food {
     width: 0.8em;
     height: 0.8em;
-    background-position: 24.0741% 32.1759%;
+    background-position: 0% 51.6204%;
     background-size: 640%;
   }
 
   &.meeple-grain {
     width: 0.75em;
     height: 0.79em;
-    background-position: 56.7506% 32.1016%;
+    background-position: 32.9519% 51.5012%;
     background-size: 682.667%;
   }
 
   &.meeple-vegetable {
     width: 0.82em;
     height: 0.8em;
-    background-position: 22.4771% 50.4566%;
+    background-position: 40.1376% 69.1781%;
     background-size: 673.684%;
   }
 
   &.meeple-sheep {
     width: 0.98em;
     height: 0.76em;
-    background-position: 0% 50.6881%;
+    background-position: 0% 69.4954%;
     background-size: 522.449%;
   }
 
   &.meeple-pig {
     width: 1.118em;
     height: 0.77em;
-    background-position: 81.9797% 32.0276%;
+    background-position: 55.5838% 51.3825%;
     background-size: 433.898%;
   }
 
   &.meeple-cattle {
-    width: 1.104em;
+    width: 1.03em;
     height: 0.82em;
-    background-position: 0% 32.3256%;
+    background-position: 20.5882% 32.3256%;
     background-size: 492.308%;
   }
 
@@ -123,10 +123,62 @@
     background-size: 640%;
   }
 
+  &.meeple-arrow {
+    width: 0.4em;
+    height: 0.3em;
+    background-position: 26.1745% 81.681%;
+    background-size: 787.692%;
+  }
+  &.meeple-arrow-1x {
+    width: 1.3em;
+    height: 0.6em;
+    background-position: 46.0759% 81.3305%;
+    background-size: 437.607%;
+  }
+  &.meeple-arrow-2x {
+    width: 1.2em;
+    height: 0.6em;
+    background-position: 0% 82.2126%;
+    background-size: 437.607%;
+  }
+
+  &.meeple-building {
+    width: 1.1571em;
+    height: 1.1em;
+    background-position: 92.1114% 51.2644%;
+    background-size: 632.099%;
+  }
+  &.meeple-pasture {
+    width: 1.1em;
+    height: 1.1em;
+    background-position: 22.5287% 69.3364%;
+    background-size: 664.935%;
+  }
+  &.meeple-empty {
+    width: 1em;
+    height: 1em;
+    background-position: 57.1754% 69.0205%;
+    background-size: 701.37%;
+  }
+  &.meeples-mines {
+    width: 1.1em;
+    height: 1.1em;
+    background-position: 0% 32.4766%;
+    background-size: 609.524%;
+  }
+
+  &.meeple-reorganize {
+    background-position: 85.8447% 32.3256%;
+    background-size: 174.744%;
+    width: 5em;
+    height: 1.4em;
+    margin: -0.2em -0.4em;
+  }
+
   &.meeple-cook {
     width: 2em;
     height: 1.1em;
-    background-position: 70.2461% 46.2343%;
+    background-position: 66.8904% 79.2887%;
     background-size: 787.692%;
 
     #anytimeActions & {
