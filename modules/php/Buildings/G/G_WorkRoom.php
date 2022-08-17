@@ -21,4 +21,9 @@ class G_WorkRoom extends \CAV\Models\Building
     $this->cost = [STONE => 1];
     $this->vp = 2;
   }
+
+  public function done()
+  {
+    return true;
+  }
 }
