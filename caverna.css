@@ -438,7 +438,7 @@ html {
     box-shadow: none; }
 
 #buildings-test {
-  display: none;
+	display:flex;
   flex-wrap: wrap; }
   #buildings-test .caverna-building {
     margin: 5px; }

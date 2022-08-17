@@ -18,5 +18,21 @@ class G_CuddleRoom extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 1];
     $this->vp = 2;
+    $this->animalHolder = true;
+  }
+
+  public function onPlayerComputeDropZones($player, &$args)
+  {
+    $capacity = $player->countDwarfs();
+
+    if ($capacity > 0) {
+      $args['zones'][] = [
+        'type' => 'card',
+        'card_id' => $this->type,
+        'constraints' => [SHEEP],
+        'capacity' => $capacity,
+        'locations' => [['type' => 'card', 'card_id' => $this->type]],
+      ];
+    }
   }
 }

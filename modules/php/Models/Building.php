@@ -36,13 +36,14 @@ class Building extends \CAV\Helpers\DB_Model
    * STATIC INFORMATIONS
    *  they are overwritten by children
    */
-  protected $staticAttributes = ['name', 'desc', 'tooltip', 'vp', 'category', 'dwelling'];
+  protected $staticAttributes = ['name', 'desc', 'tooltip', 'vp', 'category', 'dwelling', 'animalHolder'];
   protected $name = ''; // UI
   protected $desc = []; // UI
   protected $tooltip = [];
   protected $vp = 0;
   protected $category = null; // Useful for location on board
   protected $dwelling = 0;
+  protected $animalHolder = false;
 
   public function jsonSerialize()
   {
@@ -108,7 +109,7 @@ class Building extends \CAV\Helpers\DB_Model
 
   public function isPlayed()
   {
-    return $this->location == 'board';
+    return $this->location == 'board' || ($this->location = 'inPlay');
   }
 
   /**
@@ -234,18 +235,12 @@ class Building extends \CAV\Helpers\DB_Model
       throw new \feException("Trying to addScoringEntry for a non-played card : {$this->id}");
     }
 
-    if (is_string($desc)) {
-      $desc = [
-        'log' => $desc,
-        'args' => [],
-      ];
-    }
     $player = $player ?? $this->getPlayer();
     $desc['args']['i18n'][] = 'card_name';
     $desc['args']['card_name'] = $this->getName();
     $desc['args']['player_name'] = $player ?? $player->getName();
     $desc['args']['score'] = $score;
-    Scores::addEntry($player, $isBonus ? SCORING_CARDS_BONUS : SCORING_CARDS, $score, null, $this->getName());
+    Scores::addEntry($player, $isBonus ? SCORING_BUILDINGS_BONUS : SCORING_BUILDINGS, $score, null, $this->getName());
   }
 
   protected function addBonusScoringEntry($score, $player = null)

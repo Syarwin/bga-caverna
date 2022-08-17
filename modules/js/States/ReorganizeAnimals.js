@@ -27,12 +27,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         zone.pId = pId;
         zone.cId = pId + '-' + i; // Control ID, must be unique on DOM
         zone.holder = this.computeDropZoneControlHolder(zone);
-        if (zone.type == 'card') {
-          // zone.control = this.place('tplReorganizeControl', zone, zone.holder);
-          zone.control = this.place('tplReorganizeControl', zone, zone.holder.parentNode);
-        } else {
-          zone.control = this.place('tplReorganizeControl', zone, this.getAnimalControlContainer(zone));
-        }
+        // if (zone.type == 'card') {
+        //   zone.control = this.place('tplReorganizeControl', zone, zone.holder);
+        //   // zone.control = this.place('tplReorganizeControl', zone, zone.holder.parentNode);
+        // } else {
+        zone.control = this.place('tplReorganizeControl', zone, this.getAnimalControlContainer(zone));
+        // }
       });
 
       this.updateDropZonesStatus(false);

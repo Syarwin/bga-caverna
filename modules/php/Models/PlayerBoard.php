@@ -330,8 +330,11 @@ class PlayerBoard
       }
 
       // Check card constraint
-      if ($zone['type'] == 'card' && method_exists(Buildings::get($zone['card_id']), 'getInvalidAnimals')) {
-        $card = Buildings::get($zone['card_id']);
+      if (
+        $zone['type'] == 'card' &&
+        method_exists(Buildings::getFilteredQuery(null, null, $zone['card_id'])->get(), 'getInvalidAnimals')
+      ) {
+        $card = Buildings::getFilteredQuery(null, null, $zone['card_id'])->get();
         $animals = array_merge($animals, $card->getInvalidAnimals($zone, $raiseException));
       }
       // Check only one type of animal
@@ -483,6 +486,8 @@ class PlayerBoard
       $zone[SHEEP] = 0;
       $zone[PIG] = 0;
       $zone[CATTLE] = 0;
+      $zone[DOG] = 0;
+      $zone[DONKEY] = 0;
       $zone['animals'] = 0;
       $zone['meeples'] = [];
 
