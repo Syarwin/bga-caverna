@@ -18,4 +18,16 @@ class G_StubbleRoom extends \CAV\Models\Building
     $this->cost = [WOOD => 1, ORE => 1];
     $this->vp = 1;
   }
+
+  public function onPlayerComputeDropZones($player, &$args)
+  {
+    $fields = $player->board()->getSowableFields(null, true);
+    foreach ($fields as $f) {
+      $args['zones'][] = [
+        'type' => 'field',
+        'capacity' => 1,
+        'locations' => [['type' => 'field', 'field' => $f]],
+      ];
+    }
+  }
 }
