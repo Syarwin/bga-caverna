@@ -13,5 +13,17 @@ class G_BreakfastRoom extends \CAV\Models\Building
     $this->tooltip = [clienttranslate('The Breakfast room can hold up to 3 Cattle but no other Farm animals.')];
     $this->cost = [WOOD => 1];
     $this->vp = 0;
+    $this->animalHolder = true;
+  }
+
+  public function onPlayerComputeDropZones($player, &$args)
+  {
+    $args['zones'][] = [
+      'type' => 'card',
+      'card_id' => $this->type,
+      'constraints' => [CATTLE],
+      'capacity' => 3,
+      'locations' => [['type' => 'card', 'card_id' => $this->type]],
+    ];
   }
 }
