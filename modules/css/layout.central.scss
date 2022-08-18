@@ -1,147 +1,66 @@
-#add-board-holder {
-  display: none;
-  position: absolute;
-  z-index: 2;
-
-  width: calc(var(--cavernaCentralBoardScale) * 156px);
-  height: calc(var(--cavernaCentralBoardScale) * 340px);
-  top: calc(var(--cavernaCentralBoardScale) * 615px);
-
-  [data-players='1'] & {
-    display: none;
-  }
-
-  #game_play_area[data-additional='1'] & {
-    display: block;
-  }
-
-  [data-players='2'] & {
-    height: calc(var(--cavernaCentralBoardScale) * 614px);
-    top: 0px;
-    position: relative;
-  }
-
-  [data-players='3'] & {
-    top: calc(var(--cavernaCentralBoardScale) * 530px);
-  }
-}
-
-#add-board {
-  width: 156px;
-  height: 340px;
-  background-image: url('img/add_34p.png');
-  background-size: 100% auto;
-  transform: scale(var(--cavernaCentralBoardScale));
-  transform-origin: top left;
-
-  border: 1px dashed white;
-  border-left: none;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-
-  [data-players='2'] & {
-    height: 614px;
-    background-image: url('img/add_2p.png');
-    background-size: 100% auto;
-    position: relative;
-    top: 0px;
-    left: 0px;
-  }
-}
-
-#left-board-holder {
-  width: calc(var(--cavernaCentralBoardScale) * 156px);
-  height: calc(var(--cavernaCentralBoardScale) * 679px);
-
-  [data-players='1'] &,
-  [data-players='2'] & {
-    display: none;
-  }
-
-  [data-additional='1'][data-players='3'] & {
-    height: calc(var(--cavernaCentralBoardScale) * 637px);
-  }
-  [data-players='4'] & {
-    height: calc(var(--cavernaCentralBoardScale) * 614px);
-  }
-}
-#left-board {
-  width: 156px;
-  height: 679px;
-  background-image: url('img/left_3p.png');
-  background-size: 100% auto;
-  position: relative;
-  transform: scale(var(--cavernaCentralBoardScale));
-  transform-origin: top left;
-
-  [data-additional='1'][data-players='3'] & {
-    height: 637px;
-  }
-  [data-players='4'] & {
-    background-image: url('img/left_4p.png');
-    height: 614px;
-  }
-}
-
 #central-board-holder {
-  width: calc(var(--cavernaCentralBoardScale) * 830px);
-  //  height: calc(var(--cavernaCentralBoardScale) * 795px);
+  width: calc(var(--cavernaCentralBoardScale) * 915px);
 }
 
 #central-board {
-  width: 830px;
-  //  height: 795px; TODO
+  width: 915px;
   transform: scale(var(--cavernaCentralBoardScale));
   transform-origin: top left;
-  background-image: url('img/central.png');
-  background-size: 100% auto;
-  position: relative;
 
-  // TODO : remove
-  display: grid;
-  grid-row-gap: 5px;
-  grid-column-gap: 5px;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  margin-left: 3px;
 
-  // TODO
-  // #modal-buttons-holder {
-  //   position: absolute;
-  //   left: 679px;
-  //   top: 326px;
-  //   background-image: url('img/action_frame_bg.jpg');
-  //   background-size: 100% 10px;
-  //   box-shadow: 2px 2px 5px -1px black;
-  //   background-color: transparent;
-  //   border-radius: 13px;
-  //   padding: 7px;
-  //   display: flex;
-  //   border: 2px solid black;
-  //
-  //   #majors-button,
-  //   #hand-button {
-  //     position: relative;
-  //     width: 60px;
-  //     height: 60px;
-  //     background-image: url('img/majors_icon.png');
-  //     background-size: 100%;
-  //     cursor: pointer;
-  //
-  //     &:hover {
-  //       transform: scale(1.1);
-  //     }
-  //   }
-  //   #hand-button {
-  //     background-image: url('img/hand_icon.png');
-  //     margin-left: 10px;
-  //   }
-  // }
+  .action-card-wrapper {
+    width: 195px;
+    height: 211px;
+    padding: 12px 18px;
+    box-sizing: border-box;
+    background-image: url('img/action_cards_border.png');
+    margin-left: -12px;
+    margin-top: -13px;
+    order: 1;
+  }
 
   .turn-action-container {
-    width: 140px;
-    height: 140px;
-    position: absolute;
-    // TODO : remove
-    display: none;
+    position: relative;
+    order: 2;
+
+    .turn-number {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.4;
+      width: 100%;
+      height: 100%;
+      background-image: url('img/back_numbers.png');
+      background-size: 600% 100%;
+      z-index: 1;
+
+      .help-marker {
+        opacity: 1;
+        pointer-events: all;
+        bottom: 11%;
+        right: 11%;
+        left: auto;
+        top: auto;
+      }
+
+      .turn-number-indication {
+        position: absolute;
+        bottom: 13px;
+        right: 9%;
+        height: 24px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 13px;
+        border: 1px solid #004f00;
+        font-size: 17px;
+        line-height: 24px;
+        padding-right: 26px;
+        padding-left: 7px;
+      }
+    }
 
     .future-resources-holder {
       position: absolute;

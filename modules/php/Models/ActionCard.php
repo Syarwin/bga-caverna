@@ -34,7 +34,6 @@ class ActionCard extends \CAV\Helpers\DB_Model
   protected $actionCardType = null; // Useful to declare Hollow4 as an Hollow action
   protected $stage = 0;
   protected $accumulation = []; // Array of resource => amount
-  protected $container = 'central'; // UI
   // Constraints
   protected $players = null; // Players requirements => null if none, integer if only one, array otherwise
 
@@ -44,7 +43,6 @@ class ActionCard extends \CAV\Helpers\DB_Model
       'accumulate' => count($this->accumulation) > 0,
       'component' => $this->isBoardComponent(),
       'desc' => $this->getDesc(),
-      'container' => $this->container,
     ]);
   }
 
@@ -58,11 +56,9 @@ class ActionCard extends \CAV\Helpers\DB_Model
     return $this->actionCardType ?? substr($this->id, 6);
   }
 
-  public function getInitialLocation()
+  public function getStage()
   {
-    // TODO
-    return 'board';
-    //    return $this->stage == 0 ? 'board' : ['deck', $this->stage];
+    return $this->stage;
   }
 
   public function getDesc()

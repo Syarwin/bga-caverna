@@ -10,18 +10,9 @@
 
 #position-wrapper {
   position: relative;
+  display: flex;
 
   #main-boards {
-    width: 100%;
-//    height: calc(var(--cavernaCentralBoardScale) * 795px);
-    display: flex;
-
-    [data-additional='1'][data-players='4'] & {
-      height: calc(var(--cavernaCentralBoardScale) * 965px);
-    }
-    [data-additional='1'][data-players='3'] & {
-      height: calc(var(--cavernaCentralBoardScale) * 890px);
-    }
   }
 }
 

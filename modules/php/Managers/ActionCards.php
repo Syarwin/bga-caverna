@@ -3,7 +3,6 @@ namespace CAV\Managers;
 
 use CAV\Core\Globals;
 use CAV\Core\Meeples;
-// use caverna;
 
 /* Class to manage all the cards for Agricola */
 
@@ -88,24 +87,68 @@ class ActionCards extends \CAV\Helpers\Pieces
         continue;
       }
 
+      // Compute location depending on number of players
+      $location = self::getInitialLocation($card, $players);
       $cards[] = [
         'id' => $card->getId(),
-        'location' => $card->getInitialLocation(),
-        'state' => $card->getInitialLocation() == 'board' ? 1 : 0,
+        'location' => $location,
+        'state' => $location == 'board' ? 1 : 0,
       ];
     }
 
     self::create($cards, null);
 
-    //
-    // for ($i = 1; $i <= 6; $i++) {
-    //   self::shuffle('deck_' . $i);
-    //
-    //   foreach (self::getInLocation('deck_' . $i, null, 'state') as $id => $card) {
-    //     self::move($card->getId(), 'turn_' . $turn);
-    //     $turn++;
-    //   }
-    // }
+    if (count($players) > 1) {
+      $turn = 1;
+
+      for ($i = 1; $i <= 4; $i++) {
+        self::shuffle('deck_' . $i);
+
+        foreach (self::getInLocationOrdered('deck_' . $i) as $id => $card) {
+          // WishChildren is already placed
+          if ($turn != 4) {
+            self::move($card->getId(), 'turn_' . $turn);
+          }
+          $turn++;
+        }
+      }
+    }
+  }
+
+  public static function getInitialLocation($card, $players)
+  {
+    $stage = $card->getStage();
+    if ($stage == 0) {
+      return 'board';
+    }
+
+    // Handle solo
+    if (count($players) == 1) {
+      $mapping = [
+        'ActionBlacksmithing' => 1,
+        'ActionSheepFarming' => 2,
+        'ActionOreMineConstruction' => 3,
+        'ActionWishChildren' => 4,
+        'ActionDonkeyFarming' => 5,
+        'ActionRubyMineConstruction' => 6,
+        'ActionOreDelivery' => 7,
+        'ActionFamilyLife' => 8,
+        'ActionOreTrading' => 9,
+        'ActionAdventure' => 10,
+        'ActionRubyDelivery' => 11,
+      ];
+      return ['turn', $mapping[$card->getId()]];
+    }
+    // WishChildren is always at round 4
+    elseif ($card->getActionCardType() == 'ActionWishChildren') {
+      return ['turn', 4];
+    }
+    // 2 players has no round 9
+    elseif (count($players) <= 2 && $stage > 9) {
+      return ['deck', $stage - 1];
+    } else {
+      return ['deck', $stage];
+    }
   }
 
   public static function getVisible($player = null)
@@ -144,7 +187,12 @@ class ActionCards extends \CAV\Helpers\Pieces
   public static function getHelp()
   {
     $cards = self::getInLocation(['turn', '%'])->ui();
-    $map = [0, 1, 1, 1, 1, 5, 5, 5, 8, 8, 10, 10, 12, 12, 14];
+    $nPlayers = Players::count();
+    if ($nPlayers == 1) {
+      return $cards; // No need to hide cards in solo mode since order is enforced
+    }
+
+    $map = $nPlayers <= 2 ? [0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4] : [0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4];
     foreach ($cards as &$card) {
       $turn = \explode('_', $card['location'])[1];
       $card['location'] = 'turn_' . $map[$turn];
@@ -158,7 +206,6 @@ class ActionCards extends \CAV\Helpers\Pieces
     $location = ['turn', $turn];
     if (self::countInLocation($location, HIDDEN) == 0) {
       return self::getInLocation($location);
-      // throw new \feException('Card is alreay visible');
     }
 
     self::moveAllInLocation($location, $location, HIDDEN, VISIBLE);

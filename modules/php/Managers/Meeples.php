@@ -40,23 +40,13 @@ class Meeples extends \CAV\Helpers\Pieces
     $meeples = [];
     // 1st and 2 player has 1 food, third player has 2 food
     // other players have 3 foods
-    $foodMap = [1, 1, 2, 3, 3, 3, 3, 3];
+    $foodMap = count($players) == 1 ? [2] : [1, 1, 2, 3, 3, 3, 3, 3];
     $order = Players::getTurnOrder();
     foreach ($order as $i => $pId) {
       $meeples[] = ['type' => FOOD, 'player_id' => $pId, 'location' => 'reserve', 'nbr' => $foodMap[$i]];
     }
     $meeples[] = ['type' => 'firstPlayer', 'player_id' => $order[0], 'location' => 'reserve', 'nbr' => 1];
 
-    // foreach ($players as $pId => $player) {
-    //   $meeples[] = [
-    //     'type' => 'cavern',
-    //     'player_id' => $player_id,
-    //     'location' => 'board',
-    //     'x' => 7,
-    //     'y' => 5,
-    //     'nbr' => 1,
-    //   ];
-    // }
     self::create($meeples);
 
     Stables::setupNewGame($players, $options);
