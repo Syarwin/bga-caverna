@@ -1,6 +1,8 @@
 <?php
 namespace CAV\ActionCards;
 
+use CAV\Managers\Buildings;
+
 class ActionExtension extends \CAV\Models\ActionCard
 {
   public function __construct($row)
@@ -18,8 +20,11 @@ class ActionExtension extends \CAV\Models\ActionCard
       ),
     ];
     $this->players = [7];
+  }
 
-    $this->flow = [
+  protected function getFlow($player, $dwarf)
+  {
+    $flow = [
       'type' => NODE_XOR,
       'childs' => [
         [
@@ -48,5 +53,18 @@ class ActionExtension extends \CAV\Models\ActionCard
         ],
       ],
     ];
+
+    if (
+      $player->hasPlayedBuilding('G_GuestRoom') &&
+      Buildings::get('G_GuestRoom')->getExtraDatas('extension') != true
+    ) {
+      $flow['type'] = NODE_SEQ;
+      $flow['childs'][] = [
+        'action' => \SPECIAL_EFFECT,
+        'args' => ['cardId' => 'G_GuestRoom', 'method' => 'useExtension'],
+      ];
+    }
+
+    return $flow;
   }
 }

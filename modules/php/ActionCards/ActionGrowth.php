@@ -13,8 +13,11 @@ class ActionGrowth extends \CAV\Models\ActionCard
       clienttranslate('Alternatively, carry out a Family growth action.'),
     ];
     $this->players = [4, 5, 6, 7];
+  }
 
-    $this->flow = [
+  protected function getFlow($player, $dwarf)
+  {
+    $flow = [
       'type' => NODE_XOR,
       'childs' => [
         [
@@ -32,5 +35,11 @@ class ActionGrowth extends \CAV\Models\ActionCard
         ],
       ],
     ];
+
+    if ($player->hasPlayedBuilding('G_GuestRoom')) {
+      $flow['type'] = NODE_OR;
+    }
+
+    return $flow;
   }
 }
