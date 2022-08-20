@@ -37,7 +37,7 @@ class ActionRubyMineConstruction extends \CAV\Models\ActionCard
         [
           'action' => PLACE_TILE,
           'args' => [
-            'tiles' => [\TILE_DEEP_TUNNEL],
+            'tiles' => [\TILE_MINE_DEEP_TUNNEL],
           ],
         ],
       ],
