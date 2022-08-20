@@ -86,6 +86,7 @@
     box-shadow: none;
     background-color: transparent;
     border-radius: 20px;
+    pointer-events: none;
   }
 
   h2 {
@@ -156,8 +157,6 @@
 #popin_showExchanges {
   min-height: 300px;
   width: 700px;
-  background-color: #fbe0a1;
-  background-image: none;
 
   #popin_showExchanges_contents {
     display: flex;

@@ -4,7 +4,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Setup all actions slot/cards
      */
     setupActionCards() {
-      for (var i = 1; i <= 14; i++) {
+      let nPlayers = Object.keys(this.gamedatas.players).length;
+      let nTurns = nPlayers <= 2 ? 11 : 12;
+      for (var i = 1; i <= nTurns; i++) {
         this.place('tplTurnContainer', i, 'central-board');
       }
 
@@ -15,6 +17,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     setupActionCardsHelpers() {
+      return; // TODO
       // Tooltip on future rounds
       this.gamedatas.cards.help.forEach((card) => {
         card.description = this.formatCardDesc(card.desc);
@@ -25,6 +28,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     updateActionCardsHelp() {
+      return; // TODO
+
       let bounds = [1, 5, 8, 10, 12, 14, 15];
       for (var i = 0; i < bounds.length - 1; i++) {
         let lower = bounds[i],
@@ -63,29 +68,25 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this.addCustomTooltip(card.id, this.tplActionCardTooltip(card));
       };
 
-      this.place('tplActionCard', card, card.container + '-board');
-      addTooltip();
-
-      // TODO
-      // if (card.component) {
-      //   this.place('tplActionCard', card, card.container + '-board');
-      //   addTooltip();
-      // } else {
-      //   if (flip) {
-      //     let target = $(card.location).querySelector('.turn-number');
-      //     if (this.isFastMode()) {
-      //       this.flipAndReplace(target, this.tplActionCard(card));
-      //       addTooltip();
-      //     } else {
-      //       this.flipAndReplace(target, this.tplActionCard(card)).then(addTooltip);
-      //     }
-      //   } else {
-      //     let target = $(card.location).querySelector('.turn-number');
-      //     dojo.destroy(target); // Remove turn number slot
-      //     this.place('tplActionCard', card, card.location);
-      //     addTooltip();
-      //   }
-      // }
+      if (card.component) {
+        this.place('tplActionCard', card, 'central-board');
+        addTooltip();
+      } else {
+        if (flip) {
+          let target = $(card.location).querySelector('.turn-number');
+          if (this.isFastMode()) {
+            this.flipAndReplace(target, this.tplActionCard(card));
+            addTooltip();
+          } else {
+            this.flipAndReplace(target, this.tplActionCard(card)).then(addTooltip);
+          }
+        } else {
+          let target = $(card.location).querySelector('.turn-number');
+          dojo.destroy(target); // Remove turn number slot
+          this.place('tplActionCard', card, card.location);
+          addTooltip();
+        }
+      }
     },
 
     /**
@@ -115,7 +116,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     tplTurnContainer(turn) {
       return (
         `
-      <div class='turn-action-container' id='turn_${turn}'>
+      <div class='action-card-wrapper turn-action-container' id='turn_${turn}'>
         <div class='turn-number'>
           <div class='help-marker' id='turn-number-tooltipable-${turn}'>
             <svg><use href="#help-marker-svg" /></svg>
@@ -132,8 +133,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           .join('') +
         `
         </div>
-      </div>
-      `
+      </div>`
       );
     },
 
@@ -141,10 +141,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Template for action card
      */
     tplActionCard(card) {
-      let component = card.component ? 'component' : '';
       return (
-        `
-      <div id="${card.id}" data-id="${card.id}" class="action-card-holder ${component}">
+        `<div class='action-card-wrapper'>
+      <div id="${card.id}" data-id="${card.id}" class="action-card-holder">
         <div class="dwarf-holder resource-holder-update" data-n="0"></div>
         <div class="action-card">
           <h4 class="action-header">${_(card.name)}</h4>
@@ -156,7 +155,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         (card.accumulate ? "<div class='resource-holder resource-holder-update'></div>" : '') +
         `
       </div>
-      `
+    </div>`
       );
     },
 

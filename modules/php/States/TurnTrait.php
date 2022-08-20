@@ -47,9 +47,9 @@ trait TurnTrait
     Notifications::startNewTurn($turn);
 
     // Reveal new action card
-    // $card = ActionCards::draw()->first();
-    // Globals::setLastRevealed($card->getId());
-    // Notifications::revealActionCard($card);
+    $card = ActionCards::draw()->first();
+    Globals::setLastRevealed($card->getId());
+    Notifications::revealActionCard($card);
 
     // Listen for buildings AfterRevealAction
     $this->checkBuildingListeners('AfterRevealAction', 'stPreparationListener');

@@ -5,25 +5,11 @@
 
 <div id="position-wrapper">
   <div id="main-boards">
-    <div id="add-board-holder"><div id="add-board"></div></div>
-    <div id="left-board-holder"><div id="left-board"></div></div>
     <div id="central-board-holder">
-      <div id="central-board">
-        <div id="harvest-slot-4" class="harvest-slot"></div>
-        <div id="harvest-slot-7" class="harvest-slot"></div>
-        <div id="harvest-slot-9" class="harvest-slot"></div>
-        <div id="harvest-slot-11" class="harvest-slot"></div>
-        <div id="harvest-slot-13" class="harvest-slot"></div>
-        <div id="harvest-slot-14" class="harvest-slot"></div>
-        <div id="modal-buttons-holder">
-          <div id="majors-button"></div>
-          <div id="hand-button"></div>
-        </div>
-      </div>
+      <div id="central-board"></div>
     </div>
   </div>
-  <div id="player-boards"><div id="player-boards-left-column"><div id="player-boards-shape-outside"></div></div></div>
-  <div id="alternative-hand-wrapper"></div>
+  <div id="player-boards"></div>
 </div>
 
 
