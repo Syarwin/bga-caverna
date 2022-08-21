@@ -130,8 +130,6 @@ class Buildings extends \CAV\Helpers\Pieces
    */
   public function getListeningBuildings($event)
   {
-    return []; // TODO
-
     return self::getInLocation('inPlay')
       ->merge(self::getInLocation('hand'))
       ->filter(function ($building) use ($event) {

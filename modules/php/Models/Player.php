@@ -329,6 +329,16 @@ class Player extends \CAV\Helpers\DB_Model
     return $animals;
   }
 
+  public function countAnimalsOnTile($tileType, $animal)
+  {
+    $animals = 0;
+    $tiles = $board->getTilesOfType($tileType);
+    foreach ($tiles as $tile) {
+      $animals += Meeples::countAnimalInZoneLocation($this->id, $animal, $tile);
+    }
+    return $animals;
+  }
+
   /**
    * Count the number of animals in a given location
    */

@@ -23,4 +23,18 @@ class G_Miner extends \CAV\Models\Building
     $this->cost = [WOOD => 1, STONE => 1];
     $this->vp = 3;
   }
+
+  public function isListeningTo($event)
+  {
+    return $this->isPlayerEvent($event) && $event['type'] == 'StartOfTurn';
+  }
+
+  public function onPlayerStartOfTurn($player, $event)
+  {
+    $donkeys = $player->countAnimalsOnTile(\TILE_ORE_MINE, DONKEY);
+
+    if ($donkeys > 0) {
+      return $this->gainNode([ORE => $donkeys]);
+    }
+  }
 }

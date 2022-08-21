@@ -123,6 +123,11 @@ class PlayerBoard
     return $this->getTilesOfType(TILE_FIELD);
   }
 
+  public function getOreMines()
+  {
+    return $this->getTilesOfType(\TILE_ORE_MINE);
+  }
+
   public function countEmptyCell()
   {
     $nodes = $this->getAllNodes(true);
