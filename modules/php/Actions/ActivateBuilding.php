@@ -83,7 +83,7 @@ class ActivateBuilding extends \CAV\Models\Action
     ];
   }
 
-  public function stActivateCard()
+  public function stActivateBuilding()
   {
     $player = $this->getPlayer();
     $node = $this->ctx;

@@ -61,7 +61,7 @@ class ActionExtension extends \CAV\Models\ActionCard
       $flow['type'] = NODE_SEQ;
       $flow['childs'][] = [
         'action' => \SPECIAL_EFFECT,
-        'args' => ['cardId' => 'G_GuestRoom', 'method' => 'useExtension'],
+        'args' => ['cardType' => 'G_GuestRoom', 'method' => 'useExtension'],
       ];
     }
 
