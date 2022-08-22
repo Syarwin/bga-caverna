@@ -6,7 +6,7 @@ class Y_SuppliesStorage extends \CAV\Models\Building
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->type = 'Y_WeaponStorage';
+    $this->type = 'Y_SuppliesStorage';
     $this->category = 'bonus';
     $this->name = clienttranslate('Supplies Storage');
     $this->tooltip = [
