@@ -101,6 +101,16 @@ class Player extends \CAV\Helpers\DB_Model
     return Dwarfs::hasInReserve($this->id);
   }
 
+  public function hasArmedDwarfs()
+  {
+    foreach ($this->getAllDwarfs() as $dId => $dwarf) {
+      if (($dwarf['weapon'] ?? 0) > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   ////////////////////////////////////////////////////
   //  ____        _ _     _ _
   // | __ ) _   _(_) | __| (_)_ __   __ _ ___

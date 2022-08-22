@@ -425,6 +425,14 @@ class Notifications
     ]);
   }
 
+  public static function destroyWeapon($player, $resources)
+  {
+    self::notifyAll('silentKill', clienttranslate('${player_name} converts weapon into food'), [
+      'player' => $player,
+      'resources' => $resources->toArray(),
+    ]);
+  }
+
   public static function returnHome($meeples)
   {
     self::notifyAll('returnHome', clienttranslate('End of turn. All dwarfs come back home'), [
