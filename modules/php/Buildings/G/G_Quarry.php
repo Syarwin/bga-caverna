@@ -17,4 +17,23 @@ class G_Quarry extends \CAV\Models\Building
     $this->cost = [WOOD => 1];
     $this->vp = 2;
   }
+
+  public function isListeningTo($event)
+  {
+    return $this->isActionEvent($event, 'Reorganize') && $event['trigger'] == \HARVEST;
+  }
+
+  public function onPlayerAfterReorganize($player, $event)
+  {
+    $createdAnimals = Globals::getQuarry();
+    $donkeys = 0;
+    foreach ($createdAnimals as $animal) {
+      if ($animal['type'] == DONKEY) {
+        $donkeys++;
+      }
+    }
+    if ($donkeys > 0) {
+      return $this->gainNode([STONE => $donkeys]);
+    }
+  }
 }
