@@ -86,6 +86,17 @@ trait DebugTrait
     $this->actTakeAtomicAction([[['id' => 'B68_Beanfield', 'crop' => VEGETABLE]]]);
   }
 
+  public function nt()
+  {
+    $player = Players::getCurrent();
+    Engine::insertAtRoot([
+      'action' => PLACE_DWARF,
+      'pId' => $player->getId(),
+    ]);
+    Engine::save();
+    Engine::proceed();
+  }
+
   function addResource($type, $qty = 1)
   {
     if (!in_array($type, RESOURCES)) {
