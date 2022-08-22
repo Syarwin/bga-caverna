@@ -9,6 +9,7 @@ class G_BreedingCave extends \CAV\Models\Building
     $this->type = 'G_BreedingCave';
     $this->category = 'food';
     $this->name = clienttranslate('Breeding Cave');
+    $this->desc = [clienttranslate('for each animal bred')];
     $this->tooltip = [
       clienttranslate(
         'Every time you breed your animals __(in the Breeding phase or via the corresponding Expedition loot item)__, you will get 1 Food for each newborn Farm animal.'
