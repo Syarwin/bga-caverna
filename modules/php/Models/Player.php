@@ -516,7 +516,7 @@ class Player extends \CAV\Helpers\DB_Model
     return $this->countDwarfs(ADULT) * 2 + $this->countDwarfs(CHILD);
   }
 
-  public function breed($animalType = null, $source = null)
+  public function breed($animalType = null, $source = null, $breeds = null)
   {
     $meeples = [];
     $animals = $this->breedTypes();
@@ -528,6 +528,9 @@ class Player extends \CAV\Helpers\DB_Model
         continue;
       }
       if ($animalType != null && $animal != $animalType) {
+        continue;
+      }
+      if (!is_null($breeds) && !in_array($animal, $breeds)) {
         continue;
       }
 
