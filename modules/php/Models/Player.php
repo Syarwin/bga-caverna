@@ -521,7 +521,7 @@ class Player extends \CAV\Helpers\DB_Model
     $meeples = [];
     $animals = $this->breedTypes();
     $created = [];
-    Globals::setQuarry([]);
+    Globals::setBreed([]);
 
     foreach ($animals as $animal => $value) {
       if ($value == false) {
@@ -540,8 +540,9 @@ class Player extends \CAV\Helpers\DB_Model
 
     if (count($meeples) > 0) {
       $reorganize = $this->checkAutoReorganize($meeples);
-      if ($this->hasPlayedBuilding('G_Quarry')) {
-        Globals::setQuarry($created);
+      Globals::setBreed($created);
+
+      if ($this->hasPlayedBuilding('G_Quarry') || $this->hasPlayedBuilding('G_BreedingCave')) {
         $reorganize = true; // force confirm of reorganize
       }
       Notifications::breed($this, $meeples, $source);

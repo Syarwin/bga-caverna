@@ -77,7 +77,7 @@ class Breed extends \CAV\Models\Action
         'pId' => $player->getId(),
         'action' => REORGANIZE,
         'args' => [
-          'trigger' => HARVEST,
+          'trigger' => BREED,
         ],
       ],
       ['order' => 'harvestBreed']

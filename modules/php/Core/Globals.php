@@ -34,7 +34,7 @@ class Globals extends \CAV\Helpers\DB_Manager
     'skipHarvest' => 'obj',
     'workPhase' => 'bool',
 
-    'quarry' => 'obj', // for management of G_Quarry
+    'breed' => 'obj', // for management of G_Quarry
   ];
 
   protected static $table = 'global_variables';

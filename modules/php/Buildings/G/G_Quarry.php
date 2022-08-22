@@ -20,12 +20,12 @@ class G_Quarry extends \CAV\Models\Building
 
   public function isListeningTo($event)
   {
-    return $this->isActionEvent($event, 'Reorganize') && $event['trigger'] == \HARVEST;
+    return $this->isActionEvent($event, 'Reorganize') && ($event['trigger'] == \HARVEST || $event['trigger'] == \BREED);
   }
 
   public function onPlayerAfterReorganize($player, $event)
   {
-    $createdAnimals = Globals::getQuarry();
+    $createdAnimals = Globals::getBreed();
     $donkeys = 0;
     foreach ($createdAnimals as $animal) {
       if ($animal['type'] == DONKEY) {
