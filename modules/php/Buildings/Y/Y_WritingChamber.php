@@ -17,4 +17,29 @@ class Y_WritingChamber extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 2];
   }
+
+  public function computeSpecialScore($scores)
+  {
+    foreach ($scores as $pId => $score) {
+      if ($pId != $this->getPId()) {
+        continue;
+      }
+      $negativeEntry = 0;
+      foreach ($score as $type => $values) {
+        if ($type == 'total') {
+          continue;
+        }
+
+        if (isset($values['entries'])) {
+          foreach ($values['entries'] as $entry) {
+            if ($entry['score'] < 0) {
+              $negativeEntry += $entry['score'];
+            }
+          }
+        }
+      }
+
+      $this->addBonusScoringEntry(min(7, $negativeEntry * -1));
+    }
+  }
 }

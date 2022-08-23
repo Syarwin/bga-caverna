@@ -86,6 +86,11 @@ class Scores extends \CAV\Helpers\DB_Manager
     self::init();
     foreach (Players::getAll() as $pId => $player) {
       self::computePlayer($player);
+      if ($player->hasPlayedBuilding('Y_WritingChamber')) {
+        Buildings::getFilteredQuery(null, null, 'Y_WritingChamber')
+          ->get(true)
+          ->computeSpecialScore(self::$scores);
+      }
     }
 
     // update of Stats
