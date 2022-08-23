@@ -9,6 +9,7 @@ class Y_BeerParlor extends \CAV\Models\Building
     $this->type = 'Y_BeerParlor';
     $this->category = 'foodBonus';
     $this->name = clienttranslate('Beer Parlor');
+    $this->desc = [clienttranslate('at anytime before scoring')];
     $this->tooltip = [
       clienttranslate('
       At any time before scoring, you can trade 2 Grain from your personal supply for 3 Gold or 4 Food.'),

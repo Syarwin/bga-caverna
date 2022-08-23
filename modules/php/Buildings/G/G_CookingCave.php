@@ -9,6 +9,7 @@ class G_CookingCave extends \CAV\Models\Building
     $this->type = 'G_CookingCave';
     $this->category = 'food';
     $this->name = clienttranslate('Cooking Cave');
+    $this->desc = [clienttranslate('Each time')];
     $this->tooltip = [
       clienttranslate(
         'You will get 5 Food from the general supply (instead of 3) everytime you convert a set of 1 Grain and 1 Vegetable into Food'

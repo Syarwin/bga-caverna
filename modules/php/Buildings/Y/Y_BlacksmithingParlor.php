@@ -9,6 +9,7 @@ class Y_BlacksmithingParlor extends \CAV\Models\Building
     $this->type = 'Y_BlacksmithingParlor';
     $this->category = 'foodBonus';
     $this->name = clienttranslate('Blacksmithing Parlor');
+    $this->desc = [clienttranslate('at anytime before scoring')];
     $this->tooltip = [
       clienttranslate('
       At any time before scoring, you can trade a set of 1 Ruby and 1 Ore for 2 Gold and 1 Food.'),

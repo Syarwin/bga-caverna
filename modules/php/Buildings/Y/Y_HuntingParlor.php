@@ -9,6 +9,7 @@ class Y_HuntingParlor extends \CAV\Models\Building
     $this->type = 'Y_HuntingParlor';
     $this->category = 'foodBonus';
     $this->name = clienttranslate('Hunting Parlor');
+    $this->desc = [clienttranslate('at anytime before scoring')];
     $this->tooltip = [
       clienttranslate('
       At any time before scoring, you can trade 2 Wild boars for 2 Gold and 2 Food __(instead of the usual 4 Food)__.'),

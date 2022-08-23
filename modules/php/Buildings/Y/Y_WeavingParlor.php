@@ -9,6 +9,7 @@ class Y_WeavingParlor extends \CAV\Models\Building
     $this->type = 'Y_WeavingParlor';
     $this->category = 'foodBonus';
     $this->name = clienttranslate('Weaving Parlor');
+    $this->desc = [clienttranslate('+1'), clienttranslate('for'), clienttranslate('for each')];
     $this->tooltip = [
       clienttranslate(
         'When building the Weaving parlor, immediately (and only once) get 1 Food from the general supply for each Sheep on your Home board'

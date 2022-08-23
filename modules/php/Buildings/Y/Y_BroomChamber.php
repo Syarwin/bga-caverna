@@ -9,6 +9,7 @@ class Y_BroomChamber extends \CAV\Models\Building
     $this->type = 'Y_BroomChamber';
     $this->category = 'bonus';
     $this->name = clienttranslate('Broom Chamber');
+    $this->desc = [clienttranslate('if 5 dwarfs'), clienttranslate('if 6 dwarfs')];
     $this->tooltip = [
       clienttranslate(
         'When scoring, the Broom chamber will be worth 5 Bonus points if you have 5 Dwarfs in play. It will be worth 10 Bonus points if you have 6 Dwarfs in play.'

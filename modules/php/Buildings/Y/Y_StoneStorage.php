@@ -9,6 +9,7 @@ class Y_StoneStorage extends \CAV\Models\Building
     $this->type = 'Y_StoneStorage';
     $this->category = 'bonus';
     $this->name = clienttranslate('Stone Storage');
+    $this->desc = [clienttranslate('for each')];
     $this->tooltip = [
       clienttranslate('
       When scoring, the Stone storage will be worth 1 Bonus point for each Stone you have.'),

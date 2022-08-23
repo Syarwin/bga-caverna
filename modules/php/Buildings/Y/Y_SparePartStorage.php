@@ -12,6 +12,7 @@ class Y_SparePartStorage extends \CAV\Models\Building
     $this->type = 'Y_SparePartStorage';
     $this->category = 'bonus';
     $this->name = clienttranslate('Spare Part Storage');
+    $this->desc = [clienttranslate('at anytime before scoring')];
     $this->tooltip = [
       clienttranslate(
         'At any time before scoring, you can trade sets of 1 Wood, 1 Stone and 1 Ore for 2 Gold per set.'

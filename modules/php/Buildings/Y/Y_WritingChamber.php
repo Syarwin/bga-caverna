@@ -9,6 +9,7 @@ class Y_WritingChamber extends \CAV\Models\Building
     $this->type = 'Y_WritingChamber';
     $this->category = 'bonus';
     $this->name = clienttranslate('Writing Chamber');
+    $this->desc = [clienttranslate('When scoring, prevents loss up to 7 <SCORE>')];
     $this->tooltip = [
       clienttranslate(
         'When scoring, the Writing chamber can prevent the loss of up to 7 Gold points. You lose points for Begging markers, unused spaces on your Home board and missing Farm animals. Correction is automatically managed by BGA.'
