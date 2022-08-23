@@ -1,6 +1,8 @@
 <?php
 namespace CAV\Buildings\Y;
 
+use CAV\Managers\Buildings;
+
 class Y_MainStorage extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -16,5 +18,17 @@ class Y_MainStorage extends \CAV\Models\Building
       ),
     ];
     $this->cost = [WOOD => 2, STONE => 1];
+  }
+
+  public function computeBonusScore()
+  {
+    $c = 0;
+    $buildings = Buildings::getOfPlayer($this->getPId());
+    foreach ($buildings as $b => $building) {
+      if (substr($building->getType(), 0, 2) == 'Y_') {
+        $c++;
+      }
+    }
+    $this->addBonusScoringEntry($c * 2);
   }
 }
