@@ -102,7 +102,7 @@ class Notifications
     self::notifyAll('revealActionCard', clienttranslate('Action __${action}__ is revealed'), [
       'action' => $card->getName(),
       'i18n' => ['action'],
-      'card' => $card,
+      'card' => $card->getUiData(),
       'turn' => Globals::getTurn(),
     ]);
   }
@@ -632,7 +632,7 @@ class Notifications
       unset($data['player2']);
     }
 
-    if (isset($data['card'])) {
+    if (isset($data['card']) && \is_object($data['card'])) {
       $data['i18n'][] = 'card_name';
       $data['card_name'] = $data['card']->getName();
     }

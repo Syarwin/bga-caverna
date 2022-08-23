@@ -4,10 +4,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Setup all actions slot/cards
      */
     setupActionCards() {
-      let nPlayers = Object.keys(this.gamedatas.players).length;
-      let nTurns = nPlayers <= 2 ? 11 : 12;
-      for (var i = 1; i <= nTurns; i++) {
-        this.place('tplTurnContainer', i, 'central-board');
+      let bounds = this.getStagesBounds();
+      for (let stage = 1; stage < bounds.length; stage++) {
+        let lower = bounds[stage - 1],
+          upper = bounds[stage];
+        for (let turn = lower; turn < upper; turn++) {
+          this.place('tplTurnContainer', { turn, stage }, 'central-board');
+        }
       }
 
       this.gamedatas.cards.visible.forEach((card) => {
@@ -25,6 +28,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         card.tooltipDescription = this.formatCardDesc(card.tooltipDesc);
       });
       this.updateActionCardsHelp();
+    },
+
+    getStagesBounds() {
+      let nPlayers = Object.keys(this.gamedatas.players).length;
+      return nPlayers <= 2 ? [1, 4, 7, 9, 11] : [1, 4, 7, 10, 13];
     },
 
     updateActionCardsHelp() {
@@ -113,15 +121,20 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     /**
      * Slot for turn
      */
-    tplTurnContainer(turn) {
+    tplTurnContainer(data) {
+      let turn = data.turn,
+        stage = data.stage;
       return (
         `
       <div class='action-card-wrapper turn-action-container' id='turn_${turn}'>
         <div class='turn-number'>
-          <div class='help-marker' id='turn-number-tooltipable-${turn}'>
-            <svg><use href="#help-marker-svg" /></svg>
+          <div class='turn-number-indication'>${this.substranslate(_('Round ${turn}'), { turn })}</div>
+          <div class='stage-helper'>
+            ${stage}
+            <div class='help-marker' id='turn-number-tooltipable-${turn}'>
+              <svg><use href="#help-marker-svg" /></svg>
+            </div>
           </div>
-          <div class='turn-number-indication'>${turn}</div>
         </div>
         <div class='future-resources-holder'>
         ` +
@@ -141,9 +154,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Template for action card
      */
     tplActionCard(card) {
-      return (
-        `<div class='action-card-wrapper'>
-      <div id="${card.id}" data-id="${card.id}" class="action-card-holder">
+      let cardTpl =
+        `<div id="${card.id}" data-id="${card.id}" class="action-card-holder">
         <div class="dwarf-holder resource-holder-update" data-n="0"></div>
         <div class="action-card">
           <h4 class="action-header">${_(card.name)}</h4>
@@ -154,9 +166,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         ` +
         (card.accumulate ? "<div class='resource-holder resource-holder-update'></div>" : '') +
         `
-      </div>
-    </div>`
-      );
+      </div>`;
+
+      return card.component ? `<div class='action-card-wrapper'>${cardTpl}</div>` : cardTpl;
     },
 
     /**

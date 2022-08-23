@@ -909,5 +909,17 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
     clearClientState() {
       this.restoreServerGameState();
     },
+
+    substranslate(log, args) {
+      return this.format_string_recursive(log, args);
+    },
+
+    translate(t) {
+      if (typeof t === 'object') {
+        return this.format_string_recursive(t.log, t.args);
+      } else {
+        return _(t);
+      }
+    },
   });
 });
