@@ -39,7 +39,9 @@ abstract class Utils extends \APP_DbObject
     }
 
     foreach ($meeples as $meeple) {
-      $t[$meeple['type']]++;
+      if (isset($t[$meeple['type']])) {
+        $t[$meeple['type']]++;
+      }
     }
 
     return $t;

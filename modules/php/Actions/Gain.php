@@ -18,7 +18,7 @@ class Gain extends \CAV\Models\Action
   {
     $args = $this->getCtxArgs();
     foreach ($args as $resource => $amount) {
-      if (\in_array($resource, [SHEEP, PIG, CATTLE])) {
+      if (\in_array($resource, [SHEEP, PIG, CATTLE, DONKEY])) {
         return false;
       }
     }

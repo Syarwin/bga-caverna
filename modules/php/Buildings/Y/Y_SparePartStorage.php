@@ -1,6 +1,9 @@
 <?php
 namespace CAV\Buildings\Y;
 
+use CAV\Managers\Players;
+use CAV\Managers\Buildings;
+
 class Y_SparePartStorage extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -33,5 +36,28 @@ class Y_SparePartStorage extends \CAV\Models\Building
         ],
       ],
     ];
+  }
+
+  public function isListeningTo($event)
+  {
+    return $this->isActionEvent($event, 'Furnish') &&
+      $event['buildingType'] == 'Y_SparePartStorage' &&
+      Players::get($event['pId'])->hasPlayedBuilding('G_Trader');
+  }
+
+  public function onPlayerAfterFurnish($player, $event)
+  {
+    return [
+      'action' => \SPECIAL_EFFECT,
+      'args' => ['cardType' => $this->type, 'method' => 'removeBuilding', 'args' => []],
+    ];
+  }
+
+  public function removeBuilding()
+  {
+    $b = Buildings::getFilteredQuery(null, null, 'G_Trader')
+      ->get()
+      ->first();
+    Buildings::DB()->delete($b->getId());
   }
 }

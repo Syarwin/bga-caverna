@@ -1,6 +1,9 @@
 <?php
 namespace CAV\Buildings\G;
 
+use CAV\Managers\Players;
+use CAV\Managers\Buildings;
+
 class G_Trader extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -23,5 +26,42 @@ class G_Trader extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 1];
     $this->vp = 2;
+    $this->exchanges = [
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          GOLD => 2,
+        ],
+        'to' => [
+          WOOD => 1,
+          STONE => 1,
+          ORE => 1,
+        ],
+      ],
+    ];
+  }
+
+  public function isListeningTo($event)
+  {
+    return $this->isActionEvent($event, 'Furnish') &&
+      $event['buildingType'] == 'G_Trader' &&
+      Players::get($event['pId'])->hasPlayedBuilding('Y_SparePartStorage');
+  }
+
+  public function onPlayerAfterFurnish($player, $event)
+  {
+    return [
+      'action' => \SPECIAL_EFFECT,
+      'args' => ['cardType' => $this->type, 'method' => 'removeBuilding', 'args' => []],
+    ];
+  }
+
+  public function removeBuilding()
+  {
+    $b = Buildings::getFilteredQuery(null, null, 'Y_SparePartStorage')
+      ->get()
+      ->first();
+    Buildings::DB()->delete($b->getId());
   }
 }

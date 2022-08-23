@@ -22,4 +22,9 @@ class G_GuestRoom extends \CAV\Models\Building
     $this->cost = [WOOD => 1, STONE => 1];
     $this->vp = 0;
   }
+
+  public function useExtension()
+  {
+    $this->setExtraDatas('extension', true);
+  }
 }

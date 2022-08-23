@@ -18,5 +18,58 @@ class G_SlaughteringCave extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2, STONE => 2];
     $this->vp = 2;
+
+    $this->exchanges = [
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          \SHEEP => 1,
+        ],
+        'to' => [
+          FOOD => 2,
+        ],
+      ],
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          \PIG => 1,
+        ],
+        'to' => [
+          FOOD => 3,
+        ],
+      ],
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          \CATTLE => 1,
+        ],
+        'to' => [
+          FOOD => 4,
+        ],
+      ],
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          \DONKEY => 1,
+        ],
+        'to' => [
+          FOOD => 2,
+        ],
+      ],
+      [
+        'source' => $this->name,
+        'flag' => $this->id,
+        'from' => [
+          \DONKEY => 2,
+        ],
+        'to' => [
+          FOOD => 5,
+        ],
+      ],
+    ];
   }
 }

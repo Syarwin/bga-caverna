@@ -1,6 +1,8 @@
 <?php
 namespace CAV\Buildings\G;
 
+use CAV\Helpers\Utils;
+
 class G_Carpenter extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -22,5 +24,13 @@ class G_Carpenter extends \CAV\Models\Building
     Utils::addBonus($args['costs'], [WOOD => -1], $this->id);
   }
 
-  // TODO : listen to placeTiles cost and check type of tile
+  public function onPlayerComputePlaceTileCosts($player, &$args)
+  {
+    if (
+      isset($args['tiles']) &&
+      (in_array(TILE_PASTURE, $args['tiles']) || in_array(TILE_LARGE_PASTURE, $args['tiles']))
+    ) {
+      Utils::addBonus($args['costs'], [WOOD => -1], $this->id);
+    }
+  }
 }

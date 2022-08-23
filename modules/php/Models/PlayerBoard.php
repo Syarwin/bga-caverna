@@ -123,6 +123,11 @@ class PlayerBoard
     return $this->getTilesOfType(TILE_FIELD);
   }
 
+  public function getOreMines()
+  {
+    return $this->getTilesOfType(\TILE_ORE_MINE);
+  }
+
   public function countEmptyCell()
   {
     $nodes = $this->getAllNodes(true);
@@ -398,10 +403,20 @@ class PlayerBoard
     }
 
     $zones = $this->buildableZones;
-    // TODO : handle that pair of buildings
-    // if(...){
-    //   ...
-    // }
+    if ($building->getType() == 'G_Trader' && $this->player->hasPlayedBuilding('Y_SparePartStorage')) {
+      $b = Buildings::getFilteredQuery(null, null, 'Y_SparePartStorage')
+        ->get()
+        ->first();
+      $zones = [['x' => $b->getX(), 'y' => $b->getY()]];
+    }
+
+    if ($building->getType() == 'Y_SparePartStorage' && $this->player->hasPlayedBuilding('G_Trader')) {
+      $b = Buildings::getFilteredQuery(null, null, 'G_Trader')
+        ->get()
+        ->first();
+      // $zones = ['Y_SparePartStorage' => ['x' => $b->getX(), 'y' => $b->getY()]];
+      $zones = [['x' => $b->getX(), 'y' => $b->getY()]];
+    }
 
     return $zones;
   }

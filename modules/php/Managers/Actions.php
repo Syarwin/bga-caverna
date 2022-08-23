@@ -28,6 +28,7 @@ class Actions
     SPECIAL_EFFECT => 'SpecialEffect',
     WISHCHILDREN => 'WishChildren',
     WEAPON_INCREASE => 'WeaponIncrease',
+    BREED => 'Breed',
   ];
 
   public static function get($actionId, $ctx = null)

@@ -88,6 +88,7 @@ class Furnish extends \CAV\Models\Action
     // Listeners for cards
     $eventData = [
       'buildingId' => $buildingId,
+      'buildingType' => $building->getType(),
       'pos' => $zone,
     ];
     $this->checkAfterListeners($player, $eventData);

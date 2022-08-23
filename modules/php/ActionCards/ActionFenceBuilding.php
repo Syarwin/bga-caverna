@@ -33,11 +33,11 @@ class ActionFenceBuilding extends \CAV\Models\ActionCard
           'childs' => [
             [
               'action' => PLACE_TILE,
-              'args' => ['tiles' => [TILE_PASTURE], 'cost' => [WOOD => 2]],
+              'args' => ['tiles' => [TILE_PASTURE], 'costs' => [WOOD => 2]],
             ],
             [
               'action' => PLACE_TILE,
-              'args' => ['tiles' => [TILE_LARGE_PASTURE], 'cost' => [WOOD => 4]],
+              'args' => ['tiles' => [TILE_LARGE_PASTURE], 'costs' => [WOOD => 4]],
             ],
           ],
         ],

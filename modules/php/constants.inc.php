@@ -86,6 +86,7 @@ const ST_BLACKSMITH = 41;
 const ST_EXPEDITION = 42;
 const ST_WEAPON_INCREASE = 43;
 const ST_FURNISH = 44;
+const ST_BREED = 45;
 
 const ST_REORGANIZE = 80;
 
@@ -195,7 +196,7 @@ const TILE_SQUARES_MAPPING = [
   TILE_MEADOW => [TILE_MEADOW],
   TILE_FIELD => [TILE_FIELD],
   TILE_PASTURE => [TILE_PASTURE],
-  TILE_LARGE_PASTURE => [TILE_PASTURE, TILE_PASTURE]
+  TILE_LARGE_PASTURE => [TILE_PASTURE, TILE_PASTURE],
 ];
 
 // State to differentiate chah beh oui !ildren from grown ups
@@ -274,6 +275,7 @@ const SPECIAL_EFFECT = 'SPECIAL_EFFECT';
 const STABLES = 'STABLES';
 const WISHCHILDREN = 'WISH_CHILDREN';
 const WEAPON_INCREASE = 'WEAPON_INCREASE';
+const BREED = 'BREED';
 
 /** ExtraDatas**/
 const BONUS_VP = 'bonusVP';

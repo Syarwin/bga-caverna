@@ -147,6 +147,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       zones.forEach((pos) => {
         this.onClick(this.getCell(pos), () => onClickZone(pos));
       });
+
+      if (zones.length == 1) {
+        onClickZone(zones[0]);
+      }
     },
 
     /**
@@ -433,10 +437,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         }
 
         if (selectableCells.length == 1) {
-          ['mouseover', 'mouseenter', 'click'].forEach(e => {
+          ['mouseover', 'mouseenter', 'click'].forEach((e) => {
             const ev = new Event(e);
             selectableCells[0].dispatchEvent(ev);
-          })
+          });
         }
       };
 

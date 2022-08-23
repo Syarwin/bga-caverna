@@ -14,7 +14,7 @@ class G_RubySupplier extends \CAV\Models\Building
       clienttranslate(
         'When building the Ruby supplier, place 1 Ruby from the general supply on the next 4 Round spaces.'
       ),
-      clienttranslate('At the beginning of these rounds, you receive the Wood.'),
+      clienttranslate('At the beginning of these rounds, you receive the Ruby.'),
     ];
     $this->cost = [WOOD => 2, STONE => 2];
     $this->vp = 2;

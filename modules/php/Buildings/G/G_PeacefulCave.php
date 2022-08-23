@@ -1,6 +1,10 @@
 <?php
 namespace CAV\Buildings\G;
 
+use CAV\Core\Engine;
+use CAV\Core\Notifications;
+use CAV\Managers\Meeples;
+
 class G_PeacefulCave extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -20,5 +24,52 @@ class G_PeacefulCave extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 2, WOOD => 2];
     $this->vp = 2;
+  }
+
+  public function isListeningTo($event)
+  {
+    return $this->isAnytime($event) && $this->getPlayer()->hasArmedDwarfs();
+  }
+
+  public function onPlayerAtAnytime($player, $event)
+  {
+    $dwarfs = $this->getPlayer()->getAllDwarfs();
+    $childs = [];
+    foreach ($dwarfs as $dId => $dwarf) {
+      if (($dwarf['weapon'] ?? 0) > 0) {
+        $childs[] = [
+          'action' => \SPECIAL_EFFECT,
+          'args' => [
+            'cardType' => $this->type,
+            'method' => 'convertWeapon',
+            'args' => [$dwarf['weapon'], $dId, $dwarf['weaponId']],
+          ],
+        ];
+      }
+    }
+    return ['type' => NODE_OR, 'optional' => true, 'childs' => $childs];
+  }
+
+  public function getConvertWeaponDescription($weapon, $dId, $weaponId)
+  {
+    return [
+      'log' => clienttranslate('Convert weapon ${w} into <FOOD>'),
+      'args' => ['w' => $weapon],
+    ];
+  }
+
+  public function convertWeapon($weapon, $dId, $weaponId)
+  {
+    // remove weapon
+    $dwarfs = $this->getPlayer()->getAllDwarfs();
+    if (!isset($dwarfs[$dId]) || !isset($dwarfs[$dId]['weapon']) || $dwarfs[$dId]['weapon'] != $weapon) {
+      throw new \BgaVisibleSystemException('This dwarf is not armed. Should not happen');
+    }
+    $m = Meeples::getMany([$weaponId]);
+    Meeples::DB()->delete($weaponId);
+    Notifications::destroyWeapon($this->getPlayer(), $m);
+
+    // insert Food
+    Engine::insertAsChild($this->gainNode([FOOD => $weapon]));
   }
 }

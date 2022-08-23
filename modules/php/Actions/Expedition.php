@@ -98,7 +98,7 @@ class Expedition extends \CAV\Models\Action
         'args' => ['tiles' => [TILE_CAVERN]],
       ],
     ],
-    'breed' => ['lvl' => 14, ['special' => 'breed']], // TODO
+    'breed' => ['lvl' => 14, 'flow' => ['action' => BREED, 'args' => ['max' => 2]]],
   ];
 
   public function __construct($row)

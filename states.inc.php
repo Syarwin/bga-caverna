@@ -181,6 +181,18 @@ $machinestates = [
     'possibleactions' => ['actBlacksmith', 'actPassOptionalAction', 'actRestart'],
   ],
 
+  ST_BREED => [
+    'name' => 'breed',
+    'description' => clienttranslate('${actplayer} must breed all their animals'),
+    'descriptionmyturn' => clienttranslate('${you} must breed all their animals'),
+    'descriptionchoice' => clienttranslate('${actplayer} must breed ${max} animals'),
+    'descriptionmyturnchoice' => clienttranslate('${you} must breed ${max} animals'),
+    'args' => 'argsAtomicAction',
+    'action' => 'stAtomicAction',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actBreed', 'actPassOptionalAction', 'actRestart'],
+  ],
+
   ST_EXPEDITION => [
     'name' => 'expedition',
     'description' => clienttranslate('${actplayer} may take up to ${n} loot items of strength at most ${max}'),

@@ -24,12 +24,26 @@ class ActionRubyMineConstruction extends \CAV\Models\ActionCard
 
   protected function getFlow($player, $dwarf)
   {
-    return [
-      'action' => PLACE_TILE,
-      'args' => [
-        'tiles' => [TILE_RUBY_MINE],
-        'bonusIfDeep' => true,
+    $flow = [
+      'type' => NODE_SEQ,
+      'childs' => [
+        [
+          'action' => PLACE_TILE,
+          'args' => [
+            'tiles' => [TILE_RUBY_MINE],
+          ],
+        ],
       ],
     ];
+    if ($player->hasPlayedBuilding('G_GuestRoom')) {
+      $flow['childs'][] = [
+        'action' => PLACE_TILE,
+        'optional' => true,
+        'args' => [
+          'tiles' => [TILE_RUBY_MINE],
+        ],
+      ];
+    }
+    return $flow;
   }
 }

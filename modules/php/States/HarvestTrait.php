@@ -191,7 +191,7 @@ trait HarvestTrait
     // Listen for cards enforcing reorganization on last harvest (eg Organic Farmer)
     $enforceReorganize = false;
     if (Globals::getTurn() == 14) {
-      foreach ($player->getCards(null, true) as $card) {
+      foreach ($player->getBuildings(null, true) as $card) {
         $enforceReorganize = $enforceReorganize || $card->enforceReorganizeOnLastHarvest();
       }
     }

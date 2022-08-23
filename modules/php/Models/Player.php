@@ -101,6 +101,16 @@ class Player extends \CAV\Helpers\DB_Model
     return Dwarfs::hasInReserve($this->id);
   }
 
+  public function hasArmedDwarfs()
+  {
+    foreach ($this->getAllDwarfs() as $dId => $dwarf) {
+      if (($dwarf['weapon'] ?? 0) > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   ////////////////////////////////////////////////////
   //  ____        _ _     _ _
   // | __ ) _   _(_) | __| (_)_ __   __ _ ___
@@ -329,6 +339,16 @@ class Player extends \CAV\Helpers\DB_Model
     return $animals;
   }
 
+  public function countAnimalsOnTile($tileType, $animal)
+  {
+    $animals = 0;
+    $tiles = $board->getTilesOfType($tileType);
+    foreach ($tiles as $tile) {
+      $animals += Meeples::countAnimalInZoneLocation($this->id, $animal, $tile);
+    }
+    return $animals;
+  }
+
   /**
    * Count the number of animals in a given location
    */
@@ -506,18 +526,21 @@ class Player extends \CAV\Helpers\DB_Model
     return $this->countDwarfs(ADULT) * 2 + $this->countDwarfs(CHILD);
   }
 
-  public function breed($animalType = null, $source = null)
+  public function breed($animalType = null, $source = null, $breeds = null)
   {
     $meeples = [];
     $animals = $this->breedTypes();
     $created = [];
-    Globals::setD115([]);
+    Globals::setBreed([]);
 
     foreach ($animals as $animal => $value) {
       if ($value == false) {
         continue;
       }
       if ($animalType != null && $animal != $animalType) {
+        continue;
+      }
+      if (!is_null($breeds) && !in_array($animal, $breeds)) {
         continue;
       }
 
@@ -527,8 +550,9 @@ class Player extends \CAV\Helpers\DB_Model
 
     if (count($meeples) > 0) {
       $reorganize = $this->checkAutoReorganize($meeples);
-      if ($this->hasPlayedCard('D115_FodderPlanter')) {
-        Globals::setD115($created);
+      Globals::setBreed($created);
+
+      if ($this->hasPlayedBuilding('G_Quarry') || $this->hasPlayedBuilding('G_BreedingCave')) {
         $reorganize = true; // force confirm of reorganize
       }
       Notifications::breed($this, $meeples, $source);

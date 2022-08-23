@@ -57,26 +57,12 @@ trait DebugTrait
     // self::loadDebugUpdateEngine($engine, $map);
     // var_dump($engine);
     // $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
-    // Engine::insertAsChild([
-    //   'action' => STABLES,
-    //   'args' => [
-    //     'max' => 1,
-    //     'costs' => Utils::formatCost([STONE => 1, 'max' => 1]),
-    //   ],
-    // ]);
+
+    // Engine::insertAsChild(['action' => BREED, 'args' => ['max' => 2]]);
     // Engine::resolveAction();
     // Engine::proceed();
-    $player = Players::getCurrent();
-    ActionCards::setupNewGame(
-      [
-        $player->getId() => $player,
-        0 => 1,
-        2 => 3,
-        4 => 4,
-        5 => 5,
-      ],
-      []
-    );
+
+    $this->actTakeAtomicAction([[CATTLE, PIG]]);
   }
 
   public function dd()
@@ -84,6 +70,17 @@ trait DebugTrait
     // throw new \feException(print_r(Globals::getEngine()));
     // Buildings::get('A71_ClearingSpade')->moveCrop(149, 165);
     $this->actTakeAtomicAction([[['id' => 'B68_Beanfield', 'crop' => VEGETABLE]]]);
+  }
+
+  public function nt()
+  {
+    $player = Players::getCurrent();
+    Engine::insertAtRoot([
+      'action' => PLACE_DWARF,
+      'pId' => $player->getId(),
+    ]);
+    Engine::save();
+    Engine::proceed();
   }
 
   function addResource($type, $qty = 1)

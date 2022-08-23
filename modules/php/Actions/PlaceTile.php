@@ -2,6 +2,7 @@
 namespace CAV\Actions;
 
 use CAV\Managers\Players;
+use CAV\Managers\Buildings;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Helpers\Utils;
@@ -89,6 +90,21 @@ class PlaceTile extends \CAV\Models\Action
     ];
   }
 
+  public function getCosts($player, $args = [])
+  {
+    $costs = [];
+
+    if (isset($args['costs']) && $args['costs'] != null) {
+      $costs['trades'][] = $args['costs'];
+    }
+
+    // Apply card effects
+    $args['card'] = $this;
+    $args['costs'] = $costs;
+    Buildings::applyEffects($player, 'ComputePlaceTileCosts', $args);
+    return $args['costs'];
+  }
+
   public function actPlaceTile($tile, $positions)
   {
     self::checkAction('actPlaceTile');
@@ -113,6 +129,12 @@ class PlaceTile extends \CAV\Models\Action
 
     // Notify the new tile squares
     Notifications::placeTile($player, $tile, $squares);
+
+    // Trigger of Pay if needed
+    $cost = $this->getCosts($player, $this->getCtxArgs());
+    if ($cost != NO_COST) {
+      $player->pay(1, $cost, clienttranslate('place tile'));
+    }
 
     // Insert gain node if any bonus
     if (!is_null($bonus)) {

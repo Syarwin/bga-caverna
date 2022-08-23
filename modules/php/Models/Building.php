@@ -109,7 +109,7 @@ class Building extends \CAV\Helpers\DB_Model
 
   public function isPlayed()
   {
-    return $this->location == 'board' || ($this->location = 'inPlay');
+    return $this->location == 'board' || $this->location == 'inPlay';
   }
 
   /**

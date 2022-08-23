@@ -119,6 +119,14 @@ class Meeples extends \CAV\Helpers\Pieces
       ->count();
   }
 
+  public function countAnimalInZoneLocation($pId, $animal, $location = null)
+  {
+    return self::getFilteredQuery($pId, 'board', [$animal])
+      ->where('x', $location['x'])
+      ->where('y', $location['y'])
+      ->count();
+  }
+
   public function countAnimalsInZoneCard($pId, $location = null)
   {
     return self::getFilteredQuery($pId, $location['card_id'], [SHEEP, PIG, CATTLE])->count();

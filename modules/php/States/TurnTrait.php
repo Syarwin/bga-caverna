@@ -174,6 +174,7 @@ trait TurnTrait
   function stLabor()
   {
     $player = Players::getActive();
+    Globals::setBreed([]);
 
     // Already out of round ? => Go to the next player if one is left
     $skipped = Globals::getSkippedPlayers();

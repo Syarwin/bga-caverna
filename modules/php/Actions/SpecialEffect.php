@@ -12,16 +12,33 @@ class SpecialEffect extends \CAV\Models\Action
   public function isDoable($player, $ignoreResources = false)
   {
     $args = $this->getCtxArgs();
-    $card = Buildings::get($args['cardId']);
+    if (isset($args['cardId'])) {
+      $card = Buildings::get($args['cardId']);
+    } elseif (isset($args['cardType'])) {
+      $card = Buildings::getFilteredQuery(null, null, $args['cardType'])
+        ->get()
+        ->first();
+    } else {
+      throw new \feException('Issue on special effect args');
+    }
     $method = 'is' . \ucfirst($args['method']) . 'Doable';
     $arguments = $args['args'] ?? [];
+
     return \method_exists($card, $method) ? $card->$method($player, $ignoreResources, ...$arguments) : true;
   }
 
   public function getDescription($ignoreResources = false)
   {
     $args = $this->getCtxArgs();
-    $card = Buildings::get($args['cardId']);
+    if (isset($args['cardId'])) {
+      $card = Buildings::get($args['cardId']);
+    } elseif (isset($args['cardType'])) {
+      $card = Buildings::getFilteredQuery(null, null, $args['cardType'])
+        ->get()
+        ->first();
+    } else {
+      throw new \feException('Issue on special effect args');
+    }
     $method = 'get' . \ucfirst($args['method']) . 'Description';
     $arguments = $args['args'] ?? [];
     return \method_exists($card, $method) ? $card->$method(...$arguments) : '';
@@ -30,7 +47,15 @@ class SpecialEffect extends \CAV\Models\Action
   public function isIndependent($player = null)
   {
     $args = $this->getCtxArgs();
-    $card = Buildings::get($args['cardId']);
+    if (isset($args['cardId'])) {
+      $card = Buildings::get($args['cardId']);
+    } elseif (isset($args['cardType'])) {
+      $card = Buildings::getFilteredQuery(null, null, $args['cardType'])
+        ->get()
+        ->first();
+    } else {
+      throw new \feException('Issue on special effect args');
+    }
     $method = 'isIndependent' . \ucfirst($args['method']);
     return \method_exists($card, $method) ? $card->$method($player) : false;
   }
@@ -38,7 +63,15 @@ class SpecialEffect extends \CAV\Models\Action
   public function isAutomatic($player = null)
   {
     $args = $this->getCtxArgs();
-    $card = Buildings::get($args['cardId']);
+    if (isset($args['cardId'])) {
+      $card = Buildings::get($args['cardId']);
+    } elseif (isset($args['cardType'])) {
+      $card = Buildings::getFilteredQuery(null, null, $args['cardType'])
+        ->get()
+        ->first();
+    } else {
+      throw new \feException('Issue on special effect args');
+    }
     $method = $args['method'];
     return \method_exists($card, $method);
   }
@@ -46,7 +79,15 @@ class SpecialEffect extends \CAV\Models\Action
   public function stSpecialEffect()
   {
     $args = $this->getCtxArgs();
-    $card = Buildings::get($args['cardId']);
+    if (isset($args['cardId'])) {
+      $card = Buildings::get($args['cardId']);
+    } elseif (isset($args['cardType'])) {
+      $card = Buildings::getFilteredQuery(null, null, $args['cardType'])
+        ->get()
+        ->first();
+    } else {
+      throw new \feException('Issue on special effect args');
+    }
     $method = $args['method'];
     $arguments = $args['args'] ?? [];
     if (\method_exists($card, $method)) {
@@ -58,7 +99,15 @@ class SpecialEffect extends \CAV\Models\Action
   public function argsSpecialEffect()
   {
     $args = $this->getCtxArgs();
-    $card = Buildings::get($args['cardId']);
+    if (isset($args['cardId'])) {
+      $card = Buildings::get($args['cardId']);
+    } elseif (isset($args['cardType'])) {
+      $card = Buildings::getFilteredQuery(null, null, $args['cardType'])
+        ->get()
+        ->first();
+    } else {
+      throw new \feException('Issue on special effect args');
+    }
     $method = 'args' . \ucfirst($args['method']);
     $arguments = $args['args'] ?? [];
     return \method_exists($card, $method) ? $card->$method(...$arguments) : [];
@@ -67,7 +116,15 @@ class SpecialEffect extends \CAV\Models\Action
   public function actSpecialEffect(...$actArgs)
   {
     $args = $this->getCtxArgs();
-    $card = Buildings::get($args['cardId']);
+    if (isset($args['cardId'])) {
+      $card = Buildings::get($args['cardId']);
+    } elseif (isset($args['cardType'])) {
+      $card = Buildings::getFilteredQuery(null, null, $args['cardType'])
+        ->get()
+        ->first();
+    } else {
+      throw new \feException('Issue on special effect args');
+    }
     $method = 'act' . \ucfirst($args['method']);
     $arguments = $args['args'] ?? [];
     if (!\method_exists($card, $method)) {
