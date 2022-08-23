@@ -1,6 +1,8 @@
 <?php
 namespace CAV\Buildings\Y;
 
+use CAV\Managers\Buildings;
+
 class Y_StateParlor extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -9,6 +11,10 @@ class Y_StateParlor extends \CAV\Models\Building
     $this->type = 'Y_StateParlor';
     $this->category = 'foodBonus';
     $this->name = clienttranslate('State Parlor');
+    $this->desc = [
+      clienttranslate('Receive immediately for each adjacent dwelling +2'),
+      clienttranslate('when scoring'),
+    ];
     $this->tooltip = [
       clienttranslate(
         'When building the State parlor, immediately (and only once) get 2 Food from the general supply for each Dwelling that is __(horizontally or vertically)__ adjacent to the State parlor.'
@@ -18,5 +24,36 @@ class Y_StateParlor extends \CAV\Models\Building
       ),
     ];
     $this->cost = [GOLD => 5, STONE => 3];
+  }
+
+  protected function onBuy($player, $eventData)
+  {
+    return $this->gainNode([FOOD => 2 * $this->calculateAdjacentDwellings()]);
+  }
+
+  protected function calculateAdjacentDwellings()
+  {
+    $adj = 0;
+
+    foreach (
+      $this->getPlayer()
+        ->board()
+        ->getAdjacentTiles($this->x, $this->y)
+      as $tile
+    ) {
+      $b = Buildings::getFilteredQuery($this->getPId(), null, null)
+        ->where([['x', $tile['x']], ['y', $tile['y']]])
+        ->get(true);
+
+      if (!is_null($b) && $b->getDwelling() > 0) {
+        $adj++;
+      }
+    }
+    return $adj;
+  }
+
+  public function computeBonusScore()
+  {
+    $this->addBonusScoringEntry($this->calculateAdjacentDwellings() * 4);
   }
 }

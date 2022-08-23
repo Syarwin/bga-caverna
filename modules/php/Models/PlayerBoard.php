@@ -722,6 +722,18 @@ class PlayerBoard
     }
   }
 
+  public function getAdjacentTiles($x, $y)
+  {
+    $nodes = $this->getNodesAround($x, $y);
+    $tiles = [];
+    foreach ($nodes as $dir => $pos) {
+      if ($this->grid[$pos['x']][$pos['y']] !== null) {
+        $tiles[] = $this->grid[$pos['x']][$pos['y']];
+      }
+    }
+    return $tiles;
+  }
+
   ///////////////////////////////////////////////////////////////////
   //  _____ _      _     _        ______
   // |  ___(_) ___| | __| |___   / / ___|_ __ ___  _ __  ___
