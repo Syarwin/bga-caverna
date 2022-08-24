@@ -52,7 +52,7 @@ trait TurnTrait
     Notifications::revealActionCard($card);
 
     // Reveal harvest token if needed
-    $harvest = Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED, \HARVEST_GREEN])->get(true);
+    $harvest = Meeples::getHarvestToken();
     if ($harvest != null) {
       Meeples::DB()->update(['meeple_state', 1], $harvest['id']);
       $hToken = Meeples::get($harvest['id']);
@@ -350,9 +350,24 @@ trait TurnTrait
   {
     // Next turn or harvest
     $turn = Globals::getTurn();
-    $harvest = [4, 7, 9, 11, 13, 14];
-    if (in_array($turn, $harvest)) {
+    $harvestToken = Meeples::getHarvestToken();
+
+    if (
+      $turn == 3 ||
+      $turn == 5 ||
+      (($turn > 5 && $harvestToken['type'] == HARVEST_GREEN) ||
+        Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
+          ->where(['meeple_state', 1])
+          ->count() == 3)
+    ) {
       $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
+    } elseif (
+      $turn == 4 ||
+      Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
+        ->where(['meeple_state', 1])
+        ->count() == 2
+    ) {
+      // TODO: pay only 1 food by dwarf (including babies)
     } else {
       $this->gamestate->nextState('end');
     }

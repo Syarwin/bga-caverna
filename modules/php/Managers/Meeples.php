@@ -3,6 +3,7 @@ namespace CAV\Managers;
 use caverna;
 use CAV\Core\Stats;
 use CAV\Helpers\UserException;
+use CAV\Core\Globals;
 
 /* Class to manage all the meeples for Agricola */
 
@@ -260,6 +261,11 @@ class Meeples extends \CAV\Helpers\Pieces
     return self::getOnCardQ($cId, $pId, $type)
       ->where('type', '<>', 'dwarf')
       ->get();
+  }
+
+  public function getHarvestToken()
+  {
+    return self::getFilteredQuery(null, 'turn_' . Globals::getTurn(), [\HARVEST_RED, \HARVEST_GREEN])->get(true);
   }
 
   public function collectResourcesOnCard($player, $cId, $pId = null)
