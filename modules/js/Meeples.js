@@ -164,6 +164,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           reserve = 'reserve-' + meeple.pId;
         }
         return reserve;
+      } else if (meeple.type == 'harvest_grey' || meeple.type == 'harvest_green' || meeple.type == 'harvest_red') {
+        return $(`${meeple.location}`);
       } else if (meeple.location.substr(0, 4) == 'turn') {
         return $(meeple.location).querySelector('[data-pid="' + meeple.pId + '"]');
       } else if ($(meeple.location)) {
@@ -330,6 +332,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     notif_silentDestroy(n) {
       debug('Notif: silent destroy', n);
       n.args.resources.forEach((meeple) => dojo.destroy('meeple-' + meeple.id));
+    },
+
+    notif_revealHarvestToken(n) {
+      debug('Notif: reveal harvest token', n);
+      debug('TODO');
     },
 
     /**

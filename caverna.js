@@ -109,6 +109,7 @@ define([
           ['upgradeWeapon', 500],
           ['furnish', 500],
           ['placeTile', 500],
+          ['revealHarvestToken', 500],
           // UNCHECKED
           ['addFences', null],
           ['addStables', null],
@@ -579,10 +580,7 @@ define([
 
         // Has extra animals ?
         if (
-            this._extraAnimals.sheep +
-            this._extraAnimals.pig +
-            this._extraAnimals.cattle +
-            this._extraAnimals.donkey !=
+          this._extraAnimals.sheep + this._extraAnimals.pig + this._extraAnimals.cattle + this._extraAnimals.donkey !=
           0
         ) {
           dojo.place(

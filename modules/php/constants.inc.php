@@ -208,6 +208,11 @@ const ANYTIME = 1;
 const BREAD = 2;
 const HARVEST = 3;
 
+// Harvest token
+const HARVEST_RED = 'harvest_red';
+const HARVEST_GREEN = 'harvest_green';
+const HARVEST_GREY = 'harvest_grey';
+
 /*
  * Scoring categories
  */

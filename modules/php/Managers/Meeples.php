@@ -18,7 +18,10 @@ class Meeples extends \CAV\Helpers\Pieces
       'id' => (int) $meeple['id'],
       'location' => $meeple['location'],
       'pId' => $meeple['player_id'],
-      'type' => $meeple['type'],
+      'type' =>
+        ($meeple['type'] == HARVEST_RED || $meeple['type'] == HARVEST_GREEN) && $meeple['state'] == 0
+          ? HARVEST_GREY
+          : $meeple['type'],
       'x' => $meeple['x'],
       'y' => $meeple['y'],
       'state' => $meeple['state'],
@@ -46,6 +49,26 @@ class Meeples extends \CAV\Helpers\Pieces
       $meeples[] = ['type' => FOOD, 'player_id' => $pId, 'location' => 'reserve', 'nbr' => $foodMap[$i]];
     }
     $meeples[] = ['type' => 'firstPlayer', 'player_id' => $order[0], 'location' => 'reserve', 'nbr' => 1];
+
+    // Setup of the harvest Tokens
+    $harvestTokens = [
+      HARVEST_RED,
+      HARVEST_RED,
+      HARVEST_RED,
+      HARVEST_GREEN,
+      HARVEST_GREEN,
+      HARVEST_GREEN,
+      HARVEST_GREEN,
+    ];
+    shuffle($harvestTokens);
+    $i = 6;
+    foreach ($harvestTokens as $tok) {
+      if (count($players) <= 2 && $i == 12) {
+        continue;
+      }
+      $meeples[] = ['type' => $tok, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+      $i++;
+    }
 
     self::create($meeples);
 

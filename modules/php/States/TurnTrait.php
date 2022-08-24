@@ -51,6 +51,19 @@ trait TurnTrait
     Globals::setLastRevealed($card->getId());
     Notifications::revealActionCard($card);
 
+    // Reveal harvest token if needed
+    $harvest = Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED, \HARVEST_GREEN])->get(true);
+    if ($harvest != null) {
+      Meeples::DB()->update(['meeple_state', 1], $harvest['id']);
+      $hToken = Meeples::get($harvest['id']);
+      Notification::revealHarvestToken(
+        $hToken,
+        Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
+          ->where(['meeple_state', 1])
+          ->count()
+      );
+    }
+
     // Listen for buildings AfterRevealAction
     $this->checkBuildingListeners('AfterRevealAction', 'stPreparationListener');
   }
