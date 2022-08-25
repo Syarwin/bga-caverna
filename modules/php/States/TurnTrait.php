@@ -59,7 +59,8 @@ trait TurnTrait
       Notification::revealHarvestToken(
         $hToken,
         Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
-          ->where(['meeple_state', 1])
+          ->where('meeple_state', 1)
+          ->get()
           ->count()
       );
     }
@@ -351,23 +352,28 @@ trait TurnTrait
     // Next turn or harvest
     $turn = Globals::getTurn();
     $harvestToken = Meeples::getHarvestToken();
+    Globals::setHarvestCost(2);
 
     if (
       $turn == 3 ||
       $turn == 5 ||
       (($turn > 5 && $harvestToken['type'] == HARVEST_GREEN) ||
         Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
-          ->where(['meeple_state', 1])
+          ->where('meeple_state', 1)
+          ->get()
           ->count() == 3)
     ) {
       $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
+      return;
     } elseif (
       $turn == 4 ||
       Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
-        ->where(['meeple_state', 1])
+        ->where('meeple_state', 1)
+        ->get()
         ->count() == 2
     ) {
-      // TODO: pay only 1 food by dwarf (including babies)
+      Globals::setHarvestCost(1);
+      $this->initCustomTurnOrder('harvestFeed', \HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
     } else {
       $this->gamestate->nextState('end');
     }
@@ -380,34 +386,34 @@ trait TurnTrait
     }
 
     Globals::setHarvest(false);
-    if (Globals::getTurn() == 14) {
+    if (Globals::getTurn() == 12 || (Players::count() <= 2 && Globals::getTurn() == 11)) {
       $this->gamestate->nextState('end');
       return;
     }
 
     // Pig Breeder
-    if (Globals::getTurn() == 12) {
-      $card = Buildings::getSingle('A165_PigBreeder', false);
-      if ($card != null && $card->isPlayed()) {
-        $player = $card->getPlayer();
-        if ($player->breed(PIG, clienttranslate("Pig breeder's effect"))) {
-          // Inserting leaf REORGANIZE
-          Engine::setup(
-            [
-              'pId' => $player->getId(),
-              'action' => REORGANIZE,
-              'args' => [
-                'trigger' => HARVEST,
-                'breedTypes' => [PIG => true],
-              ],
-            ],
-            ['state' => ST_BEFORE_START_OF_TURN]
-          );
-          Engine::proceed();
-          return;
-        }
-      }
-    }
+    // if (Globals::getTurn() == 12) {
+    //   $card = Buildings::getSingle('A165_PigBreeder', false);
+    //   if ($card != null && $card->isPlayed()) {
+    //     $player = $card->getPlayer();
+    //     if ($player->breed(PIG, clienttranslate("Pig breeder's effect"))) {
+    //       // Inserting leaf REORGANIZE
+    //       Engine::setup(
+    //         [
+    //           'pId' => $player->getId(),
+    //           'action' => REORGANIZE,
+    //           'args' => [
+    //             'trigger' => HARVEST,
+    //             'breedTypes' => [PIG => true],
+    //           ],
+    //         ],
+    //         ['state' => ST_BEFORE_START_OF_TURN]
+    //       );
+    //       Engine::proceed();
+    //       return;
+    //     }
+    //   }
+    // }
 
     $this->gamestate->nextState('newTurn');
   }

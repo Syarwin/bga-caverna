@@ -303,6 +303,11 @@ $stats_type = [
       'name' => totranslate('Number of ruby converted in food'),
       'type' => 'int',
     ],
+    'convertedGold' => [
+      'id' => STAT_GOLD_CONVERTED,
+      'name' => totranslate('Number of gold converted in food'),
+      'type' => 'int',
+    ],
     //
     'grainToFood' => [
       'id' => STAT_FOOD_FROM_GRAIN,
@@ -347,6 +352,11 @@ $stats_type = [
     'rubyToFood' => [
       'id' => STAT_FOOD_FROM_RUBY,
       'name' => totranslate('Number of food from ruby'),
+      'type' => 'int',
+    ],
+    'goldToFood' => [
+      'id' => STAT_FOOD_FROM_GOLD,
+      'name' => totranslate('Number of food from gold'),
       'type' => 'int',
     ],
 

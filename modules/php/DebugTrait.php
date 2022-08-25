@@ -63,18 +63,8 @@ trait DebugTrait
     // Engine::proceed();
 
     // $this->actTakeAtomicAction([[CATTLE, PIG]]);
-    // Reveal harvest token if needed
-    $harvest = Meeples::getFilteredQuery(null, 'turn_' . Globals::getTurn(), [\HARVEST_RED, \HARVEST_GREEN])->get(true);
-    if ($harvest != null) {
-      Meeples::DB()->update(['meeple_state', 1], $harvest['id']);
-      $hToken = Meeples::get($harvest['id']);
-      Notification::revealHarvestToken(
-        $hToken,
-        Meeples::getFilteredQuery(null, 'turn_' . Globals::getTurn(), [\HARVEST_RED])
-          ->where(['meeple_state', 1])
-          ->count()
-      );
-    }
+    Globals::setHarvestCost(2);
+    $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
   }
 
   public function dd()

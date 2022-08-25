@@ -99,12 +99,6 @@ trait HarvestTrait
   /****************************
    ******* Feeding phase *******
    ****************************/
-  // TODO : remove !!
-  function stHarvestPrepareFeedListener()
-  {
-    $this->stStartHarvestFeedingPhase();
-  }
-
   function stStartHarvestFeedingPhase()
   {
     $this->checkBuildingListeners('StartHarvestFeedingPhase', 'stInitHarvestFeedingPhase', [], \HARVEST);
@@ -163,11 +157,11 @@ trait HarvestTrait
     Engine::proceed();
   }
 
-  // TODO : remove
-  function stHarvestEndOfFeed()
-  {
-    $this->checkBuildingListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);
-  }
+  // // TODO : remove
+  // function stHarvestEndOfFeed()
+  // {
+  //   $this->checkBuildingListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);
+  // }
 
   function stEndHarvestFeedingPhase()
   {
@@ -190,11 +184,11 @@ trait HarvestTrait
     $player = Players::getActive();
     // Listen for cards enforcing reorganization on last harvest (eg Organic Farmer)
     $enforceReorganize = false;
-    if (Globals::getTurn() == 14) {
-      foreach ($player->getBuildings(null, true) as $card) {
-        $enforceReorganize = $enforceReorganize || $card->enforceReorganizeOnLastHarvest();
-      }
-    }
+    // if (Globals::getTurn() == 12) {
+    //   foreach ($player->getBuildings(null, true) as $card) {
+    //     $enforceReorganize = $enforceReorganize || $card->enforceReorganizeOnLastHarvest();
+    //   }
+    // }
 
     // If player has enough to breed, creation of a baby in reserve
     $created = $player->breed();

@@ -18,6 +18,7 @@ class Globals extends \CAV\Helpers\DB_Manager
 
     'harvest' => 'bool',
     'skippedPlayers' => 'obj',
+    'harvestCost' => 'int',
     'exchangeFlags' => 'obj',
 
     'gameSeed' => 'str',

@@ -132,7 +132,7 @@ class PlaceTile extends \CAV\Models\Action
 
     // Trigger of Pay if needed
     $cost = $this->getCosts($player, $this->getCtxArgs());
-    if ($cost != NO_COST) {
+    if ($cost != [] && $cost != NO_COST) {
       $player->pay(1, $cost, clienttranslate('place tile'));
     }
 

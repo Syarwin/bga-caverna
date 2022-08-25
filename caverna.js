@@ -266,7 +266,8 @@ define([
 
       notif_startHarvest(n) {
         debug('Notif: starting harvest', n);
-
+        debug('TODO');
+        return;
         let elem = $('harvest-' + n.args.turn);
         dojo.empty('card-overlay');
         if (this.isFastMode()) {

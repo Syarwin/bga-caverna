@@ -240,7 +240,7 @@ class Exchange extends \CAV\Models\Action
       // Notify (group consecutive identical exchange)
       if ($i == count($trades) - 1 || $trades[$i + 1] != $tradeIndex) {
         if (count($deleted) != 0 || count($created) != 0) {
-          Notifications::exchange($player, $deleted, $created, $exchange['source']);
+          Notifications::exchange($player, $deleted, $created, $exchange['source'] ?? null);
         }
         array_push($eventData['created'], ...$created);
         $deleted = [];

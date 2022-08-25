@@ -274,10 +274,10 @@ class Player extends \CAV\Helpers\DB_Model
   {
     $exchanges = [
       Utils::formatExchange([DOG => [FOOD => 0]]),
-
       [
         'from' => [GOLD => 2],
         'to' => [FOOD => 1],
+        'triggers' => null,
       ],
       Utils::formatExchange([DONKEY => [FOOD => 1]]),
       Utils::formatExchange([SHEEP => [FOOD => 1]]),
@@ -286,6 +286,7 @@ class Player extends \CAV\Helpers\DB_Model
       [
         'from' => [GOLD => 3],
         'to' => [FOOD => 2],
+        'triggers' => null,
       ],
       Utils::formatExchange([PIG => [FOOD => 2]]),
       Utils::formatExchange([VEGETABLE => [FOOD => 2]]),
@@ -294,10 +295,12 @@ class Player extends \CAV\Helpers\DB_Model
       [
         'from' => [GOLD => 4],
         'to' => [FOOD => 3],
+        'triggers' => null,
       ],
       [
         'from' => [DONKEY => 2],
         'to' => [FOOD => 3],
+        'triggers' => null,
       ],
       Utils::formatExchange([CATTLE => [FOOD => 3]]),
     ];
@@ -523,7 +526,7 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getHarvestCost()
   {
-    return $this->countDwarfs(ADULT) * 2 + $this->countDwarfs(CHILD);
+    return $this->countDwarfs(ADULT) * Globals::getHarvestCost() + $this->countDwarfs(CHILD);
   }
 
   public function breed($animalType = null, $source = null, $breeds = null)
