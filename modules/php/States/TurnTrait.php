@@ -354,26 +354,30 @@ trait TurnTrait
     $harvestToken = Meeples::getHarvestToken();
     Globals::setHarvestCost(2);
 
-    if (
-      $turn == 3 ||
-      $turn == 5 ||
-      (($turn > 5 && $harvestToken['type'] == HARVEST_GREEN) ||
-        Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
-          ->where('meeple_state', 1)
-          ->get()
-          ->count() == 3)
-    ) {
+    if ($turn == 3 || $turn == 5 || ($turn > 5 && $harvestToken['type'] == HARVEST_GREEN)) {
       $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
       return;
     } elseif (
       $turn == 4 ||
-      Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
-        ->where('meeple_state', 1)
-        ->get()
-        ->count() == 2
+      ($turn > 5 &&
+        $harvestToken['type'] == HARVEST_RED &&
+        Meeples::getFilteredQuery(null, null, [\HARVEST_RED])
+          ->where('meeple_state', 1)
+          ->get()
+          ->count() == 2)
     ) {
       Globals::setHarvestCost(1);
       $this->initCustomTurnOrder('harvestFeed', \HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
+    } elseif (
+      $turn > 5 &&
+      $harvestToken['type'] == HARVEST_RED &&
+      Meeples::getFilteredQuery(null, null, [\HARVEST_RED])
+        ->where('meeple_state', 1)
+        ->get()
+        ->count() == 3
+    ) {
+      // only reap.
+      // TODO
     } else {
       $this->gamestate->nextState('end');
     }
