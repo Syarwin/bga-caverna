@@ -110,8 +110,13 @@ class ActionCards extends \CAV\Helpers\Pieces
             self::move($card->getId(), 'turn_' . $turn);
           }
           $turn++;
+          if ($turn == 4) {
+            $turn++;
+          }
         }
       }
+    } else {
+      // TODO solo mode
     }
   }
 

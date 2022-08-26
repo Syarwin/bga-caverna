@@ -8,7 +8,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       for (let stage = 1; stage < bounds.length; stage++) {
         let lower = bounds[stage - 1],
           upper = bounds[stage];
-        for (let turn = lower; turn <= upper; turn++) {
+        for (let turn = lower; turn < upper; turn++) {
           this.place('tplTurnContainer', { turn, stage }, 'central-board');
         }
       }
@@ -32,7 +32,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     getStagesBounds() {
       let nPlayers = Object.keys(this.gamedatas.players).length;
-      return nPlayers <= 2 ? [1, 4, 7, 9, 11] : [1, 4, 7, 10, 13];
+      return nPlayers <= 2 ? [1, 4, 7, 9, 12] : [1, 4, 7, 10, 13];
     },
 
     updateActionCardsHelp() {

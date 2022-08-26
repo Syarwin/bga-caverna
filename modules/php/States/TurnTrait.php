@@ -377,7 +377,7 @@ trait TurnTrait
         ->count() == 3
     ) {
       // only reap.
-      // TODO
+      $this->initCustomTurnOrder('harvestField', HARVEST, ST_HARVEST_FIELD, 'stHarvestEnd');
     } else {
       $this->gamestate->nextState('end');
     }

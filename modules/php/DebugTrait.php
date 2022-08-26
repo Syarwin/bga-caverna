@@ -63,7 +63,7 @@ trait DebugTrait
     // Engine::proceed();
 
     // $this->actTakeAtomicAction([[CATTLE, PIG]]);
-    Globals::setHarvestCost(2);
+    Globals::setHarvestCost(1);
     $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
   }
 

@@ -17,6 +17,7 @@ class ActionOreDelivery extends \CAV\Models\ActionCard
     ];
 
     $this->accumulation = [ORE => 1, STONE => 1];
+    $this->stage = 3;
   }
 
   public function getFlow($player, $dwarf)
