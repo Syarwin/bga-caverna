@@ -384,6 +384,7 @@ trait TurnTrait
           ->count() == 2)
     ) {
       Globals::setHarvestCost(1);
+      Globals::setHarvest(true);
       $this->initCustomTurnOrder('harvestFeed', \HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
     } elseif (
       $turn > 5 &&
