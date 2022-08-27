@@ -163,5 +163,6 @@ class Globals extends \CAV\Helpers\DB_Manager
     self::setLiveScoring($options[OPTION_SCORING] == OPTION_SCORING_ENABLED);
     self::setTurn(0);
     self::setFirstPlayer(Game::get()->getNextPlayerTable()[0]);
+    self::setHarvestCost(2);
   }
 }

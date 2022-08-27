@@ -26,31 +26,14 @@ class WishChildren extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return false;
-
-    if (!$player->hasFarmerInReserve()) {
+    if (!$player->hasDwarfInReserve()) {
       return false;
     }
 
     // Check constraints associated with the action
     $constraints = $this->ctx->getArgs()['constraints'] ?? [];
     foreach ($constraints as $c) {
-      if (
-        $player->hasPlayedCard('B10_Caravan') &&
-        $c == 'freeRoom' &&
-        $player->countDwarfs() >= $player->countRooms() + 1
-      ) {
-        return false;
-      } elseif (
-        !$player->hasPlayedCard('B10_Caravan') &&
-        $c == 'freeRoom' &&
-        $player->countDwarfs() >= $player->countRooms()
-      ) {
-        return false;
-      }
-
-      // Action space on additional board with an action blocked until turn5
-      if ($c == 'turn5' && Globals::getTurn() < 5) {
+      if ($c == 'freeRoom' && $player->countDwarfs() >= $player->countDwellings()) {
         return false;
       }
     }

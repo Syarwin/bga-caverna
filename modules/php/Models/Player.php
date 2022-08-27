@@ -148,6 +148,16 @@ class Player extends \CAV\Helpers\DB_Model
     return count($this->board()->getTilesOfType(TILE_RUBY_MINE));
   }
 
+  public function countDwellings()
+  {
+    $buildings = Buildings::getOfPlayer($this->id);
+    $dwellings = 0;
+    foreach ($buildings as $bId => $building) {
+      $dwellings += $building->getDwelling();
+    }
+    return $dwellings;
+  }
+
   ////////////////////////////////////////////////////////////
   //  _   _ _   _  ____ _   _ _____ ____ _  _______ ____
   // | | | | \ | |/ ___| | | | ____/ ___| |/ / ____|  _ \

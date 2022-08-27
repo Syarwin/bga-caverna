@@ -21,12 +21,12 @@ trait TurnTrait
   function stBeforeStartOfTurn()
   {
     // 0) Make children grow up
-    // $children = Dwarfs::growChildren();
-    // if (!empty($children)) {
-    //   Notifications::growChildren($children);
-    //   Notifications::updateHarvestCosts();
-    // }
+    $children = Dwarfs::growChildren();
+    if (!empty($children)) {
+      Notifications::growChildren($children);
+    }
 
+    Notifications::updateHarvestCosts();
     $skipped = Players::getAll()
       ->filter(function ($player) {
         return $player->isZombie();
@@ -70,6 +70,16 @@ trait TurnTrait
           ->get()
           ->count()
       );
+      if (
+        $hToken['type'] == HARVEST_RED &&
+        Meeples::getFilteredQuery(null, null, [\HARVEST_RED])
+          ->where('meeple_state', 1)
+          ->get()
+          ->count() == 2
+      ) {
+        Globals::setHarvestCost(1);
+        Notifications::updateHarvestCosts();
+      }
     }
 
     // Listen for buildings AfterRevealAction

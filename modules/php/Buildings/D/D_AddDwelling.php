@@ -19,8 +19,22 @@ class D_AddDwelling extends \CAV\Models\Building
         'Once you have 5 Dwarfs, you can use a Family growth action to get a sixth Dwarf (see also “Family chamber”).'
       ),
     ];
-    $this->dwelling = 1;
     $this->cost = [WOOD => 4, STONE => 3];
     $this->vp = 5;
   }
+
+  public function getDwelling()
+  {
+    // provides room only if 5 others dwarfs are placed
+    if (
+      $this->getPlayer()
+        ->getAllDwarfs()
+        ->count() != 5
+    ) {
+      return 0;
+    }
+    return 1;
+  }
+
+  // TODO : add a 6th dwarf in reserve
 }
