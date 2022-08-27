@@ -65,7 +65,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     /**
      * Main factory function for action card
      */
-    addActionCard(card, flip = false) {
+    addActionCard(card, flip = false, oldCard = null) {
       // Add extra info
       card.description = this.formatCardDesc(card.desc);
       card.tooltipText = card.tooltip.map((s) => _(s)).join('<br />');
@@ -81,7 +81,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         addTooltip();
       } else {
         if (flip) {
-          let target = $(card.location).querySelector('.turn-number');
+          let target = '';
+          if (oldCard == null) {
+            target = $(card.location).querySelector('.turn-number');
+          } else {
+            target = $(oldCard);
+          }
           if (this.isFastMode()) {
             this.flipAndReplace(target, this.tplActionCard(card));
             addTooltip();
@@ -113,7 +118,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_revealActionCard(n) {
       debug('Notif: revealing a new card', n);
-      this.addActionCard(n.args.card, true);
+      if (n.args.hasOwnProperty('oldName')) {
+        this.addActionCard(n.args.card, true, n.args.oldId);
+      } else {
+        this.addActionCard(n.args.card, true);
+      }
       dojo.attr('game_play_area', 'data-turn', n.args.turn);
       this.updateActionCardsHelp();
     },

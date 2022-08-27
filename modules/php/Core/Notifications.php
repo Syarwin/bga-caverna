@@ -124,6 +124,18 @@ class Notifications
     ]);
   }
 
+  public static function flipWishChildren($oldCard, $newCard)
+  {
+    self::notifyAll('revealActionCard', clienttranslate('Card ${oldName} is replaced by ${newName}'), [
+      'oldName' => $oldCard->getName(),
+      'newName' => $newCard->getName(),
+      'i18n' => ['oldName', 'newName'],
+      'card' => $newCard->getUiData(),
+      'oldId' => $oldCard->getId(),
+      'turn' => 4,
+    ]);
+  }
+
   public static function accumulate($meeples, $silent = false)
   {
     self::notifyAll('accumulation', $silent ? '' : clienttranslate('Accumulation spaces are being filled in'), [

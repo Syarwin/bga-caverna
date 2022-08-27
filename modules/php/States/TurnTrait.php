@@ -51,12 +51,19 @@ trait TurnTrait
     Globals::setLastRevealed($card->getId());
     Notifications::revealActionCard($card);
 
+    if ($card->getId() == 'ActionFamilyLife') {
+      $oldCard = ActionCards::get('ActionWishChildren');
+      ActionCards::DB()->update(['card_id' => 'ActionUrgentWishChildren'], 'ActionWishChildren');
+      $newCard = ActionCards::get('ActionUrgentWishChildren');
+      Notifications::flipWishChildren($oldCard, $newCard);
+    }
+
     // Reveal harvest token if needed
     $harvest = Meeples::getHarvestToken();
     if ($harvest != null) {
-      Meeples::DB()->update(['meeple_state', 1], $harvest['id']);
+      Meeples::DB()->update(['meeple_state' => 1], $harvest['id']);
       $hToken = Meeples::get($harvest['id']);
-      Notification::revealHarvestToken(
+      Notifications::revealHarvestToken(
         $hToken,
         Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
           ->where('meeple_state', 1)

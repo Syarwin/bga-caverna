@@ -321,7 +321,7 @@
     'ActionOreMineConstruction' 'ActionOreMining4' 'ActionOreMining' 'ActionOreTrading' 'ActionRubyDelivery'
     'ActionRubyMineConstruction' 'ActionRubyMining' 'ActionSheepFarming' 'ActionSlash' 'ActionSmallDriftMining'
     'ActionFirstPlayer4' 'ActionFirstPlayer' 'ActionStripMining' 'ActionGrowth' 'ActionSupplies' 'ActionSustenance4'
-    'ActionSustenance' 'ActionUrgentWish' 'ActionWeeklyMarket' 'ActionWishChildren' 'ActionWoodGathering';
+    'ActionSustenance' 'ActionUrgentWishChildren' 'ActionWeeklyMarket' 'ActionWishChildren' 'ActionWoodGathering';
   @each $cId in $actionCards {
     $i: index($actionCards, $cId) - 1;
     &[data-id='#{$cId}'] .action-card .action-background {

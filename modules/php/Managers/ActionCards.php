@@ -64,6 +64,7 @@ class ActionCards extends \CAV\Helpers\Pieces
     // Stage 2
     'DonkeyFarming',
     'RubyMineConstruction',
+    'WishChildren',
     // Stage 3
     'FamilyLife',
     'Exploration',
@@ -72,6 +73,7 @@ class ActionCards extends \CAV\Helpers\Pieces
     'Adventure',
     'OreTrading',
     'RubyDelivery',
+    'UrgentWishChildren',
   ];
 
   /* Creation of the cards */
@@ -89,6 +91,7 @@ class ActionCards extends \CAV\Helpers\Pieces
 
       // Compute location depending on number of players
       $location = self::getInitialLocation($card, $players);
+
       $cards[] = [
         'id' => $card->getId(),
         'location' => $location,
@@ -145,7 +148,7 @@ class ActionCards extends \CAV\Helpers\Pieces
       return ['turn', $mapping[$card->getId()]];
     }
     // WishChildren is always at round 4
-    elseif ($card->getActionCardType() == 'ActionWishChildren') {
+    elseif ($card->getId() == 'ActionWishChildren') {
       return ['turn', 4];
     }
     // 2 players has no round 9
