@@ -7,7 +7,7 @@ class ActionWishChildren extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionWishChildren';
-    $this->name = clienttranslate('Wish children');
+    $this->name = clienttranslate('Wish for children');
     $this->desc = [clienttranslate('Either'), clienttranslate('or')];
     $this->tooltip = [
       clienttranslate('If your cave system provides more room for Dwarfs than you have Dwarfs in play, you may carry out a Family growth action. Place a Dwarf
@@ -42,5 +42,14 @@ disc from your personal supply on the Dwarf taking the action.'),
         ],
       ],
     ];
+  }
+
+  protected function getFlow($player, $dwarf)
+  {
+    $flow = $this->flow;
+    if ($player->hasPlayedBuilding('G_GuestRoom')) {
+      $flow['type'] = NODE_OR;
+    }
+    return $flow;
   }
 }

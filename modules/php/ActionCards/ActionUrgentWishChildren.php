@@ -7,7 +7,7 @@ class ActionUrgentWishChildren extends \CAV\Models\ActionCard
   {
     parent::__construct($row);
     $this->id = 'ActionUrgentWishChildren';
-    $this->name = clienttranslate('Urgent Wish children');
+    $this->name = clienttranslate('Urgent Wish for children');
     $this->desc = [clienttranslate('Either'), clienttranslate('or')];
 
     $this->tooltip = [
@@ -50,5 +50,14 @@ former, you may then carry out a Family growth action. __(You may not grow your 
   public function isSupported($players, $options)
   {
     return false; // will be updated when family life is flipped
+  }
+
+  protected function getFlow($player, $dwarf)
+  {
+    $flow = $this->flow;
+    if ($player->hasPlayedBuilding('G_GuestRoom')) {
+      $flow['type'] = NODE_OR;
+    }
+    return $flow;
   }
 }
