@@ -11,6 +11,10 @@ const OPTION_SCORING = 107;
 const OPTION_SCORING_ENABLED = 0;
 const OPTION_SCORING_DISABLED = 1;
 
+const OPTION_REVEAL_HARVEST = 110;
+const OPTION_REVEAL_START = 0;
+const OPTION_REVEAL_END = 1;
+
 /*
  * User preferences
  */
@@ -209,9 +213,11 @@ const BREAD = 2;
 const HARVEST = 3;
 
 // Harvest token
-const HARVEST_RED = 'harvest_red';
-const HARVEST_GREEN = 'harvest_green';
 const HARVEST_GREY = 'harvest_grey';
+const HARVEST_NORMAL = 'harvest_normal';
+const HARVEST_NONE = 'harvest_none';
+const HARVEST_1FOOD = 'harvest_1food';
+const HARVEST_REAP = 'harvest_reap';
 
 /*
  * Scoring categories

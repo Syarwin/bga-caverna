@@ -35,6 +35,21 @@ $game_options = [
     'default' => OPTION_COMPETITIVE_BEGINNER,
   ],
 
+  \OPTION_REVEAL_HARVEST => [
+    'name' => totranslate('Reveal harvest'),
+    'values' => [
+      OPTION_REVEAL_START => [
+        'name' => totranslate('Start of turn'),
+      ],
+      \OPTION_REVEAL_END => [
+        'name' => totranslate('Beginning of harvest'),
+        'nobeginner' => true,
+        'tmdisplay' => totranslate('Harvest type revealed just before the harvest'),
+      ],
+    ],
+    'default' => OPTION_REVEAL_START,
+  ],
+
   OPTION_SCORING => [
     'name' => totranslate('Live scoring'),
     'values' => [

@@ -81,19 +81,16 @@ class Notifications
     ]);
   }
 
-  public static function revealHarvestToken($token, $countRed)
+  public static function revealHarvestToken($token)
   {
-    if ($token['type'] == HARVEST_GREEN) {
+    if ($token['type'] == HARVEST_NORMAL) {
       $msg = clienttranslate('A normal harvest will take place at the end of the turn');
-    } elseif ($token['type'] == HARVEST_RED) {
-      if ($countRed == 1) {
-        $msg = clienttranslate('No harvest will take place');
-      } elseif ($countRed == 2) {
-        $msg = clienttranslate('Pay 1 <FOOD> by dwarf instead of harvest this turn');
-      }
-      if ($countRed == 3) {
-        $msg = clienttranslate('Only the fields will be reaped this turn.');
-      }
+    } elseif ($token['type'] == HARVEST_NONE) {
+      $msg = clienttranslate('No harvest will take place this turn');
+    } elseif ($token['type'] == \HARVEST_1FOOD) {
+      $msg = clienttranslate('Pay 1 <FOOD> by dwarf instead of harvest this turn');
+    } elseif ($token['type'] == \HARVEST_REAP) {
+      $msg = clienttranslate('Only the fields will be reaped this turn.');
     }
     self::notifyAll('revealHarvestToken', $msg, ['token' => $token]);
   }

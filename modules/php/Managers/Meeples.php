@@ -4,6 +4,7 @@ use caverna;
 use CAV\Core\Stats;
 use CAV\Helpers\UserException;
 use CAV\Core\Globals;
+use CAV\Core\Notifications;
 
 /* Class to manage all the meeples for Agricola */
 
@@ -19,10 +20,7 @@ class Meeples extends \CAV\Helpers\Pieces
       'id' => (int) $meeple['id'],
       'location' => $meeple['location'],
       'pId' => $meeple['player_id'],
-      'type' =>
-        ($meeple['type'] == HARVEST_RED || $meeple['type'] == HARVEST_GREEN) && $meeple['state'] == 0
-          ? HARVEST_GREY
-          : $meeple['type'],
+      'type' => substr($meeple['type'], 0, 7) == 'harvest' && $meeple['state'] == 0 ? HARVEST_GREY : $meeple['type'],
       'x' => $meeple['x'],
       'y' => $meeple['y'],
       'state' => $meeple['state'],
@@ -52,25 +50,39 @@ class Meeples extends \CAV\Helpers\Pieces
     $meeples[] = ['type' => 'firstPlayer', 'player_id' => $order[0], 'location' => 'reserve', 'nbr' => 1];
 
     // Setup of the harvest Tokens
-    $harvestTokens = [
-      HARVEST_RED,
-      HARVEST_RED,
-      HARVEST_RED,
-      HARVEST_GREEN,
-      HARVEST_GREEN,
-      HARVEST_GREEN,
-      HARVEST_GREEN,
-    ];
-    shuffle($harvestTokens);
-    $i = 6;
-    foreach ($harvestTokens as $tok) {
-      if (count($players) <= 2 && $i == 12) {
-        continue;
-      }
-      $meeples[] = ['type' => $tok, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 0, 'nbr' => 1];
-      $i++;
-    }
+    $meeples[] = ['type' => \HARVEST_NONE, 'location' => 'turn_1', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_NONE, 'location' => 'turn_2', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_NORMAL, 'location' => 'turn_3', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_1FOOD, 'location' => 'turn_4', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_NORMAL, 'location' => 'turn_5', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
 
+    if (count($players) == 1) {
+      for ($i = 6; ($i = 12); $i++) {
+        $meeples[] = ['type' => HARVEST_NORMAL, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+      }
+    } else {
+      $harvestTokens = ['red', 'red', 'red', HARVEST_NORMAL, HARVEST_NORMAL, HARVEST_NORMAL, HARVEST_NORMAL];
+      shuffle($harvestTokens);
+      $i = 6;
+      $red = 0;
+      foreach ($harvestTokens as $tok) {
+        if (count($players) <= 2 && $i == 12) {
+          continue;
+        }
+        if ($tok == 'red') {
+          $red++;
+          if ($red == 1) {
+            $tok = HARVEST_NONE;
+          } elseif ($red == 2) {
+            $tok = \HARVEST_1FOOD;
+          } else {
+            $tok = HARVEST_REAP;
+          }
+        }
+        $meeples[] = ['type' => $tok, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+        $i++;
+      }
+    }
     self::create($meeples);
 
     Stables::setupNewGame($players, $options);
@@ -263,9 +275,25 @@ class Meeples extends \CAV\Helpers\Pieces
       ->get();
   }
 
+  /************* Harvest tokens *******************/
   public function getHarvestToken()
   {
-    return self::getFilteredQuery(null, 'turn_' . Globals::getTurn(), [\HARVEST_RED, \HARVEST_GREEN])->get(true);
+    return self::getFilteredQuery(null, 'turn_' . Globals::getTurn(), 'harvest%')->get(true);
+  }
+
+  public function revealHarvestToken()
+  {
+    // Reveal harvest token if needed
+    $harvest = self::getHarvestToken();
+    if ($harvest != null) {
+      self::DB()->update(['meeple_state' => 1], $harvest['id']);
+      $hToken = self::get($harvest['id']);
+      Notifications::revealHarvestToken($hToken);
+      if ($hToken['type'] == \HARVEST_1FOOD) {
+        Globals::setHarvestCost(1);
+        Notifications::updateHarvestCosts();
+      }
+    }
   }
 
   public function collectResourcesOnCard($player, $cId, $pId = null)

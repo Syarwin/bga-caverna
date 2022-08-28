@@ -164,7 +164,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           reserve = 'reserve-' + meeple.pId;
         }
         return reserve;
-      } else if (meeple.type == 'harvest_grey' || meeple.type == 'harvest_green' || meeple.type == 'harvest_red') {
+      } else if (meeple.type.substring(0, 7) == 'harvest') {
         return $(`${meeple.location}`);
       } else if (meeple.location.substr(0, 4) == 'turn') {
         return $(meeple.location).querySelector('[data-pid="' + meeple.pId + '"]');

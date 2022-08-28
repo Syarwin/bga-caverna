@@ -58,28 +58,8 @@ trait TurnTrait
       Notifications::flipWishChildren($oldCard, $newCard);
     }
 
-    // Reveal harvest token if needed
-    $harvest = Meeples::getHarvestToken();
-    if ($harvest != null) {
-      Meeples::DB()->update(['meeple_state' => 1], $harvest['id']);
-      $hToken = Meeples::get($harvest['id']);
-      Notifications::revealHarvestToken(
-        $hToken,
-        Meeples::getFilteredQuery(null, 'turn_' . $turn, [\HARVEST_RED])
-          ->where('meeple_state', 1)
-          ->get()
-          ->count()
-      );
-      if (
-        $hToken['type'] == HARVEST_RED &&
-        Meeples::getFilteredQuery(null, null, [\HARVEST_RED])
-          ->where('meeple_state', 1)
-          ->get()
-          ->count() == 2
-      ) {
-        Globals::setHarvestCost(1);
-        Notifications::updateHarvestCosts();
-      }
+    if (Globals::isRevealStartHarvest()) {
+      Meeples::revealHarvestToken();
     }
 
     // Listen for buildings AfterRevealAction
@@ -370,30 +350,18 @@ trait TurnTrait
     $turn = Globals::getTurn();
     $harvestToken = Meeples::getHarvestToken();
     Globals::setHarvestCost(2);
+    if (Globals::isRevealStartHarvest()) {
+      Meeples::revealHarvestToken();
+    }
 
-    if ($turn == 3 || $turn == 5 || ($turn > 5 && $harvestToken['type'] == HARVEST_GREEN)) {
+    if ($harvestToken['type'] == HARVEST_NORMAL) {
       $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
       return;
-    } elseif (
-      $turn == 4 ||
-      ($turn > 5 &&
-        $harvestToken['type'] == HARVEST_RED &&
-        Meeples::getFilteredQuery(null, null, [\HARVEST_RED])
-          ->where('meeple_state', 1)
-          ->get()
-          ->count() == 2)
-    ) {
+    } elseif ($harvestToken['type'] == \HARVEST_1FOOD) {
       Globals::setHarvestCost(1);
       Globals::setHarvest(true);
       $this->initCustomTurnOrder('harvestFeed', \HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
-    } elseif (
-      $turn > 5 &&
-      $harvestToken['type'] == HARVEST_RED &&
-      Meeples::getFilteredQuery(null, null, [\HARVEST_RED])
-        ->where('meeple_state', 1)
-        ->get()
-        ->count() == 3
-    ) {
+    } elseif ($harvestToken['type'] == \HARVEST_REAP) {
       // only reap.
       $this->initCustomTurnOrder('harvestField', HARVEST, ST_HARVEST_FIELD, 'stHarvestEnd');
     } else {

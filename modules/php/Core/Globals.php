@@ -20,6 +20,7 @@ class Globals extends \CAV\Helpers\DB_Manager
     'skippedPlayers' => 'obj',
     'harvestCost' => 'int',
     'exchangeFlags' => 'obj',
+    'revealStartHarvest' => 'bool',
 
     'gameSeed' => 'str',
 
@@ -161,6 +162,7 @@ class Globals extends \CAV\Helpers\DB_Manager
     self::setSolo(count($players) == 1);
     self::setBeginner($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER);
     self::setLiveScoring($options[OPTION_SCORING] == OPTION_SCORING_ENABLED);
+    self::setRevealStartHarvest($options[OPTION_REVEAL_HARVEST] == \OPTION_REVEAL_START);
     self::setTurn(0);
     self::setFirstPlayer(Game::get()->getNextPlayerTable()[0]);
     self::setHarvestCost(2);
