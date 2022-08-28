@@ -421,7 +421,7 @@ trait TurnTrait
     Globals::setTurn(15);
     Globals::setLiveScoring(true);
     Scores::update(true);
-    Notifications::seed(Globals::getGameSeed());
+    // Notifications::seed(Globals::getGameSeed());
     $this->gamestate->jumpToState(\ST_END_GAME);
   }
 }
