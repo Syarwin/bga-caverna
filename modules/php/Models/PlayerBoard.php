@@ -697,7 +697,11 @@ class PlayerBoard
 
     // Get buildable zone
     if (count($tiles) == 1) {
-      die('TODO');
+      $tileAsset = $tile . '-' . '0_0';
+      list($square, $coveredBonus) = $this->addTileSquare($tiles[0], $tileAsset, $positions[0]);
+      $squares[] = $square;
+      $bonus = $bonus ?? $coveredBonus;
+      return [$squares, $bonus];
     } elseif (count($tiles) == 2) {
       // Compute rotation
       $rotation = 0;

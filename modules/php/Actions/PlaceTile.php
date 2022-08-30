@@ -43,6 +43,8 @@ class PlaceTile extends \CAV\Models\Action
       TILE_RUBY_MINE => clienttranslate('a Ruby mine tile'),
       TILE_MEADOW => clienttranslate('a Meadow tile'),
       TILE_FIELD => clienttranslate('a Field tile'),
+      \TILE_TUNNEL => clienttranslate('a Tunnel tile'),
+      \TILE_CAVERN => clienttranslate('a Cavern tile'),
       TILE_PASTURE => clienttranslate('a Small Pasture'),
       TILE_LARGE_PASTURE => clienttranslate('a Large Pasture'),
     ];
@@ -61,6 +63,16 @@ class PlaceTile extends \CAV\Models\Action
           'i18n' => ['tile1', 'tile2'],
           'tile1' => self::getTileName($tiles[0]),
           'tile2' => self::getTileName($tiles[1]),
+        ],
+      ];
+    } elseif (count($tiles) == 3) {
+      return [
+        'log' => clienttranslate('${tile1} or ${tile2}or ${tile3}'),
+        'args' => [
+          'i18n' => ['tile1', 'tile2'],
+          'tile1' => self::getTileName($tiles[0]),
+          'tile2' => self::getTileName($tiles[1]),
+          'tile3' => self::getTileName($tiles[2]),
         ],
       ];
     }
@@ -116,7 +128,7 @@ class PlaceTile extends \CAV\Models\Action
       if (count($positions) == 2) {
         return $positions[0] == $zone['pos1'] && $positions[1] == $zone['pos2'];
       } else {
-        return $positions[0] == $zone;
+        return $positions[0] == $zone['pos1'];
       }
     });
     if (empty($zones)) {
