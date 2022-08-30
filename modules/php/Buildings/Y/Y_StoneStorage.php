@@ -15,6 +15,7 @@ class Y_StoneStorage extends \CAV\Models\Building
       When scoring, the Stone storage will be worth 1 Bonus point for each Stone you have.'),
     ];
     $this->cost = [WOOD => 3, ORE => 1];
+    $this->beginner = true;
   }
 
   public function computeBonusScore()

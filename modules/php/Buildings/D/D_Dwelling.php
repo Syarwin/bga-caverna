@@ -20,5 +20,6 @@ class D_Dwelling extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 4, STONE => 3];
     $this->vp = 3;
+    $this->beginner = true;
   }
 }

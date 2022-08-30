@@ -19,6 +19,7 @@ class Y_WeavingParlor extends \CAV\Models\Building
       ),
     ];
     $this->cost = [WOOD => 2, STONE => 1];
+    $this->beginner = true;
   }
 
   protected function onBuy($player, $eventData)

@@ -16,6 +16,7 @@ class Y_WritingChamber extends \CAV\Models\Building
       ),
     ];
     $this->cost = [STONE => 2];
+    $this->beginner = true;
   }
 
   public function computeSpecialScore($scores)

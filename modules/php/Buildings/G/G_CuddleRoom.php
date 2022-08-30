@@ -19,6 +19,7 @@ class G_CuddleRoom extends \CAV\Models\Building
     $this->cost = [WOOD => 1];
     $this->vp = 2;
     $this->animalHolder = true;
+    $this->beginner = true;
   }
 
   public function onPlayerComputeDropZones($player, &$args)

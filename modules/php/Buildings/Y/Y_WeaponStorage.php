@@ -16,6 +16,7 @@ class Y_WeaponStorage extends \CAV\Models\Building
       ),
     ];
     $this->cost = [WOOD => 3, STONE => 2];
+    $this->beginner = true;
   }
 
   public function computeBonusScore()

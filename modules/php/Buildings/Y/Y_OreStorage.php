@@ -15,6 +15,7 @@ class Y_OreStorage extends \CAV\Models\Building
       clienttranslate('__(For instance, you get 1/2/3/… Bonus points for 2-3/4-5/6-7/… Ore, respectively.)__'),
     ];
     $this->cost = [WOOD => 1, STONE => 2];
+    $this->beginner = true;
   }
 
   public function computeBonusScore()

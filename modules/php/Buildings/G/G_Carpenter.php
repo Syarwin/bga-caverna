@@ -17,6 +17,7 @@ class G_Carpenter extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 1];
     $this->vp = 0;
+    $this->beginner = true;
   }
 
   public function onPlayerComputeCostsFurnish($player, &$args)

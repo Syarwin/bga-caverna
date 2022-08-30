@@ -18,6 +18,7 @@ class Y_MainStorage extends \CAV\Models\Building
       ),
     ];
     $this->cost = [WOOD => 2, STONE => 1];
+    $this->beginner = true;
   }
 
   public function computeBonusScore()

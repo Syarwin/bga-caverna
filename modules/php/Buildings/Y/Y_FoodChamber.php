@@ -17,6 +17,7 @@ class Y_FoodChamber extends \CAV\Models\Building
       clienttranslate('__(You will get the usual ½ Gold point per Grain and 1 Gold point per Vegetable regardless.)__'),
     ];
     $this->cost = [WOOD => 2, \VEGETABLE => 2];
+    $this->beginner = true;
   }
 
   public function computeBonusScore()

@@ -17,5 +17,6 @@ class G_WorkingCave extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 1, WOOD => 1];
     $this->vp = 2;
+    $this->beginner = true;
   }
 }

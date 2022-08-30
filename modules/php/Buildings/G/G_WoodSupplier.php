@@ -18,6 +18,7 @@ class G_WoodSupplier extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 1];
     $this->vp = 2;
+    $this->beginner = true;
   }
 
   protected function onBuy($player, $eventData)
