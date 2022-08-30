@@ -17,6 +17,7 @@ class G_StubbleRoom extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 1, ORE => 1];
     $this->vp = 1;
+    $this->beginner = true;
   }
 
   public function onPlayerComputeDropZones($player, &$args)

@@ -9,7 +9,10 @@ class G_Blacksmith extends \CAV\Models\Building
     $this->type = 'G_Blacksmith';
     $this->category = 'material';
     $this->name = clienttranslate('Blacksmith');
-    $this->desc = [clienttranslate('immediately'), clienttranslate('every time you forge a new weapon, you receive a discount of')];
+    $this->desc = [
+      clienttranslate('immediately'),
+      clienttranslate('every time you forge a new weapon, you receive a discount of'),
+    ];
     $this->tooltip = [
       clienttranslate('When building the Blacksmith, immediately (and only once) get 2 Ore from the general supply.'),
       clienttranslate(
@@ -19,6 +22,7 @@ class G_Blacksmith extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 1, STONE => 2];
     $this->vp = 3;
+    $this->beginner = true;
   }
 
   protected function onBuy($player, $eventData)

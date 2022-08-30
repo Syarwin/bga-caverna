@@ -14,6 +14,7 @@ class G_BreakfastRoom extends \CAV\Models\Building
     $this->cost = [WOOD => 1];
     $this->vp = 0;
     $this->animalHolder = true;
+    $this->beginner = true;
   }
 
   public function onPlayerComputeDropZones($player, &$args)

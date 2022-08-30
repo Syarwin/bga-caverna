@@ -18,6 +18,7 @@ class G_RubySupplier extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2, STONE => 2];
     $this->vp = 2;
+    $this->beginner = true;
   }
 
   protected function onBuy($player, $eventData)

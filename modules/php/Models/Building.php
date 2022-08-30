@@ -36,7 +36,7 @@ class Building extends \CAV\Helpers\DB_Model
    * STATIC INFORMATIONS
    *  they are overwritten by children
    */
-  protected $staticAttributes = ['name', 'desc', 'tooltip', 'vp', 'category', 'dwelling', 'animalHolder'];
+  protected $staticAttributes = ['name', 'desc', 'tooltip', 'vp', 'category', 'dwelling', 'animalHolder', 'beginner'];
   protected $name = ''; // UI
   protected $desc = []; // UI
   protected $tooltip = [];
@@ -44,6 +44,7 @@ class Building extends \CAV\Helpers\DB_Model
   protected $category = null; // Useful for location on board
   protected $dwelling = 0;
   protected $animalHolder = false;
+  protected $beginner = false;
 
   public function jsonSerialize()
   {
@@ -91,9 +92,11 @@ class Building extends \CAV\Helpers\DB_Model
     // Check banlist
     // $checkBanlist = !$this->banned; // TODO reenable? || $options[OPTION_COMPETITIVE_LEVEL] != OPTION_COMPETITIVE_BANLIST;
 
-    $checkBeginner = !$this->isNotBeginner || $options[OPTION_COMPETITIVE_LEVEL] != OPTION_COMPETITIVE_BEGINNER;
-
-    return $this->implemented && $checkBeginner;
+    if ($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER) {
+      return $this->implemented && $this->beginner;
+    } else {
+      return $this->implemented;
+    }
   }
 
   //////////////////////////////////////////////

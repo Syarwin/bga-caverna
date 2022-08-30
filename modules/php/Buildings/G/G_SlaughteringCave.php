@@ -18,6 +18,7 @@ class G_SlaughteringCave extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2, STONE => 2];
     $this->vp = 2;
+    $this->beginner = true;
 
     $this->exchanges = [
       [

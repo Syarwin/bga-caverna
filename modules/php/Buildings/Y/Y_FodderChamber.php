@@ -19,6 +19,7 @@ class Y_FodderChamber extends \CAV\Models\Building
       ),
     ];
     $this->cost = [STONE => 1, GRAIN => 1];
+    $this->beginner = true;
   }
 
   public function computeBonusScore()

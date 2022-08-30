@@ -19,6 +19,7 @@ class Y_BeerParlor extends \CAV\Models\Building
     ];
     $this->cost = [WOOD => 2];
     $this->vp = 3;
+    $this->beginner = true;
     $this->exchanges = [
       [
         'source' => $this->name,
