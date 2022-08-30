@@ -13,25 +13,6 @@ use CAV\Helpers\Utils;
 
 trait HarvestTrait
 {
-  /**
-   * List of listeners for harvest
-   * - BeforeHarvest : D98_Transactor
-   *
-   * - StartHarvest : D97_BeggingStudent
-   *
-   * - StartHarvestFieldPhase : B61_ThreeFieldRotation
-   * - HarvestFieldPhase : A112_ScytheWorker, B39_Loom, B50_ButterChurn, C98_CubeCutter, D38_MilkingStool
-   * - action REAP : C106_PotatoHarvester, C70_LettucePatch
-   * - EndHarvestFieldPhase : C110_HomeBrewer
-   *
-   * - StartHarvestFeedingPhase : C107_Baker
-   * - HarvestFeedingPhase : C59_SchnappsDistillery, D12_MilkingPlace, D84_FeedPellets
-   * - EndHarvestFeedingPhase : C41_FarmStore
-   *
-   * - breeding phase : D115_FodderPlanter
-   * - EndHarvest : C113_WinterCaretaker
-   */
-
   /****************************
    ****** Starting harvest *****
    ****************************/

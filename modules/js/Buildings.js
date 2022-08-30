@@ -1,12 +1,77 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   return declare('caverna.buildings', null, {
     setupBuildings() {
+      // Construct buildings boards
+      // prettier-ignore
+      const buildingsBoards = {
+        dwellings : ['D_Dwelling', 'D_SimpleDwelling1', 'D_SimpleDwelling2', 'D_MixedDwelling', 'D_CoupleDwelling', 'D_AddDwelling', 'G_CuddleRoom', 'G_BreakfastRoom', 'G_StubbleRoom', 'G_WorkRoom', 'G_GuestRoom', 'G_OfficeRoom'],
+        materials : ['G_Carpenter', 'G_StoneCarver', 'G_Blacksmith', 'G_Miner', 'G_Builder', 'G_Trader', 'G_WoodSupplier', 'G_StoneSupplier', 'G_RubySupplier', 'G_DogSchool', 'G_Quarry', 'G_Seam'],
+        food : ['G_SlaughteringCave', 'G_CookingCave', 'G_WorkingCave', 'G_MiningCave', 'G_BreedingCave', 'G_PeacefulCave', 'Y_WeavingParlor', 'Y_MilkingParlor', 'Y_StateParlor', 'Y_HuntingParlor', 'Y_BeerParlor', 'Y_BlacksmithingParlor'],
+        bonus : ['Y_StoneStorage', 'Y_OreStorage', 'Y_SparePartStorage', 'Y_MainStorage', 'Y_WeaponStorage', 'Y_SuppliesStorage', 'Y_BroomChamber', 'Y_TreasureChamber', 'Y_FoodChamber', 'Y_PrayerChamber', 'Y_WritingChamber', 'Y_FodderChamber'],
+      };
+      // prettier-ignore
+      const advancedBuildings = ['D_MixedDwelling', 'D_CoupleDwelling', 'D_AddDwelling', 'G_WorkRoom', 'G_GuestRoom', 'G_OfficeRoom', 'G_Miner', 'G_Builder', 'G_Trader', 'G_DogSchool', 'G_Quarry', 'G_Seam', 'G_MiningCave', 'G_BreedingCave', 'G_PeacefulCave', 'Y_StateParlor', 'Y_BlacksmithingParlor', 'Y_SparePartStorage', 'Y_SuppliesStorage', 'Y_BroomChamber', 'Y_PrayerChamber'];
+      Object.keys(buildingsBoards).forEach((type) => {
+        let board = dojo.place(
+          `<div class='buildings-board' data-id='${type}'>
+          <div class='building-board-left'></div>
+          <div class='building-board-separator'></div>
+          <div class='building-board-right'></div>
+        </div>`,
+          'buildings-container',
+        );
+
+        buildingsBoards[type].forEach((buildingId, i) => {
+          dojo.place(
+            `<div class="building-placeholder" data-id="${buildingId}"></div>`,
+            board.querySelector(i < 6 ? '.building-board-left' : '.building-board-right'),
+          );
+        });
+
+        dojo.place(
+          `<div id='show-building-board-${type}' class='building-board-button' data-id='${type}'><i class="fa fa-times" aria-hidden="true"></i></div>`,
+          'floating-building-buttons',
+        );
+        $(`show-building-board-${type}`).addEventListener('click', (evt) => this.goToBuildingBoard(type, evt));
+      });
+
       // Create an overlay for building animations
       dojo.place("<div id='building-overlay'></div>", 'ebd-body');
       dojo.connect($('building-overlay'), 'click', () => this.zoomOffBuilding());
 
       //this.setupMajorsImprovements();
       this.updateBuildings();
+    },
+
+    goToBuildingBoard(type, evt = null) {
+      if (evt) evt.stopPropagation();
+      let pref = 0; // TODO
+      if (pref == 0) {
+        // Floating container
+        if (this._floatingContainerOpen == type) {
+          delete $('floating-building-boards-wrapper').dataset.open;
+          this._floatingContainerOpen = null;
+        } else {
+          $('floating-building-boards-wrapper').dataset.open = type;
+          this._floatingContainerOpen = type;
+        }
+      } else if (pref == 1) {
+        // // Modal container
+        // if (this._modalContainerOpen == company.id) {
+        //   delete $('modal-company-boards-wrapper').dataset.open;
+        //   this._modalContainerOpen = null;
+        //   this._companiesModal.hide();
+        // } else {
+        //   $('modal-company-boards-wrapper').dataset.open = company.id;
+        //   if (this._modalContainerOpen == null) {
+        //     this._companiesModal.show();
+        //   }
+        //   this._modalContainerOpen = company.id;
+        // }
+      } else if (t.pref == 2) {
+        // Below map
+        // window.scrollTo(0, $(`company-board-${company.id}`).getBoundingClientRect()['top'] - 30);
+      }
     },
 
     updateBuildings() {
@@ -38,21 +103,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     /**
      * Create the modal that holds the major improvements
      */
-    setupMajorsImprovements() {
-      const MAJORS = [
-        'Fireplace1',
-        'Fireplace2',
-        'CookingHearth1',
-        'CookingHearth2',
-        'Well',
-        'ClayOven',
-        'StoneOven',
-        'Joinery',
-        'Pottery',
-        'Basket',
-      ];
-
-      this._majorsDialog = new customgame.modal('showMajors', {
+    setupBuildingsModal() {
+      this._buildingsDialog = new customgame.modal('showBuildings', {
         class: 'caverna_popin',
         closeIcon: 'fa-times',
         //        openAnimation: true,
@@ -72,8 +124,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         breakpoint: 1200,
       });
 
-      this.addCustomTooltip('majors-button', _('Display available major improvements'));
-      this.onClick('majors-button', () => this.openMajorsModal(), false);
+      this.addCustomTooltip('buildings-button', _('Display available major improvements'));
+      this.onClick('buildings-button', () => this.openMajorsModal(), false);
     },
 
     /**
@@ -122,12 +174,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         // Played building => on the board
         return this.getCell(building);
       } else {
-        return $('buildings-test');
+        return $('buildings-container').querySelector(`.building-placeholder[data-id="${building.type}"]`);
       }
-      // else if (building.type == MAJOR && building.location == 'board') {
-      //   // Available major => in the major modal
-      //   return building.id + '_holder';
-      // }
 
       console.error('Trying to get container of a building', building);
       return $('game_play_area');

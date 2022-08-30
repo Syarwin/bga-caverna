@@ -101,15 +101,6 @@
   }
 }
 
-#buildings-test {
-  display: none;
-  flex-wrap: wrap;
-
-  .caverna-building {
-    margin: 5px;
-  }
-}
-
 /**
  * TOOLTIPS
  */
@@ -130,5 +121,170 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+#buildings-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.buildings-board {
+  --cavernaBuildingScale: 0.6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 280px;
+  width: 926px;
+  margin: 5px 0px;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 2px 2px 3px -1px black;
+
+  .building-board-left,
+  .building-board-right {
+    background: url('img/buildings_board_background.jpg');
+    background-size: 100% 100%;
+    display: flex;
+    flex-wrap: wrap;
+    width: 430px;
+  }
+  .building-board-left {
+    border-radius: 8px 0px 0px 8px;
+  }
+  .building-board-right {
+    border-radius: 0px 8px 8px 0px;
+  }
+
+  .building-board-separator {
+    width: 66px;
+    height: 280px;
+    background: url('img/buildings_board_separators.jpg');
+    background-size: 400% 100%;
+  }
+  &[data-id='bonys'] .building-board-separator {
+    background-position-x: 0%;
+  }
+  &[data-id='dwellings'] .building-board-separator {
+    background-position-x: 33.33%;
+  }
+  &[data-id='food'] .building-board-separator {
+    background-position-x: 66.66%;
+  }
+  &[data-id='materials'] .building-board-separator {
+    background-position-x: 100%;
+  }
+
+  .building-placeholder {
+    width: calc(var(--cavernaBuildingScale) * 200px);
+    height: calc(var(--cavernaBuildingScale) * 200px);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    margin: 10px;
+  }
+}
+
+.building-board-button {
+  width: 44px;
+  height: 44px;
+  background-image: url('img/buildings_board_separators_icons.jpg');
+  background-size: 400% 100%;
+  border: 2px solid black;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: transparent;
+
+  @each $board in $buildingBoards {
+    $i: index($buildingBoards, $board) - 1;
+    &[data-id='#{$board}'] {
+      background-position-x: $i * 100% / 3;
+    }
+  }
+}
+
+#floating-building-boards-wrapper {
+  position: fixed;
+  bottom: calc(-1 * var(--cavernaBuildingBoardScale) * 270px);
+  left: 0;
+  transition: bottom 0.8s;
+  z-index: 10;
+  &[data-n='0'] {
+    display: none;
+  }
+  &[data-open] {
+    bottom: 0px;
+  }
+
+  width: calc(var(--cavernaBuildingBoardScale) * 926px);
+  height: calc(var(--cavernaBuildingBoardScale) * 280px);
+  box-shadow: 0 0 10px 1px #ff0;
+  background-color: rgba(40, 39, 36, 0.78);
+  border-top: 1px solid #7c5d45;
+  border-right: 1px solid #7c5d45;
+  border-top-right-radius: 8px;
+
+  #floating-building-buttons {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    .mobile_version & {
+      justify-content: flex-start;
+    }
+    z-index: 2;
+    transition: top 0.8s;
+    .building-board-button {
+      margin: 0px 5px;
+      margin-top: -38px;
+      cursor: pointer;
+      transform: translateY(0);
+      transition: transform 0.4s;
+      &:hover {
+        transform: translateY(-10px);
+      }
+    }
+  }
+  &[data-open] #floating-buildings-buttons .building-board-button {
+    margin-top: -30px;
+  }
+
+  #floating-building-slider {
+    width: 100%;
+    height: 100%;
+    margin-top: calc(-1 * var(--cavernaBuildingBoardScale) * 12px);
+    padding-top: calc(var(--cavernaBuildingBoardScale) * 12px);
+    overflow: hidden;
+
+    #floating-building-boards-container {
+      display: flex;
+      .buildings-board {
+        margin: 0;
+        display: none;
+      }
+    }
+  }
+
+  @each $board in $buildingBoards {
+    &[data-open='#{$board}'] {
+      #floating-building-buttons .building-board-button[data-id='#{$board}'] {
+        background: #e6e7e9;
+        transform: translateY(-10px);
+        color: black;
+        &:hover {
+          font-size: 32px;
+        }
+      }
+
+      #floating-building-slider #floating-building-boards-container .buildings-board[data-id='#{$board}'] {
+        display: flex;
+      }
+    }
   }
 }
