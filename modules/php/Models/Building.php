@@ -95,7 +95,7 @@ class Building extends \CAV\Helpers\DB_Model
     if ($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER) {
       return $this->implemented && $this->beginner;
     } else {
-      return $this->implemented && !$this->beginner;
+      return $this->implemented;
     }
   }
 
