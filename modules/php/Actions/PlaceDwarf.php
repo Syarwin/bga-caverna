@@ -5,10 +5,12 @@ use CAV\Managers\Players;
 use CAV\Managers\ActionCards;
 use CAV\Managers\Buildings;
 use CAV\Managers\Meeples;
+use CAV\Managers\Dwarfs;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Core\Globals;
 use CAV\Core\Stats;
+use CAV\Helpers\Utils;
 
 class PlaceDwarf extends \CAV\Models\Action
 {
@@ -51,6 +53,8 @@ class PlaceDwarf extends \CAV\Models\Action
     $dwarf = $this->getCtxArgs()['dwarf'] ?? null;
     if (is_null($dwarf)) {
       $dwarf = reset($possibleWeapons);
+    } else {
+      $dwarf = Dwarfs::get($dwarf);
     }
 
     // TODO: manage ruby possibility to use another dwarf
@@ -58,6 +62,7 @@ class PlaceDwarf extends \CAV\Models\Action
     $args = [
       'dwarf' => $dwarf,
       'possibleWeapons' => $possibleWeapons,
+      'hasRuby' => $player->countReserveResource(RUBY) != 0,
       'allCards' => $cards->getIds(),
       'cards' => $cards
         ->filter(function ($card) use ($player, $dwarf) {
@@ -78,39 +83,63 @@ class PlaceDwarf extends \CAV\Models\Action
    * Place the dwarf on a card/space and activate the corresponding card
    *   to update the flow tree
    */
-  function actPlaceDwarf($cardId)
+  function actPlaceDwarf($cardId, $dwarfId)
   {
     self::checkAction('actPlaceDwarf');
     $player = Players::getActive();
 
-    $args = self::argsPlaceDwarf();
-    $cards = $args['cards'];
-    if (!\in_array($cardId, $cards)) {
-      throw new \BgaUserException(clienttranslate('You cannot place a person here'));
+    if (is_null($dwarfId)) {
+      $args = self::argsPlaceDwarf();
+      $cards = $args['cards'];
+      if (!\in_array($cardId, $cards)) {
+        throw new \BgaUserException(clienttranslate('You cannot place a person here'));
+      }
+
+      $card = ActionCards::get($cardId);
+      $eventData = [
+        'actionCardId' => $card->getId(),
+        'actionCardType' => $card->getActionCardType(),
+      ];
+
+      // Place dwarf
+      $dwarf = $args['dwarf'];
+      $dwarfId = $dwarf['id'];
+      Meeples::moveToCoords($dwarfId, $cardId);
+      Notifications::placeDwarf($player, $dwarfId, $card, $this->ctx->getSource());
+      Stats::incPlacedDwarfs($player);
+
+      // Are there cards triggered by the placement ?
+      $this->checkListeners('PlaceDwarf', $player, $eventData);
+
+      // Activate action card
+      $flow = $card->getTaggedFlow($player, $dwarf);
+      $this->checkModifiers('computePlaceDwarfFlow', $flow, 'flow', $player, $eventData);
+      Engine::insertAsChild($flow);
+
+      $this->checkAfterListeners($player, $eventData, false);
+      $this->resolveAction(['actionCardId' => $cardId, 'dwarfId' => $dwarfId]);
+    } else {
+      // Player wants to place another dwarf
+      $dwarf = Dwarfs::get($dwarfId);
+      if (is_null($dwarf) || $dwarf['pId'] != $player->getId() || $dwarf['location'] != 'board') {
+        throw new \BgaVisibleSystemException('You cannot use this dwarf. Should not happen');
+      }
+
+      Engine::insertAsChild([
+        'type' => NODE_SEQ,
+        'childs' => [
+          [
+            'action' => PAY,
+            'args' => [
+              'costs' => Utils::formatCost([RUBY => 1]),
+              'nb' => 1,
+              'source' => clienttranslate('placing an equipped dwarf early'),
+            ],
+          ],
+          ['action' => \PLACE_DWARF, 'args' => ['dwarf' => $dwarfId]],
+        ],
+      ]);
+      $this->resolveAction(['action' => 'pay1ruby']);
     }
-
-    $card = ActionCards::get($cardId);
-    $eventData = [
-      'actionCardId' => $card->getId(),
-      'actionCardType' => $card->getActionCardType(),
-    ];
-
-    // Place dwarf
-    $dwarf = $args['dwarf'];
-    $dwarfId = $dwarf['id'];
-    Meeples::moveToCoords($dwarfId, $cardId);
-    Notifications::placeDwarf($player, $dwarfId, $card, $this->ctx->getSource());
-    Stats::incPlacedDwarfs($player);
-
-    // Are there cards triggered by the placement ?
-    $this->checkListeners('PlaceDwarf', $player, $eventData);
-
-    // Activate action card
-    $flow = $card->getTaggedFlow($player, $dwarf);
-    $this->checkModifiers('computePlaceDwarfFlow', $flow, 'flow', $player, $eventData);
-    Engine::insertAsChild($flow);
-
-    $this->checkAfterListeners($player, $eventData, false);
-    $this->resolveAction(['actionCardId' => $cardId, 'dwarfId' => $dwarfId]);
   }
 }

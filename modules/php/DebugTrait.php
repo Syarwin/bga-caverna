@@ -62,9 +62,9 @@ trait DebugTrait
     // Engine::resolveAction();
     // Engine::proceed();
 
-    // $this->actTakeAtomicAction([[CATTLE, PIG]]);
-    Globals::setHarvestCost(1);
-    $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
+    $this->actTakeAtomicAction([null, 25]);
+    // Globals::setHarvestCost(1);
+    // $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
   }
 
   public function dd()

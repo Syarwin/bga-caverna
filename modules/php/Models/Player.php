@@ -313,22 +313,6 @@ class Player extends \CAV\Helpers\DB_Model
         'triggers' => null,
       ],
       Utils::formatExchange([CATTLE => [FOOD => 3]]),
-      // Ruby joker
-      Utils::formatExchange([RUBY => [WOOD => 1]]),
-      Utils::formatExchange([RUBY => [STONE => 1]]),
-      Utils::formatExchange([RUBY => [ORE => 1]]),
-      Utils::formatExchange([RUBY => [GRAIN => 1]]),
-      Utils::formatExchange([RUBY => [VEGETABLE => 1]]),
-      Utils::formatExchange([RUBY => [SHEEP => 1]]),
-      Utils::formatExchange([RUBY => [PIG => 1]]),
-      Utils::formatExchange([RUBY => [DOG => 1]]),
-      Utils::formatExchange([RUBY => [DONKEY => 1]]),
-      [
-        'from' => [RUBY => 1, FOOD => 1],
-        'to' => [CATTLE => 1],
-        'triggers' => null,
-      ],
-      Utils::formatExchange([RUBY => [GOLD => 1]]),
     ];
 
     foreach ($this->getPlayedBuildings() as $building) {

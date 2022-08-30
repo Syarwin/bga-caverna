@@ -10,6 +10,7 @@ use CAV\Core\Engine;
 use CAV\Core\Game;
 use CAV\Models\PlayerBoard;
 use CAV\Core\Notifications;
+use CAV\Helpers\Utils;
 
 trait ActionTrait
 {
@@ -36,7 +37,7 @@ trait ActionTrait
     $this->addArgsAnytimeAction($args, $action);
 
     $sourceId = $node->getSourceId() ?? null;
-    if(!isset($args['source']) && !is_null($sourceId)){
+    if (!isset($args['source']) && !is_null($sourceId)) {
       $args['source'] = Buildings::get($sourceId)->getName();
     }
 
@@ -74,6 +75,108 @@ trait ActionTrait
       $listeningCards['childs'][] = ['action' => EXCHANGE, 'pId' => $player->getId(), 'desc' => '<COOK>'];
     }
 
+    if ($player->countReserveResource(RUBY) > 0) {
+      $listeningCards['childs'][] = [
+        'type' => NODE_XOR,
+        'pId' => $player->getId(),
+        'desc' => 'Use 1 <RUBY>',
+        'optional' => true,
+        'childs' => [
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [WOOD => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [STONE => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [ORE => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [GRAIN => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [VEGETABLE => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [SHEEP => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [PIG => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [DOG => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [DONKEY => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1, FOOD => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [\CATTLE => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => GAIN, 'args' => [GOLD => 1]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+              ['action' => PLACE_TILE, 'args' => ['tiles' => [TILE_MEADOW, TILE_FIELD, TILE_TUNNEL]]],
+            ],
+          ],
+          [
+            'type' => NODE_SEQ,
+            'childs' => [
+              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 2]), 'nb' => 1]],
+              ['action' => PLACE_TILE, 'args' => ['tiles' => [TILE_CAVERN]]],
+            ],
+          ],
+        ],
+      ];
+    }
+
     // Keep only doable actions
     $anytimeActions = [];
     foreach ($listeningCards['childs'] as $flow) {
@@ -108,7 +211,6 @@ trait ActionTrait
     if (is_null($choice)) {
       return false;
     }
-
 
     Globals::incAnytimeRecursion();
     $this->actAnytimeAction($choice, true);
@@ -166,7 +268,7 @@ trait ActionTrait
    */
   function stAtomicAction()
   {
-    if($this->takeIndependentMandatoryAnytimeActionIfAny()){
+    if ($this->takeIndependentMandatoryAnytimeActionIfAny()) {
       return;
     }
 
