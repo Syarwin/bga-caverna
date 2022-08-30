@@ -25,7 +25,7 @@ define(['dojo', 'dojo/_base/declare', 'dojo/fx', 'dojox/fx/ext-dojo/complex'], f
 
     closeIcon: 'fa-times-circle', // Set to null if you don't want an icon
     closeIconTpl:
-      '<a href="#" id="popin_${id}_close" class="${class}_closeicon"><i class="fa ${closeIcon} fa-2x" aria-hidden="true"></i></a>',
+      '<a href="#" id="popin_${id}_close" class="${class}_closeicon closeicon"><i class="fa ${closeIcon} fa-2x" aria-hidden="true"></i></a>',
     closeAction: 'destroy', // 'destroy' or 'hide', it's used both for close icon and click on underlay
     closeWhenClickOnUnderlay: true,
 
