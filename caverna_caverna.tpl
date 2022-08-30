@@ -1,6 +1,14 @@
 {OVERALL_GAME_HEADER}
 
-<div id="buildings-test"></div>
+<div id="floating-building-boards-wrapper">
+  <div id="floating-building-buttons"></div>
+  <div id="floating-building-slider">
+    <div id="floating-building-boards-container">
+      <div id="buildings-container"></div>
+    </div>
+  </div>
+</div>
+
 
 
 <div id="position-wrapper">

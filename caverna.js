@@ -150,6 +150,9 @@ define([
         this._cardAnimationSpeed = this.getConfig('cavernaCardAnimationSpeed', 80);
         this._centralBoardScale = this.getConfig('cavernaCentralBoardScale', 100);
         this._playerBoardScale = this.getConfig('cavernaPlayerBoardScale', 100);
+
+        this._floatingContainerOpen = null;
+        this._modalContainerOpen = null;
       },
 
       /**

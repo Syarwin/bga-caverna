@@ -155,6 +155,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           .join('') +
         `
         </div>
+        <div class='harvest-token-container'></div>
       </div>`
       );
     },

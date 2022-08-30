@@ -1,6 +1,6 @@
 :root {
   --cavernaBuildingScale: 0.8;
-
+  --cavernaBuildingBoardScale: 1;
   --cavernaCentralBoardScale: 1;
   --cavernaPlayerBoardScale: 1;
 }
@@ -12,3 +12,5 @@
     box-shadow: none;
   }
 }
+
+$buildingBoards: 'bonus' 'dwellings' 'food' 'materials';
