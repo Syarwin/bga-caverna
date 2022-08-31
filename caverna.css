@@ -250,13 +250,13 @@ html {
   .caverna-building.selectable {
     cursor: pointer; }
     .caverna-building.selectable .building-resizable {
-      border: 2px dashed red; }
+      border: 2px dashed white; }
     .caverna-building.selectable:hover {
       transform: scale(1.05); }
       .caverna-building.selectable:hover .building-resizable {
-        border: 2px solid red; }
+        border: 2px solid white; }
   .caverna-building.selected .building-resizable {
-    border: 2px solid red; }
+    border: 2px solid white; }
   .caverna-building[data-type='BroomChamber'] .building-resizable {
     background-position-x: 0%;
     background-position-y: 0%; }

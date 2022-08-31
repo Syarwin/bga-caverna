@@ -107,7 +107,7 @@ define([
           ['placeDwarf', null],
           ['equipWeapon', null],
           ['upgradeWeapon', 500],
-          ['furnish', 500],
+          ['furnish', null],
           ['placeTile', 500],
           ['revealHarvestToken', 500],
           // UNCHECKED
