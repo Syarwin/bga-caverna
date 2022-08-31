@@ -70,6 +70,9 @@ class PlayerBoard
   {
     $this->player = $player;
     $this->pId = $player->getId();
+    if ($player->hasPlayedBuilding('G_OfficeRoom')) {
+      $this->isExtended = true;
+    }
     $this->fetchDatas();
   }
 

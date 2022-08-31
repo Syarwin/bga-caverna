@@ -19,4 +19,18 @@ class G_OfficeRoom extends \CAV\Models\Building
     $this->cost = [STONE => 1];
     $this->vp = 0;
   }
+
+  public function isListeningTo($event)
+  {
+    return $this->isActionEvent($event, 'PlaceTile');
+  }
+
+  public function onPlayerAfterPlaceTile($player, $event)
+  {
+    foreach ($event['positions'] as $position) {
+      if ($position['x'] == -1 || $position['x'] == 13 || $position['y'] == -1 || $position['y'] == 9) {
+        return $this->gainNode([GOLD => 2]);
+      }
+    }
+  }
 }
