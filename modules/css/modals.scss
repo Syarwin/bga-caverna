@@ -25,11 +25,12 @@
 /**
  * Generic modals
  */
-.caverna_popin {
+.caverna_popin,
+.cavernaBuilding_popin {
   width: 80%;
   position: relative;
 
-  .caverna_popin_closeicon {
+  .closeicon {
     background-color: #60322e;
     border-radius: 50%;
     width: 45px;
@@ -58,7 +59,8 @@
 #popin_showExchanges,
 #popin_showHelpsheet,
 #popin_showSeedPrompt,
-#popin_showTour {
+#popin_showTour,
+.cavernaBuilding_popin {
   z-index: 2000;
   width: 500px;
   display: flex;
@@ -67,7 +69,7 @@
   background-image: url('img/action_frame_bg_alt.jpg');
   background-size: 324px auto;
   background-clip: content-box;
-  padding: 7px 0px;
+  padding: 7px 2px;
   border-radius: 20px;
   position: relative;
   &::before {
@@ -101,7 +103,7 @@
     padding: 7px;
   }
 
-  .caverna_popin_closeicon {
+  .closeicon {
     width: 35px;
     height: 35px;
     top: 15px;
@@ -110,47 +112,36 @@
   }
 }
 
-#popin_showMajors {
-  z-index: 2000;
-  width: calc(1400px * var(--cavernaCardScale));
-  max-width: calc(1400px * var(--cavernaCardScale));
-  min-width: calc(1400px * var(--cavernaCardScale));
-  height: calc(1001px * var(--cavernaCardScale));
-  background-image: url('img/majors_background.jpg');
-  background-size: 100% 100%;
-  border: 1px solid #624603;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px black;
-
-  .caverna_popin_closeicon {
-    right: -1.5%;
-    top: -3%;
+.cavernaBuilding_popin_container {
+  .cavernaBuilding_popin_underlay {
+    background: black !important;
   }
 
-  #popin_showMajors_contents {
-    padding: calc(35px * var(--cavernaCardScale)) 0px;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
+  .cavernaBuilding_popin {
+    width: 600px;
+    --cavernaBuildingScale: 1;
 
-    #majors-container {
-      height: 100%;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      grid-column-gap: 35px;
-      grid-row-gap: 35px;
-    }
+    .building-detail {
+      padding: 0px 15px 10px;
 
-    .major-holder {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .player-card {
-        transition: none;
+      .building-tooltip {
+        .building-holder {
+          margin-right: 15px;
+        }
       }
     }
+
+    .building-details-footer {
+      min-height: 30px;
+      background-color: #e6e6e6d1;
+      border-top: 1px solid #6a4b2f;
+      margin: 0px 5px 4px;
+      border-bottom-left-radius: 13px;
+      border-bottom-right-radius: 13px;
+      text-align: right;
+      padding: 0px 10px;
+    }
+
   }
 }
 

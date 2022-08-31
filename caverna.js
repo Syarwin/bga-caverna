@@ -107,7 +107,7 @@ define([
           ['placeDwarf', null],
           ['equipWeapon', null],
           ['upgradeWeapon', 500],
-          ['furnish', 500],
+          ['furnish', null],
           ['placeTile', 500],
           ['revealHarvestToken', 500],
           // UNCHECKED
@@ -300,6 +300,8 @@ define([
         dojo.query('.player-board-wrapper.current.harvest').removeClass('harvest');
         dojo.query('.phantom').removeClass('.phantom');
         this._isHarvest = false;
+        this._selectableBuildings = [];
+        this._onSelectBuildingCallback = null;
         if (this._exchangeDialog) this._exchangeDialog.hide();
         if (this._showSeedDialog) this._showSeedDialog.destroy();
         this.inherited(arguments);
@@ -495,18 +497,16 @@ define([
 
       onEnteringStateFurnish(args) {
         // TODO : add grey filter on other buildings
-        Object.keys(args.buildings).forEach((buildingId) => {
-          this.onClick(`building-${buildingId}`, () => {
-            this.clientState('furnishSelectZone', _('Click on your player board to place the building'), {
-              buildingId,
-              zones: args.buildings[buildingId],
-            });
+        this.promptBuilding(Object.keys(args.buildings), (buildingId) => {
+          this.clientState('furnishSelectZone', _('Click on your player board to place the building'), {
+            buildingId,
+            zones: args.buildings[buildingId],
           });
         });
       },
 
       onEnteringStateFurnishSelectZone(args) {
-        this.addCancelStateBtn();
+        this.addCancelStateBtn(_('Cancel building choice'));
         $(`building-${args.buildingId}`).classList.add('selected');
         this.promptPlayerBoardZones(args.zones, 1, 1, (zones) => {
           this.takeAtomicAction('actFurnish', [args.buildingId, zones[0]]);

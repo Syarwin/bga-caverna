@@ -1,4 +1,8 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
+  function isVisible(elem) {
+    return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+  }
+
   return declare('caverna.buildings', null, {
     setupBuildings() {
       // Construct buildings boards
@@ -35,12 +39,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         $(`show-building-board-${type}`).addEventListener('click', (evt) => this.goToBuildingBoard(type, evt));
       });
 
-      // Create an overlay for building animations
-      dojo.place("<div id='building-overlay'></div>", 'ebd-body');
-      dojo.connect($('building-overlay'), 'click', () => this.zoomOffBuilding());
-
       //this.setupMajorsImprovements();
       this.updateBuildings();
+      this._selectableBuildings = [];
+      this._onSelectBuildingCallback = null;
     },
 
     goToBuildingBoard(type, evt = null) {
@@ -167,6 +169,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       }
       let oBuilding = this.place('tplBuilding', building, container);
       this.addCustomTooltip(`building-${building.id}`, this.tplBuildingTooltip(building));
+      $(`building-${building.id}`).addEventListener('click', () => this.showBuildingDetails(building));
     },
 
     getBuildingContainer(building) {
@@ -214,25 +217,72 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       `;
     },
 
+    showBuildingDetails(building, notif = null) {
+      let selectable = this._selectableBuildings.includes(building.id);
+
+      let footer = '';
+      if (selectable || notif !== null) {
+        footer = `<div class="building-details-footer" id='building-${building.id}-details-footer'></div>`;
+      }
+      let title =
+        notif == null
+          ? _(building.name)
+          : this.substranslate(_('${player_name} furnishes its cavern with ${building_name}'), {
+              player_name: this.coloredPlayerName(notif.args.player_name),
+              building_name: _(building.name),
+            });
+
+      let dialog = new customgame.modal('buildingDetail' + building.id, {
+        class: 'cavernaBuilding_popin',
+        closeIcon: 'fa-times',
+        autoShow: true,
+        contents: `<div class="building-detail">${this.tplBuildingTooltip(building)}</div>${footer}`,
+        verticalAlign: 'flex-start',
+        scale: 0.8,
+        title: title,
+        breakpoint: 600,
+      });
+
+      if (selectable) {
+        this.addPrimaryActionButton(
+          `btnSelectBuilding${building.id}`,
+          _('Furnish your cavern with this building'),
+          () => {
+            dialog.destroy();
+            this._onSelectBuildingCallback(building.id);
+          },
+          `building-${building.id}-details-footer`,
+        );
+      } else if (notif !== null) {
+        this.addPrimaryActionButton(
+          `btnDoneReadingDetails`,
+          _('Ok'),
+          () => {
+            dialog.destroy();
+
+            let config = {};
+            let o = $(`building-${building.id}`);
+            if (!this.isFastMode() && !isVisible(o)) {
+              config.from = $(`floating-building-buttons`);
+            }
+            this.slide(o, this.getBuildingContainer(building), config).then(() =>
+              this.notifqueue.setSynchronousDuration(10),
+            );
+          },
+          `building-${building.id}-details-footer`,
+        );
+      }
+    },
+
     /**
      * Prompt current player to pick a building
      */
-    promptBuilding(types, buildings, callback) {
+    promptBuilding(buildings, callback) {
       if (this.isFastMode()) return;
 
-      // Majors
-      if (types.includes('major')) {
-        dojo.query('#majors-container .player-building').addClass('unselectable');
-        this.addPrimaryActionButton('btnOpenMajorModal', _('Show major improvements'), () => this.openMajorsModal());
-
-        if (types.length == 1) {
-          // If only major are prompted, auto open modal
-          this.openMajorsModal();
-        }
-      }
-
-      // Add event listener
-      buildings.forEach((buildingId) => this.onClick(buildingId, () => callback(buildingId)));
+      this._selectableBuildings = buildings.map((id) => parseInt(id));
+      this._onSelectBuildingCallback = callback;
+      buildings.forEach((buildingId) => $(`building-${buildingId}`).classList.add('selectable'));
     },
 
     computeSlidingAnimationFrom(building, newContainer) {
@@ -259,81 +309,17 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     notif_furnish(n) {
       debug('Notif: buying a building', n);
       let building = n.args.building;
-      return; // TODO
+      this.loadSaveBuilding(building);
+      this._selectableBuildings = [];
 
-      let duration = 700;
-      let waitingTime = 80000 / this._buildingAnimationSpeed;
-
-      // Create the building if needed, and compute initial location of sliding event
-      let exists = $(building.id);
-      let from = this.computeSlidingAnimationFrom(building, 'buildings-wrapper-' + building.pId);
-
-      // Zoom on it, then zoom off
-      if (this.isFastMode()) {
-        this.notifqueue.setSynchronousDuration(0);
+      if (n.args.player_id == this.player_id) {
+        this.slide(`building-${building.id}`, this.getBuildingContainer(building)).then(() =>
+          this.notifqueue.setSynchronousDuration(10),
+        );
       } else {
-        this.zoomOnBuilding(building.id, { from, duration })
-          .then(() => this.wait(waitingTime))
-          .then(() => this.zoomOffBuilding({ duration }))
-          .then(() => this.notifqueue.setSynchronousDuration(10));
+        this.showBuildingDetails(building, n);
       }
-
-      // Close major modal if open
-      if (this._majorsDialog.isDisplayed()) {
-        this._majorsDialog.hide();
-      }
-
       return null;
-    },
-
-    /**
-     * Zoom on a building
-     */
-    zoomOnBuilding(buildingId, config = {}) {
-      this._zoomedBuilding = buildingId;
-      let originalBuilding = $(buildingId);
-      let animatedBuilding = dojo.clone(originalBuilding);
-      let scale =
-        (parseFloat(this.getScale(originalBuilding.querySelector('.player-building-resizable'))) * 100) /
-        parseInt(this._buildingScale);
-
-      dojo.addClass(originalBuilding, 'phantom'); // Make the original building invisible
-      dojo.attr(animatedBuilding, 'id', buildingId + '_animated'); // Add a prefix to avoid duplicate id
-      dojo.style(animatedBuilding, 'transform', `scale(${scale})`);
-      dojo.empty('building-overlay');
-      dojo.place(animatedBuilding, 'building-overlay');
-
-      // Start animation
-      config.from = config.from || originalBuilding;
-      let anim = this.slide(animatedBuilding, 'building-overlay', config);
-      dojo.addClass('building-overlay', 'active');
-      dojo.style(animatedBuilding, 'transform', `scale(${100 / parseInt(this._buildingScale)})`);
-      dojo.removeClass(animatedBuilding, 'mini');
-      return anim;
-    },
-
-    /**
-     * Zoom off a building
-     */
-    zoomOffBuilding(config = {}) {
-      if (this._zoomedBuilding == null) return;
-
-      let buildingId = this._zoomedBuilding;
-      let originalBuilding = $(buildingId);
-      let animatedBuilding = $(buildingId + '_animated');
-      let scale =
-        (parseFloat(this.getScale(originalBuilding.querySelector('.player-building-resizable'))) * 100) /
-        parseInt(this._buildingScale);
-
-      config.destroy = true;
-      let anim = this.slide(animatedBuilding, buildingId, config).then(() =>
-        dojo.removeClass(originalBuilding, 'phantom'),
-      );
-      dojo.removeClass('building-overlay', 'active');
-      dojo.style(animatedBuilding, 'transform', `scale(${scale})`);
-      dojo.addClass(animatedBuilding, 'mini');
-      this._zoomedBuilding = null;
-      return anim;
     },
   });
 });

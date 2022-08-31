@@ -21,19 +21,19 @@
     cursor: pointer;
 
     .building-resizable {
-      border: 2px dashed red;
+      border: 2px dashed white;
     }
 
     &:hover {
       transform: scale(1.05);
 
       .building-resizable {
-        border: 2px solid red;
+        border: 2px solid white;
       }
     }
   }
   &.selected .building-resizable {
-    border: 2px solid red;
+    border: 2px solid white;
   }
 
   $buildings: 'BroomChamber' 'FodderChamber' 'FoodChamber' 'MainStorage' 'OreStorage' 'PrayerChamber' 'SparePartStorage'

@@ -250,13 +250,13 @@ html {
   .caverna-building.selectable {
     cursor: pointer; }
     .caverna-building.selectable .building-resizable {
-      border: 2px dashed red; }
+      border: 2px dashed white; }
     .caverna-building.selectable:hover {
       transform: scale(1.05); }
       .caverna-building.selectable:hover .building-resizable {
-        border: 2px solid red; }
+        border: 2px solid white; }
   .caverna-building.selected .building-resizable {
-    border: 2px solid red; }
+    border: 2px solid white; }
   .caverna-building[data-type='BroomChamber'] .building-resizable {
     background-position-x: 0%;
     background-position-y: 0%; }
@@ -2046,10 +2046,12 @@ html {
 /**
  * Generic modals
  */
-.caverna_popin {
+.caverna_popin,
+.cavernaBuilding_popin {
   width: 80%;
   position: relative; }
-  .caverna_popin .caverna_popin_closeicon {
+  .caverna_popin .closeicon,
+  .cavernaBuilding_popin .closeicon {
     background-color: #60322e;
     border-radius: 50%;
     width: 45px;
@@ -2062,17 +2064,20 @@ html {
     right: -15px;
     font-size: 100%;
     color: white !important; }
-    .caverna_popin .caverna_popin_closeicon:hover {
+    .caverna_popin .closeicon:hover,
+    .cavernaBuilding_popin .closeicon:hover {
       text-decoration: none;
       color: #ccc !important;
       transform: scale(1.1); }
-    .caverna_popin .caverna_popin_closeicon i {
+    .caverna_popin .closeicon i,
+    .cavernaBuilding_popin .closeicon i {
       margin-top: -2px; }
 
 #popin_showExchanges,
 #popin_showHelpsheet,
 #popin_showSeedPrompt,
-#popin_showTour {
+#popin_showTour,
+.cavernaBuilding_popin {
   z-index: 2000;
   width: 500px;
   display: flex;
@@ -2080,13 +2085,14 @@ html {
   background-image: url("img/action_frame_bg_alt.jpg");
   background-size: 324px auto;
   background-clip: content-box;
-  padding: 7px 0px;
+  padding: 7px 2px;
   border-radius: 20px;
   position: relative; }
   #popin_showExchanges::before,
   #popin_showHelpsheet::before,
   #popin_showSeedPrompt::before,
-  #popin_showTour::before {
+  #popin_showTour::before,
+  .cavernaBuilding_popin::before {
     content: '';
     top: 0;
     bottom: 0;
@@ -2106,7 +2112,8 @@ html {
   #popin_showExchanges h2,
   #popin_showHelpsheet h2,
   #popin_showSeedPrompt h2,
-  #popin_showTour h2 {
+  #popin_showTour h2,
+  .cavernaBuilding_popin h2 {
     background-color: white;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--caverna-font-family);
@@ -2116,48 +2123,35 @@ html {
     text-align: center;
     font-size: 20px;
     padding: 7px; }
-  #popin_showExchanges .caverna_popin_closeicon,
-  #popin_showHelpsheet .caverna_popin_closeicon,
-  #popin_showSeedPrompt .caverna_popin_closeicon,
-  #popin_showTour .caverna_popin_closeicon {
+  #popin_showExchanges .closeicon,
+  #popin_showHelpsheet .closeicon,
+  #popin_showSeedPrompt .closeicon,
+  #popin_showTour .closeicon,
+  .cavernaBuilding_popin .closeicon {
     width: 35px;
     height: 35px;
     top: 15px;
     right: 13px;
     font-size: 0.75em; }
 
-#popin_showMajors {
-  z-index: 2000;
-  width: calc(1400px * var(--cavernaCardScale));
-  max-width: calc(1400px * var(--cavernaCardScale));
-  min-width: calc(1400px * var(--cavernaCardScale));
-  height: calc(1001px * var(--cavernaCardScale));
-  background-image: url("img/majors_background.jpg");
-  background-size: 100% 100%;
-  border: 1px solid #624603;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px black; }
-  #popin_showMajors .caverna_popin_closeicon {
-    right: -1.5%;
-    top: -3%; }
-  #popin_showMajors #popin_showMajors_contents {
-    padding: calc(35px * var(--cavernaCardScale)) 0px;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box; }
-    #popin_showMajors #popin_showMajors_contents #majors-container {
-      height: 100%;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      grid-column-gap: 35px;
-      grid-row-gap: 35px; }
-    #popin_showMajors #popin_showMajors_contents .major-holder {
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-      #popin_showMajors #popin_showMajors_contents .major-holder .player-card {
-        transition: none; }
+.cavernaBuilding_popin_container .cavernaBuilding_popin_underlay {
+  background: black !important; }
+.cavernaBuilding_popin_container .cavernaBuilding_popin {
+  width: 600px;
+  --cavernaBuildingScale: 1; }
+  .cavernaBuilding_popin_container .cavernaBuilding_popin .building-detail {
+    padding: 0px 15px 10px; }
+    .cavernaBuilding_popin_container .cavernaBuilding_popin .building-detail .building-tooltip .building-holder {
+      margin-right: 15px; }
+  .cavernaBuilding_popin_container .cavernaBuilding_popin .building-details-footer {
+    min-height: 30px;
+    background-color: #e6e6e6d1;
+    border-top: 1px solid #6a4b2f;
+    margin: 0px 5px 4px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+    text-align: right;
+    padding: 0px 10px; }
 
 #popin_showExchanges {
   min-height: 300px;
