@@ -83,7 +83,7 @@ class PlaceDwarf extends \CAV\Models\Action
    * Place the dwarf on a card/space and activate the corresponding card
    *   to update the flow tree
    */
-  function actPlaceDwarf($cardId, $dwarfId)
+  function actPlaceDwarf($cardId, $dwarfId = null)
   {
     self::checkAction('actPlaceDwarf');
     $player = Players::getActive();
