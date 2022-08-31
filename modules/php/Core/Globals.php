@@ -98,6 +98,13 @@ class Globals extends \CAV\Helpers\DB_Manager
     self::$data[$name] = $val;
   }
 
+  public static function init()
+  {
+    foreach (self::$variables as $name => $type) {
+      self::create($name);
+    }
+  }
+
   /*
    * Magic method that intercept not defined static method and do the appropriate stuff
    */
@@ -159,6 +166,8 @@ class Globals extends \CAV\Helpers\DB_Manager
    */
   public static function setupNewGame($players, $options)
   {
+    self::init();
+
     self::setSolo(count($players) == 1);
     self::setBeginner($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER);
     self::setLiveScoring($options[OPTION_SCORING] == OPTION_SCORING_ENABLED);
