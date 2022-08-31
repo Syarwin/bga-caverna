@@ -150,9 +150,12 @@ class Stats extends \CAV\Helpers\DB_Manager
           $value = $args[1];
         }
 
-        self::getFilteredQuery($id, $pId)
-          ->update(['stats_value' => $value])
-          ->run();
+        $oldValue = self::getFilteredQuery($id, $pId)->get(true)['value'];
+        if ($oldValue != $value) {
+          self::getFilteredQuery($id, $pId)
+            ->update(['stats_value' => $value])
+            ->run();
+        }
         return $value;
       } elseif ($match[1] == 'inc') {
         $id = null;
