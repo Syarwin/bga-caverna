@@ -288,7 +288,10 @@ class AbstractNode
     $childs = $this->getType() == NODE_SEQ && !empty($this->childs) ? [0 => $this->childs[0]] : $this->childs;
 
     foreach ($childs as $id => $child) {
-      if (!$child->isResolved() && $child->isDoable($player, $ignoreResources)) {
+      if (
+        !$child->isResolved() &&
+        ($child->isDoable($player, $ignoreResources) || ($ignoreResources && $player->hasRuby()))
+      ) {
         $choice = [
           'id' => $id,
           'description' =>

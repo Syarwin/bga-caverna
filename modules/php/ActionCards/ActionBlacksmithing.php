@@ -36,6 +36,7 @@ a Level 3 expedition.'
           ['action' => BLACKSMITH],
           [
             'action' => EXPEDITION,
+            'optional' => true,
             'args' => [
               'lvl' => 3,
             ],

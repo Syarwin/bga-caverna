@@ -208,6 +208,11 @@ class Player extends \CAV\Helpers\DB_Model
     return Meeples::countAllResource($this->id, $type);
   }
 
+  public function hasRuby()
+  {
+    return $this->countReserveResource(RUBY) != 0;
+  }
+
   public function createResourceInReserve($type, $nbr = 1)
   {
     return Meeples::getMany(Meeples::createResourceInReserve($this->id, $type, $nbr))->toArray();
