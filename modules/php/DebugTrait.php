@@ -62,7 +62,8 @@ trait DebugTrait
     // Engine::resolveAction();
     // Engine::proceed();
 
-    $this->actTakeAtomicAction([null, 25]);
+    // $this->actTakeAtomicAction([null, 25]);
+    $this->stInitHarvestFeedingPhase();
     // Globals::setHarvestCost(1);
     // $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
   }

@@ -1,6 +1,9 @@
 <?php
 namespace CAV\Buildings\G;
 
+use CAV\Helpers\Utils;
+use CAV\Core\Globals;
+
 class G_WorkingCave extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -18,5 +21,20 @@ class G_WorkingCave extends \CAV\Models\Building
     $this->cost = [STONE => 1, WOOD => 1];
     $this->vp = 2;
     $this->beginner = true;
+  }
+
+  public function onPlayerComputeHarvestCosts($player, &$costs)
+  {
+    $harvestCost = Globals::getHarvestCost();
+    Utils::addBonusChoices(
+      $costs,
+      [
+        [FOOD => -1 * $harvestCost, STONE => 1],
+        [FOOD => -1 * $harvestCost, WOOD => 1],
+        [FOOD => -1 * $harvestCost, ORE => 2],
+      ],
+      $this->id,
+      true
+    );
   }
 }
