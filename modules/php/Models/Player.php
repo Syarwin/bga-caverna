@@ -150,10 +150,21 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function countDonkeyInMines()
   {
+    $totalDonkeys = 0;
     $mines = $this->board()
       ->getTilesOfType(TILE_ORE_MINE)
       ->merge($this->board()->getTilesOfType(TILE_RUBY_MINE));
-    throw new \feException(print_r($mines));
+    $minesCoords = [];
+    foreach ($mines as $mId => $mine) {
+      $minesCoords[] = ['x' => $mine['x'], 'y' => $mine['y']];
+    }
+    $donkeys = Meeples::getResourceOfType($this->id, DONKEY);
+    foreach ($donkeys as $dId => $donkey) {
+      if (in_array(['x' => $donkey['x'], 'y' => $donkey['y']], $minesCoords)) {
+        $totalDonkeys++;
+      }
+    }
+    return $totalDonkeys;
   }
 
   public function countDwellings()
