@@ -57,6 +57,7 @@
 }
 
 #popin_showExchanges,
+#popin_showExpedition,
 #popin_showHelpsheet,
 #popin_showSeedPrompt,
 #popin_showTour,
@@ -95,7 +96,7 @@
     background-color: white;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--caverna-font-family);
-    margin: 4px 5px;
+    margin: 4px 3px;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
     text-align: center;
@@ -141,7 +142,129 @@
       text-align: right;
       padding: 0px 10px;
     }
+  }
+}
 
+#popin_showExpedition {
+  min-height: 300px;
+  width: 750px;
+
+  #expedition-container {
+    display: flex;
+    margin-bottom: 5px;
+
+    & > div {
+      display: flex;
+      flex-flow: row;
+      flex-wrap: wrap;
+      padding: 0px 12px;
+      &:first-child {
+        flex-basis: 45%;
+        align-self: center;
+
+        div.expedition-lvl {
+          padding: 7px 0px;
+        }
+      }
+      &:last-child {
+        flex-basis: 55%;
+        border-left: 1px solid black;
+      }
+
+      div.expedition-lvl {
+        flex-basis: 100%;
+        padding: 5px 0px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #00000082;
+        &[data-lvl='7'],
+        &[data-lvl='8'],
+        &[data-lvl='14'] {
+          border-bottom: none;
+        }
+
+        &[data-lvl='5'],
+        &[data-lvl='6'],
+        &[data-lvl='7'],
+        &[data-lvl='8'] {
+          flex-basis: 48%;
+        }
+
+        &[data-lvl='6'],
+        &[data-lvl='8'] {
+          padding-left: 4%;
+        }
+
+        div.expedition-lvl-weapon {
+          width: 50px;
+          height: 50px;
+          flex-shrink: 0;
+          background-image: url('img/weapons-flat.jpg');
+          background-size: 700% 200%;
+          border-radius: 50%;
+          box-shadow: 1px 2px 5px -2px black;
+
+          @for $i from 1 through 7 {
+            &[data-force='#{$i}'] {
+              background-position: ($i - 1) * 100% / 6 0%;
+            }
+          }
+          @for $i from 8 through 14 {
+            &[data-force='#{$i}'] {
+              background-position: ($i - 8) * 100% / 6 100%;
+            }
+          }
+        }
+
+        div.expedition-lvl-container {
+          display: flex;
+          flex-wrap: wrap;
+          flex-grow: 1;
+          justify-content: space-between;
+          margin-left: 10px;
+
+          button {
+            width: auto;
+            cursor: default;
+            min-height: 42px;
+            font-size: 15px;
+            flex-basis: 47%;
+            text-overflow: initial;
+            white-space: normal;
+            margin: 5px 0px;
+
+            .meeple-container {
+              font-size: 2.2em;
+            }
+          }
+
+          &#expedition-lvl-5,
+          &#expedition-lvl-6,
+          &#expedition-lvl-7,
+          &#expedition-lvl-8 {
+            button {
+              flex-basis: 100%;
+            }
+          }
+
+          &#expedition-lvl-1 {
+            button:first-of-type {
+              flex-basis: 100%;
+            }
+          }
+
+          &#expedition-lvl-9,
+          &#expedition-lvl-10 {
+            button:first-of-type {
+              flex-basis: 30%;
+            }
+            button:last-of-type {
+              flex-basis: 65%;
+            }
+          }
+        }
+      }
+    }
   }
 }
 

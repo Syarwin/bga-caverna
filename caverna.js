@@ -446,55 +446,6 @@ define([
         }
       },
 
-      onEnteringStateExpedition(args) {
-        let selected = [];
-        let selectLoot = (name) => {
-          if (selected.includes(name) || selected.length == args.n) return;
-          selected.push(name);
-          $(`loot-${name}`).classList.add('disabled');
-          this.addPrimaryActionButton('btnConfirmLoot', _('Confirm'), () => {
-            this.takeAtomicAction('actExpedition', [selected]);
-          });
-
-          this.addSecondaryActionButton('btnClearLoot', _('Clear'), () => {
-            selected = [];
-            dojo.query('#customActions .action-button').removeClass('disabled');
-            dojo.destroy('btnClearLoot');
-            dojo.destroy('btnConfirmLoot');
-          });
-        };
-
-        let addLoot = (force, name, text) => {
-          if (force <= args.max) {
-            this.addPrimaryActionButton(`loot-${name}`, this.formatStringMeeples(text), () => selectLoot(name));
-          }
-        };
-
-        addLoot(1, 'increaseStrength', _('Increase all weapon strength'));
-        addLoot(1, 'dog', '<DOG>');
-        addLoot(1, 'wood', '<WOOD>');
-        addLoot(2, 'sheep', '<SHEEP>');
-        addLoot(2, 'grain', '<GRAIN>');
-        addLoot(3, 'donkey', '<DONKEY>');
-        addLoot(3, 'stone', '<STONE>');
-        addLoot(4, 'vegetable', '<VEGETABLE>');
-        addLoot(4, 'ore', '2<ORE>');
-        addLoot(5, 'pig', '<PIG>');
-        addLoot(6, 'gold', '2 <GOLD>');
-        addLoot(7, 'furnish', _('Furnish'));
-        addLoot(8, 'stable', '<BARN>');
-        addLoot(9, 'tunnel', _('Construct Tunnel'));
-        addLoot(9, 'smallPasture', _('1<WOOD> for small pasture'));
-        addLoot(10, 'cattle', '<CATTLE>');
-        addLoot(10, 'largePasture', _('2<WOOD> for large pasture'));
-        addLoot(11, 'meadow', _('Construct Meadow'));
-        addLoot(11, 'dwelling', _('Furnish dwelling'));
-        addLoot(12, 'field', _('Field'));
-        addLoot(12, 'sow', _('Sow'));
-        addLoot(14, 'cavern', _('Construct Cavern'));
-        addLoot(14, 'breed', _('Breed two types of animals'));
-      },
-
       onEnteringStateFurnish(args) {
         // TODO : add grey filter on other buildings
         this.promptBuilding(Object.keys(args.buildings), (buildingId) => {
@@ -511,6 +462,93 @@ define([
         this.promptPlayerBoardZones(args.zones, 1, 1, (zones) => {
           this.takeAtomicAction('actFurnish', [args.buildingId, zones[0]]);
         });
+      },
+
+      ////////////////////////////////////////////////////////////
+      //  _____                     _ _ _   _
+      // | ____|_  ___ __   ___  __| (_) |_(_) ___  _ __
+      // |  _| \ \/ / '_ \ / _ \/ _` | | __| |/ _ \| '_ \
+      // | |___ >  <| |_) |  __/ (_| | | |_| | (_) | | | |
+      // |_____/_/\_\ .__/ \___|\__,_|_|\__|_|\___/|_| |_|
+      //            |_|
+      ////////////////////////////////////////////////////////////
+
+      onEnteringStateExpedition(args) {
+        if (this._expeditionDialog) {
+          this._expeditionDialog.kill();
+        }
+
+        // Create modal
+        this._expeditionDialog = new customgame.modal('showExpedition', {
+          autoShow: true,
+          class: 'caverna_popin',
+          closeIcon: 'fa-times',
+          title: _('Expedition loot'),
+          closeAction: 'hide',
+          verticalAlign: 'flex-start',
+          contents: `<div id="expedition-container">
+            <div id="expedition-container-left"></div>
+            <div id="expedition-container-right"></div>
+          </div>
+          <div id="expedition-footer"></div>`,
+        });
+
+        for(let i = 1; i <= 14; i++){
+          if(i == 13) continue;
+
+          dojo.place(`<div class='expedition-lvl' data-lvl='${i}'>
+            <div class='expedition-lvl-weapon' data-force='${i}'></div>
+            <div id="expedition-lvl-${i}" class='expedition-lvl-container'></div>
+          </div>`, `expedition-container-${i < 9? 'left' : 'right'}`);
+        }
+
+
+        let addLoot = (force, name, text) => {
+          dojo.place(`<button id='expedition-loot-${name}' class='action-button bgabutton bgabutton_gray'>${this.formatStringMeeples(text)}</button>`, `expedition-lvl-${force}`);
+        };
+
+        addLoot(1, 'increaseStrength', _('Increase all weapon strength'));
+        addLoot(1, 'dog', '<DOG>');
+        addLoot(1, 'wood', '<WOOD>');
+        addLoot(2, 'sheep', '<SHEEP>');
+        addLoot(2, 'grain', '<GRAIN>');
+        addLoot(3, 'donkey', '<DONKEY>');
+        addLoot(3, 'stone', '<STONE>');
+        addLoot(4, 'vegetable', '<VEGETABLE>');
+        addLoot(4, 'ore', '2<ORE>');
+        addLoot(5, 'pig', '<PIG>');
+        addLoot(6, 'gold', '2 <GOLD>');
+        addLoot(7, 'furnish', '<FURNISH>');
+        addLoot(8, 'stable', '<BARN>');
+        addLoot(9, 'tunnel', _('<TUNNEL>'));
+        addLoot(9, 'smallPasture', _('1<WOOD> for <SMALL_PASTURE>'));
+        addLoot(10, 'cattle', '<CATTLE>');
+        addLoot(10, 'largePasture', _('2<WOOD> for <LARGE_PASTURE>'));
+        addLoot(11, 'meadow', _('Place <MEADOW>'));
+        addLoot(11, 'dwelling', _("Furnish dwelling <br/> for 2 <WOOD> 2 <STONE>"));
+        addLoot(12, 'field', _('Place <FIELD>'));
+        addLoot(12, 'sow', _('<SOW>'));
+        addLoot(14, 'cavern', _('Place <CAVERN>'));
+        addLoot(14, 'breed', _('Breed up to two types of animals'));
+
+        //
+        // let selected = [];
+        // let selectLoot = (name) => {
+        //   if (selected.includes(name) || selected.length == args.n) return;
+        //   selected.push(name);
+        //   $(`loot-${name}`).classList.add('disabled');
+        //   this.addPrimaryActionButton('btnConfirmLoot', _('Confirm'), () => {
+        //     this.takeAtomicAction('actExpedition', [selected]);
+        //   });
+        //
+        //   this.addSecondaryActionButton('btnClearLoot', _('Clear'), () => {
+        //     selected = [];
+        //     dojo.query('#customActions .action-button').removeClass('disabled');
+        //     dojo.destroy('btnClearLoot');
+        //     dojo.destroy('btnConfirmLoot');
+        //   });
+        // };
+        //
       },
 
       //////////////////////////////////////////////////////////

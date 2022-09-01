@@ -27,7 +27,7 @@
   }
 
   &.meeple-wood {
-    width: 0.6em;
+    width: 0.58em;
     height: 0.78em;
     background-position: 74.5575% 51.3825%;
     background-size: 853.333%;
@@ -41,7 +41,7 @@
   }
 
   &.meeple-ore {
-    width: 0.91em;
+    width: 0.89em;
     height: 0.7062em;
     background-position: 73.3032% 66.1572%;
     background-size: 731.429%;
@@ -192,12 +192,65 @@
     background-position-x: 100%;
     width: 0.8em;
     height: 1.1em;
+    filter:grayscale(1);
   }
   &.meeple-dwarf_icon {
     background-image: url('img/dwarves.png');
     background-size: 700% 100%;
     width: 1.4483em;
     height: 1.2em;
+  }
+
+  &.meeple-cavern,
+  &.meeple-field,
+  &.meeple-furnish,
+  &.meeple-large_pasture,
+  &.meeple-meadow,
+  &.meeple-small_pasture,
+  &.meeple-sow,
+  &.meeple-tunnel {
+    width: 2.37em;
+    height: 1.82em;
+    background-image: url('img/loot.png');
+  }
+
+  &.meeple-cavern {
+    background-position: 0% 0%;
+    background-size: 432.068%;
+  }
+  &.meeple-field {
+    background-position: 30.1144% 0%;
+    background-size: 432.068%;
+  }
+  &.meeple-furnish {
+    width: 1.78em;
+    height: 1.49em;
+    background-position: 0% 41.6%;
+    background-size: 575.281%;
+  }
+  &.meeple-large_pasture {
+    width: 3.26em;
+    height: 1.76em;
+    background-position: 33.9542% 21.4623%;
+    background-size: 314.11%;
+  }
+  &.meeple-meadow {
+    background-position: 60.2287% 0%;
+    background-size: 432.068%;
+  }
+  &.meeple-small_pasture {
+    background-position: 90.3431% 0%;
+    background-size: 432.068%;
+  }
+  &.meeple-sow {
+    width: 3.42em;
+    height: 1.76em;
+    background-position: 82.5513% 21.4623%;
+    background-size: 299.415%;
+  }
+  &.meeple-tunnel {
+    background-position: 0% 21.6152%;
+    background-size: 432.068%;
   }
 }
 

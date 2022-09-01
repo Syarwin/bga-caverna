@@ -1331,7 +1331,7 @@ html {
     background-position: 17.2414% 0%;
     background-size: 483.019%; }
   .caverna-meeple.meeple-wood {
-    width: 0.6em;
+    width: 0.58em;
     height: 0.78em;
     background-position: 74.5575% 51.3825%;
     background-size: 853.333%; }
@@ -1341,7 +1341,7 @@ html {
     background-position: 17.8571% 51.6204%;
     background-size: 800%; }
   .caverna-meeple.meeple-ore {
-    width: 0.91em;
+    width: 0.89em;
     height: 0.7062em;
     background-position: 73.3032% 66.1572%;
     background-size: 731.429%; }
@@ -1453,12 +1453,47 @@ html {
     background-size: 700% 100%;
     background-position-x: 100%;
     width: 0.8em;
-    height: 1.1em; }
+    height: 1.1em;
+    filter: grayscale(1); }
   .caverna-meeple.meeple-dwarf_icon {
     background-image: url("img/dwarves.png");
     background-size: 700% 100%;
     width: 1.4483em;
     height: 1.2em; }
+  .caverna-meeple.meeple-cavern, .caverna-meeple.meeple-field, .caverna-meeple.meeple-furnish, .caverna-meeple.meeple-large_pasture, .caverna-meeple.meeple-meadow, .caverna-meeple.meeple-small_pasture, .caverna-meeple.meeple-sow, .caverna-meeple.meeple-tunnel {
+    width: 2.37em;
+    height: 1.82em;
+    background-image: url("img/loot.png"); }
+  .caverna-meeple.meeple-cavern {
+    background-position: 0% 0%;
+    background-size: 432.068%; }
+  .caverna-meeple.meeple-field {
+    background-position: 30.1144% 0%;
+    background-size: 432.068%; }
+  .caverna-meeple.meeple-furnish {
+    width: 1.78em;
+    height: 1.49em;
+    background-position: 0% 41.6%;
+    background-size: 575.281%; }
+  .caverna-meeple.meeple-large_pasture {
+    width: 3.26em;
+    height: 1.76em;
+    background-position: 33.9542% 21.4623%;
+    background-size: 314.11%; }
+  .caverna-meeple.meeple-meadow {
+    background-position: 60.2287% 0%;
+    background-size: 432.068%; }
+  .caverna-meeple.meeple-small_pasture {
+    background-position: 90.3431% 0%;
+    background-size: 432.068%; }
+  .caverna-meeple.meeple-sow {
+    width: 3.42em;
+    height: 1.76em;
+    background-position: 82.5513% 21.4623%;
+    background-size: 299.415%; }
+  .caverna-meeple.meeple-tunnel {
+    background-position: 0% 21.6152%;
+    background-size: 432.068%; }
 
 .meeple-dwarf, .meeple-stable {
   width: 35px;
@@ -2087,6 +2122,7 @@ html {
       margin-top: -2px; }
 
 #popin_showExchanges,
+#popin_showExpedition,
 #popin_showHelpsheet,
 #popin_showSeedPrompt,
 #popin_showTour,
@@ -2102,6 +2138,7 @@ html {
   border-radius: 20px;
   position: relative; }
   #popin_showExchanges::before,
+  #popin_showExpedition::before,
   #popin_showHelpsheet::before,
   #popin_showSeedPrompt::before,
   #popin_showTour::before,
@@ -2123,6 +2160,7 @@ html {
     border-radius: 20px;
     pointer-events: none; }
   #popin_showExchanges h2,
+  #popin_showExpedition h2,
   #popin_showHelpsheet h2,
   #popin_showSeedPrompt h2,
   #popin_showTour h2,
@@ -2130,13 +2168,14 @@ html {
     background-color: white;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--caverna-font-family);
-    margin: 4px 5px;
+    margin: 4px 3px;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
     text-align: center;
     font-size: 20px;
     padding: 7px; }
   #popin_showExchanges .closeicon,
+  #popin_showExpedition .closeicon,
   #popin_showHelpsheet .closeicon,
   #popin_showSeedPrompt .closeicon,
   #popin_showTour .closeicon,
@@ -2165,6 +2204,99 @@ html {
     border-bottom-right-radius: 13px;
     text-align: right;
     padding: 0px 10px; }
+
+#popin_showExpedition {
+  min-height: 300px;
+  width: 750px; }
+  #popin_showExpedition #expedition-container {
+    display: flex;
+    margin-bottom: 5px; }
+    #popin_showExpedition #expedition-container > div {
+      display: flex;
+      flex-flow: row;
+      flex-wrap: wrap;
+      padding: 0px 12px; }
+      #popin_showExpedition #expedition-container > div:first-child {
+        flex-basis: 45%;
+        align-self: center; }
+        #popin_showExpedition #expedition-container > div:first-child div.expedition-lvl {
+          padding: 7px 0px; }
+      #popin_showExpedition #expedition-container > div:last-child {
+        flex-basis: 55%;
+        border-left: 1px solid black; }
+      #popin_showExpedition #expedition-container > div div.expedition-lvl {
+        flex-basis: 100%;
+        padding: 5px 0px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #00000082; }
+        #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='7'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='8'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='14'] {
+          border-bottom: none; }
+        #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='5'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='6'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='7'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='8'] {
+          flex-basis: 48%; }
+        #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='6'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='8'] {
+          padding-left: 4%; }
+        #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon {
+          width: 50px;
+          height: 50px;
+          flex-shrink: 0;
+          background-image: url("img/weapons-flat.jpg");
+          background-size: 700% 200%;
+          border-radius: 50%;
+          box-shadow: 1px 2px 5px -2px black; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='1'] {
+            background-position: 0% 0%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='2'] {
+            background-position: 16.6666666667% 0%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='3'] {
+            background-position: 33.3333333333% 0%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='4'] {
+            background-position: 50% 0%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='5'] {
+            background-position: 66.6666666667% 0%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='6'] {
+            background-position: 83.3333333333% 0%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='7'] {
+            background-position: 100% 0%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='8'] {
+            background-position: 0% 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='9'] {
+            background-position: 16.6666666667% 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='10'] {
+            background-position: 33.3333333333% 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='11'] {
+            background-position: 50% 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='12'] {
+            background-position: 66.6666666667% 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='13'] {
+            background-position: 83.3333333333% 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='14'] {
+            background-position: 100% 100%; }
+        #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container {
+          display: flex;
+          flex-wrap: wrap;
+          flex-grow: 1;
+          justify-content: space-between;
+          margin-left: 10px; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button {
+            width: auto;
+            cursor: default;
+            min-height: 42px;
+            font-size: 15px;
+            flex-basis: 47%;
+            text-overflow: initial;
+            white-space: normal;
+            margin: 5px 0px; }
+            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button .meeple-container {
+              font-size: 2.2em; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-5 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-6 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-7 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-8 button {
+            flex-basis: 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-1 button:first-of-type {
+            flex-basis: 100%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-9 button:first-of-type, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-10 button:first-of-type {
+            flex-basis: 30%; }
+          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-9 button:last-of-type, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-10 button:last-of-type {
+            flex-basis: 65%; }
 
 #popin_showExchanges {
   min-height: 300px;
