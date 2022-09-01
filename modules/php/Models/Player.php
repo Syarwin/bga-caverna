@@ -148,6 +148,25 @@ class Player extends \CAV\Helpers\DB_Model
     return count($this->board()->getTilesOfType(TILE_RUBY_MINE));
   }
 
+  public function countDonkeyInMines()
+  {
+    $totalDonkeys = 0;
+    $mines = $this->board()
+      ->getTilesOfType(TILE_ORE_MINE)
+      ->merge($this->board()->getTilesOfType(TILE_RUBY_MINE));
+    $minesCoords = [];
+    foreach ($mines as $mId => $mine) {
+      $minesCoords[] = ['x' => $mine['x'], 'y' => $mine['y']];
+    }
+    $donkeys = Meeples::getResourceOfType($this->id, DONKEY);
+    foreach ($donkeys as $dId => $donkey) {
+      if (in_array(['x' => $donkey['x'], 'y' => $donkey['y']], $minesCoords)) {
+        $totalDonkeys++;
+      }
+    }
+    return $totalDonkeys;
+  }
+
   public function countDwellings()
   {
     $buildings = Buildings::getOfPlayer($this->id);
@@ -539,9 +558,26 @@ class Player extends \CAV\Helpers\DB_Model
     }
   }
 
-  public function getHarvestCost()
+  public function getHarvestFoodCost()
   {
     return $this->countDwarfs(ADULT) * Globals::getHarvestCost() + $this->countDwarfs(CHILD);
+  }
+
+  public function getHarvestCost()
+  {
+    $costs = [
+      'nb' => $this->countDwarfs(),
+      'costs' => [
+        'trades' => [['max' => $this->countDwarfs(ADULT), 'nb' => 1, FOOD => Globals::getHarvestCost()]],
+      ],
+      'source' => clienttranslate('Harvest'),
+      'harvest' => true,
+    ];
+
+    if ($this->countDwarfs(CHILD) != 0) {
+      Utils::addCost($costs, ['max' => $this->countDwarfs(CHILD), 'nb' => 1, FOOD => 1]);
+    }
+    return $costs;
   }
 
   public function breed($animalType = null, $source = null, $breeds = null)

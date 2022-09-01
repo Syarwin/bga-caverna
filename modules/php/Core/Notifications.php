@@ -562,7 +562,7 @@ class Notifications
   {
     $data = [];
     foreach (Players::getAll() as $pId => $player) {
-      $data[$pId] = $player->getHarvestCost();
+      $data[$pId] = $player->getHarvestFoodCost();
     }
 
     self::notifyAll('updateHarvestCosts', '', [

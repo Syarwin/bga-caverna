@@ -202,8 +202,8 @@ html {
   border-radius: 0px 5px 5px 0px; }
 
 [data-tile='tileRubyMine-0'] {
-  background-position-x: 66.6666666667%;
-  background-position-y: 100%;
+  background-position-x: 100%;
+  background-position-y: 66.6666666667%;
   border-radius: 5px; }
 
 [data-tile='tileMeadow-0'] {

@@ -11,11 +11,22 @@ class D_StartDwelling extends \CAV\Models\Building
     $this->dwelling = 2;
     $this->nbInBox = 0;
     $this->animalHolder = 2;
-    $this->desc = [clienttranslate('room for exactly 2 Dwarfs and 1 pair of anima')];
+    $this->desc = [clienttranslate('room for exactly 2 Dwarfs and 1 pair of animals')];
   }
 
   public function isSupported($players, $options)
   {
     return false; // Make sure StartDwelling are not created on building boards
+  }
+
+  public function onPlayerComputeDropZones($player, &$args)
+  {
+    $args['zones'][] = [
+      'type' => 'card',
+      'card_id' => $this->type,
+      'constraints' => [],
+      'capacity' => 2,
+      'locations' => [['type' => 'card', 'card_id' => $this->type]],
+    ];
   }
 }

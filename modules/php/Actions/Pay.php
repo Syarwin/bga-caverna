@@ -105,7 +105,7 @@ class Pay extends \CAV\Models\Action
       if ($this->isHarvest() && $harvestFlag) {
         $this->actPayHarvest();
       } else {
-        throw new \BgaVisibleSystemException("No option to pay");
+        throw new \BgaVisibleSystemException('No option to pay');
       }
     }
   }
@@ -284,14 +284,14 @@ class Pay extends \CAV\Models\Action
   public static function canBuy($player, $costs, $n = 1)
   {
     // Handle major improvements that can be bought with another card
-    if (isset($costs['cards'])) {
-      $playerCards = $player->getCards($costs['cards']['type'])->getIds();
-      foreach ($costs['cards']['list'] as $cardId) {
-        if (in_array($cardId, $playerCards)) {
-          return true;
-        }
-      }
-    }
+    // if (isset($costs['cards'])) {
+    //   $playerCards = $player->getCards($costs['cards']['type'])->getIds();
+    //   foreach ($costs['cards']['list'] as $cardId) {
+    //     if (in_array($cardId, $playerCards)) {
+    //       return true;
+    //     }
+    //   }
+    // }
 
     // Compute all buyable combinations
     // NOTICE : can't use maxBuyableAmount since there can be gaps in buyable amounts !!

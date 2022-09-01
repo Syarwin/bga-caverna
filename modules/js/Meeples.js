@@ -138,7 +138,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           container = this.getSeedContainer({ id: field.getAttribute('data-id') });
         }
 
-        if (['sheep', 'pig', 'cattle'].includes(meeple.type)) {
+        if (['sheep', 'pig', 'cattle', 'donkey', 'dog'].includes(meeple.type)) {
           container = container.querySelector('.animal-holder');
         }
 

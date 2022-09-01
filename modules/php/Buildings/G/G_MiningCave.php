@@ -1,6 +1,8 @@
 <?php
 namespace CAV\Buildings\G;
 
+use CAV\Helpers\Utils;
+
 class G_MiningCave extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -17,5 +19,18 @@ class G_MiningCave extends \CAV\Models\Building
     ];
     $this->cost = [STONE => 2, WOOD => 3];
     $this->vp = 2;
+  }
+
+  public function orderComputeHarvestCosts()
+  {
+    return [['>', 'G_WorkingCave']];
+  }
+
+  public function onPlayerComputeHarvestCosts($player, &$costs)
+  {
+    $donkey = $player->countDonkeyInMines();
+    for ($i = 0; $i < $donkey; $i++) {
+      Utils::addBonus($costs, [FOOD => -1], $this->id);
+    }
   }
 }

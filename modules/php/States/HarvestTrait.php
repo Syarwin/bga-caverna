@@ -105,11 +105,12 @@ trait HarvestTrait
     $reaction = Buildings::getReaction($event, false);
 
     // Exchange node
-    $costs = Utils::formatFee([FOOD => $player->getHarvestCost()]);
+    $costs = $player->getHarvestCost();
+    Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs['costs']);
     if (Actions::isDoable(EXCHANGE, [], $player)) {
       // Do we have to enter pay ?
       $pref = $player->getPref(OPTION_AUTOPAY_HARVEST);
-      $cantPay = !Actions::isDoable(PAY, ['costs' => $costs], $player);
+      $cantPay = !Actions::isDoable(PAY, $costs, $player);
       $hasSpecialExchange = Actions::isDoable(EXCHANGE, ['exclusive' => true], $player);
       if ($pref != OPTION_AUTOPAY_HARVEST_ENABLED || $cantPay || $hasSpecialExchange) {
         $reaction['childs'][] = [
@@ -125,11 +126,7 @@ trait HarvestTrait
       'action' => PAY,
       'pId' => $player->getId(),
       'resolveParent' => true,
-      'args' => [
-        'costs' => $costs,
-        'source' => clienttranslate('Harvest'),
-        'harvest' => true,
-      ],
+      'args' => $costs,
     ];
 
     // Inserting into engine

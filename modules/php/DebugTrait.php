@@ -58,11 +58,14 @@ trait DebugTrait
     // var_dump($engine);
     // $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
 
-    // Engine::insertAsChild(['action' => BREED, 'args' => ['max' => 2]]);
+    // Engine::insertAsChild([
+    //   'action' => PLACE_DWARF,
+    // ]);
     // Engine::resolveAction();
     // Engine::proceed();
 
-    $this->actTakeAtomicAction([null, 25]);
+    // $this->actTakeAtomicAction([null, 25]);
+    $this->stInitHarvestFeedingPhase();
     // Globals::setHarvestCost(1);
     // $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
   }
