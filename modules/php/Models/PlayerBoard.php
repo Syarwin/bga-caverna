@@ -467,18 +467,11 @@ class PlayerBoard
     foreach ($this->getPastures() as $pasture) {
       $zones[] = [
         'type' => 'pasture',
-        'capacity' => 2 ** (count($pasture['stables']) + 1) * count($pasture['nodes']),
+        'capacity' => 2 * count($pasture['stables'] + 1) * count($pasture['nodes']),
         'locations' => $pasture['nodes'],
         'stables' => $pasture['stables'],
       ];
     }
-
-    // // Add the rooms as a single zone
-    // $zones[] = [
-    //   'type' => 'room',
-    //   'capacity' => 1,
-    //   'locations' => array_map(['CAV\Models\PlayerBoard', 'extractPos'], $this->rooms),
-    // ];
 
     // Add the unfenced stables
     $marks = $this->getPasturesMarks();
@@ -487,10 +480,24 @@ class PlayerBoard
         $zones[] = [
           'type' => 'stable',
           'capacity' => 1,
+          'constraints' => isset($this->grid[$stable['x']][$stable['y']]) ? [] : [PIG],
           'locations' => [$this->extractPos($stable)],
         ];
       }
     }
+
+    // mines => donkeys
+    $mines = $this->getTilesOfType(TILE_ORE_MINE)->merge($this->getTilesOfType(TILE_RUBY_MINE));
+    foreach ($mines as $mId => $mine) {
+      $zones[] = [
+        'type' => 'mine',
+        'capacity' => 1,
+        'constraints' => [DONKEY],
+        'locations' => [$this->extractPos($mine)],
+      ];
+    }
+    // TODO: update dogs / Sheep, if so stables are ignored
+    //
 
     // Apply card effects
     $args['zones'] = $zones;
@@ -838,8 +845,25 @@ class PlayerBoard
    */
   protected function computePastures()
   {
-    // TODO
     $this->pastures = [];
+    $tiles = $this->getTilesOfType(\TILE_PASTURE);
+
+    // Small pasture
+    foreach ($tiles as $tId => $tile) {
+      $pasture = [
+        'nodes' => [$this->extractPos($tile)],
+        'type' => 'small',
+        'stables' => [],
+      ];
+      if ($this->containsStable($tile)) {
+        $pasture['stables'] = ['x' => $tile['x'], 'y' => $tile['y']];
+      }
+      $this->pastures[] = $pasture;
+    }
+
+    // TODO : large pasture
+
+    //\TILE_PASTURE && \TILE_LARGE_PASTURE
     // $visited = [];
     // foreach ($this->getAllNodes() as $pos) {
     //   if (isset($visited[$pos['x']][$pos['y']]) || !$this->isFreeOrStable($pos)) {

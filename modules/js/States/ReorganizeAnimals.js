@@ -236,6 +236,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Main state where reorganizing happens
      */
     onEnteringStateReorganize(args) {
+      return;
+      // TODO
       this.enableAnimalControls(args.exchanges);
       this._isHarvest = args.harvest;
       if (args.harvest) {
