@@ -467,7 +467,7 @@ class PlayerBoard
     foreach ($this->getPastures() as $pasture) {
       $zones[] = [
         'type' => 'pasture',
-        'capacity' => 2 * count($pasture['stables'] + 1) * count($pasture['nodes']),
+        'capacity' => 2 * (count($pasture['stables']) + 1) * count($pasture['nodes']),
         'locations' => $pasture['nodes'],
         'stables' => $pasture['stables'],
       ];
@@ -847,81 +847,70 @@ class PlayerBoard
   {
     $this->pastures = [];
     $tiles = $this->getTilesOfType(\TILE_PASTURE);
-
+    $largePastures = [];
+    $found = false;
+    $otherTile = '';
     // Small pasture
     foreach ($tiles as $tId => $tile) {
-      $pasture = [
-        'nodes' => [$this->extractPos($tile)],
-        'type' => 'small',
-        'stables' => [],
-      ];
+      $asset = explode($tile['asset'], '-')[0];
+      if ($asset == \TILE_PASTURE) {
+        $pasture = [
+          'nodes' => [$this->extractPos($tile)],
+          'type' => 'pasture',
+          'stables' => [],
+        ];
+      } else {
+        // Tile Large Pasture
+        $found = false;
+        $rotation = explode('_', $tile['asset'])[1];
+        $tileNum = explode('-', $tile['asset'])[1][0];
+
+        if ($tileNum == 0) {
+          if ($rotation == 0) {
+            $otherTile = $tile['x'] + 2 . '-' . $tile['y'];
+          } elseif ($rotation == 2) {
+            $otherTile = $tile['x'] - 2 . '-' . $tile['y'];
+          } elseif ($rotation == 1) {
+            $otherTile = $tile['x'] . '-' . ($tile['y'] - 2);
+          } else {
+            $otherTile = $tile['x'] . '-' . ($tile['y'] + 2);
+          }
+        } else {
+          if ($rotation == 0) {
+            $otherTile = $tile['x'] - 2 . '-' . $tile['y'];
+          } elseif ($rotation == 2) {
+            $otherTile = $tile['x'] + 2 . '-' . $tile['y'];
+          } elseif ($rotation == 1) {
+            $otherTile = $tile['x'] . '-' . ($tile['y'] + 2);
+          } else {
+            $otherTile = $tile['x'] . '-' . ($tile['y'] - 2);
+          }
+        }
+        if (!isset($largePastures[$otherTile])) {
+          // not found yet, we created a new pasture
+          $pasture = [
+            'nodes' => [$this->extractPos($tile)],
+            'type' => 'pasture',
+            'stables' => [],
+          ];
+        } else {
+          $pasture = $largePastures[$otherTile];
+          $pasture['nodes'][] = $this->extractPos($tile);
+          $found = true;
+        }
+      }
       if ($this->containsStable($tile)) {
         $pasture['stables'] = ['x' => $tile['x'], 'y' => $tile['y']];
       }
-      $this->pastures[] = $pasture;
+      if ($asset == TILE_PASTURE) {
+        $this->pastures[] = $pasture;
+      } elseif ($found === false) {
+        $largePastures[$tile['x'] . '-' . $tile['y']] = $pasture;
+      } else {
+        $largePastures[$otherTile] = $pasture;
+      }
     }
-
-    // TODO : large pasture
-
-    //\TILE_PASTURE && \TILE_LARGE_PASTURE
-    // $visited = [];
-    // foreach ($this->getAllNodes() as $pos) {
-    //   if (isset($visited[$pos['x']][$pos['y']]) || !$this->isFreeOrStable($pos)) {
-    //     continue;
-    //   }
-    //   $fences = $this->getFencesAround($pos);
-    //   if (!isset($fences[W]) || !isset($fences[N])) {
-    //     // The top-left corner of a pasture should have fence on TOP and LEFT
-    //     continue;
-    //   }
-    //
-    //   // Run graph exploration
-    //   $queue = [$pos];
-    //   $visited[$pos['x']][$pos['y']] = true;
-    //   $pasture = [
-    //     'nodes' => [],
-    //     'stables' => [],
-    //   ];
-    //   while (!empty($queue)) {
-    //     $pos = array_pop($queue);
-    //     array_push($pasture['nodes'], $pos);
-    //     if ($this->containsStable($pos)) {
-    //       array_push($pasture['stables'], $pos);
-    //     }
-    //
-    //     foreach ([W, N, E, S] as $i) {
-    //       if ($this->hasFenceInDirection($pos, $i)) {
-    //         continue;
-    //       }
-    //
-    //       $npos = $this->nextNodeInDirection($pos, $i);
-    //       if (!$this->isValid($npos) || isset($visited[$npos['x']][$npos['y']])) {
-    //         continue;
-    //       }
-    //
-    //       $visited[$npos['x']][$npos['y']] = true;
-    //       array_push($queue, $npos);
-    //     }
-    //   }
-    //
-    //   // Check if the pasture is not the outside
-    //   $fenced = true;
-    //   foreach ($pasture['nodes'] as $node) {
-    //     foreach ([W, N, E, S] as $i) {
-    //       if (!$this->hasFenceInDirection($node, $i)) {
-    //         $npos = $this->nextNodeInDirection($node, $i);
-    //         if (!in_array($npos, $pasture['nodes'])) {
-    //           $fenced = false;
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    //
-    //   if ($fenced) {
-    //     array_push($this->pastures, $pasture);
-    //   }
-    // }
+    $this->pastures = array_merge($this->pastures, array_values($largePastures));
   }
 
   /**

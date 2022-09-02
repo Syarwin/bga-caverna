@@ -140,9 +140,9 @@ class Reorganize extends \CAV\Models\Action
     // Sort pastures first, then stables, then rooms
     usort($zones, function ($a, $b) {
       $map = [
-        'D148_special' => 4,
-        'pasture' => 3,
-        'stable' => 2,
+        'pasture' => 4,
+        'stable' => 3,
+        'mine' => 2,
         'card' => 1,
         'room' => 0,
       ];
