@@ -75,108 +75,6 @@ trait ActionTrait
       $listeningCards['childs'][] = ['action' => EXCHANGE, 'pId' => $player->getId(), 'desc' => '<COOK>'];
     }
 
-    if ($player->countReserveResource(RUBY) > 0) {
-      $listeningCards['childs'][] = [
-        'type' => NODE_XOR,
-        'pId' => $player->getId(),
-        'desc' => 'Use 1 <RUBY>',
-        'optional' => true,
-        'childs' => [
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [WOOD => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [STONE => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [ORE => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [GRAIN => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [VEGETABLE => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [SHEEP => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [PIG => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [DOG => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [DONKEY => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1, FOOD => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [\CATTLE => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => GAIN, 'args' => [GOLD => 1]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
-              ['action' => PLACE_TILE, 'args' => ['tiles' => [TILE_MEADOW, TILE_FIELD, TILE_TUNNEL]]],
-            ],
-          ],
-          [
-            'type' => NODE_SEQ,
-            'childs' => [
-              ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 2]), 'nb' => 1]],
-              ['action' => PLACE_TILE, 'args' => ['tiles' => [TILE_CAVERN]]],
-            ],
-          ],
-        ],
-      ];
-    }
-
     // Keep only doable actions
     $anytimeActions = [];
     foreach ($listeningCards['childs'] as $flow) {
@@ -274,5 +172,121 @@ trait ActionTrait
 
     $action = $this->getCurrentAtomicAction();
     Actions::stAction($action, Engine::getNextUnresolved());
+  }
+
+  /***
+   * Ruby management
+   */
+  function actUseRuby($power)
+  {
+    self::checkAction('actUseRuby');
+
+    $player = Players::getCurrent();
+    if ($player->countReserveResource(RUBY) == 0) {
+      throw new \BgaUserException(clienttranslate('You do not have a ruby to convert'));
+    }
+
+    $powers = [
+      WOOD => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          [
+            'action' => PAY,
+            'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1, 'source' => clienttranslate('conversion')],
+          ],
+          ['action' => GAIN, 'args' => [WOOD => 1]],
+        ],
+      ],
+      STONE => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [STONE => 1]],
+        ],
+      ],
+      ORE => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [ORE => 1]],
+        ],
+      ],
+      GRAIN => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [GRAIN => 1]],
+        ],
+      ],
+      VEGETABLE => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [VEGETABLE => 1]],
+        ],
+      ],
+      SHEEP => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [SHEEP => 1]],
+        ],
+      ],
+      PIG => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [PIG => 1]],
+        ],
+      ],
+      DOG => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [DOG => 1]],
+        ],
+      ],
+      DONKEY => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [DONKEY => 1]],
+        ],
+      ],
+      CATTLE => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1, FOOD => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [\CATTLE => 1]],
+        ],
+      ],
+      GOLD => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => GAIN, 'args' => [GOLD => 1]],
+        ],
+      ],
+      PLACE_TILE => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 1]), 'nb' => 1]],
+          ['action' => PLACE_TILE, 'args' => ['tiles' => [TILE_MEADOW, TILE_FIELD, TILE_TUNNEL]]],
+        ],
+      ],
+      'place_cavern' => [
+        'type' => NODE_SEQ,
+        'childs' => [
+          ['action' => PAY, 'args' => ['costs' => Utils::formatCost([RUBY => 2]), 'nb' => 1]],
+          ['action' => PLACE_TILE, 'args' => ['tiles' => [TILE_CAVERN]]],
+        ],
+      ],
+    ];
+    if (!isset($powers[$power])) {
+      throw new \BgaVisibleSystemException('Power not defined. Should not happen');
+    }
+
+    Engine::insertAtRoot($powers[$power], false);
+    Engine::proceed();
   }
 }

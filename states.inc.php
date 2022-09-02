@@ -71,7 +71,7 @@ $machinestates = [
     'type' => 'activeplayer',
     'args' => 'argsConfirmTurn',
     'action' => 'stConfirmTurn',
-    'possibleactions' => ['actConfirmTurn', 'actRestart'],
+    'possibleactions' => ['actConfirmTurn', 'actRestart', 'actUseRuby'],
   ],
 
   ST_CONFIRM_PARTIAL_TURN => [
@@ -83,7 +83,7 @@ $machinestates = [
     'type' => 'activeplayer',
     'args' => 'argsConfirmTurn',
     // 'action' => 'stConfirmPartialTurn',
-    'possibleactions' => ['actConfirmPartialTurn', 'actRestart'],
+    'possibleactions' => ['actConfirmPartialTurn', 'actRestart', 'actUseRuby'],
   ],
 
   ST_RESOLVE_CHOICE => [
@@ -93,7 +93,7 @@ $machinestates = [
     'type' => 'activeplayer',
     'args' => 'argsResolveChoice',
     'action' => 'stResolveChoice',
-    'possibleactions' => ['actChooseAction', 'actRestart'],
+    'possibleactions' => ['actChooseAction', 'actRestart', 'actUseRuby'],
     'transitions' => [],
   ],
 
@@ -137,7 +137,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'type' => 'activeplayer',
     'action' => 'stAtomicAction',
-    'possibleactions' => ['actPlaceDwarf', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actPlaceDwarf', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
     'transitions' => [],
   ],
 
@@ -178,7 +178,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actBlacksmith', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actBlacksmith', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_BREED => [
@@ -190,7 +190,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actBreed', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actBreed', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_EXPEDITION => [
@@ -200,7 +200,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actExpedition', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actExpedition', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_WEAPON_INCREASE => [
@@ -209,7 +209,7 @@ $machinestates = [
     'descriptionmyturn' => clienttranslate('${you} increases the weapons of all armed dwarf of 1'),
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actWeaponIncrease', 'actRestart'],
+    'possibleactions' => ['actWeaponIncrease', 'actRestart', 'actUseRuby'],
   ],
 
   ST_PAY => [
@@ -221,7 +221,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actPay', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actPay', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_FIRSTPLAYER => [
@@ -240,7 +240,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actPlaceTile', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actPlaceTile', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_FURNISH => [
@@ -252,7 +252,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actFurnish', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actFurnish', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_IMITATION => [
@@ -262,7 +262,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actImitate', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actImitate', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_SOW => [
@@ -274,7 +274,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actSow', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actSow', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_STABLE => [
@@ -289,7 +289,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'action' => 'stAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actStables', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actStables', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_REORGANIZE => [
@@ -301,7 +301,7 @@ $machinestates = [
     'action' => 'stAtomicAction',
     'args' => 'argsAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actReorganize', 'actRestart'],
+    'possibleactions' => ['actReorganize', 'actRestart', 'actUseRuby'],
   ],
 
   ST_WISHCHILDREN => [
@@ -327,7 +327,7 @@ $machinestates = [
     'args' => 'argsAtomicAction',
     'type' => 'activeplayer',
     'action' => 'stAtomicAction',
-    'possibleactions' => ['actExchange', 'actPassOptionalAction', 'actRestart'],
+    'possibleactions' => ['actExchange', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_ACTIVATE_BUILDING => [
@@ -345,7 +345,7 @@ $machinestates = [
     'action' => 'stAtomicAction',
     'args' => 'argsAtomicAction',
     'type' => 'activeplayer',
-    'possibleactions' => ['actPassOptionalAction', 'actRestart', 'actA112', 'actA71', 'actC104', 'actD132'],
+    'possibleactions' => ['actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
   ST_END_WORK_PHASE => [
