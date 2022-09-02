@@ -77,7 +77,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
       dojo.place("<div id='customActions' style='display:inline-block'></div>", $('generalactions'), 'after');
 
       this.setupNotifications();
-      this.initPreferencesObserver();
+      this.initPreferences();
       if (!this.isReadOnly()) {
         this.checkPreferencesConsistency(gamedatas.prefs);
       }
@@ -384,9 +384,14 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
         var pref = match[1];
         var newValue = e.target.value;
         this.prefs[pref].value = newValue;
-        $('preference_control_' + pref).value = newValue;
-        $('preference_fontrol_' + pref).value = newValue;
+        if (this.prefs[pref].attribute) {
+          $('ebd-body').setAttribute('data-' + this.prefs[pref].attribute, newValue);
+        }
 
+        $('preference_control_' + pref).value = newValue;
+        if ($('preference_fontrol_' + pref)) {
+          $('preference_fontrol_' + pref).value = newValue;
+        }
         data = { pref: pref, lock: false, value: newValue, player: this.player_id };
         this.takeAction('actChangePref', data, false, false);
         this.onPreferenceChange(pref, newValue);
@@ -404,6 +409,231 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
     },
 
     onPreferenceChange(pref, newValue) {},
+
+    // Init preferences will setup local preference and put the corresponding data-attribute on overall-content div if needed
+    initPreferences() {
+      // Attach data attribute on overall-content div
+      Object.keys(this.prefs).forEach((prefId) => {
+        let pref = this.prefs[prefId];
+        if (pref.attribute) {
+          $('ebd-body').setAttribute('data-' + pref.attribute, pref.value);
+        }
+      });
+
+      if (!this.isReadOnly() && this.gamedatas.localPrefs) {
+        // Create local prefs
+        Object.keys(this.gamedatas.localPrefs).forEach((prefId) => {
+          let pref = this.gamedatas.localPrefs[prefId];
+          pref.id = prefId;
+          let selectedValue = this.gamedatas.prefs.find((pref2) => pref2.pref_id == pref.id).pref_value;
+          pref.value = selectedValue;
+          this.prefs[prefId] = pref;
+          if (pref.attribute) {
+            $('ebd-body').setAttribute('data-' + pref.attribute, selectedValue);
+          }
+          this.place('tplPreferenceSelect', pref, 'local-prefs-container');
+        });
+      }
+
+      this.initPreferencesObserver();
+      if (!this.isReadOnly()) {
+        this.checkPreferencesConsistency(this.gamedatas.prefs);
+      }
+
+      this.setupSettings();
+    },
+
+    tplPreferenceSelect(pref) {
+      let values = Object.keys(pref.values)
+        .map(
+          (val) =>
+            `<option value='${val}' ${pref.value == val ? 'selected="selected"' : ''}>${_(
+              pref.values[val].name,
+            )}</option>`,
+        )
+        .join('');
+
+      return `
+        <div class="preference_choice">
+          <div class="row-data row-data-large">
+            <div class="row-label">${_(pref.name)}</div>
+            <div class="row-value">
+              <select id="preference_control_${
+                pref.id
+              }" class="preference_control game_local_preference_control" style="display: block;">
+                ${values}
+              </select>
+            </div>
+          </div>
+        </div>
+      `;
+    },
+
+    onPreferenceChange(pref, newValue) {},
+
+    /************************
+     ******* SETTINGS ********
+     ************************/
+    setupSettings() {
+      dojo.connect($('show-settings'), 'onclick', () => this.toggleSettings());
+      this.addTooltip('show-settings', '', _('Display some settings about the game.'));
+      let container = $('settings-controls-container');
+
+      if (this._settingsSections) {
+        dojo.place(`<div id='settings-controls-header'></div><div id='settings-controls-wrapper'></div>`, container);
+        Object.keys(this._settingsSections).forEach((sectionName, i) => {
+          dojo.place(
+            `<div id='settings-section-${sectionName}' class='settings-section'></div>`,
+            'settings-controls-wrapper',
+          );
+          let div = dojo.place(`<div>${this._settingsSections[sectionName]}</div>`, 'settings-controls-header');
+          let openSection = () => {
+            dojo.query('#settings-controls-header div').removeClass('open');
+            div.classList.add('open');
+            dojo.query('#settings-controls-wrapper div.settings-section').removeClass('open');
+            $(`settings-section-${sectionName}`).classList.add('open');
+          };
+          div.addEventListener('click', openSection);
+          if (i == 0) {
+            openSection();
+          }
+        });
+      }
+
+      this.settings = {};
+      Object.keys(this._settingsConfig).forEach((settingName) => {
+        let config = this._settingsConfig[settingName];
+        let localContainer = container;
+        if (config.section) {
+          localContainer = $(`settings-section-${config.section}`);
+        }
+
+        if (config.type == 'pref') {
+          if (config.local == true && this.isReadOnly()) {
+            return;
+          }
+          // Pref type => just move the user pref around
+          dojo.place($('preference_control_' + config.prefId).parentNode.parentNode, localContainer);
+          return;
+        }
+
+        let suffix = settingName.charAt(0).toUpperCase() + settingName.slice(1);
+        let value = this.getConfig(this.game_name + suffix, config.default);
+        this.settings[settingName] = value;
+
+        // Slider type => create DOM and initialize noUiSlider
+        if (config.type == 'slider') {
+          this.place('tplSettingSlider', { desc: config.name, id: settingName }, localContainer);
+          config.sliderConfig.start = [value];
+          noUiSlider.create($('setting-' + settingName), config.sliderConfig);
+          $('setting-' + settingName).noUiSlider.on('slide', (arg) =>
+            this.changeSetting(settingName, parseInt(arg[0])),
+          );
+        } else if (config.type == 'multislider') {
+          this.place('tplSettingSlider', { desc: config.name, id: settingName }, localContainer);
+          config.sliderConfig.start = value;
+          noUiSlider.create($('setting-' + settingName), config.sliderConfig);
+          $('setting-' + settingName).noUiSlider.on('slide', (arg) => this.changeSetting(settingName, arg));
+        }
+
+        // Select type => create a select
+        else if (config.type == 'select') {
+          config.id = settingName;
+          this.place('tplSettingSelect', config, localContainer);
+          $('setting-' + settingName).addEventListener('change', () => {
+            let newValue = $('setting-' + settingName).value;
+            this.changeSetting(settingName, newValue);
+            if (config.attribute) {
+              $('ebd-body').setAttribute('data-' + config.attribute, newValue);
+            }
+          });
+        }
+        // Switch type => create a select
+        else if (config.type == 'switch') {
+          config.id = settingName;
+          this.place('tplSettingSwitch', config, localContainer);
+          $('setting-' + settingName).addEventListener('change', () => {
+            let newValue = $('setting-' + settingName).checked ? 1 : 0;
+            this.changeSetting(settingName, newValue);
+            if (config.attribute) {
+              $('ebd-body').setAttribute('data-' + config.attribute, newValue);
+            }
+          });
+        }
+
+        if (config.attribute) {
+          $('ebd-body').setAttribute('data-' + config.attribute, value);
+        }
+        this.changeSetting(settingName, value);
+      });
+    },
+
+    changeSetting(settingName, value) {
+      let suffix = settingName.charAt(0).toUpperCase() + settingName.slice(1);
+      this.settings[settingName] = value;
+      localStorage.setItem(this.game_name + suffix, value);
+      let methodName = 'onChange' + suffix + 'Setting';
+      if (this[methodName]) {
+        this[methodName](value);
+      }
+    },
+
+    tplSettingSlider(setting) {
+      return `
+      <div class='row-data row-data-large' data-id='${setting.id}'>
+        <div class='row-label'>${setting.desc}</div>
+        <div class='row-value slider'>
+          <div id="setting-${setting.id}"></div>
+        </div>
+      </div>
+      `;
+    },
+
+    tplSettingSwitch(setting) {
+      return `
+      <div class='row-data row-data-large row-data-switch' data-id='${setting.id}'>
+        <div class='row-label'>${_(setting.name)}</div>
+        <div class='row-value'>
+          <label class="switch" for="setting-${setting.id}">
+            <input type="checkbox" id="setting-${setting.id}" ${
+        this.settings[setting.id] == 1 ? 'checked="checked"' : ''
+      } />
+            <div class="slider round"></div>
+          </label>
+        </div>
+      </div>
+      `;
+    },
+
+    tplSettingSelect(setting) {
+      let values = Object.keys(setting.values)
+        .map(
+          (val) =>
+            `<option value='${val}' ${this.settings[setting.id] == val ? 'selected="selected"' : ''}>${_(
+              setting.values[val],
+            )}</option>`,
+        )
+        .join('');
+
+      return `
+        <div class="preference_choice" data-id='${setting.id}'>
+          <div class="row-data row-data-large">
+            <div class="row-label">${_(setting.name)}</div>
+            <div class="row-value">
+              <select id="setting-${
+                setting.id
+              }" class="preference_control game_local_preference_control" style="display: block;">
+                ${values}
+              </select>
+            </div>
+          </div>
+        </div>
+      `;
+    },
+
+    toggleSettings() {
+      this._settingsModal.show();
+    },
 
     getScale(id) {
       let transform = dojo.style(id, 'transform');

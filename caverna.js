@@ -96,6 +96,7 @@ define([
           'renovation',
         ];
         this._notifications = [
+          ['startNewRound', 1],
           ['updateScores', 1],
           ['clearTurn', 1],
           ['refreshUI', 1],
@@ -140,19 +141,52 @@ define([
           ['updateHarvestCosts', 1],
         ];
 
-        this._canReorganize = false;
-        this._buildingStorage = {};
-
         // Fix mobile viewport (remove CSS zoom)
         this.default_viewport = 'width=1000';
 
-        this._cardScale = this.getConfig('cavernaCardScale', 80);
-        this._cardAnimationSpeed = this.getConfig('cavernaCardAnimationSpeed', 80);
-        this._centralBoardScale = this.getConfig('cavernaCentralBoardScale', 100);
-        this._playerBoardScale = this.getConfig('cavernaPlayerBoardScale', 100);
+        this._canReorganize = false;
+        this._buildingStorage = {};
 
         this._floatingContainerOpen = null;
         this._modalContainerOpen = null;
+
+        this._settingsConfig = {
+          actionBoardBackground: {
+            default: 0,
+            name: _('Action Board Background'),
+            attribute: 'action-background',
+            type: 'select',
+            values: {
+              0: _('Image'),
+              1: _('Plain with distinct color'),
+              2: _('Plain with same color'),
+            },
+          },
+          actionBoardName: {
+            default: 0,
+            name: _('Action Board Names'),
+            attribute: 'action-name',
+            type: 'select',
+            values: {
+              0: _('Display'),
+              1: _('Hide'),
+              2: _('Hide and collapse borders'),
+              3: _('Hide and blend boards with background'),
+            },
+          },
+          actionBoardCostIcon: {
+            default: 0,
+            name: _('Costly Action Board Slots'),
+            attribute: 'cost-icon',
+            type: 'select',
+            values: {
+              0: _('Display credit cost'),
+              1: _('Hide'),
+            },
+          },
+          confirmMode: { type: 'pref', prefId: 103},
+        }
+
       },
 
       /**
@@ -195,7 +229,6 @@ define([
         this.setupBuildings();
         this.setupMeeples();
         // this.setupAnimalsDropZones();
-        this.updatePrefs();
         // this.setCardScale(this._cardScale);
         // this.setCardAnimationSpeed(this._cardAnimationSpeed);
         // this.setCentralBoardScale(this._centralBoardScale);
@@ -203,6 +236,10 @@ define([
         // if (gamedatas.seed != false) this.showSeed(gamedatas.seed);
 
         this.inherited(arguments);
+
+        // Create round counter
+        this._roundCounter = this.createCounter('round-counter');
+        this.updateRoundCounter();
       },
 
       onLoadingComplete() {
@@ -215,23 +252,6 @@ define([
         // }
 
         this.inherited(arguments);
-      },
-
-      onPreferenceChange(pref, value) {
-        this.updatePrefs();
-        if (pref == PLAYER_BOARDS || pref == HAND_CARDS) {
-          this.updateHandContainer();
-          this.onScreenWidthChange();
-        }
-        if (pref == PLAYER_RESOURCES) {
-          this.updateResourceBarsPositions();
-        }
-      },
-
-      updatePrefs() {
-        dojo.toggleClass('ebd-body', 'colorblind', this.prefs[COLORBLIND].value == 1);
-        dojo.toggleClass('ebd-body', 'disable-dominican', this.prefs[FONT_DOMINICAN].value == 1);
-        this.onScreenWidthChange();
       },
 
       onScreenWidthChange() {
@@ -248,6 +268,19 @@ define([
         //   dojo.toggleClass('player-boards', 'player-boards-right', playerBoardSize < gamePlaySize);
         // }
       },
+
+      updateRoundCounter() {
+        let val = Math.min(5, this.gamedatas.round);
+        this._roundCounter.toValue(val);
+        $('ebd-body').dataset.round = val;
+      },
+
+      notif_startNewRound(n) {
+        debug('Notif: starting new round', n);
+        this.gamedatas.round = n.args.round;
+        this.updateRoundCounter();
+      },
+
 
       notif_clearTurn(n) {
         debug('Notif: restarting turn', n);
@@ -961,150 +994,153 @@ define([
       /************************
        ******* SETTINGS ********
        ************************/
-      setupInfoPanel() {
-        dojo.place(
-          this.format_string(jstpl_configPlayerBoard, {
-            centralBoardSize: _('Size of central board(s)'),
-            playerBoardSize: _('Size of player board(s)'),
-            cardSize: _('Size of cards'),
-            playCard: _('Speed of animation when a card is played'),
-          }),
-          'player_boards',
-          'first',
-        );
-        dojo.connect($('show-settings'), 'onclick', () => this.toggleSettings());
-        this.addTooltip('show-settings', '', _('Display some settings about the game.'));
+       setupInfoPanel() {
+         dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
 
-        let chk = $('help-mode-chk');
-        dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
-        this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode.'));
-        this.setupSettings();
-        this.setupHelper();
-        this.setupTour();
-      },
+         let chk = $('help-mode-chk');
+         dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
+         this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode.'));
+
+         this.onClick('show-expedition', () => this._expeditionDialog.show(), false);
+         this.addTooltip('show-expedition', '', _('Show expedition help sheet'));
+
+         this._settingsModal = new customgame.modal('showSettings', {
+           class: 'barrage_popin',
+           closeIcon: 'fa-times',
+           title: _('Settings'),
+           closeAction: 'hide',
+           verticalAlign: 'flex-start',
+           contentsTpl: `<div id='barrage-settings'>
+             <div id='barrage-settings-header'></div>
+             <div id="settings-controls-container"></div>
+           </div>`,
+         });
+       },
+
+       tplConfigPlayerBoard() {
+         let nPlayers = Object.keys(this.gamedatas.players).length;
+
+         return `
+   <div class='player-board' id="player_board_config">
+     <div id="player_config" class="player_board_content">
+
+       <div class="player_config_row" id="round-counter-wrapper">
+         ${_('Round')} <span id='round-counter'></span> / ${nPlayers <= 2? 11 : 12}
+       </div>
+       <div class="player_config_row">
+         <div id="uwe-help"></div>
+
+         <div id="help-mode-switch">
+           <input type="checkbox" class="checkbox" id="help-mode-chk" />
+           <label class="label" for="help-mode-chk">
+             <div class="ball"></div>
+           </label>
+
+           <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="question-circle" class="svg-inline--fa fa-question-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 422a46 46 0 1 1 46-46 46.05 46.05 0 0 1-46 46zm40-131.33V300a12 12 0 0 1-12 12h-56a12 12 0 0 1-12-12v-4c0-41.06 31.13-57.47 54.65-70.66 20.17-11.31 32.54-19 32.54-34 0-19.82-25.27-33-45.7-33-27.19 0-39.44 13.14-57.3 35.79a12 12 0 0 1-16.67 2.13L148.82 170a12 12 0 0 1-2.71-16.26C173.4 113 208.16 90 262.66 90c56.34 0 116.53 44 116.53 102 0 77-83.19 78.21-83.19 106.67z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 338a46 46 0 1 0 46 46 46 46 0 0 0-46-46zm6.66-248c-54.5 0-89.26 23-116.55 63.76a12 12 0 0 0 2.71 16.24l34.7 26.31a12 12 0 0 0 16.67-2.13c17.86-22.65 30.11-35.79 57.3-35.79 20.43 0 45.7 13.14 45.7 33 0 15-12.37 22.66-32.54 34C247.13 238.53 216 254.94 216 296v4a12 12 0 0 0 12 12h56a12 12 0 0 0 12-12v-1.33c0-28.46 83.19-29.67 83.19-106.67 0-58-60.19-102-116.53-102z"></path></g></svg>
+         </div>
+
+         <div id="show-settings">
+           <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+             <g>
+               <path class="fa-secondary" fill="currentColor" d="M638.41 387a12.34 12.34 0 0 0-12.2-10.3h-16.5a86.33 86.33 0 0 0-15.9-27.4L602 335a12.42 12.42 0 0 0-2.8-15.7 110.5 110.5 0 0 0-32.1-18.6 12.36 12.36 0 0 0-15.1 5.4l-8.2 14.3a88.86 88.86 0 0 0-31.7 0l-8.2-14.3a12.36 12.36 0 0 0-15.1-5.4 111.83 111.83 0 0 0-32.1 18.6 12.3 12.3 0 0 0-2.8 15.7l8.2 14.3a86.33 86.33 0 0 0-15.9 27.4h-16.5a12.43 12.43 0 0 0-12.2 10.4 112.66 112.66 0 0 0 0 37.1 12.34 12.34 0 0 0 12.2 10.3h16.5a86.33 86.33 0 0 0 15.9 27.4l-8.2 14.3a12.42 12.42 0 0 0 2.8 15.7 110.5 110.5 0 0 0 32.1 18.6 12.36 12.36 0 0 0 15.1-5.4l8.2-14.3a88.86 88.86 0 0 0 31.7 0l8.2 14.3a12.36 12.36 0 0 0 15.1 5.4 111.83 111.83 0 0 0 32.1-18.6 12.3 12.3 0 0 0 2.8-15.7l-8.2-14.3a86.33 86.33 0 0 0 15.9-27.4h16.5a12.43 12.43 0 0 0 12.2-10.4 112.66 112.66 0 0 0 .01-37.1zm-136.8 44.9c-29.6-38.5 14.3-82.4 52.8-52.8 29.59 38.49-14.3 82.39-52.8 52.79zm136.8-343.8a12.34 12.34 0 0 0-12.2-10.3h-16.5a86.33 86.33 0 0 0-15.9-27.4l8.2-14.3a12.42 12.42 0 0 0-2.8-15.7 110.5 110.5 0 0 0-32.1-18.6A12.36 12.36 0 0 0 552 7.19l-8.2 14.3a88.86 88.86 0 0 0-31.7 0l-8.2-14.3a12.36 12.36 0 0 0-15.1-5.4 111.83 111.83 0 0 0-32.1 18.6 12.3 12.3 0 0 0-2.8 15.7l8.2 14.3a86.33 86.33 0 0 0-15.9 27.4h-16.5a12.43 12.43 0 0 0-12.2 10.4 112.66 112.66 0 0 0 0 37.1 12.34 12.34 0 0 0 12.2 10.3h16.5a86.33 86.33 0 0 0 15.9 27.4l-8.2 14.3a12.42 12.42 0 0 0 2.8 15.7 110.5 110.5 0 0 0 32.1 18.6 12.36 12.36 0 0 0 15.1-5.4l8.2-14.3a88.86 88.86 0 0 0 31.7 0l8.2 14.3a12.36 12.36 0 0 0 15.1 5.4 111.83 111.83 0 0 0 32.1-18.6 12.3 12.3 0 0 0 2.8-15.7l-8.2-14.3a86.33 86.33 0 0 0 15.9-27.4h16.5a12.43 12.43 0 0 0 12.2-10.4 112.66 112.66 0 0 0 .01-37.1zm-136.8 45c-29.6-38.5 14.3-82.5 52.8-52.8 29.59 38.49-14.3 82.39-52.8 52.79z" opacity="0.4"></path>
+               <path class="fa-primary" fill="currentColor" d="M420 303.79L386.31 287a173.78 173.78 0 0 0 0-63.5l33.7-16.8c10.1-5.9 14-18.2 10-29.1-8.9-24.2-25.9-46.4-42.1-65.8a23.93 23.93 0 0 0-30.3-5.3l-29.1 16.8a173.66 173.66 0 0 0-54.9-31.7V58a24 24 0 0 0-20-23.6 228.06 228.06 0 0 0-76 .1A23.82 23.82 0 0 0 158 58v33.7a171.78 171.78 0 0 0-54.9 31.7L74 106.59a23.91 23.91 0 0 0-30.3 5.3c-16.2 19.4-33.3 41.6-42.2 65.8a23.84 23.84 0 0 0 10.5 29l33.3 16.9a173.24 173.24 0 0 0 0 63.4L12 303.79a24.13 24.13 0 0 0-10.5 29.1c8.9 24.1 26 46.3 42.2 65.7a23.93 23.93 0 0 0 30.3 5.3l29.1-16.7a173.66 173.66 0 0 0 54.9 31.7v33.6a24 24 0 0 0 20 23.6 224.88 224.88 0 0 0 75.9 0 23.93 23.93 0 0 0 19.7-23.6v-33.6a171.78 171.78 0 0 0 54.9-31.7l29.1 16.8a23.91 23.91 0 0 0 30.3-5.3c16.2-19.4 33.7-41.6 42.6-65.8a24 24 0 0 0-10.5-29.1zm-151.3 4.3c-77 59.2-164.9-28.7-105.7-105.7 77-59.2 164.91 28.7 105.71 105.7z"></path>
+             </g>
+           </svg>
+         </div>
+       </div>
+       <div class="player_config_row">
+         <div id="show-scores">
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+             <g class="fa-group">
+               <path class="fa-secondary" fill="currentColor" d="M0 192v272a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V192zm324.13 141.91a11.92 11.92 0 0 1-3.53 6.89L281 379.4l9.4 54.6a12 12 0 0 1-17.4 12.6l-49-25.8-48.9 25.8a12 12 0 0 1-17.4-12.6l9.4-54.6-39.6-38.6a12 12 0 0 1 6.6-20.5l54.7-8 24.5-49.6a12 12 0 0 1 21.5 0l24.5 49.6 54.7 8a12 12 0 0 1 10.13 13.61zM304 128h32a16 16 0 0 0 16-16V16a16 16 0 0 0-16-16h-32a16 16 0 0 0-16 16v96a16 16 0 0 0 16 16zm-192 0h32a16 16 0 0 0 16-16V16a16 16 0 0 0-16-16h-32a16 16 0 0 0-16 16v96a16 16 0 0 0 16 16z" opacity="0.4"></path>
+               <path class="fa-primary" fill="currentColor" d="M314 320.3l-54.7-8-24.5-49.6a12 12 0 0 0-21.5 0l-24.5 49.6-54.7 8a12 12 0 0 0-6.6 20.5l39.6 38.6-9.4 54.6a12 12 0 0 0 17.4 12.6l48.9-25.8 49 25.8a12 12 0 0 0 17.4-12.6l-9.4-54.6 39.6-38.6a12 12 0 0 0-6.6-20.5zM400 64h-48v48a16 16 0 0 1-16 16h-32a16 16 0 0 1-16-16V64H160v48a16 16 0 0 1-16 16h-32a16 16 0 0 1-16-16V64H48a48 48 0 0 0-48 48v80h448v-80a48 48 0 0 0-48-48z"></path>
+             </g>
+           </svg>
+         </div>
+
+         <div id="show-help">
+         <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+           <g>
+             <path d="m 233.2661,19.969492 -65.3,132.399998 -146.099998,21.3 c -26.2000003,3.8 -36.7,36.1 -17.7000003,54.6 l 105.6999983,103 -24.999998,145.5 c -4.5,26.3 23.199998,46 46.399998,33.7 l 130.7,-68.7 130.7,68.7 c 23.2,12.2 50.9,-7.4 46.4,-33.7 l -25,-145.5 105.7,-103 c 19,-18.5 8.5,-50.8 -17.7,-54.6 l -146.1,-21.3 -65.3,-132.399998 c -11.7,-23.6000005 -45.6,-23.9000005 -57.4,0 z"
+                style="fill:currentColor;fill-opacity:0.4;stroke-width:0.50514001" />
+             <path style="fill:currentColor"
+                d="m 266.54954,154.03389 c -41.43656,0 -68.27515,16.07436 -89.34619,44.74159 -3.82236,5.20034 -2.64393,12.33041 2.68806,16.15841 l 22.3943,16.0773 c 5.38496,3.86585 13.04682,2.96194 17.26269,-2.03884 13.00373,-15.42456 22.64971,-24.30544 42.96178,-24.30544 15.97056,0 35.72456,9.73171 35.72456,24.39489 0,11.08489 -9.66467,16.77774 -25.43382,25.14841 -18.3892,9.7617 -42.72402,21.91024 -42.72402,52.30077 v 4.81105 c 0,6.51516 5.57808,11.7966 12.45917,11.7966 h 37.62199 c 6.88108,0 12.45915,-5.28144 12.45915,-11.7966 v -2.83758 c 0,-21.06678 65.03059,-21.94415 65.03059,-78.95226 5.2e-4,-42.93179 -47.03384,-75.4983 -91.09826,-75.4983 z m -5.20222,183.56459 c -19.82875,0 -35.96076,15.27415 -35.96076,34.04846 0,18.77381 16.13201,34.04797 35.96076,34.04797 19.82875,0 35.96077,-15.27416 35.96077,-34.04846 0,-18.7743 -16.13202,-34.04797 -35.96077,-34.04797 z" />
+           </g>
+         </svg>
+         </div>
+
+         <div id="show-expedition">
+         <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.67605 86.482559">
+           <path
+              style="opacity:0.42600002;vector-effect:none;fill:#000000;fill-opacity:0.99607843;stroke:#000000;stroke-width:12.54551411;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+              d="M 19.362578,50.396639 A 32.595734,34.293781 0 0 1 47.409727,11.916069 32.595734,34.293781 0 0 1 83.992527,41.4139 32.595734,34.293781 0 0 1 55.965171,79.910429 32.595734,34.293781 0 0 1 19.367207,50.433427" />
+           <path
+              style="fill:#000000;fill-opacity:0.99607843;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+              d="m 1.2815216,73.060732 7.316088,-7.31608 0.350471,-1.48951 1.2704594,-1.09522 2.979006,-0.0876 2.738057,-1.37998 0.459993,1.22665 1.22665,2.65044 1.226649,2.38759 1.204745,1.83997 -1.905687,0.9638 -0.898083,1.31426 -0.898083,0.91999 -0.459993,0.24095 -3.548522,-0.81047 z"
+              id="path1585"
+              inkscape:connector-curvature="0" />
+           <path
+              style="fill:#000000;fill-opacity:0.99607843;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+              d="m 85.655661,24.229012 0.83237,-4.07423 c 0.57923,-15.58975 -1.38702,-12.72472 -2.10283,-18.92545 l 1.4457,-0.65713004 C 98.209391,9.092222 99.256451,13.512692 101.64591,16.869112 c 1.08319,-0.0619 2.14603,0.19649 3.15425,1.31427 l 5.38849,-0.0876 0.43809,0.78856 -3.06662,4.64375 c -0.0252,0.71686 0.01,1.45387 -0.35047,2.05901 l -2.32188,1.62093 0.17524,2.01521 c 0.18071,0.83237 1.74141,1.66474 2.75996,2.49711 1.18284,-0.15055 2.36568,0.0939 3.54852,0.52571 l 4.77517,-2.49711 0.9638,0.17524 c -0.2685,3.06701 1.23415,2.64382 -2.67234,12.87982 l -1.22665,0.87617 c -0.17524,0.596 -0.35047,1.12548 -0.52571,1.88379 l -0.9638,0.96379 -1.53331,-0.13142 v 1.9714 l -2.32187,2.67234 c -4.7846,3.68451 -6.83056,4.54202 -8.017029,4.51232 l -0.91999,-0.43809 -0.78856,0.74475 c -1.25631,0.37685 -2.03007,0.65718 -3.81137,1.13903 -1.78777,0.44867 -3.86304,0.0349 -5.8704,-0.17523 4.66369,-20.40599 -1.7545,-20.9265 -2.80377,-32.59385 z" />
+           <path
+              style="fill:#000000;fill-opacity:1;stroke-width:0.10864114"
+              d="m 52.150443,19.141722 c -8.96361,0 -14.76936,3.43715 -19.32747,9.56702 -0.82686,1.11198 -0.57194,2.6366 0.58148,3.45514 l 4.84437,3.43779 c 1.16487,0.82662 2.82229,0.63335 3.73428,-0.43596 2.81299,-3.29823 4.89961,-5.1972 9.29355,-5.1972 3.45477,0 7.727968,2.08092 7.727968,5.21633 0,2.37025 -2.09066,3.58755 -5.501868,5.37745 -3.97797,2.08732 -9.24211,4.68504 -9.24211,11.1834 v 1.02873 c 0,1.39313 1.20665,2.52245 2.69517,2.52245 h 8.13845 c 1.488518,0 2.695178,-1.12932 2.695178,-2.52245 v -0.60675 c 0,-4.50469 14.0675,-4.6923 14.0675,-16.88227 1.1e-4,-9.18003 -10.17443,-16.14368 -19.706498,-16.14368 z m -1.12535,39.25136 c -4.28937,0 -7.77908,3.26605 -7.77908,7.28054 0,4.01438 3.48971,7.28042 7.77908,7.28042 4.28938,0 7.779078,-3.26604 7.779078,-7.28053 0,-4.01448 -3.489698,-7.28043 -7.779078,-7.28043 z" />
+         </svg>
+         </div>
+       </div>
+     </div>
+   </div>
+   `;
+       },
 
       updatePlayerOrdering() {
         this.inherited(arguments);
         dojo.place('player_board_config', 'player_boards', 'first');
       },
 
-      toggleSettings() {
-        dojo.toggleClass('settings-controls-container', 'settingsControlsHidden');
-
-        // Hacking BGA framework
-        if (dojo.hasClass('ebd-body', 'mobile_version')) {
-          dojo.query('.player-board').forEach((elt) => {
-            if (elt.style.height != 'auto') {
-              dojo.style(elt, 'min-height', elt.style.height);
-              elt.style.height = 'auto';
-            }
-          });
-        }
-      },
-
-      setupSettings() {
-        dojo.place($('preference_control_103').parentNode.parentNode, 'settings-controls-container');
-        dojo.place($('preference_control_107').parentNode.parentNode, 'settings-controls-container');
-        dojo.place($('preference_control_108').parentNode.parentNode, 'settings-controls-container');
-        dojo.place($('preference_control_109').parentNode.parentNode, 'settings-controls-container');
-
-        dojo.place($('preference_control_102').parentNode.parentNode, 'settings-controls-container');
-        dojo.place($('preference_control_106').parentNode.parentNode, 'settings-controls-container');
-        dojo.place($('preference_control_104').parentNode.parentNode, 'settings-controls-container');
-        dojo.place($('preference_control_105').parentNode.parentNode, 'settings-controls-container');
-
-        this._cardScaleSlider = document.getElementById('layout-control-card-size');
-        noUiSlider.create(this._cardScaleSlider, {
-          start: [this._cardScale],
-          step: 5,
-          padding: 10,
-          range: {
-            min: [40],
-            max: [120],
-          },
-        });
-        this._cardScaleSlider.noUiSlider.on('slide', (arg) => this.setCardScale(parseInt(arg[0])));
-
-        this._cardAnimationSpeedSlider = document.getElementById('layout-control-card-animation-speed');
-        noUiSlider.create(this._cardAnimationSpeedSlider, {
-          start: [this._cardAnimationSpeed],
-          step: 5,
-          padding: 10,
-          range: {
-            min: [15],
-            max: [200],
-          },
-        });
-        this._cardAnimationSpeedSlider.noUiSlider.on('slide', (arg) => this.setCardAnimationSpeed(parseInt(arg[0])));
-
-        this._centralBoardScaleSlider = document.getElementById('layout-control-central-board-size');
-        noUiSlider.create(this._centralBoardScaleSlider, {
-          start: [this._centralBoardScale],
-          step: 5,
-          padding: 10,
-          range: {
-            min: [60],
-            max: [140],
-          },
-        });
-        this._centralBoardScaleSlider.noUiSlider.on('slide', (arg) => this.setCentralBoardScale(parseInt(arg[0])));
-
-        this._playerBoardScaleSlider = document.getElementById('layout-control-player-board-size');
-        noUiSlider.create(this._playerBoardScaleSlider, {
-          start: [this._playerBoardScale],
-          step: 5,
-          padding: 10,
-          range: {
-            min: [40],
-            max: [140],
-          },
-        });
-        this._playerBoardScaleSlider.noUiSlider.on('slide', (arg) => this.setPlayerBoardScale(parseInt(arg[0])));
-      },
-
-      setCardScale(scale) {
-        this._cardScale = scale;
-
-        let applyScale = (elt, scale) => {
-          elt.style.setProperty('--cavernaCardWidth', (235 * scale) / 100 + 'px');
-          elt.style.setProperty('--cavernaCardHeight', (374 * scale) / 100 + 'px');
-          elt.style.setProperty('--cavernaCardScale', scale / 100);
-        };
-
-        applyScale(document.documentElement, scale);
-        document.querySelectorAll('.player-board-wrapper').forEach((board) => applyScale(board, 0.8 * scale));
-
-        localStorage.setItem('cavernaCardScale', scale);
-      },
-
-      setCardAnimationSpeed(speed) {
-        this._cardAnimationSpeed = speed;
-        localStorage.setItem('cavernaCardAnimationSpeed', speed);
-      },
-
-      setCentralBoardScale(scale) {
-        this._centralBoardScale = scale;
-        document.documentElement.style.setProperty('--cavernaCentralBoardScale', scale / 100);
-        localStorage.setItem('cavernaCentralBoardScale', scale);
-      },
-
-      setPlayerBoardScale(scale) {
-        this._playerBoardScale = scale;
-        document.documentElement.style.setProperty('--cavernaPlayerBoardScale', scale / 100);
-        localStorage.setItem('cavernaPlayerBoardScale', scale);
-        this.updatePlayerBoardDimensions();
-      },
-
-      updatePlayerBoardDimensions(pId = null) {
-        let ids = pId == null ? Object.keys(this.gamedatas.players) : [pId];
-        ids.forEach((pId) => {
-          let holder = $('board-wrapper-' + pId);
-          dojo.style('player-board-resizable-' + pId, {
-            width: (holder.offsetWidth * this._playerBoardScale) / 100 + 'px',
-            height: (holder.offsetHeight * this._playerBoardScale) / 100 + 'px',
-          });
-        });
-      },
+      // setCardScale(scale) {
+      //   this._cardScale = scale;
+      //
+      //   let applyScale = (elt, scale) => {
+      //     elt.style.setProperty('--cavernaCardWidth', (235 * scale) / 100 + 'px');
+      //     elt.style.setProperty('--cavernaCardHeight', (374 * scale) / 100 + 'px');
+      //     elt.style.setProperty('--cavernaCardScale', scale / 100);
+      //   };
+      //
+      //   applyScale(document.documentElement, scale);
+      //   document.querySelectorAll('.player-board-wrapper').forEach((board) => applyScale(board, 0.8 * scale));
+      //
+      //   localStorage.setItem('cavernaCardScale', scale);
+      // },
+      //
+      // setCardAnimationSpeed(speed) {
+      //   this._cardAnimationSpeed = speed;
+      //   localStorage.setItem('cavernaCardAnimationSpeed', speed);
+      // },
+      //
+      // setCentralBoardScale(scale) {
+      //   this._centralBoardScale = scale;
+      //   document.documentElement.style.setProperty('--cavernaCentralBoardScale', scale / 100);
+      //   localStorage.setItem('cavernaCentralBoardScale', scale);
+      // },
+      //
+      // setPlayerBoardScale(scale) {
+      //   this._playerBoardScale = scale;
+      //   document.documentElement.style.setProperty('--cavernaPlayerBoardScale', scale / 100);
+      //   localStorage.setItem('cavernaPlayerBoardScale', scale);
+      //   this.updatePlayerBoardDimensions();
+      // },
+      //
+      // updatePlayerBoardDimensions(pId = null) {
+      //   let ids = pId == null ? Object.keys(this.gamedatas.players) : [pId];
+      //   ids.forEach((pId) => {
+      //     let holder = $('board-wrapper-' + pId);
+      //     dojo.style('player-board-resizable-' + pId, {
+      //       width: (holder.offsetWidth * this._playerBoardScale) / 100 + 'px',
+      //       height: (holder.offsetHeight * this._playerBoardScale) / 100 + 'px',
+      //     });
+      //   });
+      // },
 
       /*
        * Display a helper with global scoring

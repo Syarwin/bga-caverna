@@ -44,7 +44,7 @@ trait TurnTrait
   function stPreparationRevealAction()
   {
     $turn = Globals::incTurn();
-    Notifications::startNewTurn($turn);
+    Notifications::startNewRound($turn);
 
     // Reveal new action card
     $card = ActionCards::draw()->first();
