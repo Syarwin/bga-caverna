@@ -61,7 +61,8 @@ html {
   transition: none !important;
 }
 
-#customActions .bgabutton.disabled {
+#customActions .bgabutton.disabled,
+#expedition-container .bgabutton.disabled {
   opacity: 0.5;
   background: linear-gradient(rgba(189, 189, 189, 0.59), rgba(166, 165, 165, 0.45));
   cursor: not-allowed;

@@ -149,6 +149,36 @@
   min-height: 300px;
   width: 750px;
 
+  #expedition-header {
+    background-color: #ffffffc2;
+    border-bottom: 1px solid #6a4b2f;
+    font-family: var(--cavernatisaac-font-family);
+    margin: -4px 3px 3px;
+    text-align: center;
+    font-size: 17px;
+    padding: 7px;
+    display: none;
+  }
+
+  #expedition-footer {
+    min-height: 50px;
+    background-color: #e6e6e6d1;
+    border-top: 1px solid #6a4b2f;
+    margin: 0px 5px 4px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+    text-align: right;
+    padding: 0px 10px;
+    display: none;
+  }
+
+  &.action {
+    #expedition-header,
+    #expedition-footer {
+      display: block;
+    }
+  }
+
   #expedition-container {
     display: flex;
     margin-bottom: 5px;
@@ -224,6 +254,7 @@
           margin-left: 10px;
 
           button {
+            position: relative;
             width: auto;
             cursor: default;
             min-height: 42px;
@@ -235,6 +266,33 @@
 
             .meeple-container {
               font-size: 2.2em;
+            }
+
+            &.disabled {
+              cursor: not-allowed;
+            }
+            &.selectable {
+              cursor: pointer;
+
+              &.disabled {
+                cursor:not-allowed;
+                opacity: 0.8;
+                overflow: visible;
+              }
+            }
+
+            &[data-choice-order]::before {
+              content: attr(data-choice-order);
+              position: absolute;
+              top: -5px;
+              right: -5px;
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              border: 1px solid black;
+              background: red;
+              color: white;
+              text-align: center;
             }
           }
 

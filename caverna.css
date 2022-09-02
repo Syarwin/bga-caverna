@@ -2208,6 +2208,28 @@ html {
 #popin_showExpedition {
   min-height: 300px;
   width: 750px; }
+  #popin_showExpedition #expedition-header {
+    background-color: #ffffffc2;
+    border-bottom: 1px solid #6a4b2f;
+    font-family: var(--cavernatisaac-font-family);
+    margin: -4px 3px 3px;
+    text-align: center;
+    font-size: 17px;
+    padding: 7px;
+    display: none; }
+  #popin_showExpedition #expedition-footer {
+    min-height: 50px;
+    background-color: #e6e6e6d1;
+    border-top: 1px solid #6a4b2f;
+    margin: 0px 5px 4px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+    text-align: right;
+    padding: 0px 10px;
+    display: none; }
+  #popin_showExpedition.action #expedition-header,
+  #popin_showExpedition.action #expedition-footer {
+    display: block; }
   #popin_showExpedition #expedition-container {
     display: flex;
     margin-bottom: 5px; }
@@ -2279,6 +2301,7 @@ html {
           justify-content: space-between;
           margin-left: 10px; }
           #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button {
+            position: relative;
             width: auto;
             cursor: default;
             min-height: 42px;
@@ -2289,6 +2312,26 @@ html {
             margin: 5px 0px; }
             #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button .meeple-container {
               font-size: 2.2em; }
+            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.disabled {
+              cursor: not-allowed; }
+            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.selectable {
+              cursor: pointer; }
+              #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.selectable.disabled {
+                cursor: not-allowed;
+                opacity: 0.8;
+                overflow: visible; }
+            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button[data-choice-order]::before {
+              content: attr(data-choice-order);
+              position: absolute;
+              top: -5px;
+              right: -5px;
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              border: 1px solid black;
+              background: red;
+              color: white;
+              text-align: center; }
           #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-5 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-6 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-7 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-8 button {
             flex-basis: 100%; }
           #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-1 button:first-of-type {
@@ -3166,7 +3209,8 @@ html {
   -o-transition: none !important;
   transition: none !important; }
 
-#customActions .bgabutton.disabled {
+#customActions .bgabutton.disabled,
+#expedition-container .bgabutton.disabled {
   opacity: 0.5;
   background: linear-gradient(rgba(189, 189, 189, 0.59), rgba(166, 165, 165, 0.45));
   cursor: not-allowed;
