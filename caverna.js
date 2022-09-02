@@ -151,27 +151,14 @@ define([
         this._modalContainerOpen = null;
 
         this._settingsConfig = {
-          actionBoardBackground: {
-            default: 0,
-            name: _('Action Board Background'),
-            attribute: 'action-background',
-            type: 'select',
-            values: {
-              0: _('Image'),
-              1: _('Plain with distinct color'),
-              2: _('Plain with same color'),
-            },
-          },
           actionBoardName: {
             default: 0,
-            name: _('Action Board Names'),
+            name: _('Action Card Names'),
             attribute: 'action-name',
             type: 'select',
             values: {
-              0: _('Display'),
-              1: _('Hide'),
-              2: _('Hide and collapse borders'),
-              3: _('Hide and blend boards with background'),
+              0: _('Hide'),
+              1: _('Display'),
             },
           },
           actionBoardCostIcon: {
@@ -219,7 +206,7 @@ define([
         //   }
         // });
         //
-        dojo.attr('game_play_area', 'data-turn', gamedatas.turn);
+        dojo.attr('game_play_area', 'data-turn', gamedatas.round);
         this.setupInfoPanel();
         this.setupScoresModal();
         this.setupExpeditionModal();

@@ -640,6 +640,10 @@ html {
     margin-left: -12px;
     margin-top: -13px;
     order: 1; }
+    [data-action-name="0"] #central-board .action-card-wrapper {
+      margin-top: -12px;
+      height: 177px;
+      background-image: url("img/action_cards_border_small.png"); }
   #central-board .turn-action-container {
     position: relative;
     order: 2; }
@@ -786,6 +790,8 @@ html {
   /*
    * ACTION CARD FRAME
    */ }
+  [data-action-name="0"] .action-card-holder {
+    height: 146px; }
   #ebd-body:not(.help-mode) .action-card-holder.selectable {
     cursor: pointer; }
     #ebd-body:not(.help-mode) .action-card-holder.selectable:hover {
@@ -898,6 +904,8 @@ html {
       }
     }
     */ }
+    [data-action-name="0"] .action-card-holder .action-card {
+      height: 146px; }
     .action-card-holder .action-card .action-header {
       padding-top: 4px;
       height: 32px;
@@ -908,6 +916,8 @@ html {
       justify-content: center;
       font-size: 11px;
       font-family: var(--caverna-font-family); }
+      [data-action-name="0"] .action-card-holder .action-card .action-header {
+        display: none; }
     .action-card-holder .action-card .action-desc {
       text-align: center;
       font-size: 11px;
@@ -918,6 +928,9 @@ html {
       height: 144px;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px; }
+      [data-action-name="0"] .action-card-holder .action-card .action-background {
+        border-radius: 8px;
+        margin-top: 2px; }
   .action-card-holder[data-id='ActionAdventure'] .action-card .action-background {
     background-position-x: 0%;
     background-position-y: 0%; }
