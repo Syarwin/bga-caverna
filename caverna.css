@@ -640,7 +640,7 @@ html {
     margin-left: -12px;
     margin-top: -13px;
     order: 1; }
-    [data-action-name="0"] #central-board .action-card-wrapper {
+    [data-action-name='0'] #central-board .action-card-wrapper {
       margin-top: -12px;
       height: 177px;
       background-image: url("img/action_cards_border_small.png"); }
@@ -790,7 +790,7 @@ html {
   /*
    * ACTION CARD FRAME
    */ }
-  [data-action-name="0"] .action-card-holder {
+  [data-action-name='0'] .action-card-holder {
     height: 146px; }
   #ebd-body:not(.help-mode) .action-card-holder.selectable {
     cursor: pointer; }
@@ -904,7 +904,7 @@ html {
       }
     }
     */ }
-    [data-action-name="0"] .action-card-holder .action-card {
+    [data-action-name='0'] .action-card-holder .action-card {
       height: 146px; }
     .action-card-holder .action-card .action-header {
       padding-top: 4px;
@@ -916,7 +916,7 @@ html {
       justify-content: center;
       font-size: 11px;
       font-family: var(--caverna-font-family); }
-      [data-action-name="0"] .action-card-holder .action-card .action-header {
+      [data-action-name='0'] .action-card-holder .action-card .action-header {
         display: none; }
     .action-card-holder .action-card .action-desc {
       text-align: center;
@@ -928,7 +928,7 @@ html {
       height: 144px;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px; }
-      [data-action-name="0"] .action-card-holder .action-card .action-background {
+      [data-action-name='0'] .action-card-holder .action-card .action-background {
         border-radius: 8px;
         margin-top: 2px; }
   .action-card-holder[data-id='ActionAdventure'] .action-card .action-background {
@@ -1161,6 +1161,10 @@ html {
   .action-card-holder[data-id='ActionSustenance'] .resource-holder, .action-card-holder[data-id='ActionSustenance4'] .resource-holder {
     bottom: 95px;
     left: 99px; }
+  .action-card-holder[data-id='ActionWishChildren'] .action-desc {
+    margin-top: 56px; }
+  .action-card-holder[data-id='ActionUrgentWishChildren'] .action-desc {
+    margin-top: 64px; }
 
 [data-actionCardName='0'] #central-board .action-card-holder {
   height: 144px; }
@@ -2205,27 +2209,6 @@ html {
           left: 30px; }
 
 /**
- * Overlay useful for card animations
- */
-#card-overlay {
-  opacity: 0;
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  top: 0;
-  left: 0;
-  z-index: 4000;
-  pointer-events: none;
-  transition: opacity 600ms;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-  #card-overlay.active {
-    opacity: 1;
-    pointer-events: all; }
-
-/**
  * Generic modals
  */
 .caverna_popin,
@@ -2323,10 +2306,10 @@ html {
     text-align: right;
     padding: 0px 10px; }
 
-#popin_showExpedition {
+#popin_showExpedition.caverna_popin {
   min-height: 300px;
   width: 750px; }
-  #popin_showExpedition #expedition-header {
+  #popin_showExpedition.caverna_popin #expedition-header {
     background-color: #ffffffc2;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--cavernatisaac-font-family);
@@ -2335,7 +2318,7 @@ html {
     font-size: 17px;
     padding: 7px;
     display: none; }
-  #popin_showExpedition #expedition-footer {
+  #popin_showExpedition.caverna_popin #expedition-footer {
     min-height: 50px;
     background-color: #e6e6e6d1;
     border-top: 1px solid #6a4b2f;
@@ -2345,38 +2328,38 @@ html {
     text-align: right;
     padding: 0px 10px;
     display: none; }
-  #popin_showExpedition.action #expedition-header,
-  #popin_showExpedition.action #expedition-footer {
+  #popin_showExpedition.caverna_popin.action #expedition-header,
+  #popin_showExpedition.caverna_popin.action #expedition-footer {
     display: block; }
-  #popin_showExpedition #expedition-container {
+  #popin_showExpedition.caverna_popin #expedition-container {
     display: flex;
     margin-bottom: 5px; }
-    #popin_showExpedition #expedition-container > div {
+    #popin_showExpedition.caverna_popin #expedition-container > div {
       display: flex;
       flex-flow: row;
       flex-wrap: wrap;
       padding: 0px 12px; }
-      #popin_showExpedition #expedition-container > div:first-child {
+      #popin_showExpedition.caverna_popin #expedition-container > div:first-child {
         flex-basis: 45%;
         align-self: center; }
-        #popin_showExpedition #expedition-container > div:first-child div.expedition-lvl {
+        #popin_showExpedition.caverna_popin #expedition-container > div:first-child div.expedition-lvl {
           padding: 7px 0px; }
-      #popin_showExpedition #expedition-container > div:last-child {
+      #popin_showExpedition.caverna_popin #expedition-container > div:last-child {
         flex-basis: 55%;
         border-left: 1px solid black; }
-      #popin_showExpedition #expedition-container > div div.expedition-lvl {
+      #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl {
         flex-basis: 100%;
         padding: 5px 0px;
         display: flex;
         align-items: center;
         border-bottom: 1px solid #00000082; }
-        #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='7'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='8'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='14'] {
+        #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='7'], #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='8'], #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='14'] {
           border-bottom: none; }
-        #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='5'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='6'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='7'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='8'] {
+        #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='5'], #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='6'], #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='7'], #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='8'] {
           flex-basis: 48%; }
-        #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='6'], #popin_showExpedition #expedition-container > div div.expedition-lvl[data-lvl='8'] {
+        #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='6'], #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl[data-lvl='8'] {
           padding-left: 4%; }
-        #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon {
+        #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon {
           width: 50px;
           height: 50px;
           flex-shrink: 0;
@@ -2384,41 +2367,41 @@ html {
           background-size: 700% 200%;
           border-radius: 50%;
           box-shadow: 1px 2px 5px -2px black; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='1'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='1'] {
             background-position: 0% 0%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='2'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='2'] {
             background-position: 16.6666666667% 0%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='3'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='3'] {
             background-position: 33.3333333333% 0%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='4'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='4'] {
             background-position: 50% 0%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='5'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='5'] {
             background-position: 66.6666666667% 0%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='6'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='6'] {
             background-position: 83.3333333333% 0%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='7'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='7'] {
             background-position: 100% 0%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='8'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='8'] {
             background-position: 0% 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='9'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='9'] {
             background-position: 16.6666666667% 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='10'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='10'] {
             background-position: 33.3333333333% 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='11'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='11'] {
             background-position: 50% 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='12'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='12'] {
             background-position: 66.6666666667% 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='13'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='13'] {
             background-position: 83.3333333333% 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='14'] {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-weapon[data-force='14'] {
             background-position: 100% 100%; }
-        #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container {
+        #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container {
           display: flex;
           flex-wrap: wrap;
           flex-grow: 1;
           justify-content: space-between;
           margin-left: 10px; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container button {
             position: relative;
             width: auto;
             cursor: default;
@@ -2428,17 +2411,17 @@ html {
             text-overflow: initial;
             white-space: normal;
             margin: 5px 0px; }
-            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button .meeple-container {
+            #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container button .meeple-container {
               font-size: 2.2em; }
-            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.disabled {
+            #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.disabled {
               cursor: not-allowed; }
-            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.selectable {
+            #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.selectable {
               cursor: pointer; }
-              #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.selectable.disabled {
+              #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container button.selectable.disabled {
                 cursor: not-allowed;
                 opacity: 0.8;
                 overflow: visible; }
-            #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container button[data-choice-order]::before {
+            #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container button[data-choice-order]::before {
               content: attr(data-choice-order);
               position: absolute;
               top: -5px;
@@ -2450,13 +2433,13 @@ html {
               background: red;
               color: white;
               text-align: center; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-5 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-6 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-7 button, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-8 button {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-5 button, #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-6 button, #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-7 button, #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-8 button {
             flex-basis: 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-1 button:first-of-type {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-1 button:first-of-type {
             flex-basis: 100%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-9 button:first-of-type, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-10 button:first-of-type {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-9 button:first-of-type, #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-10 button:first-of-type {
             flex-basis: 30%; }
-          #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-9 button:last-of-type, #popin_showExpedition #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-10 button:last-of-type {
+          #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-9 button:last-of-type, #popin_showExpedition.caverna_popin #expedition-container > div div.expedition-lvl div.expedition-lvl-container#expedition-lvl-10 button:last-of-type {
             flex-basis: 65%; }
 
 #popin_showRuby.caverna_popin {
@@ -2508,33 +2491,33 @@ html {
   #popin_showRuby.caverna_popin.active #ruby-container button {
     cursor: pointer; }
 
-#popin_showExchanges {
+#popin_showExchanges.caverna_popin {
   min-height: 300px;
   width: 700px; }
-  #popin_showExchanges #popin_showExchanges_contents {
+  #popin_showExchanges.caverna_popin #popin_showExchanges_contents {
     display: flex;
     flex-flow: column;
     flex-grow: 1; }
-    #popin_showExchanges #popin_showExchanges_contents h3 {
+    #popin_showExchanges.caverna_popin #popin_showExchanges_contents h3 {
       background-color: #e6e6e6d1;
       border-bottom: 1px solid #6a4b2f;
       font-family: var(--caverna-font-family);
       font-size: 17px;
       padding: 8px 12px;
       margin: -4px 5px 4px; }
-    #popin_showExchanges #popin_showExchanges_contents #exchanges-container {
+    #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container {
       flex-grow: 1;
       padding: 10px 20px; }
-      #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid {
+      #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid {
         display: grid;
         grid-template-columns: repeat(2, auto);
         grid-row-gap: 7px;
         font-size: 25px; }
-        #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-source {
+        #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-source {
           font-family: var(--caverna-font-family);
           font-size: 20px;
           text-align: center; }
-        #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc {
+        #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc {
           font-size: 22px;
           letter-spacing: 3px;
           cursor: pointer;
@@ -2543,26 +2526,26 @@ html {
           border-radius: 0.25rem;
           padding: 0.2rem 0.75rem;
           font-weight: bold; }
-          #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc:hover {
+          #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc:hover {
             background-color: #e1e1e1; }
-          #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc:disabled, #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc:disabled:hover {
+          #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc:disabled, #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc:disabled:hover {
             cursor: not-allowed;
             background-color: #d1d3d591;
             filter: grayscale(100%);
             color: black;
             opacity: 0.7; }
-          #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc .meeple-arrow {
+          #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc .meeple-arrow {
             width: 0.7em;
             height: 0.5em;
             margin: 0 0.5em; }
-        #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group {
+        #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group {
           display: flex;
           background-color: transparent;
           border: 1px solid #919293;
           border-radius: 0.25rem;
           width: 110px;
           overflow: hidden; }
-          #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group div {
+          #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group div {
             width: 50px;
             height: 31px;
             font-size: 15px;
@@ -2572,22 +2555,22 @@ html {
             box-sizing: border-box;
             border-left: 1px solid #919293;
             border-right: 1px solid #919293; }
-          #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group button {
+          #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group button {
             width: 30px;
             height: 31px;
             background-color: #e9ecef;
             padding: 0.375rem 0.75rem;
             font-weight: bold; }
-            #popin_showExchanges #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group button:hover {
+            #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-btn-group button:hover {
               background-color: #a0a1a2; }
-    #popin_showExchanges #popin_showExchanges_contents #exchanges-reserve {
+    #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-reserve {
       display: flex;
       background: #fffa;
       margin: 2px 5px 0px;
       padding: 5px;
       justify-content: space-around;
       border-top: 1px solid #6a4b2f; }
-    #popin_showExchanges #popin_showExchanges_contents #exchanges-dialog-footer {
+    #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-dialog-footer {
       min-height: 30px;
       background-color: #e6e6e6d1;
       border-top: 1px solid #6a4b2f;
@@ -2597,27 +2580,27 @@ html {
       text-align: right;
       padding: 0px 10px; }
 
-#popin_showScores {
+#popin_showScores.caverna_popin {
   z-index: 2000;
   padding: 0;
   width: auto;
   min-width: 300px;
   box-shadow: 2px 2px 10px black;
   background-color: white; }
-  #popin_showScores #popin_showScores_close {
+  #popin_showScores.caverna_popin #popin_showScores_close {
     width: 35px;
     height: 35px;
     top: -20px;
     right: -20px;
     font-size: 0.75em; }
-  #popin_showScores #popin_showScores_contents table {
+  #popin_showScores.caverna_popin #popin_showScores_contents table {
     width: 100%;
     border-collapse: collapse;
     font-family: var(--caverna-font-family); }
-    #popin_showScores #popin_showScores_contents table thead tr {
+    #popin_showScores.caverna_popin #popin_showScores_contents table thead tr {
       border-bottom: 2px solid black;
       border-top: 2px solid black; }
-      #popin_showScores #popin_showScores_contents table thead tr th {
+      #popin_showScores.caverna_popin #popin_showScores_contents table thead tr th {
         padding: 2px 15px;
         min-width: 50px;
         height: 50px;
@@ -2625,107 +2608,96 @@ html {
         text-align: center;
         border-left: 2px solid black;
         border-right: 2px solid black; }
-    #popin_showScores #popin_showScores_contents table tbody tr {
+    #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr {
       height: 30px; }
-      #popin_showScores #popin_showScores_contents table tbody tr:nth-child(odd) {
+      #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr:nth-child(odd) {
         background-color: #ccc; }
-      #popin_showScores #popin_showScores_contents table tbody tr#scores-row-donkey, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-vegetables, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-dwarfs, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-mines, #popin_showScores #popin_showScores_contents table tbody tr#scores-row-buildingsBonus {
+      #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-donkey, #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-vegetables, #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-dwarfs, #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-mines, #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-buildingsBonus {
         border-bottom: 1px solid black; }
-      #popin_showScores #popin_showScores_contents table tbody tr td {
+      #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td {
         vertical-align: top;
         text-align: center;
         word-wrap: anywhere;
         border-left: 2px solid black;
         border-right: 2px solid black;
         min-width: 100px; }
-        #popin_showScores #popin_showScores_contents table tbody tr td.row-header {
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td.row-header {
           text-align: right;
           padding: 4px 12px 3px;
           vertical-align: top; }
-        #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry,
-        #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry {
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry,
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry {
           display: flex;
           justify-content: flex-end;
           padding: 2px 8px; }
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry .meeple-container,
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry .meeple-container {
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry .meeple-container,
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry .meeple-container {
             font-size: 1.1em;
             width: 30px; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry .meeple-container .caverna-meeple,
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry .meeple-container .caverna-meeple {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry .meeple-container .caverna-meeple,
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry .meeple-container .caverna-meeple {
               margin: auto; }
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry, #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.scoring-subentry,
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry,
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.scoring-subentry {
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry, #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.scoring-subentry,
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry,
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.scoring-subentry {
             justify-content: space-between;
             padding: 0px 4px; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div, #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.scoring-subentry > div,
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div,
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.scoring-subentry > div {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div, #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.scoring-subentry > div,
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div,
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.scoring-subentry > div {
               padding: 2px 8px;
               line-height: 28px; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type, #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.scoring-subentry > div:first-of-type,
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type,
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.scoring-subentry > div:first-of-type {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type, #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.scoring-subentry > div:first-of-type,
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type,
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.scoring-subentry > div:first-of-type {
               border-right: 1px solid #7b7b7b91;
               margin-top: 0px;
               margin-bottom: 0px;
               min-width: 48px;
               height: 28px;
               text-align: left; }
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type,
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type {
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type,
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type {
             min-width: 65px;
             max-width: 65px;
             padding: 2px 0px;
             text-align: center; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type .meeple-farmer,
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type .meeple-farmer {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type .meeple-farmer,
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type .meeple-farmer {
               width: 0.9em;
               height: 1.2em; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type .meeple-stable,
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type .meeple-stable {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry.qty-scoring-entry > div:first-of-type .meeple-stable,
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry.qty-scoring-entry > div:first-of-type .meeple-stable {
               width: 0.8em;
               height: 1.1em; }
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-entry i,
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentry i {
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry i,
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry i {
             color: #2222229e;
             font-size: 0.8em;
             margin-left: 4px;
             vertical-align: middle; }
-        #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentries {
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentries {
           border-top: 1px solid #8a8a8a59; }
-          #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry {
+          #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry {
             font-size: 13px; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry > div {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry > div {
               padding: 0px 4px; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry > div:first-of-type {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry > div:first-of-type {
               border-right: none;
               height: auto; }
-            #popin_showScores #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry i {
+            #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentries .scoring-subentry i {
               margin-left: 1px; }
-      #popin_showScores #popin_showScores_contents table tbody tr#scores-row-total {
+      #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-total {
         height: 40px;
         border-top: 2px solid black;
         font-size: 1.2em; }
-        #popin_showScores #popin_showScores_contents table tbody tr#scores-row-total td:nth-of-type(1) {
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-total td:nth-of-type(1) {
           background: #515151;
           text-align: center;
           color: white;
           font-family: 'ColibriB';
           font-weight: bold;
           text-transform: uppercase; }
-
-#popin_showHelpsheet {
-  width: 440px;
-  background-size: 40% 10%; }
-  #popin_showHelpsheet #popin_showHelpsheet_contents {
-    width: 100%;
-    height: 720px;
-    background: url("img/helper.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center; }
 
 #popin_showSeedPrompt {
   min-height: 200px; }
@@ -2752,22 +2724,22 @@ html {
       text-align: right;
       padding: 0px 10px; }
 
-#popin_showTour {
+#popin_showTour.caverna_popin {
   width: auto; }
-  #popin_showTour #tour-slider-container {
+  #popin_showTour.caverna_popin #tour-slider-container {
     margin-bottom: 15px; }
-    #popin_showTour #tour-slider-container .slide {
+    #popin_showTour.caverna_popin #tour-slider-container .slide {
       width: 500px;
       padding: 10px 15px;
       box-sizing: border-box; }
-      #popin_showTour #tour-slider-container .slide .bubble {
+      #popin_showTour.caverna_popin #tour-slider-container .slide .bubble {
         position: relative;
         margin: 5px 20px 30px 0px;
         background: white;
         border: 2px solid black;
         border-radius: 10px;
         padding: 4px 8px; }
-        #popin_showTour #tour-slider-container .slide .bubble::before {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .bubble::before {
           content: '';
           position: absolute;
           width: 46px;
@@ -2778,101 +2750,101 @@ html {
           background-size: contain;
           background-repeat: no-repeat;
           background-position: center center; }
-      #popin_showTour #tour-slider-container .slide.inactive {
+      #popin_showTour.caverna_popin #tour-slider-container .slide.inactive {
         display: none; }
-      #popin_showTour #tour-slider-container .slide div.split-hor {
+      #popin_showTour.caverna_popin #tour-slider-container .slide div.split-hor {
         display: flex; }
-        #popin_showTour #tour-slider-container .slide div.split-hor.centered {
+        #popin_showTour.caverna_popin #tour-slider-container .slide div.split-hor.centered {
           align-items: center; }
-      #popin_showTour #tour-slider-container .slide ul {
+      #popin_showTour.caverna_popin #tour-slider-container .slide ul {
         padding-left: 25px; }
-        #popin_showTour #tour-slider-container .slide ul li {
+        #popin_showTour.caverna_popin #tour-slider-container .slide ul li {
           list-style-type: disc;
           margin-bottom: 4px; }
-      #popin_showTour #tour-slider-container .slide .tour-btn {
+      #popin_showTour.caverna_popin #tour-slider-container .slide .tour-btn {
         text-align: right; }
-        #popin_showTour #tour-slider-container .slide .tour-btn button {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-btn button {
           width: auto;
           margin-bottom: 0px; }
-      #popin_showTour #tour-slider-container .slide .tour-remark {
+      #popin_showTour.caverna_popin #tour-slider-container .slide .tour-remark {
         font-style: italic;
         background: rgba(255, 255, 255, 0.4);
         padding: 4px 7px;
         border-radius: 5px;
         border: 1px solid gray;
         font-size: 15px; }
-      #popin_showTour #tour-slider-container .slide .tour-img {
+      #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img {
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center center;
         margin: 5px 10px; }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-panelInfo {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-panelInfo {
           width: 250px;
           height: 200px;
           background-image: url("img/help/panel-info.png"); }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-centralBoard {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-centralBoard {
           width: 400px;
           height: 400px;
           background-image: url("img/help/central-board.jpg"); }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-harvest {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-harvest {
           width: 100px;
           height: 100px;
           margin: 5px auto;
           background-position: 8.62866% 21.8543%;
           background-size: 2027.72%;
           background-image: url("img/meeples.png"); }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-cardsBtn {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-cardsBtn {
           width: 173px;
           height: 100px;
           margin: 50px 10px auto 20px;
           background-image: url("img/help/cardsBtn.png"); }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-player-board {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-player-board {
           width: 300px;
           height: 200px;
           background-image: url("img/help/player-board.jpg");
           margin: 0px auto 10px; }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-player-panel {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-player-panel {
           width: 200px;
           height: 200px;
           background-image: url("img/help/player-panel.png"); }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-cook {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-cook {
           width: 257px;
           height: 283px;
           background-image: url("img/help/exchange-modal.png"); }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-cook-btn {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-cook-btn {
           width: 100px;
           height: 56px;
           background-image: url("img/help/cook-btn.jpg");
           margin: 8px auto 10px; }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-reorganize {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-reorganize {
           width: 157px;
           height: 150px;
           background-image: url("img/help/accomodate.jpg");
           margin-left: 20px; }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-reorganize-btn {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-reorganize-btn {
           width: 100px;
           height: 56px;
           background-image: url("img/help/reorganize-btn.jpg");
           margin: 8px auto 10px; }
-        #popin_showTour #tour-slider-container .slide .tour-img#img-reorganize-controls {
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-reorganize-controls {
           width: 157px;
           height: 150px;
           background-image: url("img/help/accomodate-controls.jpg");
           margin-right: 20px; }
-      #popin_showTour #tour-slider-container .slide#tour-slide-intro button {
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-intro button {
         width: auto;
         display: block; }
-      #popin_showTour #tour-slider-container .slide#tour-slide-panelInfo {
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-panelInfo {
         width: 700px; }
-      #popin_showTour #tour-slider-container .slide#tour-slide-centralBoard {
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-centralBoard {
         width: 800px; }
-      #popin_showTour #tour-slider-container .slide#tour-slide-centralBoard {
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-centralBoard {
         width: 800px; }
-      #popin_showTour #tour-slider-container .slide#tour-slide-boardPanel {
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-boardPanel {
         width: 600px; }
-      #popin_showTour #tour-slider-container .slide#tour-slide-cook .tour-remark {
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-cook .tour-remark {
         text-align: center; }
-  #popin_showTour #tour-slide-footer {
+  #popin_showTour.caverna_popin #tour-slide-footer {
     min-height: 30px;
     background-color: #e6e6e6d1;
     border-top: 1px solid #6a4b2f;

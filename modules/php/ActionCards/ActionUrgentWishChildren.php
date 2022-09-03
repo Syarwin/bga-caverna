@@ -8,11 +8,11 @@ class ActionUrgentWishChildren extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionUrgentWishChildren';
     $this->name = clienttranslate('Urgent Wish for children');
-    $this->desc = [clienttranslate('Either'), clienttranslate('or')];
+    $this->desc = [clienttranslate('or')];
 
     $this->tooltip = [
       clienttranslate('You may *either* build a Dwelling on an empty Cavern by paying its building costs or take 3 Gold from the general supply. If you do the
-former, you may then carry out a Family growth action. __(You may not grow your family on this Action space unless you use the first action to build a Dwelling.)__'),
+former, you may then carry out a Family growth action. (You may not grow your family on this Action space unless you use the first action to build a Dwelling.)'),
     ];
 
     $this->stage = 5;

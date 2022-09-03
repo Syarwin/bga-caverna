@@ -118,12 +118,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_revealActionCard(n) {
       debug('Notif: revealing a new card', n);
-      if (n.args.hasOwnProperty('oldName')) {
-        this.addActionCard(n.args.card, true, n.args.oldId);
-      } else {
-        this.addActionCard(n.args.card, true);
-      }
+      this.addActionCard(n.args.card, true);
       dojo.attr('game_play_area', 'data-turn', n.args.turn);
+      this.updateActionCardsHelp();
+    },
+
+    notif_flipWishChildren(n) {
+      debug('Notif: flipping wish children', n);
+      this.addActionCard(n.args.card, true, n.args.oldId);
       this.updateActionCardsHelp();
     },
 

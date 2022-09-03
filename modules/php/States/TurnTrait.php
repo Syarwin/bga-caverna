@@ -381,30 +381,6 @@ trait TurnTrait
       return;
     }
 
-    // Pig Breeder
-    // if (Globals::getTurn() == 12) {
-    //   $card = Buildings::getSingle('A165_PigBreeder', false);
-    //   if ($card != null && $card->isPlayed()) {
-    //     $player = $card->getPlayer();
-    //     if ($player->breed(PIG, clienttranslate("Pig breeder's effect"))) {
-    //       // Inserting leaf REORGANIZE
-    //       Engine::setup(
-    //         [
-    //           'pId' => $player->getId(),
-    //           'action' => REORGANIZE,
-    //           'args' => [
-    //             'trigger' => HARVEST,
-    //             'breedTypes' => [PIG => true],
-    //           ],
-    //         ],
-    //         ['state' => ST_BEFORE_START_OF_TURN]
-    //       );
-    //       Engine::proceed();
-    //       return;
-    //     }
-    //   }
-    // }
-
     $this->gamestate->nextState('newTurn');
   }
 

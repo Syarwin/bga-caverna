@@ -101,6 +101,7 @@ define([
           ['clearTurn', 1],
           ['refreshUI', 1],
           ['revealActionCard', 1100],
+          ['flipWishChildren', 1100],
           ['collectResources', null],
           ['gainResources', null],
           ['payResources', null],
