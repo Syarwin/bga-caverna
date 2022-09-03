@@ -23,11 +23,11 @@ class G_StubbleRoom extends \CAV\Models\Building
   public function onPlayerComputeDropZones($player, &$args)
   {
     $fields = $player->board()->getSowableFields(null, true);
-    foreach ($fields as $f) {
+    foreach ($fields as $field) {
       $args['zones'][] = [
-        'type' => 'field',
+        'type' => 'room',
         'capacity' => 1,
-        'locations' => [['type' => 'field', 'field' => $f]],
+        'locations' => [$player->board()->extractPos($field)],
       ];
     }
   }

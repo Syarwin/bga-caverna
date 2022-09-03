@@ -2899,26 +2899,20 @@ html {
     transition: margin 0.6s;
     margin-bottom: 24px;
     border: 2px solid black;
-    background-image: url("img/action_frame_bg.jpg");
+    background-image: url("img/action_frame_bg_alt.jpg");
     background-size: 100% 100%;
-    border-image-slice: 27 27 27 27;
-    border-image-width: 9px 9px 9px 9px;
-    border-image-outset: 0px 0px 0px 0px;
-    border-image-repeat: stretch stretch;
-    border-image-source: url("img/action_frame_panel.png");
     box-shadow: 2px 2px 5px -1px black;
     background-color: transparent;
-    border-radius: 15px; }
+    border-radius: 11px; }
     .animals-control-wrapper .animals-control .zone-capacity {
       text-align: center;
-      padding: 2px 0px;
-      font-size: 15px;
-      width: calc(100% - 4px);
-      margin: 3px auto 3px;
-      border-radius: 10px;
+      padding: 0px 0px;
+      font-size: 14px;
+      margin: 3px auto 0px;
+      border-radius: 8px;
       background: transparent;
       transition: background 0.6s, margin 0.6s;
-      min-width: 60px; }
+      min-width: 45px; }
     .animals-control-wrapper .animals-control.active .zone-capacity {
       background: white;
       border-top-left-radius: 0;
@@ -2927,52 +2921,20 @@ html {
       margin-top: 0px; }
     .animals-control-wrapper .animals-control .ac-composition {
       height: 0px;
-      width: 69px;
+      width: 50px;
       overflow: hidden;
       transition: height 0.6s, width 0.6s; }
-    .animals-control-wrapper .animals-control.active {
-      /*
-      &[data-type='sheep'],
-      &[data-type='pig'],
-      &[data-type='cattle'] {
-        .ac-composition {
-          height: 30px;
-        }
-      }
-      */
-      /*
-    &[data-type='sheep'] .composition-sheep {
-      margin-top: 0px;
-    }
-    &[data-type='pig'] .composition-sheep {
-      margin-top: -30px;
-    }
-    &[data-type='cattle'] .composition-sheep {
-      margin-top: -60px;
-    }
-
-    &[data-type='sheep'] {
-      margin-top: 0px;
-      margin-bottom: 60px;
-    }
-    &[data-type='pig'] {
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
-    &[data-type='cattle'] {
-      margin-top: 60px;
-      margin-bottom: 0px;
-    }
-    */ }
-      .animals-control-wrapper .animals-control.active .ac-composition {
-        height: 90px;
-        width: 99px; }
-      .animals-control-wrapper .animals-control.active[data-hidden='0'] .ac-composition {
-        height: 90px; }
-      .animals-control-wrapper .animals-control.active[data-hidden='1'] .ac-composition {
-        height: 60px; }
-      .animals-control-wrapper .animals-control.active[data-hidden='2'] .ac-composition {
-        height: 30px; }
+    .animals-control-wrapper .animals-control.active .ac-composition {
+      height: 150px;
+      width: 95px; }
+    .animals-control-wrapper .animals-control.active[data-hidden='1'] .ac-composition {
+      height: 120px; }
+    .animals-control-wrapper .animals-control.active[data-hidden='2'] .ac-composition {
+      height: 90px; }
+    .animals-control-wrapper .animals-control.active[data-hidden='3'] .ac-composition {
+      height: 60px; }
+    .animals-control-wrapper .animals-control.active[data-hidden='4'] .ac-composition {
+      height: 30px; }
     .animals-control-wrapper .animals-control .ac-composition {
       overflow: hidden; }
       .animals-control-wrapper .animals-control .ac-composition .composition-type {
@@ -2980,7 +2942,7 @@ html {
         border-bottom: 1px solid black;
         height: 30px;
         text-align: center;
-        margin: 0px 2px;
+        margin: 0px;
         transition: height 0.6s;
         overflow: hidden; }
         .animals-control-wrapper .animals-control .ac-composition .composition-type:first-of-type {
@@ -3015,7 +2977,7 @@ html {
             opacity: 0.7; }
           .animals-control-wrapper .animals-control .ac-composition .composition-type button div {
             background-image: url("img/animal-control.png");
-            background-size: 300% 300%;
+            background-size: 300% 500%;
             width: 30px;
             height: 24px; }
           .animals-control-wrapper .animals-control .ac-composition .composition-type button.composition-moins div {
@@ -3027,8 +2989,12 @@ html {
         .animals-control-wrapper .animals-control .ac-composition .composition-type.composition-sheep button div {
           background-position-y: 0%; }
         .animals-control-wrapper .animals-control .ac-composition .composition-type.composition-pig button div {
-          background-position-y: 50%; }
+          background-position-y: 25%; }
         .animals-control-wrapper .animals-control .ac-composition .composition-type.composition-cattle button div {
+          background-position-y: 50%; }
+        .animals-control-wrapper .animals-control .ac-composition .composition-type.composition-donkey button div {
+          background-position-y: 75%; }
+        .animals-control-wrapper .animals-control .ac-composition .composition-type.composition-dog button div {
           background-position-y: 100%; }
     .animals-control-wrapper .animals-control .ac-clear {
       background: rgba(255, 0, 0, 0.6);
@@ -3049,12 +3015,12 @@ html {
         background: rgba(255, 0, 0, 0.8); }
     .animals-control-wrapper .animals-control.active .ac-clear {
       height: 25px;
-      margin: 2px 2px 0 2px;
+      margin: 0px;
       padding: 2px 0px;
       border-bottom: 1px solid #393939; }
     .animals-control-wrapper .animals-control .ac-open {
       position: absolute;
-      bottom: 28px;
+      bottom: 17px;
       left: calc(50% - 16px);
       text-align: center;
       height: 0px;
@@ -3068,13 +3034,13 @@ html {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: url("img/action_frame_bg.jpg");
+      background-image: url("img/action_frame_bg_alt.jpg");
       background-size: 100% 100%;
       z-index: -1;
       border: 1px solid #5e2d09; }
       .animals-control-wrapper .animals-control .ac-open:hover {
         font-size: 20px;
-        bottom: 31px; }
+        bottom: 20px; }
       .animals-control-wrapper .animals-control .ac-open svg {
         width: 1em;
         height: 1em; }

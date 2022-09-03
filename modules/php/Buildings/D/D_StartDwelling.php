@@ -22,11 +22,10 @@ class D_StartDwelling extends \CAV\Models\Building
   public function onPlayerComputeDropZones($player, &$args)
   {
     $args['zones'][] = [
-      'type' => 'card',
+      'type' => 'room',
       'card_id' => $this->type,
-      'constraints' => [],
       'capacity' => 2,
-      'locations' => [['type' => 'card', 'card_id' => $this->type]],
+      'locations' => [$this->getPos()],
     ];
   }
 }

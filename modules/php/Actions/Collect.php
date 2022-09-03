@@ -18,7 +18,7 @@ class Collect extends \CAV\Models\Action
   {
     $cardId = $this->ctx->getCardId();
     $player = Players::getActive();
-    $meeples = Meeples::collectResourcesOnCard($player, $cardId);
+    $meeples = Meeples::getResourcesOnCard($cardId)->toArray();
     $res = Utils::reduceResources($meeples);
     return [
       'log' => clienttranslate('Collect ${resources_desc}'),

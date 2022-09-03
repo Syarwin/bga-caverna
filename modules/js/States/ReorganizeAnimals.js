@@ -1,5 +1,5 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
-  const ANIMALS = ['sheep', 'pig', 'cattle'];
+  const ANIMALS = ['dog', 'sheep', 'pig', 'cattle', 'donkey'];
 
   return declare('caverna.reorganize', null, {
     /**
@@ -27,12 +27,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         zone.pId = pId;
         zone.cId = pId + '-' + i; // Control ID, must be unique on DOM
         zone.holder = this.computeDropZoneControlHolder(zone);
-        // if (zone.type == 'card') {
-        //   zone.control = this.place('tplReorganizeControl', zone, zone.holder);
-        //   // zone.control = this.place('tplReorganizeControl', zone, zone.holder.parentNode);
-        // } else {
         zone.control = this.place('tplReorganizeControl', zone, this.getAnimalControlContainer(zone));
-        // }
       });
 
       this.updateDropZonesStatus(false);
@@ -44,8 +39,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     computeDropZoneControlHolder(zone) {
       if (zone.type == 'room') return zone.locations[0];
-
-      if (zone.type == 'card') return this.getMeepleContainer({ location: zone.card_id });
 
       return zone.locations.reduce(
         (acc, location) => {
@@ -90,8 +83,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update drop zones counters and "disabled" status
      */
     updateDropZonesStatus(preAnimation) {
-      return; // TODO
-
       // Update zones capacity counters
       this.forEachPlayer((player) => {
         this.getAnimalsDropZones(player.id).forEach((zone) => {
@@ -120,67 +111,44 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         if (zone.cId == undefined) return;
 
         let content = this.getAnimalsInZone(zone);
-
-        if (zone.type == 'card') {
-          if (zone.card_id == 'C11_WildlifeReserve') {
-            // only 1 of each animal can be put
-            ANIMALS.forEach((type) => {
-              $(`ac-infty-${type}-${zone.cId}`).disabled = true;
-              let animalLeft = reserve[type] > 0 || this.getMeeplesFromOtherZones(zone, type, 1).length > 0;
-              $(`ac-plus-${type}-${zone.cId}`).disabled = content[type].length >= 1 || animalLeft == 0;
-              $(`ac-minus-${type}-${zone.cId}`).disabled = content[type].length == 0;
-            });
-          } else if (zone.card_id == 'C86_LivestockFeeder') {
-            let isMax = content.sheep.length + content.pig.length + content.cattle.length >= zone.capacity;
-            // only 1 of each animal can be put
-            ANIMALS.forEach((type) => {
-              let row = $('animals-control-' + zone.cId).querySelector('.composition-type.composition-' + type);
-              dojo.removeClass(row, 'hidden');
-              let animalLeft = reserve[type] > 0 || this.getMeeplesFromOtherZones(zone, type, 1).length > 0;
-              $(`ac-plus-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
-              $(`ac-infty-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
-              $(`ac-minus-${type}-${zone.cId}`).disabled = content[type].length == 0;
-            });
+        let isMax = content.sheep.length + content.pig.length + content.cattle.length >= zone.capacity;
+        let zoneType = ANIMALS.reduce((acc, type) => (content[type].length > 0 ? type : acc), null);
+        dojo.attr('animals-control-' + zone.cId, 'data-type', zoneType);
+        let nHidden = 0;
+        ANIMALS.forEach((type) => {
+          let row = $('animals-control-' + zone.cId).querySelector('.composition-type.composition-' + type);
+          let animalLeft = reserve[type] > 0 || this.getMeeplesFromOtherZones(zone, type, 1).length > 0;
+          if (content[type].length == 0) {
+            let isHidden =
+              !animalLeft ||
+              (zoneType != null && type != zoneType) ||
+              (zone.constraints !== undefined && !zone.constraints.includes(type));
+            dojo.toggleClass(row, 'hidden', isHidden);
+            nHidden += isHidden ? 1 : 0;
+          } else {
+            dojo.removeClass(row, 'hidden');
           }
-        } else {
-          // let content = this.getAnimalsInZone(zone);
-          let isMax = content.sheep.length + content.pig.length + content.cattle.length >= zone.capacity;
-          let zoneType = ANIMALS.reduce((acc, type) => (content[type].length > 0 ? type : acc), null);
-          dojo.attr('animals-control-' + zone.cId, 'data-type', zoneType);
-          let nHidden = 0;
-          ANIMALS.forEach((type) => {
-            let row = $('animals-control-' + zone.cId).querySelector('.composition-type.composition-' + type);
-            let animalLeft = reserve[type] > 0 || this.getMeeplesFromOtherZones(zone, type, 1).length > 0;
-            if (content[type].length == 0) {
-              let isHidden =
-                !animalLeft ||
-                (zoneType != null && type != zoneType) ||
-                (zone.constraints !== undefined && !zone.constraints.includes(type));
-              dojo.toggleClass(row, 'hidden', isHidden);
-              nHidden += isHidden ? 1 : 0;
-            } else {
-              dojo.removeClass(row, 'hidden');
-            }
 
-            // Disable - buttons
-            $(`ac-minus-${type}-${zone.cId}`).disabled = content[type].length == 0;
+          // Disable - buttons
+          $(`ac-minus-${type}-${zone.cId}`).disabled = content[type].length == 0;
 
-            // Disable + buttons
-            $(`ac-plus-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
-            $(`ac-infty-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
-          });
-          dojo.attr('animals-control-' + zone.cId, 'data-hidden', nHidden);
-        }
+          // Disable + buttons
+          $(`ac-plus-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
+          $(`ac-infty-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
+        });
+        dojo.attr('animals-control-' + zone.cId, 'data-hidden', nHidden);
       });
 
       // Update action button
       dojo.destroy('btnConfirmReorganization');
       let msg = _('Confirm reorganization'),
         btnType = 'Primary';
-      if (reserve.sheep + reserve.pig + reserve.cattle > 0) {
+      if (reserve.sheep + reserve.pig + reserve.cattle + reserve.donkey > 0) {
         let animalsToCook = [];
         let animalsToDiscard = [];
         ANIMALS.forEach((type) => {
+          if (type == 'dog') return;
+
           // No extra animal of this type ? => return
           if (reserve[type] == 0) return;
           // Can't cook => everything goes to discard
@@ -226,18 +194,15 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_updateDropZones(n) {
       debug('Notif: updating player drop zones', n);
-      // TODO
-      // let pId = n.args.player_id;
-      // this.gamedatas.players[pId].board.dropZones = n.args.zones;
-      // this.updateAnimalsDropZones(pId);
+      let pId = n.args.player_id;
+      this.gamedatas.players[pId].board.dropZones = n.args.zones;
+      this.updateAnimalsDropZones(pId);
     },
 
     /**
      * Main state where reorganizing happens
      */
     onEnteringStateReorganize(args) {
-      return;
-      // TODO
       this.enableAnimalControls(args.exchanges);
       this._isHarvest = args.harvest;
       if (args.harvest) {
@@ -571,9 +536,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     getAnimalsInZone(zone) {
       let animals = {
+        dog: [],
         sheep: [],
         pig: [],
         cattle: [],
+        donkey: [],
       };
 
       zone.locations.forEach((loc) => {
@@ -624,6 +591,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             ${_('Clear')}
           </div>
           <div class="ac-composition" id="ac-composition-${id}">
+            <div class="composition-type composition-dog">
+              <button class="composition-minus" id="ac-minus-dog-${id}"><div></div></button>
+              <button class="composition-plus"  id="ac-plus-dog-${id}" ><div></div></button>
+              <button class="composition-infty" id="ac-infty-dog-${id}"><div></div></button>
+            </div>
+
             <div class="composition-type composition-sheep">
               <button class="composition-minus" id="ac-minus-sheep-${id}"><div></div></button>
               <button class="composition-plus"  id="ac-plus-sheep-${id}" ><div></div></button>
@@ -640,6 +613,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               <button class="composition-minus" id="ac-minus-cattle-${id}"><div></div></button>
               <button class="composition-plus"  id="ac-plus-cattle-${id}" ><div></div></button>
               <button class="composition-infty" id="ac-infty-cattle-${id}"><div></div></button>
+            </div>
+
+            <div class="composition-type composition-donkey">
+              <button class="composition-minus" id="ac-minus-donkey-${id}"><div></div></button>
+              <button class="composition-plus"  id="ac-plus-donkey-${id}" ><div></div></button>
+              <button class="composition-infty" id="ac-infty-donkey-${id}"><div></div></button>
             </div>
           </div>
           `

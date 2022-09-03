@@ -28,11 +28,11 @@ class G_CuddleRoom extends \CAV\Models\Building
 
     if ($capacity > 0) {
       $args['zones'][] = [
-        'type' => 'card',
+        'type' => 'room',
         'card_id' => $this->type,
         'constraints' => [SHEEP],
         'capacity' => $capacity,
-        'locations' => [['type' => 'card', 'card_id' => $this->type]],
+        'locations' => [$this->getPos()],
       ];
     }
   }

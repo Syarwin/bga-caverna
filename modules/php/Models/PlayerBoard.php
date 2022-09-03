@@ -486,7 +486,7 @@ class PlayerBoard
       }
     }
 
-    // mines => donkeys
+    // Mines => donkeys
     $mines = $this->getTilesOfType(TILE_ORE_MINE)->merge($this->getTilesOfType(TILE_RUBY_MINE));
     foreach ($mines as $mId => $mine) {
       $zones[] = [

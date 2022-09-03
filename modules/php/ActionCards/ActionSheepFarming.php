@@ -22,12 +22,8 @@ class ActionSheepFarming extends \CAV\Models\ActionCard
 
     $this->accumulation = [SHEEP => 1];
     $this->stage = 1;
-  }
-
-  protected function getFlow($player, $dwarf)
-  {
-    return [
-      'type' => NODE_SEQ,
+    $this->flow = [
+      'type' => NODE_THEN_OR,
       'childs' => [
         [
           'type' => NODE_OR,

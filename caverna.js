@@ -112,32 +112,21 @@ define([
           ['furnish', null],
           ['placeTile', 500],
           ['revealHarvestToken', 500],
+          ['firstPlayer', 800],
+          ['sow', null],
+          ['returnHome', null],
           // UNCHECKED
-          ['addFences', null],
+          ['placeMeeplesForFuture', null],
           ['addStables', null],
           ['growFamily', null],
           ['growChildren', 1000],
-          ['firstPlayer', 800],
-          ['plow', 1000],
-          ['sow', null],
-          ['returnHome', null],
           ['updateDropZones', 1],
           ['reorganize', null],
           ['harvestCrop', null],
           ['exchange', null],
-          ['placeMeeplesForFuture', null],
-          ['buyCard', null],
-          ['buyAndPassCard', null],
-          ['buyAndDestroyCard', null],
-          ['payWithCard', 1000],
           ['silentKill', null],
           ['silentDestroy', 1],
           ['startHarvest', 3200],
-          ['addCardToDraftSelection', 600],
-          ['removeCardFromDraftSelection', 600],
-          ['confirmDraftSelection', 1],
-          ['clearDraftPools', 1000],
-          ['draftIsOver', 500],
           ['seed', 10],
           ['updateHarvestCosts', 1],
         ];
@@ -216,11 +205,7 @@ define([
         this.setupTiles();
         this.setupBuildings();
         this.setupMeeples();
-        // this.setupAnimalsDropZones();
-        // this.setCardScale(this._cardScale);
-        // this.setCardAnimationSpeed(this._cardAnimationSpeed);
-        // this.setCentralBoardScale(this._centralBoardScale);
-        // this.setPlayerBoardScale(this._playerBoardScale);
+        this.setupAnimalsDropZones();
         // if (gamedatas.seed != false) this.showSeed(gamedatas.seed);
 
         this.inherited(arguments);

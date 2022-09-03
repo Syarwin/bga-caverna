@@ -20,11 +20,11 @@ class G_BreakfastRoom extends \CAV\Models\Building
   public function onPlayerComputeDropZones($player, &$args)
   {
     $args['zones'][] = [
-      'type' => 'card',
+      'type' => 'room',
       'card_id' => $this->type,
       'constraints' => [CATTLE],
       'capacity' => 3,
-      'locations' => [['type' => 'card', 'card_id' => $this->type]],
+      'locations' => [$this->getPos()],
     ];
   }
 }
