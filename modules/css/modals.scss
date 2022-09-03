@@ -386,6 +386,10 @@
       }
     }
   }
+
+  &.active #ruby-container button {
+    cursor: pointer;
+  }
 }
 
 #popin_showExchanges {

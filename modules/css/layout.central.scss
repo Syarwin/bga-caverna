@@ -564,6 +564,15 @@
       transform: scale(1.5);
       transform-origin: top center;
       margin: auto;
+      height: 180px;
+
+      .action-card {
+        height: 180px;
+
+        .action-header {
+          display: flex;
+        }
+      }
     }
   }
 }

@@ -324,6 +324,7 @@ define([
         this._onSelectBuildingCallback = null;
         if (this._exchangeDialog) this._exchangeDialog.hide();
         if (this._showSeedDialog) this._showSeedDialog.destroy();
+        $('popin_showRuby').classList.remove('active');
         this.inherited(arguments);
       },
 
@@ -385,6 +386,17 @@ define([
               );
             });
           }
+        }
+
+        // Use ruby button
+        if (args.args && args.args.canUseRuby && this.checkPossibleActions('actUseRuby')) {
+          this.addPrimaryActionButton(
+            'btnShowRuby',
+            this.formatStringMeeples(_('Use <RUBY>')),
+            () => this._rubyDialog.show(),
+            'anytimeActions',
+          );
+          $('popin_showRuby').classList.add('active');
         }
 
         // Call appropriate method
@@ -648,11 +660,21 @@ define([
         });
 
         let addUsage = (cost, name, text) => {
-          dojo.place(
+          let button = dojo.place(
             `<button data-name="${name}" class='action-button bgabutton bgabutton_gray'>${this.formatStringMeeples(
               text,
             )}</button>`,
             `ruby-${cost}`,
+          );
+          this.onClick(
+            button,
+            () => {
+              if ($('popin_showRuby').classList.contains('active')) {
+                this._rubyDialog.hide();
+                this.takeAction('actUseRuby', { power: name });
+              }
+            },
+            false,
           );
         };
 
@@ -667,13 +689,13 @@ define([
         addUsage(1, 'dog', '<DOG>');
         addUsage(1, 'donkey', '<DONKEY>');
 
-        addUsage(1, 'meadow', '<MEADOW>');
-        addUsage(1, 'field', '<FIELD>');
-        addUsage(1, 'tunnel', '<TUNNEL>');
+        addUsage(1, 'tileMeadow', '<MEADOW>');
+        addUsage(1, 'tileField', '<FIELD>');
+        addUsage(1, 'tileTunnel', '<TUNNEL>');
 
         addUsage('1-plus', 'cattle', '<CATTLE>');
 
-        addUsage(2, 'cavern', '<CAVERN>');
+        addUsage(2, 'tileCavern', '<CAVERN>');
       },
 
       //////////////////////////////////////////////////////////
@@ -1103,7 +1125,7 @@ define([
          <div id="show-ruby">
          <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.535551 17.212789">
            <path
-              style="opacity:0.65899999;fill:#757677;fill-opacity:1;stroke:#000000;stroke-width:0.62362206;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+              style="opacity:0.65899999;fill:#e12d2d;fill-opacity:1;stroke:#000000;stroke-width:0.62362206;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
               d="M 0.31018875,7.8099019 C 0.53196435,6.8223101 3.2526464,6.1207132 4.7238752,5.2761189 l 4.352385,-4.96539734 c 1.0338148,0.0866484 1.2104578,-0.21874313 9.0112768,2.96289134 1.994977,1.5582693 2.083729,2.7352934 2.840289,4.0458793 0.347353,0.4358572 0.639348,0.7056428 1.04212,1.307759 0.0879,0.5158494 0.358321,0.00953 0.204338,1.8799038 -2.580966,1.633346 -2.471432,1.610999 -3.698506,2.41118 -2.067356,2.189707 -3.386894,2.767213 -5.108434,3.330699 -1.49019,-0.01399 -3.014473,-0.01946 -4.7201918,0.02043 -0.5148785,0.133449 -1.0185087,0.25565 -1.7981686,0.65388 C 4.8061816,16.104929 4.0291283,14.811858 2.6192007,13.756115 -0.37668715,9.8830288 0.50109345,9.6740684 0.31018875,7.8099019 Z" />
            <path
               style="fill:none;stroke:#ffffff;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

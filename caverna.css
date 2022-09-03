@@ -1186,7 +1186,12 @@ html {
       position: initial;
       transform: scale(1.5);
       transform-origin: top center;
-      margin: auto; }
+      margin: auto;
+      height: 180px; }
+      .action-card-tooltip .action-holder .action-card-holder .action-card {
+        height: 180px; }
+        .action-card-tooltip .action-holder .action-card-holder .action-card .action-header {
+          display: flex; }
 
 .action-card-name-reference {
   font-style: italic; }
@@ -2500,6 +2505,8 @@ html {
           cursor: not-allowed;
           opacity: 0.8;
           overflow: visible; }
+  #popin_showRuby.caverna_popin.active #ruby-container button {
+    cursor: pointer; }
 
 #popin_showExchanges {
   min-height: 300px;

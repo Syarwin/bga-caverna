@@ -152,6 +152,15 @@ class action_caverna extends APP_GameAction
     self::ajaxResponse();
   }
 
+  public function actUseRuby()
+  {
+    self::setAjaxMode();
+    $power = self::getArg('power', AT_alphanum, true);
+    $this->game->actUseRuby($power);
+    self::ajaxResponse();
+  }
+
+
   //////////////////
   ///// UTILS  /////
   //////////////////
