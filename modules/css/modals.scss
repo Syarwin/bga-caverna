@@ -56,11 +56,7 @@
   }
 }
 
-#popin_showExchanges,
-#popin_showExpedition,
-#popin_showHelpsheet,
-#popin_showSeedPrompt,
-#popin_showTour,
+.caverna_popin:not(#popin_showScores),
 .cavernaBuilding_popin {
   z-index: 2000;
   width: 500px;
@@ -275,7 +271,7 @@
               cursor: pointer;
 
               &.disabled {
-                cursor:not-allowed;
+                cursor: not-allowed;
                 opacity: 0.8;
                 overflow: visible;
               }
@@ -320,6 +316,72 @@
               flex-basis: 65%;
             }
           }
+        }
+      }
+    }
+  }
+}
+
+#popin_showRuby.caverna_popin {
+  min-height: 300px;
+  width: 425px;
+
+  #ruby-container {
+    display: grid;
+    margin-bottom: 5px;
+
+    #ruby-1 {
+      grid-column: 1 / span 2;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 15px;
+
+      div.ruby-container-header {
+        flex-basis: 100%;
+      }
+    }
+    #ruby-2,
+    #ruby-1-plus {
+      grid-column-end: span 1;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+    }
+
+    div.ruby-container-header {
+      text-align: center;
+      font-size: 23px;
+      margin: 5px 0px 2px;
+      font-weight: bold;
+      font-family: var(--cavernatisaac-font-family);
+    }
+
+    button {
+      position: relative;
+      width: auto;
+      cursor: default;
+      min-height: 42px;
+      font-size: 15px;
+      min-width: 75px;
+      text-overflow: initial;
+      white-space: normal;
+      margin: 5px 4px;
+
+      .meeple-container {
+        font-size: 2.2em;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+      }
+      &.selectable {
+        cursor: pointer;
+
+        &.disabled {
+          cursor: not-allowed;
+          opacity: 0.8;
+          overflow: visible;
         }
       }
     }

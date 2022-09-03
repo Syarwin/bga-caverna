@@ -171,9 +171,8 @@ define([
               1: _('Hide'),
             },
           },
-          confirmMode: { type: 'pref', prefId: 103},
-        }
-
+          confirmMode: { type: 'pref', prefId: 103 },
+        };
       },
 
       /**
@@ -210,6 +209,7 @@ define([
         this.setupInfoPanel();
         this.setupScoresModal();
         this.setupExpeditionModal();
+        this.setupRubyModal();
         this.setupActionCards();
         this.setupPlayers();
         this.setupTiles();
@@ -267,7 +267,6 @@ define([
         this.gamedatas.round = n.args.round;
         this.updateRoundCounter();
       },
-
 
       notif_clearTurn(n) {
         debug('Notif: restarting turn', n);
@@ -622,6 +621,59 @@ define([
           button.classList.remove('disabled');
           delete button.dataset.choiceOrder;
         });
+      },
+
+      ///////////////////////////////
+      //  ____        _
+      // |  _ \ _   _| |__  _   _
+      // | |_) | | | | '_ \| | | |
+      // |  _ <| |_| | |_) | |_| |
+      // |_| \_\\__,_|_.__/ \__, |
+      //                    |___/
+      ///////////////////////////////
+
+      setupRubyModal() {
+        // Create modal
+        this._rubyDialog = new customgame.modal('showRuby', {
+          class: 'caverna_popin',
+          closeIcon: 'fa-times',
+          title: _('Ruby usage'),
+          closeAction: 'hide',
+          verticalAlign: 'flex-start',
+          contents: this.formatStringMeeples(`<div id="ruby-container">
+            <div id="ruby-1"><div class='ruby-container-header'>1 <RUBY></div></div>
+            <div id="ruby-1-plus"><div class='ruby-container-header'>1 <RUBY> + 1 <FOOD></div></div>
+            <div id="ruby-2"><div class='ruby-container-header'>2 <RUBY></div></div>
+          </div>`),
+        });
+
+        let addUsage = (cost, name, text) => {
+          dojo.place(
+            `<button data-name="${name}" class='action-button bgabutton bgabutton_gray'>${this.formatStringMeeples(
+              text,
+            )}</button>`,
+            `ruby-${cost}`,
+          );
+        };
+
+        addUsage(1, 'wood', '<WOOD>');
+        addUsage(1, 'stone', '<STONE>');
+        addUsage(1, 'ore', '<ORE>');
+        addUsage(1, 'grain', '<GRAIN>');
+        addUsage(1, 'vegetable', '<VEGETABLE>');
+
+        addUsage(1, 'sheep', '<SHEEP>');
+        addUsage(1, 'pig', '<PIG>');
+        addUsage(1, 'dog', '<DOG>');
+        addUsage(1, 'donkey', '<DONKEY>');
+
+        addUsage(1, 'meadow', '<MEADOW>');
+        addUsage(1, 'field', '<FIELD>');
+        addUsage(1, 'tunnel', '<TUNNEL>');
+
+        addUsage('1-plus', 'cattle', '<CATTLE>');
+
+        addUsage(2, 'cavern', '<CAVERN>');
       },
 
       //////////////////////////////////////////////////////////
@@ -981,38 +1033,41 @@ define([
       /************************
        ******* SETTINGS ********
        ************************/
-       setupInfoPanel() {
-         dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
+      setupInfoPanel() {
+        dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
 
-         let chk = $('help-mode-chk');
-         dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
-         this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode.'));
+        let chk = $('help-mode-chk');
+        dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
+        this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode.'));
 
-         this.onClick('show-expedition', () => this._expeditionDialog.show(), false);
-         this.addTooltip('show-expedition', '', _('Show expedition help sheet'));
+        this.onClick('show-expedition', () => this._expeditionDialog.show(), false);
+        this.addTooltip('show-expedition', '', _('Show expedition help sheet'));
 
-         this._settingsModal = new customgame.modal('showSettings', {
-           class: 'barrage_popin',
-           closeIcon: 'fa-times',
-           title: _('Settings'),
-           closeAction: 'hide',
-           verticalAlign: 'flex-start',
-           contentsTpl: `<div id='barrage-settings'>
+        this.onClick('show-ruby', () => this._rubyDialog.show(), false);
+        this.addTooltip('show-ruby', '', _('Show Ruby help sheet'));
+
+        this._settingsModal = new customgame.modal('showSettings', {
+          class: 'barrage_popin',
+          closeIcon: 'fa-times',
+          title: _('Settings'),
+          closeAction: 'hide',
+          verticalAlign: 'flex-start',
+          contentsTpl: `<div id='barrage-settings'>
              <div id='barrage-settings-header'></div>
              <div id="settings-controls-container"></div>
            </div>`,
-         });
-       },
+        });
+      },
 
-       tplConfigPlayerBoard() {
-         let nPlayers = Object.keys(this.gamedatas.players).length;
+      tplConfigPlayerBoard() {
+        let nPlayers = Object.keys(this.gamedatas.players).length;
 
-         return `
+        return `
    <div class='player-board' id="player_board_config">
      <div id="player_config" class="player_board_content">
 
        <div class="player_config_row" id="round-counter-wrapper">
-         ${_('Round')} <span id='round-counter'></span> / ${nPlayers <= 2? 11 : 12}
+         ${_('Round')} <span id='round-counter'></span> / ${nPlayers <= 2 ? 11 : 12}
        </div>
        <div class="player_config_row">
          <div id="uwe-help"></div>
@@ -1045,40 +1100,50 @@ define([
            </svg>
          </div>
 
-         <div id="show-help">
-         <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-           <g>
-             <path d="m 233.2661,19.969492 -65.3,132.399998 -146.099998,21.3 c -26.2000003,3.8 -36.7,36.1 -17.7000003,54.6 l 105.6999983,103 -24.999998,145.5 c -4.5,26.3 23.199998,46 46.399998,33.7 l 130.7,-68.7 130.7,68.7 c 23.2,12.2 50.9,-7.4 46.4,-33.7 l -25,-145.5 105.7,-103 c 19,-18.5 8.5,-50.8 -17.7,-54.6 l -146.1,-21.3 -65.3,-132.399998 c -11.7,-23.6000005 -45.6,-23.9000005 -57.4,0 z"
-                style="fill:currentColor;fill-opacity:0.4;stroke-width:0.50514001" />
-             <path style="fill:currentColor"
-                d="m 266.54954,154.03389 c -41.43656,0 -68.27515,16.07436 -89.34619,44.74159 -3.82236,5.20034 -2.64393,12.33041 2.68806,16.15841 l 22.3943,16.0773 c 5.38496,3.86585 13.04682,2.96194 17.26269,-2.03884 13.00373,-15.42456 22.64971,-24.30544 42.96178,-24.30544 15.97056,0 35.72456,9.73171 35.72456,24.39489 0,11.08489 -9.66467,16.77774 -25.43382,25.14841 -18.3892,9.7617 -42.72402,21.91024 -42.72402,52.30077 v 4.81105 c 0,6.51516 5.57808,11.7966 12.45917,11.7966 h 37.62199 c 6.88108,0 12.45915,-5.28144 12.45915,-11.7966 v -2.83758 c 0,-21.06678 65.03059,-21.94415 65.03059,-78.95226 5.2e-4,-42.93179 -47.03384,-75.4983 -91.09826,-75.4983 z m -5.20222,183.56459 c -19.82875,0 -35.96076,15.27415 -35.96076,34.04846 0,18.77381 16.13201,34.04797 35.96076,34.04797 19.82875,0 35.96077,-15.27416 35.96077,-34.04846 0,-18.7743 -16.13202,-34.04797 -35.96077,-34.04797 z" />
-           </g>
-         </svg>
+         <div id="show-ruby">
+         <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.535551 17.212789">
+           <path
+              style="opacity:0.65899999;fill:#757677;fill-opacity:1;stroke:#000000;stroke-width:0.62362206;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+              d="M 0.31018875,7.8099019 C 0.53196435,6.8223101 3.2526464,6.1207132 4.7238752,5.2761189 l 4.352385,-4.96539734 c 1.0338148,0.0866484 1.2104578,-0.21874313 9.0112768,2.96289134 1.994977,1.5582693 2.083729,2.7352934 2.840289,4.0458793 0.347353,0.4358572 0.639348,0.7056428 1.04212,1.307759 0.0879,0.5158494 0.358321,0.00953 0.204338,1.8799038 -2.580966,1.633346 -2.471432,1.610999 -3.698506,2.41118 -2.067356,2.189707 -3.386894,2.767213 -5.108434,3.330699 -1.49019,-0.01399 -3.014473,-0.01946 -4.7201918,0.02043 -0.5148785,0.133449 -1.0185087,0.25565 -1.7981686,0.65388 C 4.8061816,16.104929 4.0291283,14.811858 2.6192007,13.756115 -0.37668715,9.8830288 0.50109345,9.6740684 0.31018875,7.8099019 Z" />
+           <path
+              style="fill:none;stroke:#ffffff;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+              d="m 9.73014,1.3528419 c 0.512886,0.9912361 2.916032,1.9988155 4.679325,5.0471323 -1.582309,1.9292326 -1.842728,2.8198375 -2.73812,4.2093498 C 10.4054,11.611933 9.7484973,11.294948 8.7901883,11.631011 3.0879456,10.162175 5.0044469,9.0230166 1.822285,8.1368416" />
+           <path
+              style="fill:none;stroke:#fffffa;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+              d="m 14.409465,6.3999742 c 3.258647,0.9753939 2.364301,2.1353653 3.432867,3.2080962 -4.503394,2.2468656 -3.329952,3.2414876 -4.536289,4.7610606 -1.094702,-0.0088 -1.793867,0.140671 -3.3715656,-0.0613 C 9.4432221,13.452167 9.1232745,12.5394 8.7901883,11.631012"/>
+           <path
+              style="fill:none;stroke:#ffffff;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+              d="m 17.842332,9.6080704 c 0.898877,0.1399393 2.075182,0.5176746 2.635952,0.3678072"/>
+           <path
+              style="fill:none;stroke:#ffffef;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+              d="M 9.9344774,14.307831 8.5654172,15.636022"/>
+           <path
+              style="fill:#000000;fill-opacity:1;stroke-width:0.01918079"
+              d="m 11.577839,3.7101047 c -1.556973,0 -2.5654274,0.6168006 -3.3571682,1.7168143 -0.143625,0.1995463 -0.099346,0.4731408 0.1010029,0.620029 L 9.1631371,6.6638636 C 9.3654742,6.8122022 9.653367,6.777519 9.8117794,6.5856296 10.300393,5.993758 10.662838,5.6529858 11.426062,5.6529858 c 0.600092,0 1.342344,0.3734233 1.342344,0.9360767 0,0.425345 -0.363147,0.643791 -0.955672,0.9649903 -0.690969,0.3745728 -1.605348,0.8407363 -1.605348,2.0068765 v 0.1846065 c 0,0.2499985 0.209594,0.4526562 0.46815,0.4526562 h 1.413643 c 0.258555,0 0.468151,-0.2026577 0.468151,-0.4526562 v -0.108882 c 0,-0.8083725 2.443515,-0.84204 2.443515,-3.0295454 1.9e-5,-1.6473683 -1.767291,-2.8970041 -3.423006,-2.8970037 z m -0.195471,7.0437073 c -0.745062,0 -1.351223,0.586096 -1.351223,1.306502 0,0.720386 0.606161,1.306481 1.351223,1.306481 0.745061,0 1.351219,-0.586095 1.351219,-1.3065 0,-0.720405 -0.606158,-1.306483 -1.351219,-1.306483 z"/>
+          </svg>
          </div>
 
          <div id="show-expedition">
          <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.67605 86.482559">
            <path
-              style="opacity:0.42600002;vector-effect:none;fill:#000000;fill-opacity:0.99607843;stroke:#000000;stroke-width:12.54551411;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-              d="M 19.362578,50.396639 A 32.595734,34.293781 0 0 1 47.409727,11.916069 32.595734,34.293781 0 0 1 83.992527,41.4139 32.595734,34.293781 0 0 1 55.965171,79.910429 32.595734,34.293781 0 0 1 19.367207,50.433427" />
+              style="opacity:0.55800003;vector-effect:none;fill:#8f8e8e;fill-opacity:0.99607843;stroke:#000000;stroke-width:4.2607007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+              d="M 16.039589,51.555093 A 36.075737,38.028088 0 0 1 47.081123,8.8843112 36.075737,38.028088 0 0 1 87.569595,41.59421 36.075737,38.028088 0 0 1 56.549968,84.282689 36.075737,38.028088 0 0 1 16.044712,51.595887" />
            <path
               style="fill:#000000;fill-opacity:0.99607843;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-              d="m 1.2815216,73.060732 7.316088,-7.31608 0.350471,-1.48951 1.2704594,-1.09522 2.979006,-0.0876 2.738057,-1.37998 0.459993,1.22665 1.22665,2.65044 1.226649,2.38759 1.204745,1.83997 -1.905687,0.9638 -0.898083,1.31426 -0.898083,0.91999 -0.459993,0.24095 -3.548522,-0.81047 z"
-              id="path1585"
-              inkscape:connector-curvature="0" />
+              d="m 1.2815216,73.060732 7.316088,-7.31608 0.350471,-1.48951 1.2704594,-1.09522 2.979006,-0.0876 2.738057,-1.37998 0.459993,1.22665 1.22665,2.65044 1.226649,2.38759 1.204745,1.83997 -1.905687,0.9638 -0.898083,1.31426 -0.898083,0.91999 -0.459993,0.24095 -3.548522,-0.81047 z"/>
            <path
               style="fill:#000000;fill-opacity:0.99607843;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
               d="m 85.655661,24.229012 0.83237,-4.07423 c 0.57923,-15.58975 -1.38702,-12.72472 -2.10283,-18.92545 l 1.4457,-0.65713004 C 98.209391,9.092222 99.256451,13.512692 101.64591,16.869112 c 1.08319,-0.0619 2.14603,0.19649 3.15425,1.31427 l 5.38849,-0.0876 0.43809,0.78856 -3.06662,4.64375 c -0.0252,0.71686 0.01,1.45387 -0.35047,2.05901 l -2.32188,1.62093 0.17524,2.01521 c 0.18071,0.83237 1.74141,1.66474 2.75996,2.49711 1.18284,-0.15055 2.36568,0.0939 3.54852,0.52571 l 4.77517,-2.49711 0.9638,0.17524 c -0.2685,3.06701 1.23415,2.64382 -2.67234,12.87982 l -1.22665,0.87617 c -0.17524,0.596 -0.35047,1.12548 -0.52571,1.88379 l -0.9638,0.96379 -1.53331,-0.13142 v 1.9714 l -2.32187,2.67234 c -4.7846,3.68451 -6.83056,4.54202 -8.017029,4.51232 l -0.91999,-0.43809 -0.78856,0.74475 c -1.25631,0.37685 -2.03007,0.65718 -3.81137,1.13903 -1.78777,0.44867 -3.86304,0.0349 -5.8704,-0.17523 4.66369,-20.40599 -1.7545,-20.9265 -2.80377,-32.59385 z" />
            <path
-              style="fill:#000000;fill-opacity:1;stroke-width:0.10864114"
-              d="m 52.150443,19.141722 c -8.96361,0 -14.76936,3.43715 -19.32747,9.56702 -0.82686,1.11198 -0.57194,2.6366 0.58148,3.45514 l 4.84437,3.43779 c 1.16487,0.82662 2.82229,0.63335 3.73428,-0.43596 2.81299,-3.29823 4.89961,-5.1972 9.29355,-5.1972 3.45477,0 7.727968,2.08092 7.727968,5.21633 0,2.37025 -2.09066,3.58755 -5.501868,5.37745 -3.97797,2.08732 -9.24211,4.68504 -9.24211,11.1834 v 1.02873 c 0,1.39313 1.20665,2.52245 2.69517,2.52245 h 8.13845 c 1.488518,0 2.695178,-1.12932 2.695178,-2.52245 v -0.60675 c 0,-4.50469 14.0675,-4.6923 14.0675,-16.88227 1.1e-4,-9.18003 -10.17443,-16.14368 -19.706498,-16.14368 z m -1.12535,39.25136 c -4.28937,0 -7.77908,3.26605 -7.77908,7.28054 0,4.01438 3.48971,7.28042 7.77908,7.28042 4.28938,0 7.779078,-3.26604 7.779078,-7.28053 0,-4.01448 -3.489698,-7.28043 -7.779078,-7.28043 z" />
+              style="fill:#000000;fill-opacity:1;stroke-width:0.09777062"
+              d="m 52.399173,22.678706 c -8.015571,0 -13.207274,3.112972 -17.283294,8.664697 -0.739406,1.007102 -0.511448,2.387926 0.51998,3.129264 l 4.332003,3.113552 c 1.041668,0.748656 2.52379,0.573614 3.339323,-0.394842 2.515473,-2.987154 4.381401,-4.707021 8.310614,-4.707021 3.089375,0 6.910617,1.884656 6.910617,4.724346 0,2.146698 -1.86954,3.249187 -4.919961,4.87027 -3.557238,1.890453 -8.264615,4.243166 -8.264615,10.128626 v 0.931704 c 0,1.261736 1.079028,2.284543 2.410115,2.284543 h 7.277684 c 1.331084,0 2.410121,-1.022807 2.410121,-2.284543 v -0.549523 c 0,-4.079826 12.579646,-4.249741 12.579646,-15.290001 9.8e-5,-8.314206 -9.098328,-14.621072 -17.622233,-14.621072 z m -1.006327,35.549326 c -3.835704,0 -6.956323,2.958009 -6.956323,6.593869 0,3.635759 3.120619,6.593759 6.956323,6.593759 3.835712,0 6.956321,-2.958 6.956321,-6.593859 0,-3.63585 -3.120609,-6.593769 -6.956321,-6.593769 z"/>
          </svg>
          </div>
        </div>
      </div>
    </div>
    `;
-       },
+      },
 
       updatePlayerOrdering() {
         this.inherited(arguments);

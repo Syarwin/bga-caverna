@@ -23,41 +23,26 @@
 }
 
 #player_config {
+  padding-bottom: 8px;
+
   .player_config_row {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 10px 0px;
+    margin: 6px 0px;
   }
 
   #round-counter-wrapper {
     background-color: white;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--caverna-font-family);
-    margin: 4px 3px;
+    margin: 4px 3px 6px;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
     text-align: center;
     font-size: 19px;
     padding: 5px 7px 1px;
     display: block;
-  }
-
-  #round-phase {
-    text-align: center;
-    margin: 0px -3px 0px;
-    background: #ffffff63;
-    padding: 8px 0px 4px;
-    border-bottom: 1px solid #8080808c;
-    font-weight: bold;
-    font-size: 18px;
-    font-family: 'Oranienbaum';
-    color: black;
-    display: block;
-
-    &:empty {
-      display: none;
-    }
   }
 
   #uwe-help {
@@ -110,7 +95,7 @@
     }
   }
 
-  #show-help,
+  #show-ruby,
   #show-settings,
   #show-scores,
   #show-expedition {
@@ -128,6 +113,13 @@
     svg {
       width: auto;
       height: 40px;
+    }
+  }
+  #show-ruby,
+  #show-expedition {
+    svg {
+      width: auto;
+      height: 35px;
     }
   }
 
