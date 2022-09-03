@@ -368,7 +368,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_upgradeWeapon(n) {
       debug('Notif : upgrading weapons', n);
-      // TODO
+      n.args.dwarfs.forEach((dwarf) => {
+        $(`meeple-${dwarf.weaponId}`).dataset.force = dwarf.weapon;
+      });
     },
 
     /**

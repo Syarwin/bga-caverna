@@ -134,7 +134,7 @@ class Expedition extends \CAV\Models\Action
     self::checkAction('actExpedition');
     $args = $this->argsExpedition();
 
-    if (count($items) > $this->argsExpedition()['max']) {
+    if (count($items) > $this->argsExpedition()['n']) {
       throw new \BgaVisibleSystemException('Invalid loot selection');
     }
     if (empty($items)) {
