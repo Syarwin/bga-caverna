@@ -26,6 +26,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         );
 
         buildingsBoards[type].forEach((buildingId, i) => {
+          if (this.gamedatas.beginner && advancedBuildings.includes(buildingId)) return;
+
           dojo.place(
             `<div class="building-placeholder" data-id="${buildingId}"></div>`,
             board.querySelector(i < 6 ? '.building-board-left' : '.building-board-right'),
@@ -78,6 +80,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     updateBuildings() {
       // This function is refreshUI compatible
+      dojo.query('.office-room').removeClass('office-room');
       let buildingIds = this.gamedatas.buildings.map((building) => {
         this.loadSaveBuilding(building);
         // Create the building if needed
@@ -89,6 +92,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         let container = this.getBuildingContainer(building);
         if (o.parentNode != $(container)) {
           dojo.place(o, container);
+        }
+        if (building.type == 'G_OfficeRoom' && building.location == 'inPlay') {
+          $(`board-${building.pId}`).classList.add('office-room');
         }
 
         return parseInt(building.id);
@@ -313,9 +319,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this._selectableBuildings = [];
 
       if (n.args.player_id == this.player_id) {
-        this.slide(`building-${building.id}`, this.getBuildingContainer(building)).then(() =>
-          this.notifqueue.setSynchronousDuration(10),
-        );
+        this.slide(`building-${building.id}`, this.getBuildingContainer(building)).then(() => {
+          if (building.type == 'G_OfficeRoom') {
+            $(`board-${this.player_id}`).classList.add('office-room');
+          }
+          this.notifqueue.setSynchronousDuration(10);
+        });
       } else {
         this.showBuildingDetails(building, n);
       }

@@ -53,6 +53,10 @@
   &[data-type='StartDwelling'] .building-resizable {
     background: none;
     border: none;
+
+    .building-title {
+      margin-top: 3px;
+    }
   }
 
   .building-title {
@@ -83,8 +87,8 @@
   &::before {
     content: '';
     display: block;
-    width: 92px;
-    height: 21px;
+    width: 102%;
+    height: 22%;
     background: black;
     position: absolute;
     border-radius: 7px 7px 0px 0px;
@@ -150,6 +154,9 @@
     display: flex;
     flex-wrap: wrap;
     width: 430px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
   }
   .building-board-left {
     border-radius: 8px 0px 0px 8px;

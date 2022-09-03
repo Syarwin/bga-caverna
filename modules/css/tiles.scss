@@ -112,16 +112,18 @@
   }
 }
 
-.caverna-player-board .player-board-grid {
-  .board-cell .caverna-tile {
-    position: absolute;
-    margin: 0px;
-    left: -2px;
-    top: -2px;
-    border: none;
-  }
-  &.office-room {
-  }
+.office-room .board-cell.cell-node .square-selector,
+.caverna-player-board.office-room .player-board-grid .board-cell .caverna-tile {
+  width: 74px;
+  height: 74px;
+}
+
+.caverna-player-board .player-board-grid .board-cell .caverna-tile {
+  position: absolute;
+  margin: 0px;
+  left: -2px;
+  top: -2px;
+  border: none;
 }
 
 .board-cell.cell-node.selectable .square-selector {

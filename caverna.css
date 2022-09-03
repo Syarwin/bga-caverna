@@ -134,6 +134,11 @@ html {
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-1'] {
     border-left: none; }
 
+.office-room .board-cell.cell-node .square-selector,
+.caverna-player-board.office-room .player-board-grid .board-cell .caverna-tile {
+  width: 74px;
+  height: 74px; }
+
 .caverna-player-board .player-board-grid .board-cell .caverna-tile {
   position: absolute;
   margin: 0px;
@@ -404,6 +409,8 @@ html {
   .caverna-building[data-type='StartDwelling'] .building-resizable {
     background: none;
     border: none; }
+    .caverna-building[data-type='StartDwelling'] .building-resizable .building-title {
+      margin-top: 3px; }
   .caverna-building .building-title {
     height: 40px;
     margin: 0;
@@ -425,8 +432,8 @@ html {
   .board-cell .caverna-building::before {
     content: '';
     display: block;
-    width: 92px;
-    height: 21px;
+    width: 102%;
+    height: 22%;
     background: black;
     position: absolute;
     border-radius: 7px 7px 0px 0px;
@@ -480,7 +487,10 @@ html {
     background-size: 100% 100%;
     display: flex;
     flex-wrap: wrap;
-    width: 430px; }
+    width: 430px;
+    height: 100%;
+    justify-content: center;
+    align-items: center; }
   .buildings-board .building-board-left {
     border-radius: 8px 0px 0px 8px; }
   .buildings-board .building-board-right {
@@ -1164,7 +1174,7 @@ html {
   .action-card-holder[data-id='ActionWishChildren'] .action-desc {
     margin-top: 56px; }
   .action-card-holder[data-id='ActionUrgentWishChildren'] .action-desc {
-    margin-top: 64px; }
+    margin-top: 85px; }
 
 [data-actionCardName='0'] #central-board .action-card-holder {
   height: 144px; }
@@ -1214,22 +1224,6 @@ html {
     background-image: url("img/action_frame_bg.jpg");
     background-size: 200px 40px;
     box-shadow: 2px 2px 10px black; }
-    .player-board-wrapper .player-board-holder .cards-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 5px; }
-      .player-board-wrapper .player-board-holder .cards-wrapper .player-card {
-        /*
-        &.occupation {
-          order: 1;
-        }
-        &.minor {
-          order: 2;
-        }
-        &.major {
-          order: 3;
-        }
-        */ }
     .player-board-wrapper .player-board-holder .animals-counters {
       position: relative;
       display: flex;
@@ -1292,13 +1286,6 @@ html {
         position: relative;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px; }
-        .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid.office-room {
-          background-image: url("img/player-board.jpg");
-          background-size: 90% 90%;
-          grid-template-columns: 70px repeat(3, 4px 70px) 44px repeat(3, 70px 4px) 70px;
-          grid-template-rows: 70px repeat(4, 1px 70px) 1px 70px;
-          background-repeat: no-repeat;
-          background-position: 31px 33px; }
         .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell {
           display: flex;
           justify-content: center;
@@ -1324,6 +1311,16 @@ html {
             background-color: rgba(0, 255, 0, 0.5); }
             #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selected:hover {
               background-color: rgba(0, 255, 0, 0.9); }
+      .player-board-wrapper .player-board-holder .caverna-player-board.office-room {
+        height: 427px;
+        --cavernaBuildingScale: 0.35; }
+        .player-board-wrapper .player-board-holder .caverna-player-board.office-room .player-board-grid {
+          background-image: url("img/player-board.jpg");
+          background-size: 90% 90%;
+          grid-template-columns: 70px repeat(3, 4px 70px) 40px repeat(3, 70px 4px) 70px;
+          grid-template-rows: 70px repeat(4, 1px 70px) 1px 70px;
+          background-repeat: no-repeat;
+          background-position: 31px 31px; }
 
 #player-boards {
   display: flex;

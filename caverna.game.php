@@ -90,6 +90,7 @@ class caverna extends Table
       'scores' => Globals::isLiveScoring() ? Scores::compute() : null,
       'canceledNotifIds' => Log::getCanceledNotifIds(),
 
+      'beginner' => Globals::isBeginner(),
       'round' => Globals::getTurn(),
       'seed' => Globals::getTurn() == 15 ? Globals::getGameSeed() : false,
     ];
