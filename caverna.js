@@ -326,6 +326,7 @@ define([
         if (this._exchangeDialog) this._exchangeDialog.hide();
         if (this._showSeedDialog) this._showSeedDialog.destroy();
         $('popin_showRuby').classList.remove('active');
+        dojo.query('#buildings-container .caverna-building').removeClass('selectable selected');
         this.inherited(arguments);
       },
 

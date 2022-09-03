@@ -514,6 +514,12 @@ html {
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     margin: 10px; }
+    .buildings-board .building-placeholder[data-id='D_Dwelling'] {
+      position: relative; }
+      .buildings-board .building-placeholder[data-id='D_Dwelling'] .caverna-building {
+        position: absolute;
+        top: 0;
+        left: 0; }
 
 .building-board-button {
   width: 44px;

@@ -190,6 +190,15 @@
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     margin: 10px;
+
+    &[data-id='D_Dwelling'] {
+      position: relative;
+      .caverna-building {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
   }
 }
 

@@ -153,14 +153,19 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this._buildingStorage[building.id] = building;
       } else {
         // Building is missing information : load it from buildingStorage
+        let infos = {};
         if (this._buildingStorage[building.id] === undefined) {
-          console.error('Missing building informations :', building);
-          return;
+          if (building.type == 'D_Dwelling') {
+            infos = this._buildingStorage[1];
+          } else {
+            console.error('Missing building informations :', building);
+            return;
+          }
+        } else {
+          infos = this._buildingStorage[building.id];
         }
 
-        ['text', 'extraVp', 'name', 'tooltip', 'type', 'vp'].forEach(
-          (info) => (building[info] = this._buildingStorage[building.id][info]),
-        );
+        ['desc', 'extraVp', 'name', 'tooltip', 'type', 'vp'].forEach((info) => (building[info] = infos[info]));
       }
     },
 
@@ -317,6 +322,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let building = n.args.building;
       this.loadSaveBuilding(building);
       this._selectableBuildings = [];
+
+      if (building.type == 'D_Dwelling' && !$(`building-${building.id}`)) {
+        this.addBuilding(
+          building,
+          $('buildings-container').querySelector('.building-placeholder[data-id="D_Dwelling"]'),
+        );
+      }
 
       if (n.args.player_id == this.player_id) {
         this.slide(`building-${building.id}`, this.getBuildingContainer(building)).then(() => {
