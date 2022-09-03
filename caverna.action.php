@@ -74,52 +74,6 @@ class action_caverna extends APP_GameAction
     self::ajaxResponse();
   }
 
-  public function actDraftAdd()
-  {
-    self::setAjaxMode();
-    $cId = self::getArg('cardId', AT_alphanum, true);
-    $result = $this->game->actDraftAdd($cId);
-    self::ajaxResponse();
-  }
-  public function actDraftRemove()
-  {
-    self::setAjaxMode();
-    $cId = self::getArg('cardId', AT_alphanum, true);
-    $result = $this->game->actDraftRemove($cId);
-    self::ajaxResponse();
-  }
-  public function actDraftConfirm()
-  {
-    self::setAjaxMode();
-    $result = $this->game->actDraftConfirm();
-    self::ajaxResponse();
-  }
-
-  public function actOrderCards()
-  {
-    $ids = self::getArg('cardIds', AT_json, true);
-    $this->validateJSonAlphaNum($ids, 'cardIds');
-    $this->game->actOrderCards($ids);
-    self::ajaxResponse();
-  }
-
-  public function actPlaceDwarf()
-  {
-    self::setAjaxMode();
-    $cId = self::getArg('cId', AT_alphanum, true);
-    $result = $this->game->actPlaceDwarf($cId);
-    self::ajaxResponse();
-  }
-
-  public function actDraftCards()
-  {
-    self::setAjaxMode();
-    $cId = self::getArg('cId', AT_alphanum, true);
-    $cId2 = self::getArg('cId2', AT_alphanum, false);
-    $result = $this->game->actDraftCards([$cId, $cId2]);
-    self::ajaxResponse();
-  }
-
   public function actTakeAtomicAction()
   {
     self::setAjaxMode();

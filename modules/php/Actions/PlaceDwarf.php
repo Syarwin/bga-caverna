@@ -59,7 +59,9 @@ class PlaceDwarf extends \CAV\Models\Action
 
     // TODO: manage ruby possibility to use another dwarf
 
+    $weapon = $dwarf['weapon'] ?? 0;
     $args = [
+      'i18n' => ['dwarfDesc'],
       'dwarf' => $dwarf,
       'possibleWeapons' => $possibleWeapons,
       'hasRuby' => $player->countReserveResource(RUBY) != 0,
@@ -69,6 +71,11 @@ class PlaceDwarf extends \CAV\Models\Action
           return $card->canBePlayed($player, $dwarf);
         })
         ->getIds(),
+      'weapon' => $weapon,
+      'dwarfDesc' =>
+        $weapon == 0
+          ? clienttranslate('unarmed')
+          : ['log' => clienttranslate('${force} weapon strength'), 'args' => ['force' => $weapon]],
     ];
 
     $this->checkArgsModifiers($args, $player);

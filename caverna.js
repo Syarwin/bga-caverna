@@ -462,7 +462,34 @@ define([
        ************************/
       onEnteringStatePlaceDwarf(args) {
         this.promptActionCard(args.cards, (cId) => this.takeAtomicAction('actPlaceDwarf', [cId]), args.allCards);
+
+        let weapons = Object.keys(args.possibleWeapons);
+        if (args.canUseRuby && weapons.length > 1) {
+          this.addPrimaryActionButton(
+            'btnChangeDwarf',
+            this.formatStringMeeples(_('Pay 1 <RUBY> to change dwarf')),
+            () =>
+              this.clientState(
+                'placeDwarfChange',
+                _('Choose the weapon strength of the dwarf you want to place'),
+                args,
+              ),
+          );
+        }
       },
+      onEnteringStatePlaceDwarfChange(args) {
+        this.addCancelStateBtn();
+
+        let weapons = Object.keys(args.possibleWeapons);
+        weapons.forEach((weaponForce) => {
+          if (weaponForce != args.weapon) {
+            this.addPrimaryActionButton('btnChangeDwarf' + weaponForce, weaponForce, () => {
+              this.takeAtomicAction('actPlaceDwarf', [0, args.possibleWeapons[weaponForce].id]);
+            });
+          }
+        });
+      },
+
       onEnteringStateImitate(args) {
         this.promptActionCard(args.cards, (cId) => this.takeAtomicAction('actImitate', [cId]), args.allCards);
       },

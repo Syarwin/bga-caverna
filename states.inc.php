@@ -130,10 +130,10 @@ $machinestates = [
 
   ST_PLACE_DWARF => [
     'name' => 'placeDwarf',
-    'description' => clienttranslate('${actplayer} must place a person'),
-    'descriptionmyturn' => clienttranslate('${you} must place a person'),
-    'descriptionskippable' => clienttranslate('${actplayer} may place a person'),
-    'descriptionmyturnskippable' => clienttranslate('${you} may place a person'),
+    'description' => clienttranslate('${actplayer} must place a dwarf (${dwarfDesc})'),
+    'descriptionmyturn' => clienttranslate('${you} must place a dwarf (${dwarfDesc})'),
+    'descriptionskippable' => clienttranslate('${actplayer} may place a dwarf (${dwarfDesc})'),
+    'descriptionmyturnskippable' => clienttranslate('${you} may place a dwarf (${dwarfDesc})'),
     'args' => 'argsAtomicAction',
     'type' => 'activeplayer',
     'action' => 'stAtomicAction',
