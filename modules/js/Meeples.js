@@ -109,6 +109,24 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     addMeeple(meeple, location = null) {
       if ($('meeple-' + meeple.id)) return;
       this.place('tplMeeple', meeple, location == null ? this.getMeepleContainer(meeple) : location);
+
+      if (meeple.type == 'harvest_normal') {
+        this.addCustomTooltip(`meeple-${meeple.id}`, _('A normal harvest will take place at the end of this round.'));
+      } else if (meeple.type == 'harvest_none') {
+        this.addCustomTooltip(`meeple-${meeple.id}`, _('This round will end without any harvest.'));
+      } else if (meeple.type == 'harvest_1food') {
+        this.addCustomTooltip(
+          `meeple-${meeple.id}`,
+          _(
+            'At the end of this round, there is no harvest but instead you have to pay 1 Food per Dwarf in your cave (even for offspring Dwarfs). There is no Field or Breeding phase at this time.'
+          )
+        );
+      } else if (meeple.type == 'harvest_grey') {
+        this.addCustomTooltip(
+          `meeple-${meeple.id}`,
+          _('At the end of this round, there will be a harvest unless the hidden marker shows a red question mark.')
+        );
+      }
     },
 
     tplMeeple(meeple) {
@@ -160,7 +178,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         }
         return reserve;
       } else if (meeple.type.substring(0, 7) == 'harvest') {
-        return $(`${meeple.location}`);
+        return $(meeple.location).querySelector('.harvest-token-container');
       } else if (meeple.location.substr(0, 4) == 'turn') {
         return $(meeple.location).querySelector('[data-pid="' + meeple.pId + '"]');
       } else if ($(meeple.location)) {
@@ -331,7 +349,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     notif_revealHarvestToken(n) {
       debug('Notif: reveal harvest token', n);
-      debug('TODO');
+      let token = n.args.token;
+      let existing = $(`meeple-${token.id}`);
+      existing.id = 'flipping-harvest-token';
+      this.addMeeple(token);
+      this.flipAndReplace(existing, $(`meeple-${token.id}`));
     },
 
     /**

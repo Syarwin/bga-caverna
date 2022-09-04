@@ -778,6 +778,15 @@ html {
     [data-turn='14'] #central-board .turn-action-container#turn_14 .action-card-holder {
       border: 2px solid #fffb00;
       margin: 0; }
+    #central-board .turn-action-container .harvest-token-container {
+      position: absolute;
+      width: 34px;
+      height: 33px;
+      top: 70px;
+      right: -10px;
+      z-index: 5; }
+    #central-board .turn-action-container .action-card-holder {
+      z-index: 3; }
   #central-board .harvest-slot {
     position: absolute;
     border-radius: 4px;
@@ -1594,6 +1603,40 @@ html {
     background-position: 83.3333333333% 100%; }
   .meeple-weapon[data-force='14'] {
     background-position: 100% 100%; }
+
+.meeple-harvest_none,
+.meeple-harvest_normal,
+.meeple-harvest_grey,
+.meeple-harvest_1food {
+  background-image: url("img/harvest_tokens.png");
+  background-size: 100% 600%;
+  width: 2rem;
+  height: 2rem; }
+  .meeple-harvest_none.meeple-harvest_normal,
+  .meeple-harvest_normal.meeple-harvest_normal,
+  .meeple-harvest_grey.meeple-harvest_normal,
+  .meeple-harvest_1food.meeple-harvest_normal {
+    background-position-y: 20%; }
+  .meeple-harvest_none.meeple-harvest_grey,
+  .meeple-harvest_normal.meeple-harvest_grey,
+  .meeple-harvest_grey.meeple-harvest_grey,
+  .meeple-harvest_1food.meeple-harvest_grey {
+    background-position-y: 40%; }
+  .meeple-harvest_none.meeple-harvest_none,
+  .meeple-harvest_normal.meeple-harvest_none,
+  .meeple-harvest_grey.meeple-harvest_none,
+  .meeple-harvest_1food.meeple-harvest_none {
+    background-position-y: 60%; }
+  .meeple-harvest_none.meeple-harvest_1food,
+  .meeple-harvest_normal.meeple-harvest_1food,
+  .meeple-harvest_grey.meeple-harvest_1food,
+  .meeple-harvest_1food.meeple-harvest_1food {
+    background-position-y: 80%; }
+  .meeple-harvest_none .help-marker,
+  .meeple-harvest_normal .help-marker,
+  .meeple-harvest_grey .help-marker,
+  .meeple-harvest_1food .help-marker {
+    top: -8px; }
 
 .meeple-firstPlayer {
   width: 0.4em;

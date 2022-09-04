@@ -581,6 +581,8 @@ define([
       },
 
       onEnteringStateExpedition(args) {
+        if(args.max == 0) return;
+        
         this._expeditionDialog.show();
         this.addPrimaryActionButton('btnShowLoot', _('Show possible loot items'), () => this._expeditionDialog.show());
         $('popin_showExpedition').classList.add('action');

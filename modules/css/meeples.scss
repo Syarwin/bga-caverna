@@ -192,7 +192,7 @@
     background-position-x: 100%;
     width: 0.8em;
     height: 1.1em;
-    filter:grayscale(1);
+    filter: grayscale(1);
   }
   &.meeple-dwarf_icon {
     background-image: url('img/dwarves.png');
@@ -332,6 +332,33 @@
     &[data-force='#{$i}'] {
       background-position: ($i - 8) * 100% / 6 100%;
     }
+  }
+}
+
+.meeple-harvest_none,
+.meeple-harvest_normal,
+.meeple-harvest_grey,
+.meeple-harvest_1food {
+  background-image: url('img/harvest_tokens.png');
+  background-size: 100% 600%;
+  width: 2rem;
+  height: 2rem;
+
+  &.meeple-harvest_normal {
+    background-position-y: 20%;
+  }
+  &.meeple-harvest_grey {
+    background-position-y: 40%;
+  }
+  &.meeple-harvest_none {
+    background-position-y: 60%;
+  }
+  &.meeple-harvest_1food {
+    background-position-y: 80%;
+  }
+
+  .help-marker {
+    top: -8px;
   }
 }
 

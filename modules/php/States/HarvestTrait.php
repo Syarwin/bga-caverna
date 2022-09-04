@@ -126,7 +126,11 @@ trait HarvestTrait
       'action' => PAY,
       'pId' => $player->getId(),
       'resolveParent' => true,
-      'args' => $costs,
+      'args' => [
+        'costs' => $costs,
+        'source' => clienttranslate('Harvest'),
+        'harvest' => true,
+      ],
     ];
 
     // Inserting into engine
