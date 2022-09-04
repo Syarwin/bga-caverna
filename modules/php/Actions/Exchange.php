@@ -20,7 +20,7 @@ class Exchange extends \CAV\Models\Action
   public function getDescription($ignoreResources = false)
   {
     $trigger = $this->getCtxArgs()['trigger'] ?? ANYTIME;
-    return clienttranslate('Cook / Exchange resources');
+    return clienttranslate('Exchange resources');
   }
 
   /**

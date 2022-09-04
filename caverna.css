@@ -1345,6 +1345,11 @@ html {
 #game_play_area {
   font-size: 30px; }
 
+.bgabutton .exchange-icon {
+  width: 25px;
+  height: 25px;
+  margin: -4px 0px; }
+
 .meeple-container {
   display: inline-block;
   vertical-align: middle;

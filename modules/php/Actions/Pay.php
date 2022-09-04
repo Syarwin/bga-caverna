@@ -197,7 +197,7 @@ class Pay extends \CAV\Models\Action
       ],
     ];
     if ($begging > 0) {
-      $desc['log'] = clienttranslate('Pay ${resources_desc} and take ${n} beggar cards to feed your family');
+      $desc['log'] = clienttranslate('Pay ${resources_desc} and take ${n} beggar markers to feed your family');
       $desc['args']['n'] = $begging;
     }
 
