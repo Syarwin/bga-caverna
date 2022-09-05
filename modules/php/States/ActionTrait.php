@@ -73,7 +73,7 @@ trait ActionTrait
     }
     // Cook/exchange
     if ($args['canGoToExchange'] ?? true) {
-      $listeningCards['childs'][] = ['action' => EXCHANGE, 'pId' => $player->getId(), 'desc' => '<COOK>'];
+      $listeningCards['childs'][] = ['action' => EXCHANGE, 'pId' => $player->getId(), 'desc' => '<EXCHANGE>'];
     }
 
     // Keep only doable actions

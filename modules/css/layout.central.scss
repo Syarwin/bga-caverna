@@ -132,6 +132,19 @@
         margin: 0;
       }
     }
+
+    .harvest-token-container {
+      position: absolute;
+      width: 34px;
+      height: 33px;
+      top: 70px;
+      right: -10px;
+      z-index: 5;
+    }
+
+    .action-card-holder {
+      z-index: 3;
+    }
   }
 
   .harvest-slot {

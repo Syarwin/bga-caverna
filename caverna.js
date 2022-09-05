@@ -141,6 +141,17 @@ define([
         this._modalContainerOpen = null;
 
         this._settingsConfig = {
+          dwarfAsset: {
+            default: 0,
+            name: _('Dwarf asset'),
+            attribute: 'dwarf',
+            type: 'select',
+            values: {
+              0: _('Original discs'),
+              1: _('Meeples'),
+              2: _('Colorblind meeples'),
+            },
+          },
           actionBoardName: {
             default: 0,
             name: _('Action Card Names'),
@@ -179,7 +190,7 @@ define([
         dojo.place(
           "<div id='anytimeActions' style='display:inline-block;float:right'></div>",
           $('generalactions'),
-          'after',
+          'after'
         );
         // 3D ribbon
         dojo.place('<div id="page-title-left-ribbon" class="ribbon-effect"></div>', 'page-title');
@@ -369,7 +380,7 @@ define([
                 'btnAnytimeAction' + i,
                 msg,
                 () => this.takeAction('actAnytimeAction', { id: i }, false),
-                'anytimeActions',
+                'anytimeActions'
               );
             });
           }
@@ -381,7 +392,7 @@ define([
             'btnShowRuby',
             this.formatStringMeeples(_('Use <RUBY>')),
             () => this._rubyDialog.show(),
-            'anytimeActions',
+            'anytimeActions'
           );
           $('popin_showRuby').classList.add('active');
         }
@@ -402,7 +413,7 @@ define([
         this.addSecondaryActionButton(
           'btnChoice' + choice.id,
           desc,
-          disabled ? () => {} : () => this.takeAction('actChooseAction', { id: choice.id }),
+          disabled ? () => {} : () => this.takeAction('actChooseAction', { id: choice.id })
         );
         if (disabled) {
           dojo.addClass('btnChoice' + choice.id, 'disabled');
@@ -420,7 +431,7 @@ define([
             choiceId: 0,
             description: args.desc,
           },
-          true,
+          true
         );
       },
 
@@ -456,11 +467,7 @@ define([
             'btnChangeDwarf',
             this.formatStringMeeples(_('Pay 1 <RUBY> to change dwarf')),
             () =>
-              this.clientState(
-                'placeDwarfChange',
-                _('Choose the weapon strength of the dwarf you want to place'),
-                args,
-              ),
+              this.clientState('placeDwarfChange', _('Choose the weapon strength of the dwarf you want to place'), args)
           );
         }
       },
@@ -487,7 +494,7 @@ define([
           this.addPrimaryActionButton(
             `btnForge${force}`,
             this.format_string_recursive(_('Strength ${force}'), { force }),
-            () => this.takeAtomicAction('actBlacksmith', [force]),
+            () => this.takeAtomicAction('actBlacksmith', [force])
           );
         }
       },
@@ -542,16 +549,16 @@ define([
             <div class='expedition-lvl-weapon' data-force='${i}'></div>
             <div id="expedition-lvl-${i}" class='expedition-lvl-container'></div>
           </div>`,
-            `expedition-container-${i < 9 ? 'left' : 'right'}`,
+            `expedition-container-${i < 9 ? 'left' : 'right'}`
           );
         }
 
         let addLoot = (force, name, text) => {
           dojo.place(
             `<button data-name="${name}" class='action-button bgabutton bgabutton_gray'>${this.formatStringMeeples(
-              text,
+              text
             )}</button>`,
-            `expedition-lvl-${force}`,
+            `expedition-lvl-${force}`
           );
         };
 
@@ -581,6 +588,8 @@ define([
       },
 
       onEnteringStateExpedition(args) {
+        if (args.max == 0) return;
+
         this._expeditionDialog.show();
         this.addPrimaryActionButton('btnShowLoot', _('Show possible loot items'), () => this._expeditionDialog.show());
         $('popin_showExpedition').classList.add('action');
@@ -610,7 +619,7 @@ define([
               dojo.destroy('btnClearLoot');
               dojo.destroy('btnConfirmLoot');
             },
-            'expedition-footer',
+            'expedition-footer'
           );
 
           dojo.destroy('btnConfirmLoot');
@@ -627,7 +636,7 @@ define([
               this.takeAtomicAction('actExpedition', [selected]);
               this._expeditionDialog.hide();
             },
-            'expedition-footer',
+            'expedition-footer'
           );
         };
 
@@ -676,9 +685,9 @@ define([
         let addUsage = (cost, name, text) => {
           let button = dojo.place(
             `<button data-name="${name}" class='action-button bgabutton bgabutton_gray'>${this.formatStringMeeples(
-              text,
+              text
             )}</button>`,
-            `ruby-${cost}`,
+            `ruby-${cost}`
           );
           this.onClick(
             button,
@@ -688,7 +697,7 @@ define([
                 this.takeAction('actUseRuby', { power: name });
               }
             },
-            false,
+            false
           );
         };
 
@@ -735,7 +744,7 @@ define([
         if (!args.automaticAction) {
           // Setup and display dialog
           this.addPrimaryActionButton('btnShowPossibleExchanges', _('Show possible exchanges'), () =>
-            this._exchangeDialog.show(),
+            this._exchangeDialog.show()
           );
           this.setupExchangeModal();
         }
@@ -789,7 +798,7 @@ define([
           dojo.place(
             '<h3>' + _('Excess animals in reserve:') + ' ' + this.computeExtraAnimalsDesc() + '</h3>',
             'exchanges-container',
-            'before',
+            'before'
           );
         }
 
@@ -839,7 +848,7 @@ define([
           // Enough resources
           RESOURCES.reduce(
             (acc, res) => acc && newReserve[res] >= (exchange.from[res] == undefined ? 0 : exchange.from[res]),
-            true,
+            true
           ) &&
           // If max is supplied, shouldn't be reached already
           (exchange.max == undefined || exchange.max > this._currentExchanges.filter((e) => e == ex).length)
@@ -923,7 +932,7 @@ define([
             'btnClearExchange',
             _('Clear'),
             () => this.clearExchanges(),
-            'exchanges-dialog-footer',
+            'exchanges-dialog-footer'
           );
         }
 
@@ -941,7 +950,7 @@ define([
             'btnConfirmExchange',
             dojo.string.substitute(this.formatStringMeeples(_('Confirm and take ${begging} <BEGGING>')), { begging }),
             () => confirmExchanges(),
-            'exchanges-dialog-footer',
+            'exchanges-dialog-footer'
           );
         } else if (extraAnimals != '' && this._mandatoryExchange) {
           this.addDangerActionButton(
@@ -950,14 +959,14 @@ define([
               extraAnimals,
             }),
             () => confirmExchanges(),
-            'exchanges-dialog-footer',
+            'exchanges-dialog-footer'
           );
         } else if (this._currentExchanges.length > 0) {
           this.addPrimaryActionButton(
             'btnConfirmExchange',
             _('Confirm'),
             () => confirmExchanges(),
-            'exchanges-dialog-footer',
+            'exchanges-dialog-footer'
           );
         } else {
           if (!this._mandatoryExchange || this.gamedatas.gamestate.args.optionalAction) {
@@ -965,7 +974,7 @@ define([
               'btnPassExchange',
               _('Pass'),
               () => this.takeAction('actPassOptionalAction'),
-              'exchanges-dialog-footer',
+              'exchanges-dialog-footer'
             );
           }
         }
@@ -987,7 +996,7 @@ define([
         let desc = this.formatStringMeeples(
           this.formatResourceArray(exchange.from, false) +
             `<ARROW${arrowN}>` +
-            this.formatResourceArray(exchange.to, false),
+            this.formatResourceArray(exchange.to, false)
         );
 
         return `
@@ -1054,7 +1063,7 @@ define([
 
           // Add button
           this.addSecondaryActionButton('btnChoiceRenovate' + i, log, () =>
-            this.takeAtomicAction('actRenovation', [cost]),
+            this.takeAtomicAction('actRenovation', [cost])
           );
         });
       },
@@ -1276,7 +1285,7 @@ define([
           'btnConfirmSeedPrompt',
           _('Confirm'),
           () => this.onConfirmSeed(),
-          'seed-dialog-footer',
+          'seed-dialog-footer'
         );
       },
 
@@ -1294,7 +1303,7 @@ define([
         dojo.place('<div id="game-seed"></div>', 'anytimeActions', 'after');
         $('game-seed').innerHTML = dojo.string.substitute(
           _('Want to play with same configuration ? Here is the seed of your game : <code>${seed}</code>'),
-          { seed },
+          { seed }
         );
         dojo.style('game-seed', {
           display: 'inline-block',
@@ -1354,7 +1363,7 @@ define([
           }</button></div>`;
 
         let introBubble = _(
-          "Welcome to Agricola on BGA. I'm here to give you a tour of the interface, to make sure you'll enjoy your games to the fullest.",
+          "Welcome to Agricola on BGA. I'm here to give you a tour of the interface, to make sure you'll enjoy your games to the fullest."
         );
         let introSectionUI = _('Global interface overview');
         let introSectionScoring = _('Scoring');
@@ -1365,30 +1374,30 @@ define([
         let panelInfoItems = [
           _('my face: open this tour if you need it later'),
           _(
-            "the switch will allow to toggle the safe/help mode: when enabled, clicking will do nothing, and instead will open tooltips on any elements with a question mark on it, making it sure you won't misclick",
+            "the switch will allow to toggle the safe/help mode: when enabled, clicking will do nothing, and instead will open tooltips on any elements with a question mark on it, making it sure you won't misclick"
           ),
           _('the star calendar: details of live scores (only if corresponding game option was enabled)'),
           _('the star: a breakdown of the endgame scoring'),
           _(
-            "settings: this implementation comes with a lot of ways to customize your experience to your needs. Take some time to play with them until you're comfortable",
+            "settings: this implementation comes with a lot of ways to customize your experience to your needs. Take some time to play with them until you're comfortable"
           ),
         ];
 
         let centralBoardBubble = _(
-          'This is the central board where you take your actions. It consists of these parts:',
+          'This is the central board where you take your actions. It consists of these parts:'
         );
         let centralBoardItems = [
           _(
-            'Primary action spaces: available at the start of the game, the left column may vary or disappear based on the number of players',
+            'Primary action spaces: available at the start of the game, the left column may vary or disappear based on the number of players'
           ),
           _(
-            'Action space cards: one card is revealed at the start of each round. They are organized in 6 stages, randomized within each stage (the question mark on the round numbers preview the possible action space cards.) Each stage ends with a harvest:',
+            'Action space cards: one card is revealed at the start of each round. They are organized in 6 stages, randomized within each stage (the question mark on the round numbers preview the possible action space cards.) Each stage ends with a harvest:'
           ),
           _(
-            'Additional tile: this is only present if you enable the corresponding game option. It provides additional actions that are linked together: if a player places a farmer on one of the actions, all the other linked actions also become unavailable.',
+            'Additional tile: this is only present if you enable the corresponding game option. It provides additional actions that are linked together: if a player places a farmer on one of the actions, all the other linked actions also become unavailable.'
           ),
           _(
-            'You may notice this section is adapted to be tablet/mobile-friendly (less wide than real components). It is publisher-approved and affected cards will be adapted or omitted.',
+            'You may notice this section is adapted to be tablet/mobile-friendly (less wide than real components). It is publisher-approved and affected cards will be adapted or omitted.'
           ),
         ];
 
@@ -1396,65 +1405,65 @@ define([
         let cardsBtnItems = [
           _('Clicking the Fireplace icon brings up the Major Improvements board.'),
           _(
-            'The other icon (with mixed card types) brings up your hand of Occupations and Minor Improvements. It will not appear if you are in Beginner Mode, or if you have customized the setting to move it elsewhere.',
+            'The other icon (with mixed card types) brings up your hand of Occupations and Minor Improvements. It will not appear if you are in Beginner Mode, or if you have customized the setting to move it elsewhere.'
           ),
         ];
 
         let playerBoardBubble = _(
-          'This is your personal farmyard board. Here you can build rooms, build fences, build stables, or plow fields.',
+          'This is your personal farmyard board. Here you can build rooms, build fences, build stables, or plow fields.'
         );
         let playerPanelBubble = _('These player panels contain a lot of useful information!');
         let playerPanelItems = [
           _('Top section: resources and food in personal supply.'),
           _('Middle section: animals currently on farm, and actions remaining.'),
           _(
-            'Bottom section: a reminder that each player can only have up to 5 farmers, 15 fence pieces, and 4 stables!',
+            'Bottom section: a reminder that each player can only have up to 5 farmers, 15 fence pieces, and 4 stables!'
           ),
           _(
-            'The number after the / in your food reserve is a reminder of how much food the player currently needs for the next harvest.',
+            'The number after the / in your food reserve is a reminder of how much food the player currently needs for the next harvest.'
           ),
         ];
 
         let cookBubble = _(
-          'In Agricola, cooking animals and seed can be a crucial step to provide the food you need to feed your people.',
+          'In Agricola, cooking animals and seed can be a crucial step to provide the food you need to feed your people.'
         );
         let cookItems = [
           _(
-            'All resource conversions happens in this window: just click on the exchanges you want to make before hitting "Confirm".',
+            'All resource conversions happens in this window: just click on the exchanges you want to make before hitting "Confirm".'
           ),
           _(
-            'If you need to make an exchange, just click on this button to open the previous modal (button is only present if you can do at least one exchange).',
+            'If you need to make an exchange, just click on this button to open the previous modal (button is only present if you can do at least one exchange).'
           ),
         ];
 
         let reorganizeBubble = _(
-          'Whenever you obtain animals, you must immediately accomodate them in your farm, otherwise they will be discarded (or cooked if you have the proper improvement.)',
+          'Whenever you obtain animals, you must immediately accomodate them in your farm, otherwise they will be discarded (or cooked if you have the proper improvement.)'
         );
         let reorganizeItems = [
           _(
-            'Most of the time, the game will automatically accommodate your animals in the best spot ever. However, you may also arrange them manually by either changing the "automatic" setting or by clicking this button:',
+            'Most of the time, the game will automatically accommodate your animals in the best spot ever. However, you may also arrange them manually by either changing the "automatic" setting or by clicking this button:'
           ),
           _(
-            'Click on the small arrows that pop up in your pastures, stables, and rooms to choose how your animals should be arranged.',
+            'Click on the small arrows that pop up in your pastures, stables, and rooms to choose how your animals should be arranged.'
           ),
           _(
-            'These controls will clear all, decrease, increase, or maximize a specific animal type in each of your pastures/stables/rooms.',
+            'These controls will clear all, decrease, increase, or maximize a specific animal type in each of your pastures/stables/rooms.'
           ),
         ];
 
         let bugBubble = _('No code is error-free. Before reporting a bug, please follow the following steps.');
         let bugItems = [
           _(
-            'If the issue is related to a card, please use the unique identifier (deck + number, e.g. A001) instead of the name.',
+            'If the issue is related to a card, please use the unique identifier (deck + number, e.g. A001) instead of the name.'
           ),
           _(
-            'If your language is not English, please check the English card description using the unique identifier. If there is an incorrect translation to your language, please do not report a bug and use the translation module (Community > Translation) to fix it directly.',
+            'If your language is not English, please check the English card description using the unique identifier. If there is an incorrect translation to your language, please do not report a bug and use the translation module (Community > Translation) to fix it directly.'
           ),
           _(
-            'For rules-related bugs, please double-check the rulebook before reporting to make sure you have it correct. The majority of rules-related bugs submitted so far... have not actually been bugs :/',
+            'For rules-related bugs, please double-check the rulebook before reporting to make sure you have it correct. The majority of rules-related bugs submitted so far... have not actually been bugs :/'
           ),
           _(
-            'When you encounter a bug, please refresh your page to see if the bug goes away. Knowing whether or not a bug is persisting through refresh or not will help us find and fix it, so please include that in the bug report!',
+            'When you encounter a bug, please refresh your page to see if the bug goes away. Knowing whether or not a bug is persisting through refresh or not will help us find and fix it, so please include that in the bug report!'
           ),
         ];
         let bugReport = _('Report a new bug');
@@ -1627,6 +1636,6 @@ define([
             </div>
           `;
       },
-    },
+    }
   );
 });

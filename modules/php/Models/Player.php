@@ -565,18 +565,20 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getHarvestCost()
   {
-    $costs = [
-      'nb' => $this->countDwarfs(),
-      'costs' => [
-        'trades' => [['max' => $this->countDwarfs(ADULT), 'nb' => 1, FOOD => Globals::getHarvestCost()]],
-      ],
-      'source' => clienttranslate('Harvest'),
-      'harvest' => true,
-    ];
+    // $costs = [
+    //   'nb' => $this->countDwarfs(),
+    //   'costs' => [
+    //     'trades' => [['max' => $this->countDwarfs(ADULT), 'nb' => 1, FOOD => Globals::getHarvestCost()]],
+    //   ],
+    //   'source' => clienttranslate('Harvest'),
+    //   'harvest' => true,
+    // ];
+    //
+    // if ($this->countDwarfs(CHILD) != 0) {
+    //   Utils::addCost($costs, ['max' => $this->countDwarfs(CHILD), 'nb' => 1, FOOD => 1]);
+    // }
 
-    if ($this->countDwarfs(CHILD) != 0) {
-      Utils::addCost($costs, ['max' => $this->countDwarfs(CHILD), 'nb' => 1, FOOD => 1]);
-    }
+    $costs = Utils::formatFee([FOOD => $this->getHarvestFoodCost()]);
     return $costs;
   }
 

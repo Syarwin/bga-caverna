@@ -50,15 +50,15 @@ class Meeples extends \CAV\Helpers\Pieces
     $meeples[] = ['type' => 'firstPlayer', 'player_id' => $order[0], 'location' => 'reserve', 'nbr' => 1];
 
     // Setup of the harvest Tokens
-    $meeples[] = ['type' => \HARVEST_NONE, 'location' => 'turn_1', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
-    $meeples[] = ['type' => \HARVEST_NONE, 'location' => 'turn_2', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
-    $meeples[] = ['type' => \HARVEST_NORMAL, 'location' => 'turn_3', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
-    $meeples[] = ['type' => \HARVEST_1FOOD, 'location' => 'turn_4', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
-    $meeples[] = ['type' => \HARVEST_NORMAL, 'location' => 'turn_5', 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_NONE, 'location' => 'turn_1', 'player_id' => 0, 'state' => 1, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_NONE, 'location' => 'turn_2', 'player_id' => 0, 'state' => 1, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_NORMAL, 'location' => 'turn_3', 'player_id' => 0, 'state' => 1, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_1FOOD, 'location' => 'turn_4', 'player_id' => 0, 'state' => 1, 'nbr' => 1];
+    $meeples[] = ['type' => \HARVEST_NORMAL, 'location' => 'turn_5', 'player_id' => 0, 'state' => 1, 'nbr' => 1];
 
     if (count($players) == 1) {
       for ($i = 6; ($i = 12); $i++) {
-        $meeples[] = ['type' => HARVEST_NORMAL, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 0, 'nbr' => 1];
+        $meeples[] = ['type' => HARVEST_NORMAL, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 1, 'nbr' => 1];
       }
     } else {
       $harvestTokens = ['red', 'red', 'red', HARVEST_NORMAL, HARVEST_NORMAL, HARVEST_NORMAL, HARVEST_NORMAL];
@@ -285,7 +285,7 @@ class Meeples extends \CAV\Helpers\Pieces
   {
     // Reveal harvest token if needed
     $harvest = self::getHarvestToken();
-    if ($harvest != null) {
+    if ($harvest != null && $harvest['state'] == 0) {
       self::DB()->update(['meeple_state' => 1], $harvest['id']);
       $hToken = self::get($harvest['id']);
       Notifications::revealHarvestToken($hToken);

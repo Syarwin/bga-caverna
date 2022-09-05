@@ -110,7 +110,7 @@ trait HarvestTrait
     if (Actions::isDoable(EXCHANGE, [], $player)) {
       // Do we have to enter pay ?
       $pref = $player->getPref(OPTION_AUTOPAY_HARVEST);
-      $cantPay = !Actions::isDoable(PAY, $costs, $player);
+      $cantPay = !Actions::isDoable(PAY, ['costs' => $costs], $player);
       $hasSpecialExchange = Actions::isDoable(EXCHANGE, ['exclusive' => true], $player);
       if ($pref != OPTION_AUTOPAY_HARVEST_ENABLED || $cantPay || $hasSpecialExchange) {
         $reaction['childs'][] = [
@@ -126,7 +126,11 @@ trait HarvestTrait
       'action' => PAY,
       'pId' => $player->getId(),
       'resolveParent' => true,
-      'args' => $costs,
+      'args' => [
+        'costs' => $costs,
+        'source' => clienttranslate('Harvest'),
+        'harvest' => true,
+      ],
     ];
 
     // Inserting into engine

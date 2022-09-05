@@ -109,6 +109,24 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     addMeeple(meeple, location = null) {
       if ($('meeple-' + meeple.id)) return;
       this.place('tplMeeple', meeple, location == null ? this.getMeepleContainer(meeple) : location);
+
+      if (meeple.type == 'harvest_normal') {
+        this.addCustomTooltip(`meeple-${meeple.id}`, _('A normal harvest will take place at the end of this round.'));
+      } else if (meeple.type == 'harvest_none') {
+        this.addCustomTooltip(`meeple-${meeple.id}`, _('This round will end without any harvest.'));
+      } else if (meeple.type == 'harvest_1food') {
+        this.addCustomTooltip(
+          `meeple-${meeple.id}`,
+          _(
+            'At the end of this round, there is no harvest but instead you have to pay 1 Food per Dwarf in your cave (even for offspring Dwarfs). There is no Field or Breeding phase at this time.'
+          )
+        );
+      } else if (meeple.type == 'harvest_grey') {
+        this.addCustomTooltip(
+          `meeple-${meeple.id}`,
+          _('At the end of this round, there will be a harvest unless the hidden marker shows a red question mark.')
+        );
+      }
     },
 
     tplMeeple(meeple) {
@@ -160,7 +178,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         }
         return reserve;
       } else if (meeple.type.substring(0, 7) == 'harvest') {
-        return $(`${meeple.location}`);
+        return $(meeple.location).querySelector('.harvest-token-container');
       } else if (meeple.location.substr(0, 4) == 'turn') {
         return $(meeple.location).querySelector('[data-pid="' + meeple.pId + '"]');
       } else if ($(meeple.location)) {
@@ -331,7 +349,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     notif_revealHarvestToken(n) {
       debug('Notif: reveal harvest token', n);
-      debug('TODO');
+      let token = n.args.token;
+      let existing = $(`meeple-${token.id}`);
+      existing.id = 'flipping-harvest-token';
+      this.addMeeple(token);
+      this.flipAndReplace(existing, $(`meeple-${token.id}`));
     },
 
     /**
@@ -427,6 +449,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         str = str.replace(/\[([^\]]+)\]/gi, '<span class="text">$1</span>'); // Replace [my text] by <span clas="text">my text</span>
       });
       str = str.replace(/\{\{([^\}]+)\}\}/gi, '<div class="text-wrapper">$1</div>'); // Replace {{my wrapped text}} by <div clas="text-wrapper">my wrapped text</div>
+      str = str.replace(
+        '<EXCHANGE>',
+        `<svg class="exchange-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M422.6 278.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L434.7 176H64c-17.7 0-32-14.3-32-32s14.3-32 32-32H434.7L377.4 54.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l112 112c12.5 12.5 12.5 32.8 0 45.3l-112 112zm-269.3 224l-112-112c-12.5-12.5-12.5-32.8 0-45.3l112-112c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L141.3 336H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H141.3l57.4 57.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0z"/></svg>`
+      );
       return str;
     },
 
