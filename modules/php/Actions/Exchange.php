@@ -125,7 +125,7 @@ class Exchange extends \CAV\Models\Action
       'resources' => $player->getExchangeResources(),
       'trigger' => $trigger,
       'canGoToExchange' => false,
-      'extraAnimals' => $player->countAnimalsInReserve(),
+      'extraAnimals' => $player->countFarmAnimalsInReserve(),
       'mandatory' => $this->isMandatory(),
     ];
   }

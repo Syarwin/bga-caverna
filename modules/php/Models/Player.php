@@ -422,6 +422,13 @@ class Player extends \CAV\Helpers\DB_Model
     return $this->countAnimalsInLocation('reserve', $res);
   }
 
+  public function countFarmAnimalsInReserve($res = null)
+  {
+    $reserve = $this->countAnimalsInLocation('reserve', $res);
+    unset($reserve[DOG]);
+    return $reserve;
+  }
+
   /**
    * Which animals can be converted by a card?
    */
