@@ -662,6 +662,7 @@ class PlayerBoard
     // Get buildable zone
     $zones = [];
     if (count($tiles) == 1) {
+      $this->isExtended = false;
       foreach ($this->getPlacableZones($tiles[0]) as $pos) {
         $zones[] = [
           'pos1' => $pos,
@@ -673,6 +674,14 @@ class PlayerBoard
         foreach ($this->getPlacableZones($tiles[$i]) as $pos) {
           $neighbours = $this->getAdjacentZones($this->getPlacableZones($tiles[1 - $i], false), [$pos]);
           foreach ($neighbours as $pos2) {
+            // We cannot place 2 tiles outside of the board
+            if (
+              !in_array($tile, [TILE_MINE_DEEP_TUNNEL, TILE_LARGE_PASTURE, TILE_MINE_DEEP_TUNNEL]) &&
+              $this->checkExtended($pos) &&
+              $this->checkExtended($pos2)
+            ) {
+              continue;
+            }
             $zones[] = [
               'pos1' => $i == 0 ? $pos : $pos2,
               'pos2' => $i == 0 ? $pos2 : $pos,
@@ -711,6 +720,7 @@ class PlayerBoard
       list($square, $coveredBonus) = $this->addTileSquare($tiles[0], $tileAsset, $positions[0]);
       $squares[] = $square;
       $bonus = $bonus ?? $coveredBonus;
+      $this->isExtended = false;
       return [$squares, $bonus];
     } elseif (count($tiles) == 2) {
       // Compute rotation
@@ -992,6 +1002,11 @@ class PlayerBoard
     } else {
       return $x >= 0 && $x <= 12 && $y >= 0 && $y <= 8;
     }
+  }
+
+  protected function checkExtended($pos)
+  {
+    return $pos['x'] == -1 || $pos['x'] == 13 || $pos['y'] == -1 || $pos['y'] == 9;
   }
 
   protected function checkNodePos(&$x, &$y = null)

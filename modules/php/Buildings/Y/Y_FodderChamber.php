@@ -27,7 +27,7 @@ class Y_FodderChamber extends \CAV\Models\Building
     $player = $this->getPlayer();
     $animals = 0;
     $reserve = $player->getExchangeResources();
-    foreach (ANIMALS as $type) {
+    foreach (FARM_ANIMALS as $type) {
       $animals += $reserve[$type];
     }
     $bonus = floor($animals / 3);

@@ -71,7 +71,7 @@ trait DebugTrait
     Engine::insertAtRoot(
       [
         'action' => PLACE_TILE,
-        'args' => ['tiles' => [TILE_LARGE_PASTURE]],
+        'args' => ['tiles' => [\TILE_LARGE_PASTURE]],
       ],
       false
     );

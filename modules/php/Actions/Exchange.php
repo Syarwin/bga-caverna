@@ -251,7 +251,7 @@ class Exchange extends \CAV\Models\Action
     if ($this->isMandatory()) {
       // If it was mandatory, discard excess animals
       $animals = $player->getAllReserveResources();
-      foreach (ANIMALS as $type) {
+      foreach (FARM_ANIMALS as $type) {
         if ($animals[$type] != 0) {
           Notifications::discardAnimals($player, $player->useResource($type, $animals[$type]));
         }
