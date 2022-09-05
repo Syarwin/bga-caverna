@@ -462,21 +462,51 @@ class PlayerBoard
   public function getAnimalsDropZones()
   {
     $zones = [];
+    $dogZones = [];
+    $pastures = [];
+
+    // Dogs
+    $dogs = $this->player->getAnimalOnBoard(DOG);
+    foreach ($dogs as $dId => $dog) {
+      if (isset($dogZones[$dog['x'] . '-' . $dog['y']])) {
+        $dogZones[$dog['x'] . '-' . $dog['y']] = [
+          'type' => 'pasture',
+          'capacity' => 3, // 2 sheep + 1 dog
+          'locations' => [$this->extractPos($dog)],
+          'stables' => 0,
+          'constraints' => [SHEEP, DOG],
+        ];
+      } else {
+        $dogZones[$dog['x'] . '-' . $dog['y']]['capacity']++;
+      }
+    }
 
     // Add the pastures
     foreach ($this->getPastures() as $pasture) {
+      $break = false;
+      foreach ($pasture['nodes'] as $node) {
+        // if there is a dog, we ignore the pastures
+        if (isset($dogZones[$node['x'] . '-' . $node['y']])) {
+          $break = true;
+        }
+      }
+      if ($break === true) {
+        continue;
+      }
+
       $zones[] = [
         'type' => 'pasture',
         'capacity' => 2 * (count($pasture['stables']) + 1) * count($pasture['nodes']),
         'locations' => $pasture['nodes'],
         'stables' => $pasture['stables'],
       ];
+      $pastures = array_merge($pastures, $pasture['nodes']);
     }
 
     // Add the unfenced stables
     $marks = $this->getPasturesMarks();
     foreach ($this->stables as $stable) {
-      if ($marks[$stable['x']][$stable['y']] == null) {
+      if ($marks[$stable['x']][$stable['y']] == null && !isset($dogZones[$stable['x'] . '-' . $stable['y']])) {
         $zones[] = [
           'type' => 'stable',
           'capacity' => 1,
@@ -496,8 +526,20 @@ class PlayerBoard
         'locations' => [$this->extractPos($mine)],
       ];
     }
-    // TODO: update dogs / Sheep, if so stables are ignored
-    //
+
+    // Add meadow to accept dogs
+    foreach ($this->getTilesOfType(TILE_MEADOW) as $tId => $tile) {
+      if (!isset($dogZones[$tile['x'] . '-' . $tile['y']]) && !in_array($this->extractPos($tile), $pastures)) {
+        $zones[] = [
+          'type' => 'pasture',
+          'capacity' => 1,
+          'constraints' => [DOG],
+          'locations' => [$this->extractPos($tile)],
+        ];
+      }
+    }
+
+    $zones = array_merge($zones, array_values($dogZones));
 
     // Apply card effects
     $args['zones'] = $zones;

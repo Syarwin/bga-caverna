@@ -147,6 +147,11 @@ class Meeples extends \CAV\Helpers\Pieces
     return self::getFilteredQuery($pId, $location, [DOG, SHEEP, DONKEY, PIG, CATTLE])->get();
   }
 
+  public function getAnimal($pId, $location = null, $animal)
+  {
+    return self::getFilteredQuery($pId, $location, [$animal])->get();
+  }
+
   public function countAnimalsInZoneLocation($pId, $location = null)
   {
     return self::getFilteredQuery($pId, 'board', [SHEEP, PIG, CATTLE, DONKEY])

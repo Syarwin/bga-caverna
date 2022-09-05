@@ -376,6 +376,11 @@ class Player extends \CAV\Helpers\DB_Model
     return $animals;
   }
 
+  public function getAnimalOnBoard($animal)
+  {
+    return Meeples::getAnimal($this->id, 'board', $animal);
+  }
+
   public function countAnimalsOnTile($tileType, $animal)
   {
     $animals = 0;
