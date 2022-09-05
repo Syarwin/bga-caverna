@@ -1541,8 +1541,10 @@ html {
   background-size: 700% 100%;
   position: relative;
   z-index: 100; }
-  .colorblind .meeple-dwarf,
-  .colorblind .meeple-stable {
+  [data-dwarf='1'] .meeple-dwarf,
+  [data-dwarf='1'] .meeple-stable {
+    background-image: url("img/dwarves_alt.png"); }
+  [data-dwarf='2'] .meeple-dwarf, [data-dwarf='2'] .meeple-stable {
     background-image: url("img/dwarves_colorblind.png"); }
   .meeple-dwarf.meeple-stable, .meeple-stable.meeple-stable {
     width: 24px;
@@ -1572,6 +1574,9 @@ html {
   position: relative;
   padding: 1px 2px;
   box-sizing: border-box; }
+  [data-dwarf='1'] .meeple-dwarf, [data-dwarf='2'] .meeple-dwarf {
+    width: 40px;
+    height: 52px; }
   .meeple-dwarf.child {
     transform: scale(0.7); }
 
@@ -1608,6 +1613,21 @@ html {
     background-position: 83.3333333333% 100%; }
   .meeple-weapon[data-force='14'] {
     background-position: 100% 100%; }
+  [data-dwarf='1'] .meeple-weapon, [data-dwarf='2'] .meeple-weapon {
+    width: 30px;
+    height: 53px;
+    margin-top: -10px;
+    margin-left: 1px;
+    background-image: url("img/helmet.svg");
+    background-size: 100% auto;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    font-size: 24px; }
+    [data-dwarf='1'] .meeple-weapon::before, [data-dwarf='2'] .meeple-weapon::before {
+      content: attr(data-force);
+      color: black;
+      text-shadow: 2px 2px 8px white, 2px 0px 8px white, 2px -2px 8px white, 0px -2px 8px white, -2px -2px 8px white, -2px 0px 8px white, -2px 2px 8px white, 0px 2px 8px white; }
 
 .meeple-harvest_none,
 .meeple-harvest_normal,
