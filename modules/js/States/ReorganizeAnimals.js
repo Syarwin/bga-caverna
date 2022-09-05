@@ -90,7 +90,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
           let animals = this.getAnimalsInZone(zone);
           $('zone-current-capacity-' + zone.cId).innerHTML =
-            animals.dog.length + animals.sheep.length + animals.pig.length + animals.cattle.length + animals.donkey.length;
+            animals.dog.length +
+            animals.sheep.length +
+            animals.pig.length +
+            animals.cattle.length +
+            animals.donkey.length;
         });
       });
 
@@ -250,34 +254,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               id: meepleObj.getAttribute('data-id'),
             })
           );
-
-        // Meeples on specific cards
-
-        if ($(`cards-wrapper-` + this.player_id).querySelector('#C11_WildlifeReserve') != undefined) {
-          $(`C11_WildlifeReserve`)
-            .querySelectorAll('.meeple-' + type)
-            .forEach((meepleObj) => {
-              if (meepleObj.getAttribute('data-id') != null) {
-                meeplesOnCard.push({
-                  id: meepleObj.getAttribute('data-id'),
-                  card_id: 'C11_WildlifeReserve',
-                });
-              }
-            });
-        }
-
-        if ($(`cards-wrapper-` + this.player_id).querySelector('#C86_LivestockFeeder') != undefined) {
-          $(`C86_LivestockFeeder`)
-            .querySelectorAll('.meeple-' + type)
-            .forEach((meepleObj) => {
-              if (meepleObj.getAttribute('data-id') != null) {
-                meeplesOnCard.push({
-                  id: meepleObj.getAttribute('data-id'),
-                  card_id: 'C86_LivestockFeeder',
-                });
-              }
-            });
-        }
       });
 
       this.takeAtomicAction('actReorganize', [meeplesOnBoard, meeplesOnReserve, meeplesOnCard]);

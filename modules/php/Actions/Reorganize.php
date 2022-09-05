@@ -47,6 +47,7 @@ class Reorganize extends \CAV\Models\Action
     $player = Players::getActive();
     $args = $this->ctx->getArgs();
     $trigger = $args['trigger'] ?? ANYTIME;
+    $hasReserve = false;
     $breed = $args['breedTypes'] ?? $player->breedTypes();
 
     $ids = [];
@@ -57,6 +58,9 @@ class Reorganize extends \CAV\Models\Action
 
     foreach ($meeplesInReserve as $meeple) {
       Meeples::moveToCoords($meeple['id'], 'reserve');
+      if (Meeples::get($meeple['id'])['type'] != DOG) {
+        $hasReserve = true;
+      }
       $ids[] = $meeple['id'];
     }
 
@@ -86,8 +90,8 @@ class Reorganize extends \CAV\Models\Action
 
     Notifications::reorganize($player, Meeples::getAnimals($player->getId()));
 
-    // Still animals in reserve => go to exchange state
-    if (count($meeplesInReserve) > 0) {
+    // Still farm animals in reserve => go to exchange state
+    if ($hasReserve === true) {
       Engine::insertAsChild([
         'action' => EXCHANGE,
         'args' => [
@@ -99,6 +103,7 @@ class Reorganize extends \CAV\Models\Action
     $this->checkAfterListeners($player, [
       'trigger' => $trigger,
     ]);
+
     $this->resolveAction();
   }
 

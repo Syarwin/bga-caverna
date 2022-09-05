@@ -468,10 +468,10 @@ class PlayerBoard
     // Dogs
     $dogs = $this->player->getAnimalOnBoard(DOG);
     foreach ($dogs as $dId => $dog) {
-      if (isset($dogZones[$dog['x'] . '-' . $dog['y']])) {
+      if (!isset($dogZones[$dog['x'] . '-' . $dog['y']])) {
         $dogZones[$dog['x'] . '-' . $dog['y']] = [
           'type' => 'pasture',
-          'capacity' => 3, // 2 sheep + 1 dog
+          'capacity' => 2, // 2 sheep + 1 dog is ignored
           'locations' => [$this->extractPos($dog)],
           'stables' => 0,
           'constraints' => [SHEEP, DOG],
@@ -532,8 +532,8 @@ class PlayerBoard
       if (!isset($dogZones[$tile['x'] . '-' . $tile['y']]) && !in_array($this->extractPos($tile), $pastures)) {
         $zones[] = [
           'type' => 'pasture',
-          'capacity' => 1,
-          'constraints' => [DOG],
+          'capacity' => 0,
+          'constraints' => [DOG, SHEEP],
           'locations' => [$this->extractPos($tile)],
         ];
       }
@@ -565,6 +565,9 @@ class PlayerBoard
       // Find all animals inside that zone
       $meeples = $animals->toAssoc();
       foreach ($meeples as $i => $animal) {
+        if ($animal['type'] == DOG) {
+          continue;
+        }
         $pos = $this->extractPos($animal);
         if (
           ($zone['type'] == 'card' && $zone['card_id'] == $animal['location']) || // CARD HOLDER
