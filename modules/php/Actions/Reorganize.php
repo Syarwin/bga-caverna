@@ -86,34 +86,16 @@ class Reorganize extends \CAV\Models\Action
 
     Notifications::reorganize($player, Meeples::getAnimals($player->getId()));
 
-    // Still animals in reserve => go to exchange state if canCook
+    // Still animals in reserve => go to exchange state
     if (count($meeplesInReserve) > 0) {
-      $canCookSomeAnimals = false;
-      $exchanges = $player->getExchangeableAnimalTypes();
-      $animals = $player->getAllReserveResources();
-      foreach ([SHEEP, PIG, CATTLE] as $type) {
-        if ($animals[$type] == 0) {
-          continue;
-        }
-
-        // Can we exchange this type of animals ?
-        if ($exchanges[$type]) {
-          $canCookSomeAnimals = true;
-        } else {
-          // We discard the remaining animals as they cannot be cooked
-          Notifications::discardAnimals($player, $player->useResource($type, $animals[$type]));
-        }
-      }
-
-      if ($canCookSomeAnimals) {
-        Engine::insertAsChild([
-          'action' => EXCHANGE,
-          'args' => [
-            'mustCook' => true,
-          ],
-        ]);
-      }
+      Engine::insertAsChild([
+        'action' => EXCHANGE,
+        'args' => [
+          'mustCook' => true,
+        ],
+      ]);
     }
+
     $this->checkAfterListeners($player, [
       'trigger' => $trigger,
     ]);
@@ -126,7 +108,7 @@ class Reorganize extends \CAV\Models\Action
     $atLeastOneAnimal = array_reduce(
       $meeples,
       function ($carry, $meeple) {
-        return $carry || in_array($meeple['type'], ANIMALS);
+        return $carry || in_array($meeple['type'], FARM_ANIMALS);
       },
       false
     );
@@ -150,7 +132,7 @@ class Reorganize extends \CAV\Models\Action
     });
 
     foreach ($meeples as &$meeple) {
-      if (!in_array($meeple['type'], ANIMALS) || $meeple['location'] == 'board') {
+      if (!in_array($meeple['type'], FARM_ANIMALS) || $meeple['location'] == 'board') {
         continue;
       }
 
@@ -180,7 +162,7 @@ class Reorganize extends \CAV\Models\Action
       // Now search any zone with a free spot
       if (!$sameFound) {
         foreach ($zones as &$zone) {
-          if ($zone['animals'] == 0 && in_array($meeple['type'], $zone['constraints'] ?? ANIMALS)) {
+          if ($zone['animals'] == 0 && in_array($meeple['type'], $zone['constraints'] ?? FARM_ANIMALS)) {
             self::placeInZone($player, $meeple, $zone);
             break;
           }

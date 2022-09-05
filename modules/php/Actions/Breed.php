@@ -23,7 +23,7 @@ class Breed extends \CAV\Models\Action
   public function getBreedType($player)
   {
     $animals = $player->countAnimalsOnBoard();
-    $args = $this->getCtxArgs()['animals'] ?? ANIMALS;
+    $args = $this->getCtxArgs()['animals'] ?? FARM_ANIMALS;
     $breed = [];
 
     foreach ($animals as $animal => $c) {
