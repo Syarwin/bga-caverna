@@ -331,6 +331,13 @@
   }
 }
 
+[data-dwarf='1'],
+[data-dwarf='2'] {
+  .player-board-grid .meeple-dwarf {
+    transform: scale(0.8);
+  }
+}
+
 .meeple-weapon {
   width: 31px;
   height: 21px;

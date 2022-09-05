@@ -634,7 +634,8 @@ html {
 
 #position-wrapper {
   position: relative;
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap; }
 
 #central-board-holder {
   width: calc(var(--cavernaCentralBoardScale) * 915px); }
@@ -1579,6 +1580,10 @@ html {
     height: 52px; }
   .meeple-dwarf.child {
     transform: scale(0.7); }
+
+[data-dwarf='1'] .player-board-grid .meeple-dwarf,
+[data-dwarf='2'] .player-board-grid .meeple-dwarf {
+  transform: scale(0.8); }
 
 .meeple-weapon {
   width: 31px;
@@ -2938,19 +2943,20 @@ html {
   z-index: 110;
   pointer-events: none; }
 
-.node-background.containsRoom + .animal-holder {
-  left: 56%;
-  top: 55%;
-  right: 11%;
-  bottom: 15%;
+.caverna-building ~ .animal-holder {
+  left: auto;
+  top: 66%;
+  right: 6%;
+  bottom: -2%;
   background-color: rgba(242, 210, 33, 0.8);
   border-radius: 24%;
   border: 1px solid black;
   opacity: 0;
-  transition: opacity 0.7s; }
-  .node-background.containsRoom + .animal-holder[data-n='1'] {
+  transition: opacity 0.7s;
+  padding: 0px 3px; }
+  .caverna-building ~ .animal-holder[data-n='1'], .caverna-building ~ .animal-holder[data-n='2'], .caverna-building ~ .animal-holder[data-n='3'] {
     opacity: 1; }
-    .node-background.containsRoom + .animal-holder[data-n='1'] ~ .meeple-farmer {
+    .caverna-building ~ .animal-holder[data-n='1'] ~ .meeple-dwarf, .caverna-building ~ .animal-holder[data-n='2'] ~ .meeple-dwarf, .caverna-building ~ .animal-holder[data-n='3'] ~ .meeple-dwarf {
       left: -10px; }
 
 .animals-control-wrapper {

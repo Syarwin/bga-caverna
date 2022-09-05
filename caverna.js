@@ -98,7 +98,7 @@ define([
         this._notifications = [
           ['startNewRound', 1],
           ['updateScores', 1],
-          ['clearTurn', 1],
+          ['clearTurn', 700],
           ['refreshUI', 1],
           ['revealActionCard', 1100],
           ['flipWishChildren', 1100],
