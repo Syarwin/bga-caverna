@@ -44,7 +44,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         (acc, location) => {
           return location.x < acc.x || (location.x == acc.x && location.y > acc.y) ? acc : location;
         },
-        { x: 0, y: 10 },
+        { x: 0, y: 10 }
       );
     },
 
@@ -90,7 +90,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
           let animals = this.getAnimalsInZone(zone);
           $('zone-current-capacity-' + zone.cId).innerHTML =
-            animals.sheep.length + animals.pig.length + animals.cattle.length;
+            animals.dog.length + animals.sheep.length + animals.pig.length + animals.cattle.length + animals.donkey.length;
         });
       });
 
@@ -103,7 +103,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         (type) =>
           (reserve[type] =
             this._playerCounters[this.player_id][type].getValue() +
-            (this._isHarvest ? this._babyCounters[type].getValue() : 0)),
+            (this._isHarvest ? this._babyCounters[type].getValue() : 0))
         //        (type) => (reserve[type] = $(`reserve_${this.player_id}_${type}`).querySelectorAll('.caverna-meeple').length),
       );
 
@@ -111,7 +111,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         if (zone.cId == undefined) return;
 
         let content = this.getAnimalsInZone(zone);
-        let isMax = content.sheep.length + content.pig.length + content.cattle.length >= zone.capacity;
+        let isMax =
+          content.dog.length +
+            content.sheep.length +
+            content.pig.length +
+            content.cattle.length +
+            content.donkey.length >=
+          zone.capacity;
         let zoneType = ANIMALS.reduce((acc, type) => (content[type].length > 0 ? type : acc), null);
         dojo.attr('animals-control-' + zone.cId, 'data-type', zoneType);
         let nHidden = 0;
@@ -136,7 +142,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           $(`ac-plus-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
           $(`ac-infty-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
         });
-        dojo.attr('animals-control-' + zone.cId, 'data-hidden', nHidden);
+
+        if (!preAnimation) {
+          dojo.attr('animals-control-' + zone.cId, 'data-hidden', nHidden);
+        }
       });
 
       // Update action button
@@ -185,7 +194,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       }
 
       this['add' + btnType + 'ActionButton']('btnConfirmReorganization', msg, () =>
-        this.onClickConfirmReorganization(),
+        this.onClickConfirmReorganization()
       );
     },
 
@@ -239,7 +248,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           .forEach((meepleObj) =>
             meeplesOnReserve.push({
               id: meepleObj.getAttribute('data-id'),
-            }),
+            })
           );
 
         // Meeples on specific cards
@@ -380,7 +389,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             target: this.getAnimalHolder(loc),
             duration,
           },
-          false,
+          false
         ).then(() => this.updateDropZonesStatus(false));
         this.updateDropZonesStatus(true);
       } else if (operation == 'minus') {
@@ -393,7 +402,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             target: reserve,
             duration,
           },
-          false,
+          false
         ).then(() => this.updateDropZonesStatus(false));
         this.updateDropZonesStatus(true);
       } else if (operation == 'infty') {
@@ -411,7 +420,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             duration,
           }),
           false,
-          false,
+          false
         ).then(() => this.updateDropZonesStatus(false));
         this.updateDropZonesStatus(true);
       }
@@ -441,7 +450,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           duration: 300,
         }),
         false,
-        false,
+        false
       );
     },
 
@@ -524,7 +533,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let min = Math.min(...counts),
         max = Math.max(...counts);
       let filtered = Object.keys(counts).filter(
-        (i) => (previous && counts[i] == max) || (!previous && counts[i] == min),
+        (i) => (previous && counts[i] == max) || (!previous && counts[i] == min)
       );
 
       let zoneIndex = previous ? filtered[filtered.length - 1] : filtered[0];

@@ -157,28 +157,15 @@ class Reorganize extends \CAV\Models\Action
       // Search zone of same animal type with an empty slot
       $sameFound = false;
       foreach ($zones as &$zone) {
-        if (
-          $zone['type'] == 'card' &&
-          method_exists(Buildings::getFilteredQuery(null, null, $zone['card_id'])->get(), 'canAcceptAnimal')
-        ) {
-          if (
-            Buildings::getFilteredQuery(null, null, $zone['card_id'])
-              ->get()
-              ->canAcceptAnimal($zone, $meeple)
-          ) {
-            self::placeInZone($player, $meeple, $zone);
-            $sameFound = true;
-            break;
-          }
-        } elseif ($zone['animals'] < $zone['capacity'] && $zone[$meeple['type']] > 0) {
+        if ($zone['animals'] < $zone['capacity'] && $zone[$meeple['type']] > 0) {
           self::placeInZone($player, $meeple, $zone);
           $sameFound = true;
           break;
         }
       }
 
-      // Now search any zone with a free spot
-      if (!$sameFound) {
+      // Now search any zone with a free spot (unless it's a dog => keep it in reserve)
+      if (!$sameFound && $meeple['type'] != DOG) {
         foreach ($zones as &$zone) {
           if ($zone['animals'] == 0 && in_array($meeple['type'], $zone['constraints'] ?? ANIMALS)) {
             self::placeInZone($player, $meeple, $zone);

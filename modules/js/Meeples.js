@@ -98,9 +98,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     localUpdateResourcesHoldersType(type) {
-      if (['sheep', 'pig', 'cattle'].includes(type)) {
+      if (['dog', 'sheep', 'pig', 'cattle', 'donkey'].includes(type)) {
         this.updateAnimalsPlayerCounters(type);
-        this.updateDropZonesStatus();
+        this.updateDropZonesStatus(true);
       } else if (type == 'dwarf') {
         this.updateDwarfsPlayerCounters();
       }

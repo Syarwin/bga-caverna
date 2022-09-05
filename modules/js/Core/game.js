@@ -115,7 +115,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
           (data) => resolve(data),
           (isError, message, code) => {
             if (isError) reject(message, code);
-          },
+          }
         );
       });
     },
@@ -191,11 +191,12 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
         var functionName = 'notif_' + notif[0];
 
         let wrapper = (args) => {
+          $('gameaction_status').innerHTML = this.format_string_recursive(args.log, args.args);
           let timing = this[functionName](args);
           if (timing === undefined) {
             if (notif[1] === undefined) {
               console.error(
-                "A notification don't have default timing and didn't send a timing as return value : " + notif[0],
+                "A notification don't have default timing and didn't send a timing as return value : " + notif[0]
               );
               return;
             }
@@ -362,7 +363,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
       var optionSel = 'option[value="' + newValue + '"]';
       dojo
         .query(
-          '#preference_control_' + number + ' > ' + optionSel + ', #preference_fontrol_' + number + ' > ' + optionSel,
+          '#preference_control_' + number + ' > ' + optionSel + ', #preference_fontrol_' + number + ' > ' + optionSel
         )
         .attr('selected', true);
       var select = $('preference_control_' + number);
@@ -448,8 +449,8 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
         .map(
           (val) =>
             `<option value='${val}' ${pref.value == val ? 'selected="selected"' : ''}>${_(
-              pref.values[val].name,
-            )}</option>`,
+              pref.values[val].name
+            )}</option>`
         )
         .join('');
 
@@ -484,7 +485,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
         Object.keys(this._settingsSections).forEach((sectionName, i) => {
           dojo.place(
             `<div id='settings-section-${sectionName}' class='settings-section'></div>`,
-            'settings-controls-wrapper',
+            'settings-controls-wrapper'
           );
           let div = dojo.place(`<div>${this._settingsSections[sectionName]}</div>`, 'settings-controls-header');
           let openSection = () => {
@@ -527,7 +528,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
           config.sliderConfig.start = [value];
           noUiSlider.create($('setting-' + settingName), config.sliderConfig);
           $('setting-' + settingName).noUiSlider.on('slide', (arg) =>
-            this.changeSetting(settingName, parseInt(arg[0])),
+            this.changeSetting(settingName, parseInt(arg[0]))
           );
         } else if (config.type == 'multislider') {
           this.place('tplSettingSlider', { desc: config.name, id: settingName }, localContainer);
@@ -610,8 +611,8 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
         .map(
           (val) =>
             `<option value='${val}' ${this.settings[setting.id] == val ? 'selected="selected"' : ''}>${_(
-              setting.values[val],
-            )}</option>`,
+              setting.values[val]
+            )}</option>`
         )
         .join('');
 
@@ -669,7 +670,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
 
           phantom: false,
         },
-        options,
+        options
       );
       config.phantomStart = config.phantomStart || config.phantom;
       config.phantomEnd = config.phantomEnd || config.phantom;
@@ -807,7 +808,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
             </div>
           </div>`,
           target,
-          'after',
+          'after'
         );
         dojo.place(target, container.querySelector('.flip-back'));
         dojo.place(newNode, container.querySelector('.flip-front'));
@@ -984,7 +985,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
           <svg><use href="#help-marker-svg" /></svg>
         </div>
       `,
-        id,
+        id
       );
 
       dojo.connect($(id), 'click', (evt) => {

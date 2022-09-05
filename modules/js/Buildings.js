@@ -91,7 +91,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         let o = $(`building-${building.id}`);
         let container = this.getBuildingContainer(building);
         if (o.parentNode != $(container)) {
-          dojo.place(o, container);
+          dojo.place(o, container, "first");
         }
         if (building.type == 'G_OfficeRoom' && building.location == 'inPlay') {
           $(`board-${building.pId}`).classList.add('office-room');
@@ -178,7 +178,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       if (container == null) {
         container = this.getBuildingContainer(building);
       }
-      let oBuilding = this.place('tplBuilding', building, container);
+      let oBuilding = dojo.place(this.tplBuilding(building), container, "first");
       this.addCustomTooltip(`building-${building.id}`, this.tplBuildingTooltip(building));
       $(`building-${building.id}`).addEventListener('click', () => this.showBuildingDetails(building));
     },

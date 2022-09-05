@@ -445,7 +445,9 @@ class Player extends \CAV\Helpers\DB_Model
    */
   public function checkAnimalsInReserve($needConfirm = false)
   {
-    if ($needConfirm || $this->getAnimals('reserve')->count() > 0) {
+    $animals = $this->countAnimalsInReserve();
+    $realAnimals = $animals[SHEEP] + $animals[PIG] + $animals[CATTLE] + $animals[DONKEY];
+    if ($needConfirm || $realAnimals > 0) {
       Engine::insertAsChild([
         'action' => REORGANIZE,
       ]);
