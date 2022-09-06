@@ -42,7 +42,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let name = player.id == this.player_id ? _('Your board') : player.name;
       let html =
         `
-    <div class='player-board-resizable' id='player-board-resizable-${player.id}'>
+    <div class='player-board-resizable ${current}' id='player-board-resizable-${player.id}'>
       <div class="player-board-wrapper ${current}" id="board-wrapper-${player.id}">
         <div class="player-board-holder">
           <div class="animals-counters">

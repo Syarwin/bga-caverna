@@ -2,13 +2,20 @@
   font-style: italic;
 }
 
+[data-player-boards="1"] #player-boards {
+  width: calc(var(--cavernaPlayerBoardScale) * 625px + 20px);  
+}
+
 .player-board-resizable {
   margin: 0px 10px 10px;
+  width: calc(var(--cavernaPlayerBoardScale) * 625px);
+  height: calc(var(--cavernaPlayerBoardScale) * 420px);
 }
 
 .player-board-wrapper {
-  width: auto;
-  //  transform: scale(var(--cavernaPlayerBoardScale));
+  width: 625px;
+  height:420px;
+  transform: scale(var(--cavernaPlayerBoardScale));
   transform-origin: top left;
 
   &.harvest .player-board-holder .animals-counters .baby-counter {

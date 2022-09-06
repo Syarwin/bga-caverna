@@ -12,11 +12,7 @@
 
 
 <div id="position-wrapper">
-  <div id="main-boards">
-    <div id="central-board-holder">
-      <div id="central-board"></div>
-    </div>
-  </div>
+  <div id="central-board-wrapper"><div id="central-board"></div></div>
   <div id="player-boards"></div>
 </div>
 

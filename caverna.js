@@ -162,14 +162,53 @@ define([
               1: _('Display'),
             },
           },
-          actionBoardCostIcon: {
+          actionBoardColumns: {
+            default: 5,
+            name: _('Action board columns'),
+            type: 'slider',
+            sliderConfig: {
+              step: 1,
+              padding: 0,
+              range: {
+                min: [1],
+                max: [14],
+              },
+            },
+          },
+          actionBoardScale: {
+            default: 100,
+            name: _('Action board scale'),
+            type: 'slider',
+            sliderConfig: {
+              step: 5,
+              padding: 0,
+              range: {
+                min: [20],
+                max: [170],
+              },
+            },
+          },
+          otherPlayerBoard: {
             default: 0,
-            name: _('Costly Action Board Slots'),
-            attribute: 'cost-icon',
+            name: _('Other player boards'),
+            attribute: 'player-boards',
             type: 'select',
             values: {
-              0: _('Display credit cost'),
-              1: _('Hide'),
+              0: _('Under the central board'),
+              1: _('Next to the central board'),
+            },
+          },
+          playerBoardScale: {
+            default: 100,
+            name: _('Player board scale'),
+            type: 'slider',
+            sliderConfig: {
+              step: 5,
+              padding: 0,
+              range: {
+                min: [20],
+                max: [170],
+              },
             },
           },
           confirmMode: { type: 'pref', prefId: 103 },
@@ -1193,6 +1232,29 @@ define([
       updatePlayerOrdering() {
         this.inherited(arguments);
         dojo.place('player_board_config', 'player_boards', 'first');
+      },
+
+      onChangeActionBoardColumnsSetting(val) {
+        this.computeCentralBoardSize();
+      },
+
+      onChangeActionBoardScaleSetting(val) {
+        this.computeCentralBoardSize();
+      },
+
+      onChangePlayerBoardScaleSetting(val) {
+        let elt = document.documentElement;
+        elt.style.setProperty('--cavernaPlayerBoardScale', val / 100);
+      },
+
+      computeCentralBoardSize() {
+        $('central-board').style.width = 183 * this.settings.actionBoardColumns + 'px';
+
+        let elt = document.documentElement;
+        let scale = this.settings.actionBoardScale;
+        elt.style.setProperty('--cavernaCentralBoardScale', scale / 100);
+        $('central-board-wrapper').style.width = ($('central-board').offsetWidth * scale) / 100 + 'px';
+        $('central-board-wrapper').style.height = (($('central-board').offsetHeight + 30) * scale) / 100 + 'px';
       },
 
       // setCardScale(scale) {

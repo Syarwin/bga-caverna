@@ -59,7 +59,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       // Change No so that it fits the current player order view
       let currentNo = Object.values(this.gamedatas.players).reduce(
         (carry, player) => (player.id == this.player_id ? player.no : carry),
-        0,
+        0
       );
       let nPlayers = Object.keys(this.gamedatas.players).length;
       this.forEachPlayer((player) => (player.order = (player.no + nPlayers - currentNo) % nPlayers));
@@ -75,15 +75,27 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           `<div class="meeple-container"><div class="caverna-meeple meeple-score"></div></div>` +
             this.tplResourceCounter(player, 'gold'),
           `icon_point_${player.id}`,
-          'after',
+          'after'
         );
       });
-      dojo.place('<div id="player-boards-separator"></div>', 'player-boards', 3);
 
       this.setupPlayersCounters();
       this.setupPlayersScores();
       // TODO ?? this.updateResourceBarsPositions();
       dojo.attr('game_play_area', 'data-players', Object.keys(this.gamedatas.players).length);
+    },
+
+    updateCurrentPlayerBoardLocation() {
+      let board = document.querySelector('.player-board-resizable.current');
+      if (this.settings.otherPlayerBoard == 0) {
+        dojo.place(board, 'player-boards', 'before');
+      } else {
+        dojo.place(board, 'player-boards', 'first');
+      }
+    },
+
+    onChangeOtherPlayerBoardSetting() {
+      this.updateCurrentPlayerBoardLocation();
     },
 
     getCell(pos, pId = null) {
@@ -97,7 +109,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.forEachPlayer((player) => {
         dojo.place(
           `caverna-pannel-${player.id}`,
-          (this.prefs[PLAYER_RESOURCES].value == 0 ? 'overall_player_board_' : 'resources-bar-holder-') + player.id,
+          (this.prefs[PLAYER_RESOURCES].value == 0 ? 'overall_player_board_' : 'resources-bar-holder-') + player.id
         );
         dojo.toggleClass('resources-bar-holder-' + player.id, 'active', this.prefs[PLAYER_RESOURCES].value == 1);
       });
@@ -134,7 +146,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               <${res.toUpperCase()}>
             </div>
           `),
-            brother.parentNode,
+            brother.parentNode
           );
 
           this._babyCounters[res] = this.createCounter('resource_baby_' + res);
@@ -210,13 +222,15 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     tplPlayerPanel(player) {
       return (
         `
-      <div class="caverna-player-pannel" id="caverna-pannel-${player.id}" data-color="${player.color}">
+      <div class="caverna-player-pannel" id="caverna-pannel-${
+          player.id
+        }" data-color="${player.color}">
         <div class="caverna-first-player-holder" id="reserve_${player.id}_firstPlayer"></div>
         <div class="player-panel-resources">
           <div class="player-reserve" id="reserve-${player.id}"></div>
         ` +
         RESOURCES.map((res) =>
-          res == 'gold' || ANIMALS.includes(res) ? '' : this.tplResourceCounter(player, res),
+          res == 'gold' || ANIMALS.includes(res) ? '' : this.tplResourceCounter(player, res)
         ).join('') +
         `
         </div>
@@ -372,7 +386,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
                     <i class="fa fa-star"></i>
                   </div>
                 </div>`,
-                  container,
+                  container
                 );
               });
             }

@@ -624,18 +624,11 @@ html {
   #floating-building-boards-wrapper[data-open='materials'] #floating-building-slider #floating-building-boards-container .buildings-board[data-id='materials'] {
     display: flex; }
 
-#left-side {
-  margin-left: 0px !important;
-  margin-right: 250px; }
-
-#right-side {
-  width: 250px;
-  margin-left: -250px; }
-
 #position-wrapper {
   position: relative;
   display: flex;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  justify-content: space-between; }
 
 #central-board-holder {
   width: calc(var(--cavernaCentralBoardScale) * 915px); }
@@ -1226,11 +1219,18 @@ html {
 .action-card-name-reference {
   font-style: italic; }
 
+[data-player-boards="1"] #player-boards {
+  width: calc(var(--cavernaPlayerBoardScale) * 625px + 20px); }
+
 .player-board-resizable {
-  margin: 0px 10px 10px; }
+  margin: 0px 10px 10px;
+  width: calc(var(--cavernaPlayerBoardScale) * 625px);
+  height: calc(var(--cavernaPlayerBoardScale) * 420px); }
 
 .player-board-wrapper {
-  width: auto;
+  width: 625px;
+  height: 420px;
+  transform: scale(var(--cavernaPlayerBoardScale));
   transform-origin: top left; }
   .player-board-wrapper.harvest .player-board-holder .animals-counters .baby-counter {
     display: inline-block; }

@@ -1,20 +1,8 @@
-#left-side {
-  margin-left: 0px !important;
-  margin-right: 250px;
-}
-
-#right-side {
-  width: 250px;
-  margin-left: -250px;
-}
-
 #position-wrapper {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-
-  #main-boards {
-  }
+  justify-content: space-between;
 }
 
 @import 'layout.central';
