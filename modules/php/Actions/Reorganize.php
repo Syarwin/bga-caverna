@@ -154,7 +154,11 @@ class Reorganize extends \CAV\Models\Action
       // Now search any zone with a free spot (unless it's a dog => keep it in reserve)
       if (!$sameFound && $meeple['type'] != DOG) {
         foreach ($zones as &$zone) {
-          if ($zone['animals'] == 0 && in_array($meeple['type'], $zone['constraints'] ?? FARM_ANIMALS)) {
+          if (
+            $zone['animals'] == 0 &&
+            in_array($meeple['type'], $zone['constraints'] ?? FARM_ANIMALS) &&
+            $zone['capacity'] != 0
+          ) {
             self::placeInZone($player, $meeple, $zone);
             break;
           }

@@ -646,4 +646,9 @@ class Player extends \CAV\Helpers\DB_Model
 
     return $canBreed;
   }
+
+  public function canBreed()
+  {
+    return count($this->breedTypes()) > 0;
+  }
 }
