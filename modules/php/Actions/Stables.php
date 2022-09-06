@@ -51,7 +51,7 @@ class Stables extends \CAV\Models\Action
     $inReserve = $player->countStablesInReserve();
     $max = $this->getMaxBuildableStables($player);
     return [
-      'zones' => $player->board()->getFreeZones(false),
+      'zones' => $player->board()->getStableZone(),
       'max' => $max,
       'descSuffix' => $max == $inReserve ? 'nomore' : '',
     ];
@@ -79,6 +79,9 @@ class Stables extends \CAV\Models\Action
 
     // Add them to board
     foreach ($stables as &$stable) {
+      if (!in_array($stable, $args['zones'])) {
+        throw new \feException('Invalid zone. Should not happen');
+      }
       $player->board()->addStable($stable);
     }
 
