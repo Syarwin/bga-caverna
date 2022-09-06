@@ -28,7 +28,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         zone.cId = pId + '-' + i; // Control ID, must be unique on DOM
         zone.holder = this.computeDropZoneControlHolder(zone);
         zone.control = this.place('tplReorganizeControl', zone, this.getAnimalControlContainer(zone));
-        zone.rawCapacity = zone.capacity;
+        if (!zone.rawCapacity) {
+          zone.rawCapacity = zone.capacity;
+        }
       });
 
       this.updateDropZonesStatus(false);
@@ -577,7 +579,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     countAnimalsInZone(zone) {
       let content = this.getAnimalsInZone(zone);
-      return content.dog.length + content.sheep.length + content.pig.length + content.cattle.length + content.donkey.length;
+      return (
+        content.dog.length + content.sheep.length + content.pig.length + content.cattle.length + content.donkey.length
+      );
     },
 
     countAnimalsAtLocation(loc, pId = null, type = null) {

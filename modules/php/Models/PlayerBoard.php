@@ -339,31 +339,21 @@ class PlayerBoard
         }
       }
 
-      // Check card constraint
-      if (
-        $zone['type'] == 'card' &&
-        method_exists(Buildings::getFilteredQuery(null, null, $zone['card_id'])->get(), 'getInvalidAnimals')
-      ) {
-        $card = Buildings::getFilteredQuery(null, null, $zone['card_id'])->get();
-        $animals = array_merge($animals, $card->getInvalidAnimals($zone, $raiseException));
-      }
       // Check only one type of animal
-      else {
-        $type = null;
-        foreach ($zone['meeples'] as $meeple) {
-          // Take the first meeple as the zone type
-          if ($type == null) {
-            $type = $meeple['type'];
-            continue;
+      $type = null;
+      foreach ($zone['meeples'] as $meeple) {
+        // Take the first meeple as the zone type
+        if ($type == null) {
+          $type = $meeple['type'];
+          continue;
+        }
+
+        if ($meeple['type'] != $type && (!in_array($type, [DOG, SHEEP]) || !in_array($meeple['type'], [DOG, SHEEP]))) {
+          if ($raiseException) {
+            throw new UserException(totranslate('A room/pasture/stable contains more than one type of animal'));
           }
 
-          if ($meeple['type'] != $type) {
-            if ($raiseException) {
-              throw new UserException(totranslate('A room/pasture/stable contains more than one type of animal'));
-            }
-
-            $animals[] = $meeple;
-          }
+          $animals[] = $meeple;
         }
       }
     }
@@ -461,44 +451,17 @@ class PlayerBoard
    * Return all dropzones for animals
    *  a dropzone is described by a total capacity and an array of correspondings cells/pos/cards
    */
-  public function getAnimalsDropZones()
+
+  public function computeDropZonesWithAnimals($includeAnimals = true, $includeUnaccomodatedAnimals = false)
   {
     $zones = [];
-    $dogZones = [];
     $pastures = [];
-
-    // Dogs
-    $dogs = $this->player->getAnimalOnBoard(DOG);
-    foreach ($dogs as $dId => $dog) {
-      if (!isset($dogZones[$dog['x'] . '-' . $dog['y']])) {
-        $dogZones[$dog['x'] . '-' . $dog['y']] = [
-          'type' => 'pasture',
-          'capacity' => 2, // 2 sheep + 1 dog is ignored
-          'locations' => [$this->extractPos($dog)],
-          'stables' => 0,
-          'constraints' => [SHEEP, DOG],
-        ];
-      } else {
-        $dogZones[$dog['x'] . '-' . $dog['y']]['capacity']++;
-      }
-    }
 
     // Add the pastures
     foreach ($this->getPastures() as $pasture) {
-      $break = false;
-      foreach ($pasture['nodes'] as $node) {
-        // if there is a dog, we ignore the pastures
-        if (isset($dogZones[$node['x'] . '-' . $node['y']])) {
-          $break = true;
-        }
-      }
-      if ($break === true) {
-        continue;
-      }
-
       $zones[] = [
         'type' => 'pasture',
-        'capacity' => 2 * (count($pasture['stables']) == 0 ? 1 : 2) * count($pasture['nodes']),
+        'capacity' => 2 ** (count($pasture['stables']) + 1) * count($pasture['nodes']),
         'locations' => $pasture['nodes'],
         'stables' => $pasture['stables'],
       ];
@@ -506,9 +469,8 @@ class PlayerBoard
     }
 
     // Add the unfenced stables
-    // $marks = $this->getPasturesMarks();
     foreach ($this->stables as $stable) {
-      if (!in_array($this->extractPos($stable), $pastures) && !isset($dogZones[$stable['x'] . '-' . $stable['y']])) {
+      if (!in_array($this->extractPos($stable), $pastures)) {
         $zones[] = [
           'type' => 'stable',
           'capacity' => 1,
@@ -532,7 +494,7 @@ class PlayerBoard
 
     // Add meadow to accept dogs
     foreach ($this->getTilesOfType(TILE_MEADOW) as $tId => $tile) {
-      if (!isset($dogZones[$tile['x'] . '-' . $tile['y']]) && !in_array($this->extractPos($tile), $pastures)) {
+      if (!in_array($this->extractPos($tile), $pastures)) {
         $zones[] = [
           'type' => 'meadow',
           'capacity' => 0,
@@ -542,19 +504,15 @@ class PlayerBoard
       }
     }
 
-    $zones = array_merge($zones, array_values($dogZones));
-
     // Apply card effects
     $args['zones'] = $zones;
     Buildings::applyEffects($this->player, 'ComputeDropZones', $args);
-    return $args['zones'];
-  }
+    $zones = $args['zones'];
 
-  public function getAnimalsDropZonesWithAnimals($includeUnaccomodatedAnimals = false)
-  {
-    $zones = $this->getAnimalsDropZones();
+    // Compute animals
     $player = $this->player;
     $animals = $player->getAnimalsOnBoard();
+    $meeples = $animals->toAssoc();
 
     foreach ($zones as &$zone) {
       $zone[SHEEP] = 0;
@@ -566,21 +524,29 @@ class PlayerBoard
       $zone['meeples'] = [];
 
       // Find all animals inside that zone
-      $meeples = $animals->toAssoc();
       foreach ($meeples as $i => $animal) {
-        if ($animal['type'] == DOG) {
-          continue;
-        }
         $pos = $this->extractPos($animal);
-        if (
-          ($zone['type'] == 'card' && $zone['card_id'] == $animal['location']) || // CARD HOLDER
-          ($zone['type'] != 'card' && in_array($pos, $zone['locations']))
-        ) {
+        if (in_array($pos, $zone['locations'])) {
           $zone[$animal['type']]++;
           $zone['animals']++;
           $zone['meeples'][] = $animal;
           unset($animals[$i]);
         }
+      }
+
+      if ($zone[DOG] > 0) {
+        $zone['rawCapacity'] = $zone['capacity'];
+        $zone['capacity'] = 2 * $zone[DOG] + 1;
+      }
+
+      if (!$includeAnimals) {
+        unset($zone[SHEEP]);
+        unset($zone[PIG]);
+        unset($zone[CATTLE]);
+        unset($zone[DOG]);
+        unset($zone[DONKEY]);
+        unset($zone['animals']);
+        unset($zone['meeples']);
       }
     }
 
@@ -589,6 +555,16 @@ class PlayerBoard
     }
 
     return $zones;
+  }
+
+  public function getAnimalsDropZones()
+  {
+    return $this->computeDropZonesWithAnimals(false);
+  }
+
+  public function getAnimalsDropZonesWithAnimals($includeUnaccomodatedAnimals = false)
+  {
+    return $this->computeDropZonesWithAnimals(true, $includeUnaccomodatedAnimals);
   }
 
   public function countCoveredZonesByPastures()
