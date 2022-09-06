@@ -52,6 +52,15 @@ class Breed extends \CAV\Models\Action
     ];
   }
 
+  public function stBreed()
+  {
+    $args = $this->argsBreed();
+    $player = Players::getActive();
+    if (count($args['breeds']) == 4 || ($player->hasRuby() && count($args['breeds']) == $args['max'])) {
+      $this->actBreed($args['breeds']);
+    }
+  }
+
   public function actBreed($breeds)
   {
     self::checkAction('actBreed');
@@ -77,10 +86,10 @@ class Breed extends \CAV\Models\Action
         'pId' => $player->getId(),
         'action' => REORGANIZE,
         'args' => [
-          'trigger' => BREED,
+          'trigger' => $this->getCtxArgs()['trigger'] ?? BREED,
         ],
       ],
-      ['order' => 'harvestBreed']
+      $this->getCtxArgs()['trigger'] == HARVEST ? null : ['order' => 'harvestBreed']
     );
     Engine::save();
 

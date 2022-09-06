@@ -166,31 +166,14 @@ trait HarvestTrait
     $player = Players::getActive();
     // Listen for cards enforcing reorganization on last harvest (eg Organic Farmer)
     $enforceReorganize = false;
-    // if (Globals::getTurn() == 12) {
-    //   foreach ($player->getBuildings(null, true) as $card) {
-    //     $enforceReorganize = $enforceReorganize || $card->enforceReorganizeOnLastHarvest();
-    //   }
-    // }
 
     // If player has enough to breed, creation of a baby in reserve
-    $created = $player->breed();
-    if (!$created && !$enforceReorganize) {
+    if ($player->canBreed() || $player->hasRuby()) {
+      Engine::setup(['action' => BREED, 'args' => ['trigger' => HARVEST]], ['order' => 'harvestBreed']);
+      Engine::proceed();
+    } else {
       $this->nextPlayerCustomOrder('harvestBreed');
-      return;
     }
-
-    // Inserting leaf REORGANIZE
-    Engine::setup(
-      [
-        'pId' => $player->getId(),
-        'action' => REORGANIZE,
-        'args' => [
-          'trigger' => HARVEST,
-        ],
-      ],
-      ['order' => 'harvestBreed']
-    );
-    Engine::proceed();
   }
 
   /****************************
