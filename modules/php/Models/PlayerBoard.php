@@ -512,7 +512,7 @@ class PlayerBoard
         $zones[] = [
           'type' => 'stable',
           'capacity' => 1,
-          'constraints' => isset($this->grid[$stable['x']][$stable['y']]) ? [] : [PIG],
+          'constraints' => isset($this->grid[$stable['x']][$stable['y']]) ? null : [PIG],
           'locations' => [$this->extractPos($stable)],
         ];
         $pastures = array_merge($pastures, [$this->extractPos($stable)]);
@@ -534,7 +534,7 @@ class PlayerBoard
     foreach ($this->getTilesOfType(TILE_MEADOW) as $tId => $tile) {
       if (!isset($dogZones[$tile['x'] . '-' . $tile['y']]) && !in_array($this->extractPos($tile), $pastures)) {
         $zones[] = [
-          'type' => 'pasture',
+          'type' => 'meadow',
           'capacity' => 0,
           'constraints' => [DOG, SHEEP],
           'locations' => [$this->extractPos($tile)],

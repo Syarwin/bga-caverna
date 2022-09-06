@@ -3118,7 +3118,7 @@ html {
       .animals-control-wrapper .animals-control .ac-open svg {
         width: 1em;
         height: 1em; }
-    .player-board-wrapper.reorganizing .animals-control-wrapper .animals-control:not([data-hidden='3']) .ac-open {
+    .player-board-wrapper.reorganizing .animals-control-wrapper .animals-control:not([data-hidden='5']) .ac-open {
       height: 23px; }
 
 /*! nouislider - 14.6.0 - 6/27/2020 */

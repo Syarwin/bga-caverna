@@ -71,7 +71,7 @@ class Actions
 
   public static function getErrorMessage($actionId)
   {
-    $actionId = ucfirst(strtolower($actionId));
+    $actionId = ucfirst(mb_strtolower($actionId));
     $msg = sprintf(
       Game::get()::translate(
         'Attempting to take an action (%s) that is not possible. Either another card erroneously flagged this action as possible, or this action was possible until another card interfered.'

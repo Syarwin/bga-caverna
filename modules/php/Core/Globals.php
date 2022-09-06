@@ -116,7 +116,7 @@ class Globals extends \CAV\Helpers\DB_Manager
 
     if (preg_match('/^([gs]et|inc|is)([A-Z])(.*)$/', $method, $match)) {
       // Sanity check : does the name correspond to a declared variable ?
-      $name = strtolower($match[2]) . $match[3];
+      $name = mb_strtolower($match[2]) . $match[3];
       if (!\array_key_exists($name, self::$variables)) {
         throw new \InvalidArgumentException("Property {$name} doesn't exist");
       }

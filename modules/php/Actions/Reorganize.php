@@ -33,7 +33,7 @@ class Reorganize extends \CAV\Models\Action
 
     $player = Players::getActive();
     return [
-      'exchanges' => $player->getExchangeableAnimalTypes($trigger),
+      'exchanges' => ['sheep' => true, 'pig' => true, 'cattle' => true, 'donkey' => true],
       'animals' => $player->getAnimals()->toArray(),
       'zones' => $player->board()->getAnimalsDropZones(),
       'harvest' => $trigger == HARVEST,

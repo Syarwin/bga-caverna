@@ -34,7 +34,6 @@ trait ActionTrait
     $args = Actions::getArgs($action, $node);
     $args['automaticAction'] = Actions::get($action, $node)->isAutomatic($player);
     $args['previousEngineChoices'] = Globals::getEngineChoices();
-    $args['canUseRuby'] = $player->countReserveResource(RUBY) > 0;
     $this->addArgsAnytimeAction($args, $action);
 
     $sourceId = $node->getSourceId() ?? null;
@@ -55,6 +54,8 @@ trait ActionTrait
       return;
     }
     $player = Players::getActive();
+
+    $args['canUseRuby'] = $player->countReserveResource(RUBY) > 0;
 
     // Anytime cards
     $listeningCards = Buildings::getReaction(

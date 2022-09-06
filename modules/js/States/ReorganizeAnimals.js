@@ -28,6 +28,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         zone.cId = pId + '-' + i; // Control ID, must be unique on DOM
         zone.holder = this.computeDropZoneControlHolder(zone);
         zone.control = this.place('tplReorganizeControl', zone, this.getAnimalControlContainer(zone));
+        zone.rawCapacity = zone.capacity;
       });
 
       this.updateDropZonesStatus(false);
@@ -115,24 +116,58 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         if (zone.cId == undefined) return;
 
         let content = this.getAnimalsInZone(zone);
-        let isMax =
+        let currentContent =
           content.dog.length +
-            content.sheep.length +
-            content.pig.length +
-            content.cattle.length +
-            content.donkey.length >=
-          zone.capacity;
+          content.sheep.length +
+          content.pig.length +
+          content.cattle.length +
+          content.donkey.length;
+        // Handle DOGS
+        let isDogMode =
+          currentContent == content.sheep.length + content.dog.length &&
+          content.sheep.length <= content.dog.length + (content.dog.length == 0 ? 0 : 1);
+
+        // Making sure removing all dogs also remove all sheep
+        if (!isDogMode && zone.dogMode && content.sheep.length > 0) {
+          this.animalControlOperation(zone, 'minus', 'sheep');
+          return;
+        }
+
+        if (isDogMode && currentContent > 0) {
+          zone.capacity = 2 * content.dog.length + 1;
+          zone.dogMode = true;
+          if (currentContent > zone.capacity) {
+            this.animalControlOperation(zone, 'minus', 'sheep');
+            return;
+          }
+        } else {
+          zone.capacity = zone.rawCapacity;
+          zone.dogMode = false;
+        }
+        $(`zone-capacity-${zone.cId}`).innerHTML = zone.capacity;
+
+        let isMax = currentContent >= zone.capacity;
         let zoneType = ANIMALS.reduce((acc, type) => (content[type].length > 0 ? type : acc), null);
         dojo.attr('animals-control-' + zone.cId, 'data-type', zoneType);
         let nHidden = 0;
         ANIMALS.forEach((type) => {
           let row = $('animals-control-' + zone.cId).querySelector('.composition-type.composition-' + type);
           let animalLeft = reserve[type] > 0 || this.getMeeplesFromOtherZones(zone, type, 1).length > 0;
+          let isHidden = false;
           if (content[type].length == 0) {
-            let isHidden =
-              !animalLeft ||
-              (zoneType != null && type != zoneType) ||
-              (zone.constraints !== undefined && !zone.constraints.includes(type));
+            let constraintSatisfied =
+              zone.constraints === undefined || zone.constraints == null || zone.constraints.includes(type);
+            isHidden = !animalLeft || (zoneType != null && type != zoneType) || !constraintSatisfied;
+
+            // DOG MODE
+            if (
+              animalLeft &&
+              isDogMode &&
+              (type == 'dog' || (type == 'sheep' && (constraintSatisfied || currentContent > 0)))
+            ) {
+              isHidden = false;
+            }
+
             dojo.toggleClass(row, 'hidden', isHidden);
             nHidden += isHidden ? 1 : 0;
           } else {
@@ -140,11 +175,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           }
 
           // Disable - buttons
-          $(`ac-minus-${type}-${zone.cId}`).disabled = content[type].length == 0;
+          $(`ac-minus-${type}-${zone.cId}`).disabled = isHidden || content[type].length == 0;
 
           // Disable + buttons
-          $(`ac-plus-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
-          $(`ac-infty-${type}-${zone.cId}`).disabled = isMax || !animalLeft;
+          let cantAdd = (isMax && !(isDogMode && type == 'dog')) || !animalLeft;
+          $(`ac-plus-${type}-${zone.cId}`).disabled = isHidden || cantAdd;
+          $(`ac-infty-${type}-${zone.cId}`).disabled = isHidden || cantAdd;
         });
 
         if (!preAnimation) {
@@ -541,7 +577,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     countAnimalsInZone(zone) {
       let content = this.getAnimalsInZone(zone);
-      return content.sheep.length + content.pig.length + content.cattle.length;
+      return content.dog.length + content.sheep.length + content.pig.length + content.cattle.length + content.donkey.length;
     },
 
     countAnimalsAtLocation(loc, pId = null, type = null) {
@@ -612,7 +648,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         <div class="zone-capacity">
           <span id="zone-current-capacity-${id}">0</span>
           /
-          <span>${zone.capacity}</span>
+          <span id="zone-capacity-${id}">${zone.capacity}</span>
         </div>
         </div>
       </div>
