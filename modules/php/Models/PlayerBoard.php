@@ -163,9 +163,9 @@ class PlayerBoard
       throw new \BgaVisibleSystemException('You do not have any stable available');
     }
 
-    if (!$this->isFree($stable)) {
-      throw new \BgaVisibleSystemException('This node is not free');
-    }
+    // if (!$this->isFree($stable)) {
+    //   throw new \BgaVisibleSystemException('This node is not free');
+    // }
 
     $id = Stables::moveNextAvailable($this->pId, 'board', $stable);
     $stable = Meeples::get($id);
@@ -303,7 +303,9 @@ class PlayerBoard
       // Add all the unaccomodated animals
       if ($id === 'unaccomodated') {
         foreach ($zone['meeples'] as $meeple) {
-          $animals[] = $meeple;
+          if ($meeple['type'] != DOG) {
+            $animals[] = $meeple;
+          }
         }
         continue;
       }
@@ -496,7 +498,7 @@ class PlayerBoard
 
       $zones[] = [
         'type' => 'pasture',
-        'capacity' => 2 * (count($pasture['stables']) + 1) * count($pasture['nodes']),
+        'capacity' => 2 * (count($pasture['stables']) == 0 ? 1 : 2) * count($pasture['nodes']),
         'locations' => $pasture['nodes'],
         'stables' => $pasture['stables'],
       ];
@@ -504,15 +506,16 @@ class PlayerBoard
     }
 
     // Add the unfenced stables
-    $marks = $this->getPasturesMarks();
+    // $marks = $this->getPasturesMarks();
     foreach ($this->stables as $stable) {
-      if ($marks[$stable['x']][$stable['y']] == null && !isset($dogZones[$stable['x'] . '-' . $stable['y']])) {
+      if (!in_array($this->extractPos($stable), $pastures) && !isset($dogZones[$stable['x'] . '-' . $stable['y']])) {
         $zones[] = [
           'type' => 'stable',
           'capacity' => 1,
           'constraints' => isset($this->grid[$stable['x']][$stable['y']]) ? [] : [PIG],
           'locations' => [$this->extractPos($stable)],
         ];
+        $pastures = array_merge($pastures, [$this->extractPos($stable)]);
       }
     }
 
@@ -627,6 +630,44 @@ class PlayerBoard
     return $nodes;
   }
 
+  /**
+   * Return Zones where we can build stables
+   **/
+  public function getStableZone()
+  {
+    $nodes = $this->getAllNodes();
+
+    // Should in the forest
+    Utils::filter($nodes, function ($pos) {
+      return $this->isForestZone($pos) &&
+        (($this->isFree($pos) && !$this->checkExtended($pos)) || !$this->isFree($pos));
+    });
+
+    // Not in pastures with already a stable
+    $pastureStables = [];
+    foreach ($this->getPastures() as $pasture) {
+      if (count($pasture['stables']) != 0) {
+        $pastureStables = array_merge($pastureStables, $pasture['nodes']);
+      }
+    }
+    Utils::filter($nodes, function ($pos) use ($pastureStables) {
+      return !in_array($pos, $pastureStables);
+    });
+
+    // cannot place in a field
+    $fields = $this->getTilesOfType(\TILE_FIELD);
+    Utils::filter($nodes, function ($pos) use ($fields) {
+      foreach ($fields as $field) {
+        if ($pos == $this->extractPos($field)) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    return $nodes;
+  }
+
   public function getUnbuiltTiles($tileType = null)
   {
     $zones = [];
@@ -680,8 +721,15 @@ class PlayerBoard
   public function getPlacableZones($tile, $checkAdjacency = true)
   {
     $nodes = [];
-    if (in_array($tile, [TILE_FIELD, TILE_MEADOW])) {
+    if ($tile == TILE_MEADOW) {
       $nodes = $this->getFreeZones(FOREST);
+    } elseif ($tile == TILE_FIELD) {
+      // no stable
+      $nodes = $this->getFreeZones(FOREST);
+      $stableGrid = $this->stablesGrid;
+      Utils::filter($nodes, function ($pos) use ($stableGrid) {
+        return is_null($stableGrid[$pos['x']][$pos['y']]);
+      });
     } elseif (in_array($tile, [TILE_CAVERN, TILE_TUNNEL])) {
       $nodes = $this->getFreeZones(MOUNTAIN);
     } elseif (in_array($tile, [TILE_DEEP_TUNNEL, TILE_ORE_MINE])) {
