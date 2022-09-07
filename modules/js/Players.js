@@ -16,10 +16,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'donkey',
     'dog',
   ];
-  const PERSONAL_RESOURCES = ['dwarf', 'stable'];
+  const PERSONAL_RESOURCES = ['stable'];
   const MAX_PERSONAL_RESOURCES = {
     stable: 3,
-    dwarf: 5,
   };
   const ALL_RESOURCES = RESOURCES.concat(PERSONAL_RESOURCES);
   const ANIMALS = ['sheep', 'pig', 'cattle', 'donkey', 'dog'];
@@ -195,11 +194,20 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     updateDwarfsPlayerCounters() {
       this.forEachPlayer((player) => {
-        let boardWrapper = $(`board-wrapper-${player.id}`);
-        let meeples = boardWrapper.querySelectorAll(`:not(.actionCard):not(.dwarf-holder) > .meeple-dwarf`);
-        let caravanMeeples = boardWrapper.querySelectorAll(`[data-id='B10_Caravan'] .meeple-dwarf`);
+        let containers = {
+          'action' : $('central-board-wrapper'),
+          'board' : $(`board-wrapper-${player.id}`),
+        };
 
-        dojo.attr(`board_resource_${player.id}_dwarf`, 'data-n', meeples.length + caravanMeeples.length);
+        Object.keys(containers).forEach(location => {
+          let summaryContainer = $(`board_resource_${player.id}_dwarf`).querySelector(`.dwarf-on-${location}`);
+          summaryContainer.innerHTML = '';
+          [...containers[location].querySelectorAll(`.meeple-dwarf[data-color="${player.color}"]`)].forEach(dwarf => {
+            let o = dojo.clone(dwarf);
+            o.id += '_summary';
+            dojo.place(o, summaryContainer);
+          });
+        })
       });
     },
 
@@ -222,9 +230,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     tplPlayerPanel(player) {
       return (
         `
-      <div class="caverna-player-pannel" id="caverna-pannel-${
-          player.id
-        }" data-color="${player.color}">
+      <div class="caverna-player-pannel" id="caverna-pannel-${player.id}" data-color="${player.color}">
         <div class="caverna-first-player-holder" id="reserve_${player.id}_firstPlayer"></div>
         <div class="player-panel-resources">
           <div class="player-reserve" id="reserve-${player.id}"></div>
@@ -238,17 +244,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         ` +
         // Specific counters for animals on board or reserve
         ANIMALS.map((res) => this.tplResourceCounter(player, res, 'board_')).join('') +
-        // Specific div to show remeaning dwarfs
-        this.formatStringMeeples(`
-            <div class='player-resource resource-dwarf' id='board_resource_${player.id}_dwarf'>
-              <FARMER><FARMER><FARMER><FARMER><FARMER>
-            </div>
-          `) +
         `
         </div>
         <div class="player-panel-personal-resources">
+          <div class='player-resource resource-dwarf' id='board_resource_${player.id}_dwarf'>
+            <div class='dwarf-on-action'></div>
+            <div class='dwarf-on-board'></div>
+            <div class='dwarf-in-reserve'></div>
+          </div>
         ` +
-        ['dwarf', 'stable'].map((res) => this.tplResourceCounter(player, res)).join('') +
+        PERSONAL_RESOURCES.map((res) => this.tplResourceCounter(player, res)).join('') +
         `
         </div>
       </div>

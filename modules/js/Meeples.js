@@ -172,6 +172,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
         return container;
       } else if (meeple.location == 'reserve') {
+        if (meeple.type == 'dwarf') {
+          return $(`board_resource_${meeple.pId}_dwarf`).querySelector('.dwarf-in-reserve');
+        }
         let reserve = $(`reserve_${meeple.pId}_${meeple.type}`);
         if (reserve == null) {
           reserve = 'reserve-' + meeple.pId;
@@ -249,14 +252,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             } else {
               this.localUpdateResourcesHoldersType(resource.type);
             }
-          }
-
-          if (resource.type == 'score') {
-            let counter = document.querySelector('#' + resource.location + ' .card-bonus-vp-counter');
-            let current = counter.innerHTML == '' ? 0 : parseInt(counter.innerHTML);
-            current++;
-            counter.innerHTML = current;
-            this.refreshCardTooltipBonusVp(resource.location, current);
           }
         };
 
@@ -382,7 +377,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       debug('Notif: equip a weapon', n);
       this.slideResources([n.args.weapon], {
         from: 'page-title',
-      });
+      }).then(() => this.updateDwarfsPlayerCounters());
     },
 
     /**
@@ -393,6 +388,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       n.args.dwarfs.forEach((dwarf) => {
         $(`meeple-${dwarf.weaponId}`).dataset.force = dwarf.weapon;
       });
+      this.updateDwarfsPlayerCounters();
     },
 
     /**

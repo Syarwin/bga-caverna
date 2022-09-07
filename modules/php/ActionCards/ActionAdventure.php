@@ -24,17 +24,21 @@ class ActionAdventure extends \CAV\Models\ActionCard
   protected function getFlow($player, $dwarf)
   {
     $childs = [];
-    if (($dwarf['weapon'] ?? 0) == 0) {
+
+    $armed = ($dwarf['weapon'] ?? 0) > 0;
+    if (!$armed) {
       $childs[] = ['action' => BLACKSMITH];
     }
     $childs[] = [
       'action' => EXPEDITION,
+      'optional' => !$armed,
       'args' => [
         'lvl' => 1,
       ],
     ];
     $childs[] = [
       'action' => EXPEDITION,
+      'optional' => true,
       'args' => [
         'lvl' => 1,
       ],

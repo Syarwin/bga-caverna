@@ -194,11 +194,10 @@
 
   &.meeple-barn {
     background-image: url('img/stables.png');
-    background-size: 700% 100%;
+    background-size: 800% 100%;
     background-position-x: 100%;
     width: 0.8em;
     height: 1.1em;
-    filter: grayscale(1);
   }
   &.meeple-dwarf_icon {
     background-image: url('img/dwarves.png');
