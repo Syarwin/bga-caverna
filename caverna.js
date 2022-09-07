@@ -83,17 +83,12 @@ define([
           'confirmPartialTurn',
           'placeTile',
           'furnish',
-          // UNCHECKED
+          'breed',
           'exchange',
-          'fencing',
-          'improvement',
-          'occupation',
           'payResources',
-          'plow',
           'reorganize',
           'sow',
           'stables',
-          'renovation',
         ];
         this._notifications = [
           ['startNewRound', 1],
@@ -311,7 +306,6 @@ define([
 
       notif_refreshUI(n) {
         debug('Notif: refreshing UI', n);
-        //        ['meeples', 'players', 'scores', 'playerCards'].forEach((value) => {
         ['meeples', 'tiles', 'players', 'scores'].forEach((value) => {
           this.gamedatas[value] = n.args.datas[value];
         });
@@ -680,6 +674,8 @@ define([
         };
 
         for (let force = 1; force <= args.max; force++) {
+          if (force == 13) continue;
+
           [...$(`expedition-lvl-${force}`).querySelectorAll('button')].forEach((button) => {
             button.classList.remove('disabled');
             this.onClick(button, () => selectLoot(button));
@@ -694,6 +690,43 @@ define([
         [...$('expedition-container').querySelectorAll('button')].forEach((button) => {
           button.classList.remove('disabled');
           delete button.dataset.choiceOrder;
+        });
+      },
+
+      onEnteringStateBreed(args) {
+        if (args.automaticAction) return;
+
+        let selected = [];
+        args.breeds.forEach((resource) => {
+          this.addPrimaryActionButton(
+            resource + '-button',
+            this.formatStringMeeples('<' + resource.toUpperCase() + '>'),
+            () => {
+              if (selected.includes(resource) || selected.length >= args.max) return;
+              selected.push(resource);
+              dojo.addClass(resource + '-button', 'disabled');
+
+              let isMax = selected.length == args.max;
+              let btnType = 'add' + (isMax ? 'Primary' : 'Danger') + 'ActionButton';
+              let msg = isMax
+                ? _('Confirm')
+                : this.format_string_recursive(_('Confirm and breed only ${n}'), {
+                    n: selected.length,
+                  });
+
+              this.addSecondaryActionButton('btnClearBreed', _('Clear'), () => {
+                selected = [];
+                dojo.query('#customActions .action-button').removeClass('disabled');
+                dojo.destroy('btnClearBreed');
+                dojo.destroy('btnConfirmBreed');
+              });
+
+              dojo.destroy('btnConfirmBreed');
+              this[btnType]('btnConfirmBreed', msg, () => {
+                this.takeAtomicAction('actBreed', [selected]);
+              });
+            }
+          );
         });
       },
 

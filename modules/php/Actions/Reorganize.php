@@ -130,7 +130,7 @@ class Reorganize extends \CAV\Models\Action
         'pasture' => 4,
         'stable' => 3,
         'mine' => 2,
-        'card' => 1,
+        'meadow' => 1,
         'room' => 0,
       ];
       return $map[$b['type']] - $map[$a['type']];

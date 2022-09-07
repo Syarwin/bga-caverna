@@ -1224,7 +1224,7 @@ html {
   width: calc(var(--cavernaPlayerBoardScale) * 625px + 20px); }
 
 .player-board-resizable {
-  margin: 0px 10px 10px;
+  margin: 0px 10px 2px;
   width: calc(var(--cavernaPlayerBoardScale) * 625px);
   height: calc(var(--cavernaPlayerBoardScale) * 450px); }
 

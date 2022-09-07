@@ -30,7 +30,7 @@ class WeaponIncrease extends \CAV\Models\Action
     foreach ($dwarfs as $dwarf) {
       // we take the last version of the dwarf as the one in args may be updated
       $nDwarf = Dwarfs::get($dwarf['id']);
-      if (isset($nDwarf['weapon']) && $nDwarf['weapon'] > 0) {
+      if (isset($nDwarf['weapon']) && $nDwarf['weapon'] > 0 && $nDwarf['weapon'] < 14) {
         Dwarfs::upgradeWeapon($nDwarf, $increase);
         $upgradedDwarfs[] = $dwarf['id'];
       }
