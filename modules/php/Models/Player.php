@@ -637,6 +637,9 @@ class Player extends \CAV\Helpers\DB_Model
     $canBreed = [];
 
     foreach ($animals as $animal => $value) {
+      if ($animal == DOG) {
+        continue;
+      }
       if ($value < 2) {
         $canBreed[$animal] = false;
         continue;
@@ -649,6 +652,12 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function canBreed()
   {
-    return count($this->breedTypes()) > 0;
+    $breeds = $this->breedTypes();
+    foreach ($breeds as $animal => $canBreed) {
+      if ($canBreed === true) {
+        return true;
+      }
+    }
+    return false;
   }
 }
