@@ -56,7 +56,7 @@ class Breed extends \CAV\Models\Action
   {
     $args = $this->argsBreed();
     $player = Players::getActive();
-    if (count($args['breeds']) == 4 || ($player->hasRuby() && count($args['breeds']) == $args['max'])) {
+    if (count($args['breeds']) == 4 || (!$player->hasRuby() && count($args['breeds']) == $args['max'])) {
       $this->actBreed($args['breeds']);
     }
   }

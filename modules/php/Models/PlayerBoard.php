@@ -979,7 +979,7 @@ class PlayerBoard
         }
       }
       if ($this->containsStable($tile)) {
-        $pasture['stables'] = ['x' => $tile['x'], 'y' => $tile['y']];
+        $pasture['stables'] = [['x' => $tile['x'], 'y' => $tile['y']]];
       }
       if ($asset == TILE_PASTURE) {
         $this->pastures[] = $pasture;
