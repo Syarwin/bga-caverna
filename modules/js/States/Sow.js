@@ -96,7 +96,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     getSeedContainer(field) {
       // Create container if needed
       if (!$('seed-holder-' + field.id)) {
-        this.place('tplSeedContainer', field, 'tile-' + field.id);
+        dojo.place(this.tplSeedContainer(field), 'tile-' + field.id, 'before');
       }
 
       return 'seed-holder-' + field.id;

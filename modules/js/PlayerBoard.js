@@ -78,11 +78,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         </div>
         <div class="animals-counters">
           ` +
-      this.tplResourceCounter(player, 'sheep') +
-      this.tplResourceCounter(player, 'pig') +
-      this.tplResourceCounter(player, 'cattle') +
-      this.tplResourceCounter(player, 'donkey') +
-      `
+        this.tplResourceCounter(player, 'sheep') +
+        this.tplResourceCounter(player, 'pig') +
+        this.tplResourceCounter(player, 'cattle') +
+        this.tplResourceCounter(player, 'donkey') +
+        `
         </div>
       </div>
     </div>
@@ -253,6 +253,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       document.querySelectorAll('.caverna-tile').forEach((oTile) => {
         if (!tileIds.includes(parseInt(oTile.getAttribute('data-id')))) {
+          let seedHolder = oTile.parentNode.querySelector('.seed-holder');
+          if (seedHolder) {
+            seedHolder.remove();
+          }
           dojo.destroy(oTile);
         }
       });

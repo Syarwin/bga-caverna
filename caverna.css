@@ -93,17 +93,6 @@ html {
   display: flex;
   justify-content: center;
   align-items: center; }
-  .board-cell.cell-node .square-selector .seed-holder,
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder {
-    display: flex;
-    flex-flow: column-reverse; }
-    .board-cell.cell-node .square-selector .seed-holder .caverna-meeple, .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder .caverna-meeple {
-      margin: 0 auto -0.3em; }
-      #ebd-body:not(.mobile_version) .board-cell.cell-node .square-selector .seed-holder .caverna-meeple,
-      #ebd-body:not(.mobile_version) .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder .caverna-meeple {
-        filter: drop-shadow(1px 1px 1px black); }
-      .board-cell.cell-node .square-selector .seed-holder .caverna-meeple:first-child, .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder .caverna-meeple:first-child {
-        margin: 0; }
   .board-cell.cell-node .square-selector:not([data-tile]), .board-cell.cell-node .square-selector[data-tile=''],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile:not([data-tile]),
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile=''] {
@@ -133,6 +122,18 @@ html {
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileLargePasture-1'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-1'] {
     border-left: none; }
+
+.seed-holder {
+  display: flex;
+  flex-flow: column-reverse;
+  position: relative;
+  z-index: 2; }
+  .seed-holder .caverna-meeple {
+    margin: 0 auto -0.3em; }
+    #ebd-body:not(.mobile_version) .seed-holder .caverna-meeple {
+      filter: drop-shadow(1px 1px 1px black); }
+    .seed-holder .caverna-meeple:first-child {
+      margin: 0; }
 
 .office-room .board-cell.cell-node .square-selector,
 .caverna-player-board.office-room .player-board-grid .board-cell .caverna-tile {
