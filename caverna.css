@@ -651,7 +651,7 @@ html {
     margin-top: -13px;
     order: 1; }
     [data-action-name='0'] #central-board .action-card-wrapper {
-      margin-top: -12px;
+      margin-top: -11px;
       height: 177px;
       background-image: url("img/action_cards_border_small.png"); }
   #central-board .turn-action-container {
@@ -1490,11 +1490,10 @@ html {
       margin: 0em -0.4em; }
   .caverna-meeple.meeple-barn {
     background-image: url("img/stables.png");
-    background-size: 700% 100%;
+    background-size: 800% 100%;
     background-position-x: 100%;
     width: 0.8em;
-    height: 1.1em;
-    filter: grayscale(1); }
+    height: 1.1em; }
   .caverna-meeple.meeple-dwarf_icon {
     background-image: url("img/dwarves.png");
     background-size: 700% 100%;
@@ -1901,6 +1900,51 @@ html {
       border-top: 1px solid #80502e; }
       .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource {
         flex-basis: 33%; }
+      .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf {
+        flex-basis: 60%;
+        display: flex;
+        border: 1px solid #606060;
+        border-radius: 5px;
+        height: 7px;
+        margin-top: 20px; }
+        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-action,
+        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-board,
+        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve {
+          flex-grow: 1;
+          display: flex;
+          justify-content: center;
+          padding: 0px 2px; }
+        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-action {
+          min-width: 25px;
+          background-image: url("img/background_card.jpg");
+          background-size: 200px;
+          background-position: 100px 183px;
+          border-radius: 5px 0px 0px 5px;
+          border-right: 1px solid #606060; }
+        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-board {
+          min-width: 25px;
+          background: #7a6b64;
+          border-right: 1px solid #606060; }
+        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve {
+          background: rgba(255, 255, 255, 0.6);
+          border-radius: 0px 5px 5px 0px; }
+          .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf {
+            filter: grayscale(0.5);
+            opacity: 0.5; }
+        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf {
+          width: 23px;
+          height: 19px;
+          margin-top: -13px; }
+          .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
+            transform: scale(0.7);
+            transform-origin: -4px 0px; }
+          [data-dwarf='1'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf, [data-dwarf='2'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf {
+            width: 20px;
+            height: 26px;
+            margin-top: -20px; }
+            [data-dwarf='1'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon, [data-dwarf='2'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
+              transform: scale(0.5);
+              transform-origin: -2px 10px; }
   .colorblind .player-board .caverna-player-pannel .meeple-dwarf_icon {
     background-image: url("img/dwarfs_colorblind.png"); }
 
