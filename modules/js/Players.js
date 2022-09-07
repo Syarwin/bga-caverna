@@ -137,15 +137,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         ANIMALS.forEach((res) => {
           if (res == 'dog') return; // No baby dog
 
+          let brother = $(`resource_${this.player_id}_${res}`);
           dojo.place(
             this.formatStringMeeples(`
             <div class='baby-counter'>
               +
               <span id='resource_baby_${res}' class='resource_${res}'></span>
+              <${res.toUpperCase()}>
             </div>
           `),
-            `resource_${this.player_id}_${res}`,
-            'after'
+            brother.parentNode,
           );
 
           this._babyCounters[res] = this.createCounter('resource_baby_' + res);

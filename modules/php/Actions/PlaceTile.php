@@ -141,6 +141,9 @@ class PlaceTile extends \CAV\Models\Action
 
     // Notify the new tile squares
     Notifications::placeTile($player, $tile, $squares);
+    if ($tile == TILE_MEADOW_FIELD || $tile == \TILE_MEADOW) {
+      Notifications::updateDropZones($player);
+    }
 
     // Trigger of Pay if needed
     $cost = $this->getCosts($player, $this->getCtxArgs());

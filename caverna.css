@@ -1225,74 +1225,54 @@ html {
 .player-board-resizable {
   margin: 0px 10px 10px;
   width: calc(var(--cavernaPlayerBoardScale) * 625px);
-  height: calc(var(--cavernaPlayerBoardScale) * 420px); }
+  height: calc(var(--cavernaPlayerBoardScale) * 450px); }
 
 .player-board-wrapper {
   width: 625px;
   height: 420px;
   transform: scale(var(--cavernaPlayerBoardScale));
   transform-origin: top left; }
-  .player-board-wrapper.harvest .player-board-holder .animals-counters .baby-counter {
+  .player-board-wrapper.harvest .animals-counters .baby-counter {
     display: inline-block; }
-  .player-board-wrapper.harvest .player-board-name {
-    max-width: 100px;
-    height: 22px;
-    overflow: hidden;
-    text-overflow: ellipsis; }
   .player-board-wrapper .player-board-holder {
     border: 1px solid black;
     border-radius: 10px;
     background-image: url("img/action_frame_bg.jpg");
     background-size: 200px 40px;
     box-shadow: 2px 2px 10px black; }
-    .player-board-wrapper .player-board-holder .animals-counters {
-      position: relative;
-      display: flex;
-      justify-content: flex-start;
-      align-items: baseline;
-      font-size: 20px;
-      padding-right: 110px;
-      height: 33px; }
-      .player-board-wrapper .player-board-holder .animals-counters .player-resource {
-        margin: 2px 5px 0px;
-        background: rgba(255, 255, 255, 0.47);
-        padding: 0px 9px;
-        border-radius: 7px;
-        border: 1px solid black;
-        transition: opacity 0.5s;
-        opacity: 1;
-        position: relative; }
-        .player-board-wrapper .player-board-holder .animals-counters .player-resource[data-n='0'] {
-          opacity: 0; }
-        .player-board-wrapper .player-board-holder .animals-counters .player-resource .reserve {
-          position: absolute;
-          top: 0%;
-          left: 0%;
-          width: 100%;
-          height: 100%; }
-          .player-board-wrapper .player-board-holder .animals-counters .player-resource .reserve > div.caverna-meeple:not(.moving) {
-            display: none; }
-      .player-board-wrapper .player-board-holder .animals-counters .baby-counter {
-        font-size: 0.75em;
-        vertical-align: middle;
-        display: none; }
-    .player-board-wrapper .player-board-holder .player-board-name {
+    .player-board-wrapper .player-board-holder .player-resource.resource-dog {
       position: absolute;
-      top: -31px;
-      right: 2px;
-      font-size: 15px;
-      font-family: var(--caverna-font-family);
-      background-color: rgba(255, 255, 255, 0.5);
-      padding: 2px 1rem;
-      border-radius: 10px;
-      border: 1px solid black; }
-    .player-board-wrapper .player-board-holder .resources-bar-holder.active .player-board-name {
-      border-bottom-right-radius: 0px;
-      border-bottom-left-radius: 0px;
-      background-color: #eceeaf;
-      top: -28px;
-      right: 30px;
-      border-bottom: 1px solid black !important; }
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 7px;
+      border: 1px solid black;
+      transition: opacity 0.5s;
+      opacity: 1;
+      font-size: 22px;
+      bottom: -14px;
+      padding: 2px 3px; }
+      .player-board-wrapper .player-board-holder .player-resource.resource-dog[data-n='0'] {
+        opacity: 0; }
+      .player-board-wrapper .player-board-holder .player-resource.resource-dog .reserve {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%; }
+        .player-board-wrapper .player-board-holder .player-resource.resource-dog .reserve > div.caverna-meeple:not(.moving) {
+          display: none; }
+    .player-board-wrapper .player-board-holder .resources-bar-holder {
+      position: relative;
+      height: 33px; }
+      .player-board-wrapper .player-board-holder .resources-bar-holder .player-board-name {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        font-size: 15px;
+        font-family: var(--caverna-font-family);
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 2px 1rem;
+        border-radius: 10px;
+        border: 1px solid black; }
     .player-board-wrapper .player-board-holder .caverna-player-board {
       width: 623px;
       height: 382px;
@@ -1344,6 +1324,38 @@ html {
           grid-template-rows: 70px repeat(4, 1px 70px) 1px 70px;
           background-repeat: no-repeat;
           background-position: 31px 31px; }
+  .player-board-wrapper .animals-counters {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    font-size: 20px;
+    padding-right: 110px;
+    height: 30px;
+    padding-top: 2px; }
+    .player-board-wrapper .animals-counters .player-resource {
+      margin: 2px 5px 0px;
+      background: rgba(255, 255, 255, 0.47);
+      padding: 0px 9px;
+      border-radius: 7px;
+      border: 1px solid black;
+      transition: opacity 0.5s;
+      opacity: 1;
+      position: relative; }
+      .player-board-wrapper .animals-counters .player-resource[data-n='0'] {
+        opacity: 0; }
+      .player-board-wrapper .animals-counters .player-resource .reserve {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%; }
+        .player-board-wrapper .animals-counters .player-resource .reserve > div.caverna-meeple:not(.moving) {
+          display: none; }
+    .player-board-wrapper .animals-counters .baby-counter {
+      font-size: 0.75em;
+      vertical-align: middle;
+      display: none; }
 
 #player-boards {
   display: flex;
@@ -1370,120 +1382,120 @@ html {
   .caverna-meeple.meeple-score {
     width: 0.7em;
     height: 0.93em;
-    background-position: 41.1215% 0%;
+    background-position: 44.6262% 1.21359%;
     background-size: 609.524%; }
   .caverna-meeple.meeple-gold {
     width: 0.78em;
     height: 0.78em;
-    background-position: 17.2414% 0%;
+    background-position: 19.7044% 1.23153%;
     background-size: 483.019%; }
   .caverna-meeple.meeple-wood {
-    width: 0.58em;
+    width: 0.6em;
     height: 0.78em;
-    background-position: 74.5575% 51.3825%;
+    background-position: 98.8938% 54.8387%;
     background-size: 853.333%; }
   .caverna-meeple.meeple-stone {
     width: 0.64em;
     height: 0.8em;
-    background-position: 17.8571% 51.6204%;
+    background-position: 39.0625% 55.0926%;
     background-size: 800%; }
   .caverna-meeple.meeple-ore {
     width: 0.89em;
     height: 0.7062em;
-    background-position: 73.3032% 66.1572%;
+    background-position: 98.4163% 70.524%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-ruby {
     width: 0.9154em;
     height: 0.693em;
-    background-position: 89.1403% 66.0131%;
+    background-position: 1.13122% 88.2353%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-food {
     width: 0.8em;
     height: 0.8em;
-    background-position: 0% 51.6204%;
+    background-position: 20.8333% 55.0926%;
     background-size: 640%; }
   .caverna-meeple.meeple-grain {
     width: 0.75em;
     height: 0.79em;
-    background-position: 32.9519% 51.5012%;
+    background-position: 55.8352% 54.9654%;
     background-size: 682.667%; }
   .caverna-meeple.meeple-vegetable {
     width: 0.82em;
     height: 0.8em;
-    background-position: 40.1376% 69.1781%;
+    background-position: 63.3028% 73.7443%;
     background-size: 673.684%; }
   .caverna-meeple.meeple-sheep {
     width: 0.98em;
     height: 0.76em;
-    background-position: 0% 69.4954%;
+    background-position: 21.9807% 74.0826%;
     background-size: 522.449%; }
   .caverna-meeple.meeple-pig {
     width: 1.118em;
-    height: 0.77em;
-    background-position: 55.5838% 51.3825%;
+    height: 0.78em;
+    background-position: 82.2335% 54.8387%;
     background-size: 433.898%; }
   .caverna-meeple.meeple-cattle {
-    width: 1.03em;
+    width: 1.04em;
     height: 0.82em;
-    background-position: 20.5882% 32.3256%;
+    background-position: 23.0392% 34.6512%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-donkey {
     width: 1.04em;
     height: 0.87em;
-    background-position: 80.3922% 0%;
+    background-position: 86.5196% 1.17647%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-dog {
     width: 0.68em;
     height: 0.9em;
-    background-position: 58.5586% 0%;
+    background-position: 63.0631% 1.18483%;
     background-size: 752.941%; }
   .caverna-meeple.meeple-first {
     width: 0.4em;
     height: 0.9em;
-    background-position: 0% 0%;
+    background-position: 1.13122% 1.34048%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-begging {
     width: 1.1em;
     height: 1.1em;
-    background-position: 100% 0%;
+    background-position: 1.15741% 55.0926%;
     background-size: 640%; }
   .caverna-meeple.meeple-arrow {
     width: 0.4em;
     height: 0.3em;
-    background-position: 26.1745% 81.681%;
+    background-position: 45.1902% 87.2845%;
     background-size: 787.692%; }
   .caverna-meeple.meeple-arrow-1x {
     width: 1.3em;
     height: 0.6em;
-    background-position: 46.0759% 81.3305%;
+    background-position: 68.8608% 86.9099%;
     background-size: 437.607%; }
   .caverna-meeple.meeple-arrow-2x {
     width: 1.2em;
     height: 0.6em;
-    background-position: 0% 82.2126%;
+    background-position: 20.2532% 87.8525%;
     background-size: 437.607%; }
   .caverna-meeple.meeple-building {
     width: 1.1571em;
     height: 1.1em;
-    background-position: 92.1114% 51.2644%;
+    background-position: 1.16009% 74.2529%;
     background-size: 632.099%; }
   .caverna-meeple.meeple-pasture {
     width: 1.1em;
     height: 1.1em;
-    background-position: 22.5287% 69.3364%;
+    background-position: 44.5977% 73.913%;
     background-size: 664.935%; }
   .caverna-meeple.meeple-empty {
     width: 1em;
     height: 1em;
-    background-position: 57.1754% 69.0205%;
+    background-position: 81.3212% 73.5763%;
     background-size: 701.37%; }
   .caverna-meeple.meeples-mines {
     width: 1.1em;
     height: 1.1em;
-    background-position: 0% 32.4766%;
+    background-position: 1.16822% 34.8131%;
     background-size: 609.524%; }
   .caverna-meeple.meeple-reorganize {
-    background-position: 85.8447% 32.3256%;
+    background-position: 92.6941% 34.6512%;
     background-size: 174.744%;
     width: 5em;
     height: 1.4em;
@@ -1491,7 +1503,7 @@ html {
   .caverna-meeple.meeple-cook {
     width: 2em;
     height: 1.1em;
-    background-position: 66.8904% 79.2887%;
+    background-position: 88.1432% 84.728%;
     background-size: 787.692%; }
     #anytimeActions .caverna-meeple.meeple-cook {
       margin: 0em -0.4em; }

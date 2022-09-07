@@ -40,20 +40,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         current = 'current';
       }
       let name = player.id == this.player_id ? _('Your board') : player.name;
-      let html =
-        `
+      let html = `
     <div class='player-board-resizable ${current}' id='player-board-resizable-${player.id}'>
       <div class="player-board-wrapper ${current}" id="board-wrapper-${player.id}">
         <div class="player-board-holder">
-          <div class="animals-counters">
-            ` +
-        this.tplResourceCounter(player, 'sheep') +
-        this.tplResourceCounter(player, 'pig') +
-        this.tplResourceCounter(player, 'cattle') +
-        this.tplResourceCounter(player, 'donkey') +
-        this.tplResourceCounter(player, 'dog') +
-        `
-          </div>
           <div id="resources-bar-holder-${player.id}" class="resources-bar-holder">
             <div class="player-board-name" style="border-color:#${player.color}; color:#${player.color}">
               ${name}
@@ -74,13 +64,25 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               <div class="animal-holder resource-holder-update"></div>
               <div class="stable-holder"></div>`
               : '';
+          if (x == 6 && y == 1) {
+            content = this.tplResourceCounter(player, 'dog');
+          }
 
           html += `<div data-x='${x}' data-y='${y}' class="board-cell cell-${type}">${content}</div>`;
         }
       }
-      html += `
+      html +=
+        `
             </div>
           </div>
+        </div>
+        <div class="animals-counters">
+          ` +
+      this.tplResourceCounter(player, 'sheep') +
+      this.tplResourceCounter(player, 'pig') +
+      this.tplResourceCounter(player, 'cattle') +
+      this.tplResourceCounter(player, 'donkey') +
+      `
         </div>
       </div>
     </div>
@@ -319,7 +321,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         TILES_MAPPING[tile].forEach((tileType, i) => {
           let square = dojo.place(
             `<div class='tile-selector-cell' id='tile-selector-${tile}-${i}' data-tile='${tile}-${i}'></div>`,
-            `tile-selector-${tile}`,
+            `tile-selector-${tile}`
           );
           this.onClick(square, () => {
             if (square.classList.contains('selected')) return;
@@ -362,7 +364,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               'btnConfirmPlace',
               _('Confirm'),
               () => this.takeAtomicAction('actPlaceTile', [selectedTile, selectedPos]),
-              'subtitle-text',
+              'subtitle-text'
             );
           }
           // Otherwise, auto select other square
