@@ -132,20 +132,20 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.updatePlayersCounters(false);
 
       // Setup baby counters
-      // TODO
-      if (!this.isSpectator && false) {
+      if (!this.isSpectator) {
         this._babyCounters = {};
         ANIMALS.forEach((res) => {
-          let brother = $(`resource_${this.player_id}_${res}`);
+          if (res == 'dog') return; // No baby dog
+
           dojo.place(
             this.formatStringMeeples(`
             <div class='baby-counter'>
               +
               <span id='resource_baby_${res}' class='resource_${res}'></span>
-              <${res.toUpperCase()}>
             </div>
           `),
-            brother.parentNode
+            `resource_${this.player_id}_${res}`,
+            'after'
           );
 
           this._babyCounters[res] = this.createCounter('resource_baby_' + res);
@@ -195,19 +195,19 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     updateDwarfsPlayerCounters() {
       this.forEachPlayer((player) => {
         let containers = {
-          'action' : $('central-board-wrapper'),
-          'board' : $(`board-wrapper-${player.id}`),
+          action: $('central-board-wrapper'),
+          board: $(`board-wrapper-${player.id}`),
         };
 
-        Object.keys(containers).forEach(location => {
+        Object.keys(containers).forEach((location) => {
           let summaryContainer = $(`board_resource_${player.id}_dwarf`).querySelector(`.dwarf-on-${location}`);
           summaryContainer.innerHTML = '';
-          [...containers[location].querySelectorAll(`.meeple-dwarf[data-color="${player.color}"]`)].forEach(dwarf => {
+          [...containers[location].querySelectorAll(`.meeple-dwarf[data-color="${player.color}"]`)].forEach((dwarf) => {
             let o = dojo.clone(dwarf);
             o.id += '_summary';
             dojo.place(o, summaryContainer);
           });
-        })
+        });
       });
     },
 

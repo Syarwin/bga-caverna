@@ -1219,7 +1219,7 @@ html {
 .action-card-name-reference {
   font-style: italic; }
 
-[data-player-boards="1"] #player-boards {
+[data-player-boards='1'] #player-boards {
   width: calc(var(--cavernaPlayerBoardScale) * 625px + 20px); }
 
 .player-board-resizable {
@@ -1234,6 +1234,11 @@ html {
   transform-origin: top left; }
   .player-board-wrapper.harvest .player-board-holder .animals-counters .baby-counter {
     display: inline-block; }
+  .player-board-wrapper.harvest .player-board-name {
+    max-width: 100px;
+    height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .player-board-wrapper .player-board-holder {
     border: 1px solid black;
     border-radius: 10px;
@@ -1244,12 +1249,14 @@ html {
       position: relative;
       display: flex;
       justify-content: flex-start;
+      align-items: baseline;
       font-size: 20px;
-      padding-left: 40px; }
+      padding-right: 110px;
+      height: 33px; }
       .player-board-wrapper .player-board-holder .animals-counters .player-resource {
-        margin: 0 10px;
+        margin: 2px 5px 0px;
         background: rgba(255, 255, 255, 0.47);
-        padding: 3px 9px;
+        padding: 0px 9px;
         border-radius: 7px;
         border: 1px solid black;
         transition: opacity 0.5s;
@@ -1272,7 +1279,7 @@ html {
     .player-board-wrapper .player-board-holder .player-board-name {
       position: absolute;
       top: -31px;
-      right: 20px;
+      right: 2px;
       font-size: 15px;
       font-family: var(--caverna-font-family);
       background-color: rgba(255, 255, 255, 0.5);
@@ -2990,6 +2997,10 @@ html {
   justify-content: center;
   z-index: 110;
   pointer-events: none; }
+  .animal-holder .meeple-dog  {
+    order: 1; }
+  .animal-holder .meeple-sheep {
+    order: 2; }
 
 .caverna-building ~ .animal-holder {
   left: auto;
@@ -2997,7 +3008,7 @@ html {
   right: 6%;
   bottom: -2%;
   background-color: rgba(242, 210, 33, 0.8);
-  border-radius: 24%;
+  border-radius: 10px;
   border: 1px solid black;
   opacity: 0;
   transition: opacity 0.7s;

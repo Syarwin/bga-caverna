@@ -58,6 +58,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let pId = this.player_id;
 
       ANIMALS.forEach((type) => {
+        if (type == 'dog') return; // NO BABY DOG
         let onBoard = this.countAnimalsOnBoard(type);
         let inReserve = this.countAnimalsInReserve(type);
         let total = onBoard + inReserve;
@@ -110,8 +111,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         (type) =>
           (reserve[type] =
             this._playerCounters[this.player_id][type].getValue() +
-            (this._isHarvest ? this._babyCounters[type].getValue() : 0))
-        //        (type) => (reserve[type] = $(`reserve_${this.player_id}_${type}`).querySelectorAll('.caverna-meeple').length),
+            (this._isHarvest && type != 'dog' ? this._babyCounters[type].getValue() : 0))
       );
 
       this.getAnimalsDropZones(this.player_id).forEach((zone) => {
@@ -164,8 +164,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             // DOG MODE
             if (
               animalLeft &&
+              constraintSatisfied &&
               isDogMode &&
-              (type == 'dog' || (type == 'sheep' && (constraintSatisfied || currentContent > 0)))
+              (type == 'dog' || (type == 'sheep' && (zone['type'] != 'meadow' || currentContent > 0)))
             ) {
               isHidden = false;
             }
@@ -210,7 +211,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           else {
             let onBoard = this.countAnimalsOnBoard(type);
             if (this._isHarvest && this._babyCounters[type].getValue() > 0 && onBoard == 2) {
-              animalsToCook.push(reserve[type] - 1 + '<' + type.toUpperCase() + '>');
+              if (reserve[type] > 1) {
+                animalsToCook.push(reserve[type] - 1 + '<' + type.toUpperCase() + '>');
+              }
               animalsToDiscard.push('1<' + type.toUpperCase() + '>');
             } else {
               animalsToCook.push(reserve[type] + '<' + type.toUpperCase() + '>');
