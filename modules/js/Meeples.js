@@ -35,6 +35,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     'MEADOW',
     'SOW',
     'TUNNEL',
+    'MINES',
+    'BUILDING',
   ];
   const PERSONAL_RESOURCES = ['dwarf', 'stable'];
 

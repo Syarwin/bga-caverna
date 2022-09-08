@@ -1490,7 +1490,7 @@ html {
     height: 1em;
     background-position: 81.3212% 73.5763%;
     background-size: 701.37%; }
-  .caverna-meeple.meeples-mines {
+  .caverna-meeple.meeple-mines {
     width: 1.1em;
     height: 1.1em;
     background-position: 1.16822% 34.8131%;
@@ -1517,8 +1517,8 @@ html {
   .caverna-meeple.meeple-dwarf_icon {
     background-image: url("img/dwarves.png");
     background-size: 700% 100%;
-    width: 1.4483em;
-    height: 1.2em; }
+    width: 1.1em;
+    height: 0.8em; }
   .caverna-meeple.meeple-cavern, .caverna-meeple.meeple-field, .caverna-meeple.meeple-furnish, .caverna-meeple.meeple-large_pasture, .caverna-meeple.meeple-meadow, .caverna-meeple.meeple-small_pasture, .caverna-meeple.meeple-sow, .caverna-meeple.meeple-tunnel {
     width: 2.37em;
     height: 1.82em;
@@ -2839,6 +2839,11 @@ html {
         text-align: center;
         border-left: 2px solid black;
         border-right: 2px solid black; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table thead tr th:nth-child(1) {
+          border-right: none; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table thead tr th:nth-child(2) {
+          min-width: auto;
+          border-left: none; }
     #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr {
       height: 30px; }
       #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr:nth-child(odd) {
@@ -2855,7 +2860,12 @@ html {
         #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td.row-header {
           text-align: right;
           padding: 4px 12px 3px;
-          vertical-align: top; }
+          vertical-align: top;
+          border-right: none; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td:nth-child(2) {
+          vertical-align: middle;
+          min-width: auto;
+          border-left: none; }
         #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry,
         #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry {
           display: flex;
@@ -2929,6 +2939,8 @@ html {
           font-family: 'ColibriB';
           font-weight: bold;
           text-transform: uppercase; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-total td:nth-of-type(2) {
+          background: #515151; }
 
 #popin_showSeedPrompt {
   min-height: 200px; }

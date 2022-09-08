@@ -146,7 +146,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               <${res.toUpperCase()}>
             </div>
           `),
-            brother.parentNode,
+            brother.parentNode
           );
 
           this._babyCounters[res] = this.createCounter('resource_baby_' + res);
@@ -284,25 +284,27 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Display a table with a nice overview of current situation for everyone
      */
     setupScoresModal() {
-      let content = this.format_string(jstpl_scoresModal, {
-        dog: _('Dogs'),
-        sheep: _('Sheep'),
-        pig: _('Wild boar'),
-        cattle: _('Cattle'),
-        donkey: _('Donkeys'),
-        grains: _('Grain'),
-        vegetables: _('Vegetables'),
-        rubies: _('Rubies'),
-        dwarfs: _('Dwarfs'),
-        empty: _('Unused spaces'),
-        pastures: _('Pastures'),
-        mines: _('Ore and Ruby mines'),
-        buildings: _('Points for buildings'),
-        buildingsBonus: _('Bonus point'),
-        gold: _('Gold coins'),
-        beggings: _('Beggar tokens'),
-        total: _('Total'),
-      });
+      let content = this.formatStringMeeples(
+        this.format_string(jstpl_scoresModal, {
+          dog: _('Dogs'),
+          sheep: _('Sheep'),
+          pig: _('Wild boar'),
+          cattle: _('Cattle'),
+          donkey: _('Donkeys'),
+          grains: _('Grain'),
+          vegetables: _('Vegetables'),
+          rubies: _('Rubies'),
+          dwarfs: _('Dwarfs'),
+          empty: _('Unused spaces'),
+          pastures: _('Pastures'),
+          mines: _('Ore and Ruby mines'),
+          buildings: _('Points for buildings'),
+          buildingsBonus: _('Bonus point'),
+          gold: _('Gold coins'),
+          beggings: _('Beggar tokens'),
+          total: _('Total'),
+        })
+      );
 
       this._scoresModal = new customgame.modal('showScores', {
         class: 'caverna_popin',

@@ -545,6 +545,14 @@
             text-align: center;
             border-left: 2px solid black;
             border-right: 2px solid black;
+
+            &:nth-child(1) {
+              border-right: none;
+            }
+            &:nth-child(2) {
+              min-width: auto;
+              border-left: none;
+            }
           }
         }
       }
@@ -577,6 +585,12 @@
               text-align: right;
               padding: 4px 12px 3px;
               vertical-align: top;
+              border-right: none;
+            }
+            &:nth-child(2) {
+              vertical-align: middle;
+              min-width: auto;
+              border-left: none;
             }
 
             .scoring-entry,
@@ -669,6 +683,9 @@
               font-family: 'ColibriB';
               font-weight: bold;
               text-transform: uppercase;
+            }
+            td:nth-of-type(2) {
+              background: #515151;
             }
           }
         }
