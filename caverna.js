@@ -89,6 +89,7 @@ define([
           'reorganize',
           'sow',
           'stables',
+          'harvestChoice',
         ];
         this._notifications = [
           ['startNewRound', 1],
@@ -565,6 +566,15 @@ define([
         $(`building-${args.buildingId}`).classList.add('selected');
         this.promptPlayerBoardZones(args.zones, 1, 1, (zones) => {
           this.takeAtomicAction('actFurnish', [args.buildingId, zones[0]]);
+        });
+      },
+
+      onEnteringStateHarvestChoice(args) {
+        this.addPrimaryActionButton('btnHarvestReap', _('Reap the fields'), () => {
+          this.takeAtomicAction('actHarvestChoice', ['REAP']);
+        });
+        this.addPrimaryActionButton('btnHarvestBreed', _('Breed animals'), () => {
+          this.takeAtomicAction('actHarvestChoice', ['BREED']);
         });
       },
 

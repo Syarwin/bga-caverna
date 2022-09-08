@@ -30,9 +30,8 @@ trait HarvestTrait
       Globals::setHarvestCost(1);
       Globals::setHarvest(true);
       $this->initCustomTurnOrder('harvestFeed', HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
-    } elseif ($harvestToken['type'] == \HARVEST_CHOICE) {
-      // only reap. => NOOOOPE
-	  $this->initCustomTurnOrder('harvestChoice', HARVEST, 'stHarvestChoice', 'stStartHarvestFieldPhase');
+    } elseif ($harvestToken['type'] == \HARVEST_CHOICET) {
+      $this->initCustomTurnOrder('harvestChoice', HARVEST, 'stHarvestChoice', 'stStartHarvestFieldPhase');
     } elseif ($harvestToken['type'] == \HARVEST_NONE) {
       $this->gamestate->nextState('end');
     } else {
@@ -75,6 +74,12 @@ trait HarvestTrait
   function stHarvestFieldPhase()
   {
     $player = Players::getActive();
+    $harvestChoice = Globals::getHarvestChoice();
+
+    if ($harvestChoice != [] && $harvestChoice[$player->getId()] != \FIELD) {
+      $this->nextPlayerCustomOrder('harvestField');
+      return;
+    }
 
     // Get reaction cards
     $event = [
@@ -193,6 +198,13 @@ trait HarvestTrait
   function stHarvestBreed()
   {
     $player = Players::getActive();
+    $harvestChoice = Globals::getHarvestChoice();
+
+    if ($harvestChoice != [] && $harvestChoice[$player->getId()] != \BREED) {
+      $this->nextPlayerCustomOrder('harvestBreed');
+      return;
+    }
+
     // Listen for cards enforcing reorganization on last harvest (eg Organic Farmer)
     $enforceReorganize = false;
 

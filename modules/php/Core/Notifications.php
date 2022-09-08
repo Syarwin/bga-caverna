@@ -89,8 +89,8 @@ class Notifications
       $msg = clienttranslate('No harvest will take place this turn');
     } elseif ($token['type'] == \HARVEST_1FOOD) {
       $msg = clienttranslate('Pay 1 <FOOD> by dwarf instead of harvest this turn');
-    } elseif ($token['type'] == \HARVEST_CHOICE) {
-      $msg = clienttranslate('Only the fields will be reaped this turn.');
+    } elseif ($token['type'] == \HARVEST_CHOICET) {
+      $msg = clienttranslate('Only Field phase or Breed phase will be done this turn');
     }
     self::notifyAll('revealHarvestToken', $msg, ['token' => $token]);
   }
