@@ -220,7 +220,7 @@ const HARVEST_GREY = 'harvest_grey';
 const HARVEST_NORMAL = 'harvest_normal';
 const HARVEST_NONE = 'harvest_none';
 const HARVEST_1FOOD = 'harvest_1food';
-const HARVEST_REAP = 'harvest_reap';
+const HARVEST_CHOICE = 'harvest_choice';
 
 /*
  * Scoring categories

@@ -1653,38 +1653,59 @@ html {
       color: black;
       text-shadow: 2px 2px 8px white, 2px 0px 8px white, 2px -2px 8px white, 0px -2px 8px white, -2px -2px 8px white, -2px 0px 8px white, -2px 2px 8px white, 0px 2px 8px white; }
 
+.meeple-harvest_choice,
 .meeple-harvest_none,
 .meeple-harvest_normal,
 .meeple-harvest_grey,
-.meeple-harvest_1food {
+.meeple-harvest_1food,
+.meeple-harvest_red {
   background-image: url("img/harvest_tokens.png");
   background-size: 100% 600%;
   width: 2rem;
-  height: 2rem; }
+  height: 2rem;
+  transition: transform 1s;
+  transform: scale(1); }
+  .meeple-harvest_choice.meeple-harvest_normal,
   .meeple-harvest_none.meeple-harvest_normal,
   .meeple-harvest_normal.meeple-harvest_normal,
   .meeple-harvest_grey.meeple-harvest_normal,
-  .meeple-harvest_1food.meeple-harvest_normal {
+  .meeple-harvest_1food.meeple-harvest_normal,
+  .meeple-harvest_red.meeple-harvest_normal {
     background-position-y: 20%; }
+  .meeple-harvest_choice.meeple-harvest_grey,
   .meeple-harvest_none.meeple-harvest_grey,
   .meeple-harvest_normal.meeple-harvest_grey,
   .meeple-harvest_grey.meeple-harvest_grey,
-  .meeple-harvest_1food.meeple-harvest_grey {
+  .meeple-harvest_1food.meeple-harvest_grey,
+  .meeple-harvest_red.meeple-harvest_grey {
     background-position-y: 40%; }
+  .meeple-harvest_choice.meeple-harvest_none,
   .meeple-harvest_none.meeple-harvest_none,
   .meeple-harvest_normal.meeple-harvest_none,
   .meeple-harvest_grey.meeple-harvest_none,
-  .meeple-harvest_1food.meeple-harvest_none {
+  .meeple-harvest_1food.meeple-harvest_none,
+  .meeple-harvest_red.meeple-harvest_none {
     background-position-y: 60%; }
+  .meeple-harvest_choice.meeple-harvest_1food,
   .meeple-harvest_none.meeple-harvest_1food,
   .meeple-harvest_normal.meeple-harvest_1food,
   .meeple-harvest_grey.meeple-harvest_1food,
-  .meeple-harvest_1food.meeple-harvest_1food {
+  .meeple-harvest_1food.meeple-harvest_1food,
+  .meeple-harvest_red.meeple-harvest_1food {
     background-position-y: 80%; }
+  .meeple-harvest_choice.meeple-harvest_red,
+  .meeple-harvest_none.meeple-harvest_red,
+  .meeple-harvest_normal.meeple-harvest_red,
+  .meeple-harvest_grey.meeple-harvest_red,
+  .meeple-harvest_1food.meeple-harvest_red,
+  .meeple-harvest_red.meeple-harvest_red {
+    background-position-y: 100%; }
+  .meeple-harvest_choice .help-marker,
   .meeple-harvest_none .help-marker,
   .meeple-harvest_normal .help-marker,
   .meeple-harvest_grey .help-marker,
-  .meeple-harvest_1food .help-marker {
+  .meeple-harvest_1food .help-marker,
+  .meeple-harvest_red .help-marker {
     top: -8px; }
 
 .meeple-firstPlayer {
@@ -2154,18 +2175,26 @@ html {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 6px 0px; }
+    padding: 6px 0px;
+    border-bottom: 1px solid #80502e; }
+    #player_config .player_config_row:last-child {
+      border-bottom: none; }
   #player_config #round-counter-wrapper {
     background-color: white;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--caverna-font-family);
-    margin: 4px 3px 6px;
+    margin: 4px 3px 0px;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
     text-align: center;
     font-size: 19px;
-    padding: 5px 7px 1px;
-    display: block; }
+    padding: 5px 30px 1px;
+    display: block;
+    position: relative; }
+    #player_config #round-counter-wrapper #current-harvest {
+      position: absolute;
+      right: 5px;
+      top: 1px; }
   #player_config #uwe-help {
     width: 32px;
     height: 32px;
@@ -2176,7 +2205,7 @@ html {
     background-position: bottom right;
     border-radius: 50%;
     border: 1px solid black;
-    margin: -4px -10px 7px 0px;
+    margin: 3px -10px 3px 0px;
     cursor: pointer; }
   #player_config #help-mode-switch .checkbox {
     display: none; }
@@ -2232,6 +2261,43 @@ html {
     transition: transform 1s; }
   #player_config #show-settings:hover .fa-primary {
     transform: rotate(180deg); }
+  #player_config .harvest-indicator {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    #player_config .harvest-indicator:empty {
+      background: #aaa; }
+      #player_config .harvest-indicator:empty::before {
+        content: '';
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 10%;
+        bottom: 10%;
+        background-image: url("img/harvest_tokens.png");
+        background-size: 100% 600%;
+        opacity: 0.5; }
+    #player_config .harvest-indicator[data-type='harvest_choice']::before {
+      background-position-y: 0%; }
+    #player_config .harvest-indicator[data-type='harvest_none']::before {
+      background-position-y: 60%; }
+    #player_config .harvest-indicator[data-type='harvest_1food']::before {
+      background-position-y: 80%; }
+    #player_config .harvest-indicator[data-type='harvest_red'] {
+      width: 25px;
+      height: 25px;
+      background: none; }
+      #player_config .harvest-indicator[data-type='harvest_red']::before {
+        background-position-y: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 1 !important; }
 
 #popin_showSettings_underlay {
   background-color: black !important;
@@ -2351,6 +2417,27 @@ html {
         background-color: #2196f3; }
         #settings-controls-container .row-data label.switch input:checked + .slider::before {
           left: 30px; }
+
+/**
+ * Overlay useful for harvest animations
+ */
+#harvest-overlay {
+  opacity: 0;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 4000;
+  pointer-events: none;
+  transition: opacity 600ms;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  #harvest-overlay.active {
+    opacity: 1;
+    pointer-events: all; }
 
 /**
  * Generic modals

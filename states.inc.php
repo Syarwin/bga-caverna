@@ -360,6 +360,9 @@ $machinestates = [
     'description' => '',
     'type' => 'game',
     'action' => 'stStartHarvest',
+    'transitions' => [
+      'end' => ST_END_OF_TURN,
+    ],
   ],
 
   ST_HARVEST_FIELD => [

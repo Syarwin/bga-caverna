@@ -181,6 +181,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         }
         return reserve;
       } else if (meeple.type.substring(0, 7) == 'harvest') {
+        if (meeple.location == 'harvest') return $('current-harvest');
+        if (meeple.location == 'history')
+          return $('player_config').querySelector(`.harvest-indicator[data-type="${meeple.type}"]`);
         return $(meeple.location).querySelector('.harvest-token-container');
       } else if (meeple.location.substr(0, 4) == 'turn') {
         return $(meeple.location).querySelector('[data-pid="' + meeple.pId + '"]');

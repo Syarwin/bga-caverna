@@ -18,13 +18,26 @@ trait HarvestTrait
    ****************************/
   function stStartHarvest()
   {
-    Notifications::startHarvest();
     Globals::setHarvest(true);
     Globals::setSkipHarvest(Globals::getPassHarvest());
     Globals::setPassHarvest([]);
     Globals::setExchangeFlags([]);
 
-    $this->checkBuildingListeners('StartHarvest', 'stStartHarvestFieldPhase', [], HARVEST);
+    $harvestToken = Meeples::startHarvest();
+    Notifications::startHarvest($harvestToken);
+
+    if ($harvestToken['type'] == \HARVEST_1FOOD) {
+      Globals::setHarvestCost(1);
+      Globals::setHarvest(true);
+      $this->initCustomTurnOrder('harvestFeed', HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
+    } elseif ($harvestToken['type'] == \HARVEST_CHOICE) {
+      // only reap. => NOOOOPE
+      $this->initCustomTurnOrder('harvestField', HARVEST, ST_HARVEST_FIELD, 'stHarvestEnd');
+    } elseif ($harvestToken['type'] == \HARVEST_NONE) {
+      $this->gamestate->nextState('end');
+    } else {
+      $this->checkBuildingListeners('StartHarvest', 'stStartHarvestFieldPhase', [], HARVEST);
+    }
   }
 
   /****************************

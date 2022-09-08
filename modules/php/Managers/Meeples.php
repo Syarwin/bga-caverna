@@ -76,7 +76,7 @@ class Meeples extends \CAV\Helpers\Pieces
           } elseif ($red == 2) {
             $tok = \HARVEST_1FOOD;
           } else {
-            $tok = HARVEST_REAP;
+            $tok = HARVEST_CHOICE;
           }
         }
         $meeples[] = ['type' => $tok, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 0, 'nbr' => 1];
@@ -284,6 +284,25 @@ class Meeples extends \CAV\Helpers\Pieces
   public function getHarvestToken()
   {
     return self::getFilteredQuery(null, 'turn_' . Globals::getTurn(), 'harvest%')->get(true);
+  }
+
+  public function startHarvest()
+  {
+    $token = self::getHarvestToken();
+    self::move($token['id'], 'harvest', 1);
+    return self::get($token['id']);
+  }
+
+  public function endHarvest()
+  {
+    $token = self::getInLocation('harvest')->first();
+    if (Globals::getTurn() >= 5 && $token['type'] != \HARVEST_NORMAL) {
+      self::move($token['id'], 'history', 1);
+      return self::get($token['id']);
+    } else {
+      self::DB()->delete($token['id']);
+      return null;
+    }
   }
 
   public function revealHarvestToken()

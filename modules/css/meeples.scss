@@ -375,14 +375,18 @@
   }
 }
 
+.meeple-harvest_choice,
 .meeple-harvest_none,
 .meeple-harvest_normal,
 .meeple-harvest_grey,
-.meeple-harvest_1food {
+.meeple-harvest_1food,
+.meeple-harvest_red {
   background-image: url('img/harvest_tokens.png');
   background-size: 100% 600%;
   width: 2rem;
   height: 2rem;
+  transition: transform 1s;
+  transform: scale(1);
 
   &.meeple-harvest_normal {
     background-position-y: 20%;
@@ -395,6 +399,9 @@
   }
   &.meeple-harvest_1food {
     background-position-y: 80%;
+  }
+  &.meeple-harvest_red {
+    background-position-y: 100%;
   }
 
   .help-marker {
