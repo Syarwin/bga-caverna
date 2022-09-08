@@ -23,8 +23,34 @@ trait HarvestTrait
     Globals::setSkipHarvest(Globals::getPassHarvest());
     Globals::setPassHarvest([]);
     Globals::setExchangeFlags([]);
+    Globals::setHarvestChoice([]);
+    if (Meeples::getHarvestToken()['type'] == HARVEST_REAP) {
+      $this->checkBuildingListeners('StartHarvest', 'stInitHarvestChoice', [], HARVEST);
+    } else {
+      $this->checkBuildingListeners('StartHarvest', 'stStartHarvestFieldPhase', [], HARVEST);
+    }
+  }
 
-    $this->checkBuildingListeners('StartHarvest', 'stStartHarvestFieldPhase', [], HARVEST);
+  /********** Harvest Choice *************/
+  function stInitHarvestChoice()
+  {
+    $this->initCustomTurnOrder('harvestChoice', HARVEST, 'stHarvestChoice', 'stStartHarvestFieldPhase');
+  }
+
+  function stHarvestChoice()
+  {
+    $player = Players::getActive();
+    $reaction['childs'][] =
+      // Inserting into engine
+      self::giveExtraTime($player->getId());
+    Engine::setup(
+      [
+        'action' => HARVEST_CHOICE,
+        'pId' => $player->getId(),
+      ],
+      ['order' => 'harvestChoice']
+    );
+    Engine::proceed();
   }
 
   /****************************

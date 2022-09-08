@@ -260,15 +260,16 @@ trait TurnTrait
       Meeples::revealHarvestToken();
     }
 
-    if ($harvestToken['type'] == HARVEST_NORMAL) {
+    if ($harvestToken['type'] == HARVEST_NORMAL || $harvestToken['type'] == \HARVEST_REAP) {
       $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
     } elseif ($harvestToken['type'] == \HARVEST_1FOOD) {
+      Notifications::startHarvest();
       Globals::setHarvestCost(1);
       Globals::setHarvest(true);
       $this->initCustomTurnOrder('harvestFeed', HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
-    } elseif ($harvestToken['type'] == \HARVEST_REAP) {
-      // only reap.
-      $this->initCustomTurnOrder('harvestField', HARVEST, ST_HARVEST_FIELD, 'stHarvestEnd');
+      // } elseif ($harvestToken['type'] == \HARVEST_REAP) {
+      //   // only reap.
+      //   $this->initCustomTurnOrder('harvestField', HARVEST, ST_HARVEST_FIELD, 'stHarvestEnd');
     } else {
       $this->gamestate->nextState('end');
     }
@@ -299,7 +300,7 @@ trait TurnTrait
     foreach (Buildings::getAllBuildingsWithMethod('EndOfGame') as $card) {
       $card->onEndOfGame();
     }
-    Globals::setTurn(15);
+    Globals::setTurn(12);
     Globals::setLiveScoring(true);
     Scores::update(true);
     // Notifications::seed(Globals::getGameSeed());

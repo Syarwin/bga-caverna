@@ -29,6 +29,7 @@ class Actions
     WISHCHILDREN => 'WishChildren',
     WEAPON_INCREASE => 'WeaponIncrease',
     BREED => 'Breed',
+    HARVEST_CHOICE => 'HarvestChoice',
   ];
 
   public static function get($actionId, $ctx = null)

@@ -91,6 +91,7 @@ const ST_EXPEDITION = 42;
 const ST_WEAPON_INCREASE = 43;
 const ST_FURNISH = 44;
 const ST_BREED = 45;
+const ST_HARVEST_CHOICE = 46;
 
 const ST_REORGANIZE = 80;
 
@@ -290,6 +291,7 @@ const STABLES = 'STABLES';
 const WISHCHILDREN = 'WISH_CHILDREN';
 const WEAPON_INCREASE = 'WEAPON_INCREASE';
 const BREED = 'BREED';
+const HARVEST_CHOICE = 'HARVEST_CHOICE';
 
 /** ExtraDatas**/
 const BONUS_VP = 'bonusVP';

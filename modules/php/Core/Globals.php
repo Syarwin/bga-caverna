@@ -21,6 +21,7 @@ class Globals extends \CAV\Helpers\DB_Manager
     'harvestCost' => 'int',
     'exchangeFlags' => 'obj',
     'revealStartHarvest' => 'bool',
+    'harvestChoice' => 'obj',
 
     'gameSeed' => 'str',
 

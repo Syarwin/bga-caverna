@@ -47,17 +47,6 @@ trait DebugTrait
 
   function vt()
   {
-    // $map = [
-    //   83994342 => 2322020,
-    //   84579729 => 2322021,
-    //   90717377 => 2322022,
-    //   86928659 => 2322023,
-    // ];
-    // $engine = Globals::getEngine();
-    // self::loadDebugUpdateEngine($engine, $map);
-    // var_dump($engine);
-    // $this->actTakeAtomicAction([['id' => '1', 'x' => 7, 'y' => 5]]);
-
     // Engine::insertAsChild([
     //   'action' => PLACE_DWARF,
     // ]);
@@ -79,7 +68,9 @@ trait DebugTrait
   }
   public function tv()
   {
-    $this->actTakeAtomicAction([[SHEEP, CATTLE]]);
+    // $this->actTakeAtomicAction([[SHEEP, CATTLE]]);
+    // stPreEndOfTurn()
+    $this->actTakeAtomicAction([BREED]);
   }
 
   public function dd()

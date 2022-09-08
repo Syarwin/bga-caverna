@@ -330,6 +330,16 @@ $machinestates = [
     'possibleactions' => ['actExchange', 'actPassOptionalAction', 'actRestart', 'actUseRuby'],
   ],
 
+  ST_HARVEST_CHOICE => [
+    'name' => 'harvestChoice',
+    'description' => clienttranslate('${actplayer} must choose which phase will be done for this harvest'),
+    'descriptionmyturn' => clienttranslate('You must choose which phase will be done for this harvest'),
+    'action' => 'stAtomicAction',
+    'args' => 'argsAtomicAction',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actHarvestChoice', 'actRestart', 'actUseRuby'],
+  ],
+
   ST_ACTIVATE_BUILDING => [
     'name' => 'activateCard',
     'description' => '',
