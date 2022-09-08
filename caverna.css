@@ -93,17 +93,6 @@ html {
   display: flex;
   justify-content: center;
   align-items: center; }
-  .board-cell.cell-node .square-selector .seed-holder,
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder {
-    display: flex;
-    flex-flow: column-reverse; }
-    .board-cell.cell-node .square-selector .seed-holder .caverna-meeple, .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder .caverna-meeple {
-      margin: 0 auto -0.3em; }
-      #ebd-body:not(.mobile_version) .board-cell.cell-node .square-selector .seed-holder .caverna-meeple,
-      #ebd-body:not(.mobile_version) .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder .caverna-meeple {
-        filter: drop-shadow(1px 1px 1px black); }
-      .board-cell.cell-node .square-selector .seed-holder .caverna-meeple:first-child, .caverna-player-board .player-board-grid .board-cell .caverna-tile .seed-holder .caverna-meeple:first-child {
-        margin: 0; }
   .board-cell.cell-node .square-selector:not([data-tile]), .board-cell.cell-node .square-selector[data-tile=''],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile:not([data-tile]),
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile=''] {
@@ -133,6 +122,18 @@ html {
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileLargePasture-1'],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-1'] {
     border-left: none; }
+
+.seed-holder {
+  display: flex;
+  flex-flow: column-reverse;
+  position: relative;
+  z-index: 2; }
+  .seed-holder .caverna-meeple {
+    margin: 0 auto -0.3em; }
+    #ebd-body:not(.mobile_version) .seed-holder .caverna-meeple {
+      filter: drop-shadow(1px 1px 1px black); }
+    .seed-holder .caverna-meeple:first-child {
+      margin: 0; }
 
 .office-room .board-cell.cell-node .square-selector,
 .caverna-player-board.office-room .player-board-grid .board-cell .caverna-tile {
@@ -1219,20 +1220,20 @@ html {
 .action-card-name-reference {
   font-style: italic; }
 
-[data-player-boards="1"] #player-boards {
+[data-player-boards='1'] #player-boards {
   width: calc(var(--cavernaPlayerBoardScale) * 625px + 20px); }
 
 .player-board-resizable {
-  margin: 0px 10px 10px;
+  margin: 0px 10px 2px;
   width: calc(var(--cavernaPlayerBoardScale) * 625px);
-  height: calc(var(--cavernaPlayerBoardScale) * 420px); }
+  height: calc(var(--cavernaPlayerBoardScale) * 450px); }
 
 .player-board-wrapper {
   width: 625px;
   height: 420px;
   transform: scale(var(--cavernaPlayerBoardScale));
   transform-origin: top left; }
-  .player-board-wrapper.harvest .player-board-holder .animals-counters .baby-counter {
+  .player-board-wrapper.harvest .animals-counters .baby-counter {
     display: inline-block; }
   .player-board-wrapper .player-board-holder {
     border: 1px solid black;
@@ -1240,52 +1241,39 @@ html {
     background-image: url("img/action_frame_bg.jpg");
     background-size: 200px 40px;
     box-shadow: 2px 2px 10px black; }
-    .player-board-wrapper .player-board-holder .animals-counters {
-      position: relative;
-      display: flex;
-      justify-content: flex-start;
-      font-size: 20px;
-      padding-left: 40px; }
-      .player-board-wrapper .player-board-holder .animals-counters .player-resource {
-        margin: 0 10px;
-        background: rgba(255, 255, 255, 0.47);
-        padding: 3px 9px;
-        border-radius: 7px;
-        border: 1px solid black;
-        transition: opacity 0.5s;
-        opacity: 1;
-        position: relative; }
-        .player-board-wrapper .player-board-holder .animals-counters .player-resource[data-n='0'] {
-          opacity: 0; }
-        .player-board-wrapper .player-board-holder .animals-counters .player-resource .reserve {
-          position: absolute;
-          top: 0%;
-          left: 0%;
-          width: 100%;
-          height: 100%; }
-          .player-board-wrapper .player-board-holder .animals-counters .player-resource .reserve > div.caverna-meeple:not(.moving) {
-            display: none; }
-      .player-board-wrapper .player-board-holder .animals-counters .baby-counter {
-        font-size: 0.75em;
-        vertical-align: middle;
-        display: none; }
-    .player-board-wrapper .player-board-holder .player-board-name {
+    .player-board-wrapper .player-board-holder .player-resource.resource-dog {
       position: absolute;
-      top: -31px;
-      right: 20px;
-      font-size: 15px;
-      font-family: var(--caverna-font-family);
-      background-color: rgba(255, 255, 255, 0.5);
-      padding: 2px 1rem;
-      border-radius: 10px;
-      border: 1px solid black; }
-    .player-board-wrapper .player-board-holder .resources-bar-holder.active .player-board-name {
-      border-bottom-right-radius: 0px;
-      border-bottom-left-radius: 0px;
-      background-color: #eceeaf;
-      top: -28px;
-      right: 30px;
-      border-bottom: 1px solid black !important; }
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 7px;
+      border: 1px solid black;
+      transition: opacity 0.5s;
+      opacity: 1;
+      font-size: 22px;
+      bottom: -14px;
+      padding: 2px 3px; }
+      .player-board-wrapper .player-board-holder .player-resource.resource-dog[data-n='0'] {
+        opacity: 0; }
+      .player-board-wrapper .player-board-holder .player-resource.resource-dog .reserve {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%; }
+        .player-board-wrapper .player-board-holder .player-resource.resource-dog .reserve > div.caverna-meeple:not(.moving) {
+          display: none; }
+    .player-board-wrapper .player-board-holder .resources-bar-holder {
+      position: relative;
+      height: 33px; }
+      .player-board-wrapper .player-board-holder .resources-bar-holder .player-board-name {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        font-size: 15px;
+        font-family: var(--caverna-font-family);
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 2px 1rem;
+        border-radius: 10px;
+        border: 1px solid black; }
     .player-board-wrapper .player-board-holder .caverna-player-board {
       width: 623px;
       height: 382px;
@@ -1337,6 +1325,38 @@ html {
           grid-template-rows: 70px repeat(4, 1px 70px) 1px 70px;
           background-repeat: no-repeat;
           background-position: 31px 31px; }
+  .player-board-wrapper .animals-counters {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    font-size: 20px;
+    padding-right: 110px;
+    height: 30px;
+    padding-top: 2px; }
+    .player-board-wrapper .animals-counters .player-resource {
+      margin: 2px 5px 0px;
+      background: rgba(255, 255, 255, 0.47);
+      padding: 0px 9px;
+      border-radius: 7px;
+      border: 1px solid black;
+      transition: opacity 0.5s;
+      opacity: 1;
+      position: relative; }
+      .player-board-wrapper .animals-counters .player-resource[data-n='0'] {
+        opacity: 0; }
+      .player-board-wrapper .animals-counters .player-resource .reserve {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%; }
+        .player-board-wrapper .animals-counters .player-resource .reserve > div.caverna-meeple:not(.moving) {
+          display: none; }
+    .player-board-wrapper .animals-counters .baby-counter {
+      font-size: 0.75em;
+      vertical-align: middle;
+      display: none; }
 
 #player-boards {
   display: flex;
@@ -1363,120 +1383,120 @@ html {
   .caverna-meeple.meeple-score {
     width: 0.7em;
     height: 0.93em;
-    background-position: 41.1215% 0%;
+    background-position: 44.6262% 1.21359%;
     background-size: 609.524%; }
   .caverna-meeple.meeple-gold {
     width: 0.78em;
     height: 0.78em;
-    background-position: 17.2414% 0%;
+    background-position: 19.7044% 1.23153%;
     background-size: 483.019%; }
   .caverna-meeple.meeple-wood {
-    width: 0.58em;
+    width: 0.6em;
     height: 0.78em;
-    background-position: 74.5575% 51.3825%;
+    background-position: 98.8938% 54.8387%;
     background-size: 853.333%; }
   .caverna-meeple.meeple-stone {
     width: 0.64em;
     height: 0.8em;
-    background-position: 17.8571% 51.6204%;
+    background-position: 39.0625% 55.0926%;
     background-size: 800%; }
   .caverna-meeple.meeple-ore {
     width: 0.89em;
     height: 0.7062em;
-    background-position: 73.3032% 66.1572%;
+    background-position: 98.4163% 70.524%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-ruby {
     width: 0.9154em;
     height: 0.693em;
-    background-position: 89.1403% 66.0131%;
+    background-position: 1.13122% 88.2353%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-food {
     width: 0.8em;
     height: 0.8em;
-    background-position: 0% 51.6204%;
+    background-position: 20.8333% 55.0926%;
     background-size: 640%; }
   .caverna-meeple.meeple-grain {
     width: 0.75em;
     height: 0.79em;
-    background-position: 32.9519% 51.5012%;
+    background-position: 55.8352% 54.9654%;
     background-size: 682.667%; }
   .caverna-meeple.meeple-vegetable {
     width: 0.82em;
     height: 0.8em;
-    background-position: 40.1376% 69.1781%;
+    background-position: 63.3028% 73.7443%;
     background-size: 673.684%; }
   .caverna-meeple.meeple-sheep {
     width: 0.98em;
     height: 0.76em;
-    background-position: 0% 69.4954%;
+    background-position: 21.9807% 74.0826%;
     background-size: 522.449%; }
   .caverna-meeple.meeple-pig {
     width: 1.118em;
-    height: 0.77em;
-    background-position: 55.5838% 51.3825%;
+    height: 0.78em;
+    background-position: 82.2335% 54.8387%;
     background-size: 433.898%; }
   .caverna-meeple.meeple-cattle {
-    width: 1.03em;
+    width: 1.04em;
     height: 0.82em;
-    background-position: 20.5882% 32.3256%;
+    background-position: 23.0392% 34.6512%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-donkey {
     width: 1.04em;
     height: 0.87em;
-    background-position: 80.3922% 0%;
+    background-position: 86.5196% 1.17647%;
     background-size: 492.308%; }
   .caverna-meeple.meeple-dog {
     width: 0.68em;
     height: 0.9em;
-    background-position: 58.5586% 0%;
+    background-position: 63.0631% 1.18483%;
     background-size: 752.941%; }
   .caverna-meeple.meeple-first {
     width: 0.4em;
     height: 0.9em;
-    background-position: 0% 0%;
+    background-position: 1.13122% 1.34048%;
     background-size: 731.429%; }
   .caverna-meeple.meeple-begging {
     width: 1.1em;
     height: 1.1em;
-    background-position: 100% 0%;
+    background-position: 1.15741% 55.0926%;
     background-size: 640%; }
   .caverna-meeple.meeple-arrow {
     width: 0.4em;
     height: 0.3em;
-    background-position: 26.1745% 81.681%;
+    background-position: 45.1902% 87.2845%;
     background-size: 787.692%; }
   .caverna-meeple.meeple-arrow-1x {
     width: 1.3em;
     height: 0.6em;
-    background-position: 46.0759% 81.3305%;
+    background-position: 68.8608% 86.9099%;
     background-size: 437.607%; }
   .caverna-meeple.meeple-arrow-2x {
     width: 1.2em;
     height: 0.6em;
-    background-position: 0% 82.2126%;
+    background-position: 20.2532% 87.8525%;
     background-size: 437.607%; }
   .caverna-meeple.meeple-building {
     width: 1.1571em;
     height: 1.1em;
-    background-position: 92.1114% 51.2644%;
+    background-position: 1.16009% 74.2529%;
     background-size: 632.099%; }
   .caverna-meeple.meeple-pasture {
     width: 1.1em;
     height: 1.1em;
-    background-position: 22.5287% 69.3364%;
+    background-position: 44.5977% 73.913%;
     background-size: 664.935%; }
   .caverna-meeple.meeple-empty {
     width: 1em;
     height: 1em;
-    background-position: 57.1754% 69.0205%;
+    background-position: 81.3212% 73.5763%;
     background-size: 701.37%; }
-  .caverna-meeple.meeples-mines {
+  .caverna-meeple.meeple-mines {
     width: 1.1em;
     height: 1.1em;
-    background-position: 0% 32.4766%;
+    background-position: 1.16822% 34.8131%;
     background-size: 609.524%; }
   .caverna-meeple.meeple-reorganize {
-    background-position: 85.8447% 32.3256%;
+    background-position: 92.6941% 34.6512%;
     background-size: 174.744%;
     width: 5em;
     height: 1.4em;
@@ -1484,7 +1504,7 @@ html {
   .caverna-meeple.meeple-cook {
     width: 2em;
     height: 1.1em;
-    background-position: 66.8904% 79.2887%;
+    background-position: 88.1432% 84.728%;
     background-size: 787.692%; }
     #anytimeActions .caverna-meeple.meeple-cook {
       margin: 0em -0.4em; }
@@ -1497,8 +1517,8 @@ html {
   .caverna-meeple.meeple-dwarf_icon {
     background-image: url("img/dwarves.png");
     background-size: 700% 100%;
-    width: 1.4483em;
-    height: 1.2em; }
+    width: 1.1em;
+    height: 0.8em; }
   .caverna-meeple.meeple-cavern, .caverna-meeple.meeple-field, .caverna-meeple.meeple-furnish, .caverna-meeple.meeple-large_pasture, .caverna-meeple.meeple-meadow, .caverna-meeple.meeple-small_pasture, .caverna-meeple.meeple-sow, .caverna-meeple.meeple-tunnel {
     width: 2.37em;
     height: 1.82em;
@@ -1633,38 +1653,59 @@ html {
       color: black;
       text-shadow: 2px 2px 8px white, 2px 0px 8px white, 2px -2px 8px white, 0px -2px 8px white, -2px -2px 8px white, -2px 0px 8px white, -2px 2px 8px white, 0px 2px 8px white; }
 
+.meeple-harvest_choice,
 .meeple-harvest_none,
 .meeple-harvest_normal,
 .meeple-harvest_grey,
-.meeple-harvest_1food {
+.meeple-harvest_1food,
+.meeple-harvest_red {
   background-image: url("img/harvest_tokens.png");
   background-size: 100% 600%;
   width: 2rem;
-  height: 2rem; }
+  height: 2rem;
+  transition: transform 1s;
+  transform: scale(1); }
+  .meeple-harvest_choice.meeple-harvest_normal,
   .meeple-harvest_none.meeple-harvest_normal,
   .meeple-harvest_normal.meeple-harvest_normal,
   .meeple-harvest_grey.meeple-harvest_normal,
-  .meeple-harvest_1food.meeple-harvest_normal {
+  .meeple-harvest_1food.meeple-harvest_normal,
+  .meeple-harvest_red.meeple-harvest_normal {
     background-position-y: 20%; }
+  .meeple-harvest_choice.meeple-harvest_grey,
   .meeple-harvest_none.meeple-harvest_grey,
   .meeple-harvest_normal.meeple-harvest_grey,
   .meeple-harvest_grey.meeple-harvest_grey,
-  .meeple-harvest_1food.meeple-harvest_grey {
+  .meeple-harvest_1food.meeple-harvest_grey,
+  .meeple-harvest_red.meeple-harvest_grey {
     background-position-y: 40%; }
+  .meeple-harvest_choice.meeple-harvest_none,
   .meeple-harvest_none.meeple-harvest_none,
   .meeple-harvest_normal.meeple-harvest_none,
   .meeple-harvest_grey.meeple-harvest_none,
-  .meeple-harvest_1food.meeple-harvest_none {
+  .meeple-harvest_1food.meeple-harvest_none,
+  .meeple-harvest_red.meeple-harvest_none {
     background-position-y: 60%; }
+  .meeple-harvest_choice.meeple-harvest_1food,
   .meeple-harvest_none.meeple-harvest_1food,
   .meeple-harvest_normal.meeple-harvest_1food,
   .meeple-harvest_grey.meeple-harvest_1food,
-  .meeple-harvest_1food.meeple-harvest_1food {
+  .meeple-harvest_1food.meeple-harvest_1food,
+  .meeple-harvest_red.meeple-harvest_1food {
     background-position-y: 80%; }
+  .meeple-harvest_choice.meeple-harvest_red,
+  .meeple-harvest_none.meeple-harvest_red,
+  .meeple-harvest_normal.meeple-harvest_red,
+  .meeple-harvest_grey.meeple-harvest_red,
+  .meeple-harvest_1food.meeple-harvest_red,
+  .meeple-harvest_red.meeple-harvest_red {
+    background-position-y: 100%; }
+  .meeple-harvest_choice .help-marker,
   .meeple-harvest_none .help-marker,
   .meeple-harvest_normal .help-marker,
   .meeple-harvest_grey .help-marker,
-  .meeple-harvest_1food .help-marker {
+  .meeple-harvest_1food .help-marker,
+  .meeple-harvest_red .help-marker {
     top: -8px; }
 
 .meeple-firstPlayer {
@@ -1730,20 +1771,35 @@ html {
     background: rgba(225, 142, 36, 0.77); }
 
 .player-board {
+  padding: 7px 3px 5px;
   background-image: url("img/action_frame_bg.jpg");
   background-size: 100% 40px;
-  border: 1px solid transparent;
-  border-image-slice: 68 164 68 154;
-  border-image-width: 34px 82px 34px 77px;
-  border-image-outset: 0px 0px 0px 0px;
-  border-image-repeat: repeat repeat;
-  border-image-source: url("img/action_frame_panel.png");
+  border: 1px solid transparent !important;
   background-clip: content-box;
+  position: relative;
   box-shadow: none;
   background-color: transparent !important;
   border-radius: 20px !important; }
   #ebd-body:not(.mobile_version) .player-board {
     width: 242px !important; }
+  .player-board::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-image-slice: 68 164 68 154;
+    border-image-width: 34px 82px 34px 77px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: repeat repeat;
+    border-image-source: url("img/action_frame_panel.png");
+    z-index: 2;
+    box-shadow: none;
+    background-color: transparent;
+    border-radius: 20px;
+    pointer-events: none; }
   .mobile_version .player-board {
     margin-right: 2px !important; }
   .player-board .player_score {
@@ -1766,7 +1822,7 @@ html {
   .player-board .player-resource .reserve > div.caverna-meeple:not(.moving) {
     display: none; }
   .player-board .caverna-player-pannel {
-    padding: 3px 1px; }
+    padding: 3px 1px 0px; }
     .player-board .caverna-player-pannel .player-panel-resources,
     .player-board .caverna-player-pannel .player-panel-personal-resources,
     .player-board .caverna-player-pannel .player-panel-board-resources {
@@ -1775,7 +1831,7 @@ html {
       font-size: 18px;
       justify-content: space-around;
       position: relative;
-      padding: 0.5rem 0; }
+      border-top: 1px solid #80502e; }
       .player-board .caverna-player-pannel .player-panel-resources .player-reserve,
       .player-board .caverna-player-pannel .player-panel-personal-resources .player-reserve,
       .player-board .caverna-player-pannel .player-panel-board-resources .player-reserve {
@@ -1857,7 +1913,6 @@ html {
           content: attr(data-harvest);
           font-size: 0.75em; }
     .player-board .caverna-player-pannel .player-panel-board-resources {
-      border-top: 1px solid #80502e;
       padding: 0.25rem 0; }
       .player-board .caverna-player-pannel .player-panel-board-resources .meeple-container {
         font-size: 1.1em; }
@@ -1897,40 +1952,47 @@ html {
       .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='5'] .meeple-container:nth-child(5) {
         display: inline-block; }
     .player-board .caverna-player-pannel .player-panel-personal-resources {
-      border-top: 1px solid #80502e; }
+      border-top: 1px solid #80502e;
+      justify-content: space-between; }
       .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource {
         flex-basis: 33%; }
+      .player-board .caverna-player-pannel .player-panel-personal-resources .resource-stable {
+        margin-top: 8px; }
       .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf {
         flex-basis: 60%;
         display: flex;
-        border: 1px solid #606060;
-        border-radius: 5px;
-        height: 7px;
-        margin-top: 20px; }
+        height: 16px;
+        margin-top: 29px; }
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-action,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-board,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve {
           flex-grow: 1;
           display: flex;
           justify-content: center;
-          padding: 0px 2px; }
+          padding: 0px 2px;
+          border: 1px solid rgba(0, 0, 0, 0.6); }
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-action {
+          padding-left: 7px;
           min-width: 25px;
           background-image: url("img/background_card.jpg");
           background-size: 200px;
-          background-position: 100px 183px;
-          border-radius: 5px 0px 0px 5px;
-          border-right: 1px solid #606060; }
+          background-position: 100px 183px; }
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-board {
-          min-width: 25px;
+          min-width: 28px;
           background: #7a6b64;
-          border-right: 1px solid #606060; }
+          border-right: none;
+          border-left: none; }
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve {
-          background: rgba(255, 255, 255, 0.6);
-          border-radius: 0px 5px 5px 0px; }
+          opacity: 0.6;
+          border: 1px solid black;
+          border-left: none;
+          background: white;
+          border-top-right-radius: 5px; }
           .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf {
             filter: grayscale(0.5);
-            opacity: 0.5; }
+            margin-left: -15px; }
+            .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf:first-of-type {
+              margin-left: 0px; }
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf {
           width: 23px;
           height: 19px;
@@ -1939,11 +2001,11 @@ html {
             transform: scale(0.7);
             transform-origin: -4px 0px; }
           [data-dwarf='1'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf, [data-dwarf='2'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf {
-            width: 20px;
-            height: 26px;
-            margin-top: -20px; }
+            width: 25px;
+            height: 32px;
+            margin-top: -23px; }
             [data-dwarf='1'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon, [data-dwarf='2'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
-              transform: scale(0.5);
+              transform: scale(0.63);
               transform-origin: -2px 10px; }
   .colorblind .player-board .caverna-player-pannel .meeple-dwarf_icon {
     background-image: url("img/dwarfs_colorblind.png"); }
@@ -2106,23 +2168,6 @@ html {
 #player_board_config {
   position: relative;
   border-image: none; }
-  #player_board_config::before {
-    content: '';
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
-    border: 1px solid transparent;
-    border-image-slice: 68 164 68 154;
-    border-image-width: 34px 82px 34px 77px;
-    border-image-outset: 0px 0px 0px 0px;
-    border-image-repeat: repeat repeat;
-    border-image-source: url("img/action_frame_panel.png");
-    box-shadow: none;
-    background-color: transparent;
-    border-radius: 20px;
-    pointer-events: none; }
 
 #player_config {
   padding-bottom: 8px; }
@@ -2130,18 +2175,26 @@ html {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 6px 0px; }
+    padding: 6px 0px;
+    border-bottom: 1px solid #80502e; }
+    #player_config .player_config_row:last-child {
+      border-bottom: none; }
   #player_config #round-counter-wrapper {
     background-color: white;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--caverna-font-family);
-    margin: 4px 3px 6px;
+    margin: 4px 3px 0px;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
     text-align: center;
     font-size: 19px;
-    padding: 5px 7px 1px;
-    display: block; }
+    padding: 5px 30px 1px;
+    display: block;
+    position: relative; }
+    #player_config #round-counter-wrapper #current-harvest {
+      position: absolute;
+      right: 5px;
+      top: 1px; }
   #player_config #uwe-help {
     width: 32px;
     height: 32px;
@@ -2152,7 +2205,7 @@ html {
     background-position: bottom right;
     border-radius: 50%;
     border: 1px solid black;
-    margin: -4px -10px 7px 0px;
+    margin: 3px -10px 3px 0px;
     cursor: pointer; }
   #player_config #help-mode-switch .checkbox {
     display: none; }
@@ -2208,6 +2261,43 @@ html {
     transition: transform 1s; }
   #player_config #show-settings:hover .fa-primary {
     transform: rotate(180deg); }
+  #player_config .harvest-indicator {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    #player_config .harvest-indicator:empty {
+      background: #aaa; }
+      #player_config .harvest-indicator:empty::before {
+        content: '';
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 10%;
+        bottom: 10%;
+        background-image: url("img/harvest_tokens.png");
+        background-size: 100% 600%;
+        opacity: 0.5; }
+    #player_config .harvest-indicator[data-type='harvest_choice']::before {
+      background-position-y: 0%; }
+    #player_config .harvest-indicator[data-type='harvest_none']::before {
+      background-position-y: 60%; }
+    #player_config .harvest-indicator[data-type='harvest_1food']::before {
+      background-position-y: 80%; }
+    #player_config .harvest-indicator[data-type='harvest_red'] {
+      width: 25px;
+      height: 25px;
+      background: none; }
+      #player_config .harvest-indicator[data-type='harvest_red']::before {
+        background-position-y: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 1 !important; }
 
 #popin_showSettings_underlay {
   background-color: black !important;
@@ -2327,6 +2417,27 @@ html {
         background-color: #2196f3; }
         #settings-controls-container .row-data label.switch input:checked + .slider::before {
           left: 30px; }
+
+/**
+ * Overlay useful for harvest animations
+ */
+#harvest-overlay {
+  opacity: 0;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 4000;
+  pointer-events: none;
+  transition: opacity 600ms;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  #harvest-overlay.active {
+    opacity: 1;
+    pointer-events: all; }
 
 /**
  * Generic modals
@@ -2728,6 +2839,11 @@ html {
         text-align: center;
         border-left: 2px solid black;
         border-right: 2px solid black; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table thead tr th:nth-child(1) {
+          border-right: none; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table thead tr th:nth-child(2) {
+          min-width: auto;
+          border-left: none; }
     #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr {
       height: 30px; }
       #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr:nth-child(odd) {
@@ -2744,7 +2860,12 @@ html {
         #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td.row-header {
           text-align: right;
           padding: 4px 12px 3px;
-          vertical-align: top; }
+          vertical-align: top;
+          border-right: none; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td:nth-child(2) {
+          vertical-align: middle;
+          min-width: auto;
+          border-left: none; }
         #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-entry,
         #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr td .scoring-subentry {
           display: flex;
@@ -2818,6 +2939,8 @@ html {
           font-family: 'ColibriB';
           font-weight: bold;
           text-transform: uppercase; }
+        #popin_showScores.caverna_popin #popin_showScores_contents table tbody tr#scores-row-total td:nth-of-type(2) {
+          background: #515151; }
 
 #popin_showSeedPrompt {
   min-height: 200px; }
@@ -2986,6 +3109,10 @@ html {
   justify-content: center;
   z-index: 110;
   pointer-events: none; }
+  .animal-holder .meeple-dog  {
+    order: 1; }
+  .animal-holder .meeple-sheep {
+    order: 2; }
 
 .caverna-building ~ .animal-holder {
   left: auto;
@@ -2993,7 +3120,7 @@ html {
   right: 6%;
   bottom: -2%;
   background-color: rgba(242, 210, 33, 0.8);
-  border-radius: 24%;
+  border-radius: 10px;
   border: 1px solid black;
   opacity: 0;
   transition: opacity 0.7s;

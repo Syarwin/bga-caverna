@@ -184,7 +184,7 @@ $machinestates = [
   ST_BREED => [
     'name' => 'breed',
     'description' => clienttranslate('${actplayer} must breed all their animals'),
-    'descriptionmyturn' => clienttranslate('${you} must breed all their animals'),
+    'descriptionmyturn' => clienttranslate('${you} must breed all your animals'),
     'descriptionchoice' => clienttranslate('${actplayer} must breed ${max} animals'),
     'descriptionmyturnchoice' => clienttranslate('${you} must breed ${max} animals'),
     'args' => 'argsAtomicAction',
@@ -370,6 +370,9 @@ $machinestates = [
     'description' => '',
     'type' => 'game',
     'action' => 'stStartHarvest',
+    'transitions' => [
+      'end' => ST_END_OF_TURN,
+    ],
   ],
 
   ST_HARVEST_FIELD => [

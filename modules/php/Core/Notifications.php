@@ -89,10 +89,24 @@ class Notifications
       $msg = clienttranslate('No harvest will take place this turn');
     } elseif ($token['type'] == \HARVEST_1FOOD) {
       $msg = clienttranslate('Pay 1 <FOOD> by dwarf instead of harvest this turn');
-    } elseif ($token['type'] == \HARVEST_REAP) {
+    } elseif ($token['type'] == \HARVEST_CHOICE) {
       $msg = clienttranslate('Only the fields will be reaped this turn.');
     }
     self::notifyAll('revealHarvestToken', $msg, ['token' => $token]);
+  }
+
+  public static function startHarvest($token)
+  {
+    self::notifyAll('startHarvest', $token['type'] == HARVEST_NONE ? '' : clienttranslate('Start of harvest phase'), [
+      'token' => $token,
+    ]);
+  }
+
+  public static function endHarvest($token)
+  {
+    self::notifyAll('endHarvest', '', [
+      'token' => $token,
+    ]);
   }
 
   /////////////////////////////////////////////////////////
@@ -493,13 +507,6 @@ class Notifications
     self::notifyAll('reorganize', clienttranslate('${player_name} reorganizes their animals'), [
       'player' => $player,
       'meeples' => $meeples->toArray(),
-    ]);
-  }
-
-  public static function startHarvest()
-  {
-    self::notifyAll('startHarvest', clienttranslate('Start of harvest phase'), [
-      'turn' => Globals::getTurn(),
     ]);
   }
 

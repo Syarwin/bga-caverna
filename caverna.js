@@ -83,17 +83,12 @@ define([
           'confirmPartialTurn',
           'placeTile',
           'furnish',
-          // UNCHECKED
+          'breed',
           'exchange',
-          'fencing',
-          'improvement',
-          'occupation',
           'payResources',
-          'plow',
           'reorganize',
           'sow',
           'stables',
-          'renovation',
         ];
         this._notifications = [
           ['startNewRound', 1],
@@ -115,7 +110,6 @@ define([
           ['firstPlayer', 800],
           ['sow', null],
           ['returnHome', null],
-          // UNCHECKED
           ['placeMeeplesForFuture', null],
           ['addStables', null],
           ['growFamily', null],
@@ -127,8 +121,8 @@ define([
           ['silentKill', null],
           ['silentDestroy', 1],
           ['startHarvest', 3200],
+          ['endHarvest', null],
           ['seed', 10],
-          ['updateHarvestCosts', 1],
         ];
 
         // Fix mobile viewport (remove CSS zoom)
@@ -236,6 +230,8 @@ define([
         dojo.place('<div id="page-title-right-ribbon" class="ribbon-effect"></div>', 'page-title');
         // Create a new div for subtitle (placeTile action)
         dojo.place("<div id='page-subtitle'></div>", 'page-title', 'after');
+        // Overlay for harvest animation
+        dojo.place("<div id='harvest-overlay'></div>", 'ebd-body');
 
         // // Add Harvest Icons
         // [4, 7, 9, 11, 13, 14].forEach((turn) => {
@@ -311,7 +307,6 @@ define([
 
       notif_refreshUI(n) {
         debug('Notif: refreshing UI', n);
-        //        ['meeples', 'players', 'scores', 'playerCards'].forEach((value) => {
         ['meeples', 'tiles', 'players', 'scores'].forEach((value) => {
           this.gamedatas[value] = n.args.datas[value];
         });
@@ -325,26 +320,43 @@ define([
 
       notif_startHarvest(n) {
         debug('Notif: starting harvest', n);
-        debug('TODO');
-        return;
-        let elem = $('harvest-' + n.args.turn);
-        dojo.empty('card-overlay');
+        let elem = $('meeple-' + n.args.token.id);
+        let startingPos = elem.parentNode;
+        dojo.empty('harvest-overlay');
         if (this.isFastMode()) {
-          dojo.destroy(elem);
+          dojo.place(elem, 'current-harvest');
           return;
         }
 
-        dojo.place(elem, 'card-overlay');
+        dojo.place(elem, 'harvest-overlay');
 
         // Start animation
-        this.slide(elem, 'card-overlay', {
-          from: 'harvest-slot-' + n.args.turn,
+        this.slide(elem, 'harvest-overlay', {
+          from: startingPos,
         });
-        dojo.addClass('card-overlay', 'active');
+        dojo.addClass('harvest-overlay', 'active');
         dojo.style(elem, 'transform', `scale(5)`);
 
-        setTimeout(() => dojo.removeClass('card-overlay', 'active'), 1800);
-        setTimeout(() => dojo.destroy(elem), 3000);
+        setTimeout(() => dojo.removeClass('harvest-overlay', 'active'), 1800);
+        setTimeout(() => {
+          this.slide(elem, 'current-harvest');
+          dojo.style(elem, 'transform', `scale(1)`);
+        }, 1500);
+      },
+
+      notif_endHarvest(n) {
+        debug('Notif: ending harvest', n);
+        let token = n.args.token;
+        if (token == null) {
+          dojo.empty('current-harvest');
+          this.notifqueue.setSynchronousDuration(10);
+        } else {
+          this.slide(
+            `meeple-${token.id}`,
+            $('player_config').querySelector(`.harvest-indicator[data-type="${token.type}"]`)
+          ).then(() => this.notifqueue.setSynchronousDuration(10));
+        }
+        return null;
       },
 
       clearPossible() {
@@ -680,6 +692,8 @@ define([
         };
 
         for (let force = 1; force <= args.max; force++) {
+          if (force == 13) continue;
+
           [...$(`expedition-lvl-${force}`).querySelectorAll('button')].forEach((button) => {
             button.classList.remove('disabled');
             this.onClick(button, () => selectLoot(button));
@@ -694,6 +708,43 @@ define([
         [...$('expedition-container').querySelectorAll('button')].forEach((button) => {
           button.classList.remove('disabled');
           delete button.dataset.choiceOrder;
+        });
+      },
+
+      onEnteringStateBreed(args) {
+        if (args.automaticAction) return;
+
+        let selected = [];
+        args.breeds.forEach((resource) => {
+          this.addPrimaryActionButton(
+            resource + '-button',
+            this.formatStringMeeples('<' + resource.toUpperCase() + '>'),
+            () => {
+              if (selected.includes(resource) || selected.length >= args.max) return;
+              selected.push(resource);
+              dojo.addClass(resource + '-button', 'disabled');
+
+              let isMax = selected.length == args.max;
+              let btnType = 'add' + (isMax ? 'Primary' : 'Danger') + 'ActionButton';
+              let msg = isMax
+                ? _('Confirm')
+                : this.format_string_recursive(_('Confirm and breed only ${n}'), {
+                    n: selected.length,
+                  });
+
+              this.addSecondaryActionButton('btnClearBreed', _('Clear'), () => {
+                selected = [];
+                dojo.query('#customActions .action-button').removeClass('disabled');
+                dojo.destroy('btnClearBreed');
+                dojo.destroy('btnConfirmBreed');
+              });
+
+              dojo.destroy('btnConfirmBreed');
+              this[btnType]('btnConfirmBreed', msg, () => {
+                this.takeAtomicAction('actBreed', [selected]);
+              });
+            }
+          );
         });
       },
 
@@ -1146,12 +1197,14 @@ define([
       tplConfigPlayerBoard() {
         let nPlayers = Object.keys(this.gamedatas.players).length;
 
-        return `
+        return (
+          `
    <div class='player-board' id="player_board_config">
      <div id="player_config" class="player_board_content">
 
        <div class="player_config_row" id="round-counter-wrapper">
          ${_('Round')} <span id='round-counter'></span> / ${nPlayers <= 2 ? 11 : 12}
+         <div id="current-harvest"></div>
        </div>
        <div class="player_config_row">
          <div id="uwe-help"></div>
@@ -1223,10 +1276,20 @@ define([
               d="m 52.399173,22.678706 c -8.015571,0 -13.207274,3.112972 -17.283294,8.664697 -0.739406,1.007102 -0.511448,2.387926 0.51998,3.129264 l 4.332003,3.113552 c 1.041668,0.748656 2.52379,0.573614 3.339323,-0.394842 2.515473,-2.987154 4.381401,-4.707021 8.310614,-4.707021 3.089375,0 6.910617,1.884656 6.910617,4.724346 0,2.146698 -1.86954,3.249187 -4.919961,4.87027 -3.557238,1.890453 -8.264615,4.243166 -8.264615,10.128626 v 0.931704 c 0,1.261736 1.079028,2.284543 2.410115,2.284543 h 7.277684 c 1.331084,0 2.410121,-1.022807 2.410121,-2.284543 v -0.549523 c 0,-4.079826 12.579646,-4.249741 12.579646,-15.290001 9.8e-5,-8.314206 -9.098328,-14.621072 -17.622233,-14.621072 z m -1.006327,35.549326 c -3.835704,0 -6.956323,2.958009 -6.956323,6.593869 0,3.635759 3.120619,6.593759 6.956323,6.593759 3.835712,0 6.956321,-2.958 6.956321,-6.593859 0,-3.63585 -3.120609,-6.593769 -6.956321,-6.593769 z"/>
          </svg>
          </div>
-       </div>
+       </div>` +
+          (nPlayers == 1
+            ? ''
+            : `<div class="player_config_row">
+            <div class='harvest-indicator' data-type='harvest_red'></div>
+            <div class='harvest-indicator' data-type='harvest_none'></div>
+            <div class='harvest-indicator' data-type='harvest_1food'></div>
+            <div class='harvest-indicator' data-type='harvest_choice'></div>
+          </div>`) +
+          `
      </div>
    </div>
-   `;
+   `
+        );
       },
 
       updatePlayerOrdering() {

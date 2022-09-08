@@ -1,25 +1,6 @@
 #player_board_config {
   position: relative;
   border-image: none;
-
-  &::before {
-    content: '';
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
-    border: 1px solid transparent;
-    border-image-slice: 68 164 68 154;
-    border-image-width: 34px 82px 34px 77px;
-    border-image-outset: 0px 0px 0px 0px;
-    border-image-repeat: repeat repeat;
-    border-image-source: url('img/action_frame_panel.png');
-    box-shadow: none;
-    background-color: transparent;
-    border-radius: 20px;
-    pointer-events: none;
-  }
 }
 
 #player_config {
@@ -29,20 +10,31 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 6px 0px;
+    padding: 6px 0px;
+    border-bottom: 1px solid #80502e;
+    &:last-child {
+      border-bottom: none;
+    }
   }
 
   #round-counter-wrapper {
     background-color: white;
     border-bottom: 1px solid #6a4b2f;
     font-family: var(--caverna-font-family);
-    margin: 4px 3px 6px;
+    margin: 4px 3px 0px;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
     text-align: center;
     font-size: 19px;
-    padding: 5px 7px 1px;
+    padding: 5px 30px 1px;
     display: block;
+    position: relative;
+
+    #current-harvest {
+      position: absolute;
+      right: 5px;
+      top: 1px;
+    }
   }
 
   #uwe-help {
@@ -55,7 +47,7 @@
     background-position: bottom right;
     border-radius: 50%;
     border: 1px solid black;
-    margin: -4px -10px 7px 0px;
+    margin: 3px -10px 3px 0px;
     cursor: pointer;
   }
 
@@ -131,6 +123,56 @@
 
     &:hover .fa-primary {
       transform: rotate(180deg);
+    }
+  }
+
+  .harvest-indicator {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:empty {
+      background: #aaa;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 10%;
+        bottom: 10%;
+        background-image: url('img/harvest_tokens.png');
+        background-size: 100% 600%;
+        opacity: 0.5;
+      }
+    }
+
+    &[data-type='harvest_choice']::before {
+      background-position-y: 0%;
+    }
+    &[data-type='harvest_none']::before {
+      background-position-y: 60%;
+    }
+    &[data-type='harvest_1food']::before {
+      background-position-y: 80%;
+    }
+
+    &[data-type='harvest_red'] {
+      width: 25px;
+      height: 25px;
+      background: none;
+
+      &::before {
+        background-position-y: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 1 !important;
+      }
     }
   }
 }

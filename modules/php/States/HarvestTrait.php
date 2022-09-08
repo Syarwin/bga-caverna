@@ -18,23 +18,26 @@ trait HarvestTrait
    ****************************/
   function stStartHarvest()
   {
-    Notifications::startHarvest();
     Globals::setHarvest(true);
     Globals::setSkipHarvest(Globals::getPassHarvest());
     Globals::setPassHarvest([]);
     Globals::setExchangeFlags([]);
-    Globals::setHarvestChoice([]);
-    if (Meeples::getHarvestToken()['type'] == HARVEST_REAP) {
-      $this->checkBuildingListeners('StartHarvest', 'stInitHarvestChoice', [], HARVEST);
+
+    $harvestToken = Meeples::startHarvest();
+    Notifications::startHarvest($harvestToken);
+
+    if ($harvestToken['type'] == \HARVEST_1FOOD) {
+      Globals::setHarvestCost(1);
+      Globals::setHarvest(true);
+      $this->initCustomTurnOrder('harvestFeed', HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
+    } elseif ($harvestToken['type'] == \HARVEST_CHOICE) {
+      // only reap. => NOOOOPE
+	  $this->initCustomTurnOrder('harvestChoice', HARVEST, 'stHarvestChoice', 'stStartHarvestFieldPhase');
+    } elseif ($harvestToken['type'] == \HARVEST_NONE) {
+      $this->gamestate->nextState('end');
     } else {
       $this->checkBuildingListeners('StartHarvest', 'stStartHarvestFieldPhase', [], HARVEST);
     }
-  }
-
-  /********** Harvest Choice *************/
-  function stInitHarvestChoice()
-  {
-    $this->initCustomTurnOrder('harvestChoice', HARVEST, 'stHarvestChoice', 'stStartHarvestFieldPhase');
   }
 
   function stHarvestChoice()

@@ -93,61 +93,61 @@ var jstpl_scoresModal = `
 <table id='players-scores'>
   <thead>
     <tr id="scores-headers">
-      <th></th>
+      <th></th><th></th>
     </tr>
   </thead>
   <tbody id="scores-body">
     <tr id="scores-row-dog">
-      <td class="row-header">\${dog}</td>
+      <td class="row-header">\${dog}</td><td><DOG></td>
     </tr>
     <tr id="scores-row-sheep">
-      <td class="row-header">\${sheep}</td>
+      <td class="row-header">\${sheep}</td><td><SHEEP></td>
     </tr>
     <tr id="scores-row-pig">
-      <td class="row-header">\${pig}</td>
+      <td class="row-header">\${pig}</td><td><PIG></td>
     </tr>
     <tr id="scores-row-cattle">
-      <td class="row-header">\${cattle}</td>
+      <td class="row-header">\${cattle}</td><td><CATTLE></td>
     </tr>
     <tr id="scores-row-donkey">
-      <td class="row-header">\${donkey}</td>
+      <td class="row-header">\${donkey}</td><td><DONKEY></td>
     </tr>
     <tr id="scores-row-grains">
-      <td class="row-header">\${grains}</td>
+      <td class="row-header">\${grains}</td><td><GRAIN></td>
     </tr>
     <tr id="scores-row-vegetables">
-      <td class="row-header">\${vegetables}</td>
+      <td class="row-header">\${vegetables}</td><td><VEGETABLE></td>
     </tr>
     <tr id="scores-row-rubies">
-      <td class="row-header">\${rubies}</td>
+      <td class="row-header">\${rubies}</td><td><RUBY></td>
     </tr>
     <tr id="scores-row-dwarfs">
-      <td class="row-header">\${dwarfs}</td>
+      <td class="row-header">\${dwarfs}</td><td><DWARF></td>
     </tr>
     <tr id="scores-row-empty">
-      <td class="row-header">\${empty}</td>
+      <td class="row-header">\${empty}</td><td><EMPTY></td>
     </tr>
     <tr id="scores-row-pastures">
-      <td class="row-header">\${pastures}</td>
+      <td class="row-header">\${pastures}</td><td><PASTURE></td>
     </tr>
     <tr id="scores-row-mines">
-      <td class="row-header">\${mines}</td>
+      <td class="row-header">\${mines}</td><td><MINES></td>
     </tr>
     <tr id="scores-row-buildings">
-      <td class="row-header">\${buildings}</td>
+      <td class="row-header">\${buildings}</td><td><BUILDING></td>
     </tr>
     <tr id="scores-row-buildingsBonus">
-      <td class="row-header">\${buildingsBonus}</td>
+      <td class="row-header">\${buildingsBonus}</td><td></td>
     </tr>
     <tr id="scores-row-gold">
-      <td class="row-header">\${gold}</td>
+      <td class="row-header">\${gold}</td><td><GOLD></td>
     </tr>
     <tr id="scores-row-beggings">
-      <td class="row-header">\${beggings}</td>
+      <td class="row-header">\${beggings}</td><td><BEGGING></td>
     </tr>
 
     <tr id="scores-row-total">
-      <td class="row-header">\${total}</td>
+      <td class="row-header">\${total}</td><td><SCORE></td>
     </tr>
   </tbody>
 </table>

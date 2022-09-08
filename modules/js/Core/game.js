@@ -197,6 +197,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         let wrapper = (args) => {
           let msg = this.format_string_recursive(args.log, args.args);
           if (msg != '') {
+            msg = msg.replace(/__([^_]+)__/g, '<span class="action-card-name-reference">$1</span>');
             $('gameaction_status').innerHTML = msg;
             $('pagemaintitletext').innerHTML = msg;
           }

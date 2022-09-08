@@ -254,29 +254,19 @@ trait TurnTrait
   {
     // Next turn or harvest
     $turn = Globals::getTurn();
-    $harvestToken = Meeples::getHarvestToken();
     Globals::setHarvestCost(2);
     if (Globals::isRevealStartHarvest()) {
       Meeples::revealHarvestToken();
     }
 
-    if ($harvestToken['type'] == HARVEST_NORMAL || $harvestToken['type'] == \HARVEST_REAP) {
-      $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
-    } elseif ($harvestToken['type'] == \HARVEST_1FOOD) {
-      Notifications::startHarvest();
-      Globals::setHarvestCost(1);
-      Globals::setHarvest(true);
-      $this->initCustomTurnOrder('harvestFeed', HARVEST, ST_HARVEST_FEED, 'stHarvestEnd');
-      // } elseif ($harvestToken['type'] == \HARVEST_REAP) {
-      //   // only reap.
-      //   $this->initCustomTurnOrder('harvestField', HARVEST, ST_HARVEST_FIELD, 'stHarvestEnd');
-    } else {
-      $this->gamestate->nextState('end');
-    }
+    $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
   }
 
   function stEndOfTurn()
   {
+    $token = Meeples::endHarvest();
+    Notifications::endHarvest($token);
+
     if (Globals::isHarvest()) {
       Globals::setSkipHarvest([]);
     }

@@ -54,11 +54,9 @@ class Breed extends \CAV\Models\Action
 
   public function isAutomatic($player = null)
   {
+    $player = $player ?? Players::getActive();
     $args = $this->argsBreed();
-    if (count($args['breeds']) == 4 || (!$player->hasRuby() && count($args['breeds']) == $args['max'])) {
-      return true;
-    }
-    return false;
+    return count($args['breeds']) == 4 || (!$player->hasRuby() && count($args['breeds']) <= $args['max']);
   }
 
   public function stBreed()

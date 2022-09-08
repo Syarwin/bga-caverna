@@ -63,22 +63,6 @@
   justify-content: center;
   align-items: center;
 
-  .seed-holder {
-    display: flex;
-    flex-flow: column-reverse;
-
-    .caverna-meeple {
-      margin: 0 auto -0.3em;
-      #ebd-body:not(.mobile_version) & {
-        filter: drop-shadow(1px 1px 1px black);
-      }
-
-      &:first-child {
-        margin: 0;
-      }
-    }
-  }
-
   &:not([data-tile]),
   &[data-tile=''] {
     background: none;
@@ -109,6 +93,24 @@
   &[data-tile='tileLargePasture-1'],
   &[data-tile='tileMineDeepTunnel-1'] {
     border-left: none;
+  }
+}
+
+.seed-holder {
+  display: flex;
+  flex-flow: column-reverse;
+  position: relative;
+  z-index: 2;
+  
+  .caverna-meeple {
+    margin: 0 auto -0.3em;
+    #ebd-body:not(.mobile_version) & {
+      filter: drop-shadow(1px 1px 1px black);
+    }
+
+    &:first-child {
+      margin: 0;
+    }
   }
 }
 

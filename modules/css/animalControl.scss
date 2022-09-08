@@ -10,6 +10,13 @@
   justify-content: center;
   z-index: 110;
   pointer-events: none;
+
+  .meeple-dog  {
+    order: 1;
+  }
+  .meeple-sheep {
+    order: 2;
+  }
 }
 
 .caverna-building ~ .animal-holder {
@@ -18,7 +25,7 @@
   right: 6%;
   bottom: -2%;
   background-color: rgba(242, 210, 33, 0.8);
-  border-radius: 24%;
+  border-radius: 10px;
   border: 1px solid black;
   opacity: 0;
   transition: opacity 0.7s;
