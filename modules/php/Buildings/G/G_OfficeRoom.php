@@ -22,23 +22,24 @@ class G_OfficeRoom extends \CAV\Models\Building
 
   public function isListeningTo($event)
   {
-    return $this->isActionEvent($event, 'PlaceTile');
-  }
+    $isPlaceTile = $this->isActionEvent($event, 'PlaceTile');
+    if ($isPlaceTile === false) {
+      return $isPlaceTile;
+    }
 
-  public function onPlayerAfterPlaceTile($player, $event)
-  {
     $extended = false;
     foreach ($event['positions'] as $position) {
       if ($position['x'] == -1 || $position['x'] == 13 || $position['y'] == -1 || $position['y'] == 9) {
         $extended = true;
       }
     }
-    if (
-      $extended &&
+    return $extended &&
       count($event['positions']) == 2 &&
-      !in_array($event['tile'], [TILE_MINE_DEEP_TUNNEL, TILE_LARGE_PASTURE, TILE_MINE_DEEP_TUNNEL])
-    ) {
-      return $this->gainNode([GOLD => 2]);
-    }
+      !in_array($event['tile'], [TILE_MINE_DEEP_TUNNEL, TILE_LARGE_PASTURE, TILE_MINE_DEEP_TUNNEL]);
+  }
+
+  public function onPlayerAfterPlaceTile($player, $event)
+  {
+    return $this->gainNode([GOLD => 2]);
   }
 }
