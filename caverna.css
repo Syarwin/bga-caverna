@@ -2281,9 +2281,9 @@ html {
     display: flex;
     justify-content: center;
     align-items: center; }
-    #player_config .harvest-indicator:empty {
+    #player_config .harvest-indicator:empty, #player_config .harvest-indicator[data-type='harvest_red'] {
       background: #aaa; }
-      #player_config .harvest-indicator:empty::before {
+      #player_config .harvest-indicator:empty::before, #player_config .harvest-indicator[data-type='harvest_red']::before {
         content: '';
         position: absolute;
         left: 10%;
@@ -2303,6 +2303,9 @@ html {
       width: 25px;
       height: 25px;
       background: none; }
+      #player_config .harvest-indicator[data-type='harvest_red'] .help-marker {
+        top: -7px;
+        left: 15px; }
       #player_config .harvest-indicator[data-type='harvest_red']::before {
         background-position-y: 100%;
         left: 0;
