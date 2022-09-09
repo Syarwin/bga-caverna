@@ -9,7 +9,7 @@ class Y_WeaponStorage extends \CAV\Models\Building
     $this->type = 'Y_WeaponStorage';
     $this->category = 'bonus';
     $this->name = clienttranslate('Weapon Storage');
-    $this->desc = [clienttranslate('for each')];
+    $this->desc = [];
     $this->tooltip = [
       clienttranslate(
         'When scoring, the Weapon storage will be worth 3 Bonus points for each armed Dwarf you have __(regardless of its Weapon strength)__.'

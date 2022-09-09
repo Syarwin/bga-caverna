@@ -10,8 +10,8 @@ class G_Blacksmith extends \CAV\Models\Building
     $this->category = 'material';
     $this->name = clienttranslate('Blacksmith');
     $this->desc = [
-      clienttranslate('immediately'),
-      clienttranslate('every time you forge a new weapon, you receive a discount of'),
+      clienttranslate('immediately +2<ORE>'),
+      clienttranslate('every time you forge a new weapon, you receive a discount of 2<ORE>'),
     ];
     $this->tooltip = [
       clienttranslate('When building the Blacksmith, immediately (and only once) get 2 Ore from the general supply.'),

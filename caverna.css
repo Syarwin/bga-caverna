@@ -422,11 +422,22 @@ html {
     font-family: var(--caverna-font-family); }
   .caverna-building .building-desc {
     height: 85px;
-    margin: 57px 14px;
+    margin: 57px 18px;
     font-size: 15px;
     font-family: var(--caverna-font-family); }
     .caverna-building .building-desc > div {
-      text-align: center; }
+      text-align: center;
+      line-height: 19px; }
+  .caverna-building[data-type='CuddleRoom'] .building-desc {
+    margin: 57px 40px; }
+  .caverna-building[data-type='BreakfastRoom'] .building-desc {
+    margin: 57px 20px; }
+  .caverna-building[data-type='WorkRoom'] .building-desc div:nth-child(2) {
+    margin-top: 10px; }
+  .caverna-building[data-type='DogSchool'] .building-desc, .caverna-building[data-type='Seam'] .building-desc, .caverna-building[data-type='Quarry'] .building-desc {
+    font-size: 16px; }
+  .caverna-building[data-type='WritingChamber'] .building-desc {
+    margin: 57px 37px; }
 
 .board-cell .caverna-building {
   position: relative; }
@@ -1516,7 +1527,8 @@ html {
     height: 1.1em; }
   .caverna-meeple.meeple-dwarf_icon {
     background-image: url("img/dwarves.png");
-    background-size: 700% 100%;
+    background-size: 800% 100%;
+    background-position-x: 100%;
     width: 1.1em;
     height: 0.8em; }
   .caverna-meeple.meeple-cavern, .caverna-meeple.meeple-field, .caverna-meeple.meeple-furnish, .caverna-meeple.meeple-large_pasture, .caverna-meeple.meeple-meadow, .caverna-meeple.meeple-small_pasture, .caverna-meeple.meeple-sow, .caverna-meeple.meeple-tunnel {
@@ -1558,7 +1570,7 @@ html {
   width: 35px;
   height: 29px;
   background-image: url("img/dwarves.png");
-  background-size: 700% 100%;
+  background-size: 800% 100%;
   position: relative;
   z-index: 100; }
   [data-dwarf='1'] .meeple-dwarf,
@@ -1573,17 +1585,17 @@ html {
   .meeple-dwarf[data-color='ff0000'], .player-ff0000 .meeple-dwarf, .meeple-stable[data-color='ff0000'], .player-ff0000 .meeple-stable {
     background-position-x: 0%; }
   .meeple-dwarf[data-color='008000'], .player-008000 .meeple-dwarf, .meeple-stable[data-color='008000'], .player-008000 .meeple-stable {
-    background-position-x: 16.6666%; }
+    background-position-x: 100%/7; }
   .meeple-dwarf[data-color='72c3b1'], .player-72c3b1 .meeple-dwarf, .meeple-stable[data-color='72c3b1'], .player-72c3b1 .meeple-stable {
-    background-position-x: 33.33333%; }
+    background-position-x: 28.5714285714%; }
   .meeple-dwarf[data-color='982fff'], .player-982fff .meeple-dwarf, .meeple-stable[data-color='982fff'], .player-982fff .meeple-stable {
-    background-position-x: 50%; }
+    background-position-x: 42.8571428571%; }
   .meeple-dwarf[data-color='aa9702'], .player-aa9702 .meeple-dwarf, .meeple-stable[data-color='aa9702'], .player-aa9702 .meeple-stable {
-    background-position-x: 66.66666%; }
+    background-position-x: 57.1428571429%; }
   .meeple-dwarf[data-color='df7605'], .player-df7605 .meeple-dwarf, .meeple-stable[data-color='df7605'], .player-df7605 .meeple-stable {
-    background-position-x: 83.3333%; }
+    background-position-x: 71.4285714286%; }
   .meeple-dwarf[data-color='2a05df'], .player-2a05df .meeple-dwarf, .meeple-stable[data-color='2a05df'], .player-2a05df .meeple-stable {
-    background-position-x: 100%; }
+    background-position-x: 85.7142857143%; }
 
 .meeple-dwarf {
   width: 35px;

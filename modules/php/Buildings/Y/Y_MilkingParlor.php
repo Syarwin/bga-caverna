@@ -9,7 +9,7 @@ class Y_MilkingParlor extends \CAV\Models\Building
     $this->type = 'Y_MilkingParlor';
     $this->category = 'foodBonus';
     $this->name = clienttranslate('Milking Parlor');
-    $this->desc = [clienttranslate('+1'), clienttranslate('for'), clienttranslate('for each')];
+    $this->desc = [clienttranslate('+1<FOOD> per <CATTLE>')];
     $this->tooltip = [
       clienttranslate(
         'When building the Milking parlor, immediately (and only once) get 1 Food from the general supply for each Cattle on your Home board.'

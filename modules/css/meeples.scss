@@ -200,7 +200,8 @@
   }
   &.meeple-dwarf_icon {
     background-image: url('img/dwarves.png');
-    background-size: 700% 100%;
+    background-size: 800% 100%;
+    background-position-x: 100%;
     width: 1.1em;
     height: 0.8em;
   }
@@ -263,13 +264,13 @@
   width: 35px;
   height: 29px;
   background-image: url('img/dwarves.png');
+  background-size: 800% 100%;
   [data-dwarf='1'] & {
     background-image: url('img/dwarves_alt.png');
   }
   [data-dwarf='2'] & {
     background-image: url('img/dwarves_colorblind.png');
   }
-  background-size: 700% 100%;
   position: relative;
   z-index: 100;
 
@@ -285,27 +286,27 @@
   }
   &[data-color='008000'],
   .player-008000 & {
-    background-position-x: 16.6666%;
+    background-position-x: #{100% / 7};
   }
   &[data-color='72c3b1'],
   .player-72c3b1 & {
-    background-position-x: 33.33333%;
+    background-position-x: #{2 * 100% / 7};
   }
   &[data-color='982fff'],
   .player-982fff & {
-    background-position-x: 50%;
+    background-position-x: #{3 * 100% / 7};
   }
   &[data-color='aa9702'],
   .player-aa9702 & {
-    background-position-x: 66.66666%;
+    background-position-x: #{4 * 100% / 7};
   }
   &[data-color='df7605'],
   .player-df7605 & {
-    background-position-x: 83.3333%;
+    background-position-x: #{5 * 100% / 7};
   }
   &[data-color='2a05df'],
   .player-2a05df & {
-    background-position-x: 100%;
+    background-position-x: #{6 * 100% / 7};
   }
 }
 

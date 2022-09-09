@@ -9,7 +9,7 @@ class Y_PrayerChamber extends \CAV\Models\Building
     $this->type = 'Y_PrayerChamber';
     $this->category = 'bonus';
     $this->name = clienttranslate('Prayer Chamber');
-    $this->desc = [clienttranslate('if none of your dwarfs have a weapon')];
+    $this->desc = [];
     $this->tooltip = [
       clienttranslate(
         'When scoring, the Prayer chamber will be worth 8 Bonus points if none of your Dwarfs that are in play have a Weapon'

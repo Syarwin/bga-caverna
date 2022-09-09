@@ -13,7 +13,7 @@ class G_PeacefulCave extends \CAV\Models\Building
     $this->type = 'G_PeacefulCave';
     $this->category = 'food';
     $this->name = clienttranslate('Peaceful Cave');
-    $this->desc = [clienttranslate('you may trade your Weapons for Food at a 1:1 ration according to their strength')];
+    $this->desc = [clienttranslate('you may trade your Weapons for <FOOD> at a 1:1 ration according to their strength')];
     $this->tooltip = [
       clienttranslate(
         'At any time, you can trade the Weapons of your Dwarfs for Food. You get a number of Food equal to the strength of the Weapon you trade in. You can trade multiple Weapons at the same time or at different points in time.'

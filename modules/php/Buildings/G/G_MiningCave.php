@@ -11,7 +11,7 @@ class G_MiningCave extends \CAV\Models\Building
     $this->type = 'G_MiningCave';
     $this->category = 'food';
     $this->name = clienttranslate('Mining Cave');
-    $this->desc = [clienttranslate('reduces feeding costs by'), clienttranslate('per'), clienttranslate('in a Mine')];
+    $this->desc = [clienttranslate('reduces feeding costs by 1<FOOD> per <DONKEY> in a Mine')];
     $this->tooltip = [
       clienttranslate(
         'Every time you have to feed your Dwarfs at the end of a round __(including the special Feeding phases)__, the total feeding costs will be reduced by 1 Food per Donkey in an __(Ore or Ruby)__ mine'
