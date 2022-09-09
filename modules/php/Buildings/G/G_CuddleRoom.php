@@ -9,7 +9,7 @@ class G_CuddleRoom extends \CAV\Models\Building
     $this->type = 'G_CuddleRoom';
     $this->category = 'dwelling';
     $this->name = clienttranslate('Cuddle Room');
-    $this->desc = [clienttranslate('room for as many'), clienttranslate('as you have')];
+    $this->desc = [clienttranslate('room for as many <SHEEP> as you have <DWARF>')];
     $this->tooltip = [
       clienttranslate(
         'The Cuddle room can hold a number of Sheep equal to the number of Dwarfs you have. It cannot hold any other Farm animals.'

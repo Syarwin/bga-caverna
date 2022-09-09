@@ -1202,6 +1202,28 @@ define([
              <div id="settings-controls-container"></div>
            </div>`,
         });
+
+        // Red harvest tooltips
+        if ($('harvest-indicator-harvest_red')) {
+          this.addCustomTooltip(
+            'harvest-indicator-harvest_red',
+            _(
+              'This section concerns harvest events that might take place after round 4. During all the remaining rounds, a normal harvest will take place except for 3 of them.'
+            ) +
+              '<br/>' +
+              _(
+                'The first harvest event is that no harvest will take place at the end of the round where it is revealed.'
+              ) +
+              '<br/>' +
+              _(
+                'The second harvest event is similar to the partial harvest of round 4: no harvest but you have to pay 1 Food per Dwarf in yout cave.'
+              ) +
+              '<br/>' +
+              _(
+                'During the third harvest event, each player will decide individually whether they want to play the Field phase or the Breeding phase of the Harvest time at the end of the round. (You cannot play both these phases, but you must still play the Feeding phase. '
+              )
+          );
+        }
       },
 
       tplConfigPlayerBoard() {
@@ -1290,7 +1312,7 @@ define([
           (nPlayers == 1
             ? ''
             : `<div class="player_config_row">
-            <div class='harvest-indicator' data-type='harvest_red'></div>
+            <div class='harvest-indicator' id="harvest-indicator-harvest_red" data-type='harvest_red'></div>
             <div class='harvest-indicator' data-type='harvest_none'></div>
             <div class='harvest-indicator' data-type='harvest_1food'></div>
             <div class='harvest-indicator' data-type='harvest_choice'></div>

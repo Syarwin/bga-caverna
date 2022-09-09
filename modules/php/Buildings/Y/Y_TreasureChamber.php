@@ -9,7 +9,7 @@ class Y_TreasureChamber extends \CAV\Models\Building
     $this->type = 'Y_TreasureChamber';
     $this->category = 'bonus';
     $this->name = clienttranslate('Treasure Chamber');
-    $this->desc = [clienttranslate('for each')];
+    $this->desc = [];
     $this->tooltip = [
       clienttranslate('When scoring, the Treasure chamber will be worth 1 Bonus point for each Ruby you have.'),
       clienttranslate(

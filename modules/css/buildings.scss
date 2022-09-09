@@ -71,14 +71,90 @@
 
   .building-desc {
     height: 85px;
-    margin: 57px 14px;
+    margin: 57px 18px;
     font-size: 15px;
     font-family: var(--caverna-font-family);
 
     & > div {
       text-align: center;
+      line-height: 19px;
     }
   }
+
+  &[data-type='CuddleRoom'] .building-desc {
+    margin: 57px 40px;
+  }
+  &[data-type='BreakfastRoom'] .building-desc {
+    margin: 57px 20px;
+  }
+  &[data-type='WorkRoom'] .building-desc {
+    div:nth-child(2) {
+      margin-top: 10px;
+    }
+  }
+
+  &[data-type='DogSchool'] .building-desc,
+  &[data-type='Seam'] .building-desc,
+  &[data-type='Quarry'] .building-desc {
+    font-size: 16px;
+  }
+  &[data-type='WritingChamber'] .building-desc {
+    margin: 57px 37px;
+  }
+
+  // &[data-type='StoneCarver'] .building-desc,
+  // &[data-type='Blacksmith'] .building-desc {
+  //   font-size: 14px;
+  //   div:nth-child(1) {
+  //     text-align: left;
+  //   }
+  //   div:nth-child(2) {
+  //     line-height: 16px;
+  //     margin: 0px 12px;
+  //     &::after {
+  //       content: '\0000a0';
+  //       height: 1em;
+  //       letter-spacing: 2rem;
+  //     }
+  //   }
+  // }
+  //
+  //
+  // &[data-type='Trader'] .building-desc {
+  //   margin: 57px 18px;
+  // }
+  //
+  // &[data-type='Miner'] .building-desc {
+  //   div:nth-child(1) {
+  //     font-size: 13px;
+  //   }
+  //   div:nth-child(2) {
+  //     margin-top: 4px;
+  //   }
+  //   div:nth-child(3) {
+  //     margin-top: 4px;
+  //   }
+  // }
+  //
+  // &[data-type='TreasureChamber'] .building-desc,
+  // &[data-type='FoodChamber'] .building-desc,
+  // &[data-type='OreStorage'] .building-desc,
+  // &[data-type='MainStorage'] .building-desc,
+  // &[data-type='WeaponStorage'] .building-desc,
+  // &[data-type='StoneStorage'] .building-desc {
+  //   margin-top: 86px;
+  //   font-size: 47px;
+  // }
+  // &[data-type='OreStorage'] .building-desc {
+  //   margin-right: 20px;
+  // }
+  // &[data-type='WeaponStorage'] .building-desc {
+  //   margin-right: 27px;
+  // }
+  // &[data-type='MainStorage'] .building-desc {
+  //   margin-right: 35px;
+  // }
+  //
 }
 
 .board-cell .caverna-building {

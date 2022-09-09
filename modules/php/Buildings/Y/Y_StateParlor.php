@@ -12,7 +12,7 @@ class Y_StateParlor extends \CAV\Models\Building
     $this->category = 'foodBonus';
     $this->name = clienttranslate('State Parlor');
     $this->desc = [
-      clienttranslate('Receive immediately for each adjacent dwelling +2'),
+      clienttranslate('Receive immediately for each adjacent dwelling +2<FOOD>'),
       clienttranslate('when scoring'),
     ];
     $this->tooltip = [

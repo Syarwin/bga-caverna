@@ -9,7 +9,7 @@ class Y_FodderChamber extends \CAV\Models\Building
     $this->type = 'Y_FodderChamber';
     $this->category = 'bonus';
     $this->name = clienttranslate('Fodder Chamber');
-    $this->desc = [clienttranslate('for each 3 farm animals')];
+    $this->desc = [];
     $this->tooltip = [
       clienttranslate(
         'When scoring, the Fodder chamber will be worth 1 Bonus point for every 3 Farm animals you have (regardless of type).'

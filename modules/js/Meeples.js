@@ -128,6 +128,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           `meeple-${meeple.id}`,
           _('At the end of this round, there will be a harvest unless the hidden marker shows a red question mark.')
         );
+      } else if (meeple.type == 'harvest_choice') {
+        this.addCustomTooltip(
+          `meeple-${meeple.id}`,
+          _(
+            'At the end of this round, each player will decide individually whether they want to play the Field phase or the Breeding phase of the Harvest time at the end of the round. (You cannot play both these phases, but you must still play the Feeding phase. '
+          )
+        );
       }
     },
 

@@ -12,8 +12,8 @@ class G_StoneCarver extends \CAV\Models\Building
     $this->category = 'material';
     $this->name = clienttranslate('Stone Carver');
     $this->desc = [
-      clienttranslate('immediately'),
-      clienttranslate('every time you furnish a cavern or build a stable, you receive a discount of'),
+      clienttranslate('immediately +2<STONE>'),
+      clienttranslate('every time you furnish a cavern or build a stable, you receive a discount of 1<STONE>'),
     ];
     $this->tooltip = [
       clienttranslate(

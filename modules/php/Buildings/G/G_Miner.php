@@ -10,9 +10,7 @@ class G_Miner extends \CAV\Models\Building
     $this->category = 'material';
     $this->name = clienttranslate('Miner');
     $this->desc = [
-      clienttranslate('at the beginning of each round'),
-      clienttranslate('per'),
-      clienttranslate('in an ore mine'),
+      clienttranslate('1 <ORE> per <DONKEY> in an ore mine at the beginning of each round'),
     ];
     $this->tooltip = [
       clienttranslate(

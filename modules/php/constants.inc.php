@@ -221,7 +221,7 @@ const HARVEST_GREY = 'harvest_grey';
 const HARVEST_NORMAL = 'harvest_normal';
 const HARVEST_NONE = 'harvest_none';
 const HARVEST_1FOOD = 'harvest_1food';
-const HARVEST_CHOICET = 'harvest_choice';
+const HARVEST_CHOICE = 'harvest_choice';
 
 /*
  * Scoring categories
@@ -291,7 +291,7 @@ const STABLES = 'STABLES';
 const WISHCHILDREN = 'WISH_CHILDREN';
 const WEAPON_INCREASE = 'WEAPON_INCREASE';
 const BREED = 'BREED';
-const HARVEST_CHOICE = 'HARVEST_CHOICE';
+//const HARVEST_CHOICE = 'HARVEST_CHOICE';
 
 /** ExtraDatas**/
 const BONUS_VP = 'bonusVP';

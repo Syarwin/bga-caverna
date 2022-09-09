@@ -76,7 +76,7 @@ class Meeples extends \CAV\Helpers\Pieces
           } elseif ($red == 2) {
             $tok = \HARVEST_1FOOD;
           } else {
-            $tok = HARVEST_CHOICET;
+            $tok = HARVEST_CHOICE;
           }
         }
         $meeples[] = ['type' => $tok, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 0, 'nbr' => 1];
