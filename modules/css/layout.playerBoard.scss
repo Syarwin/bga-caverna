@@ -7,14 +7,21 @@
 }
 
 .player-board-resizable {
+  float:left;
   margin: 0px 10px 2px;
   width: calc(var(--cavernaPlayerBoardScale) * 625px);
   height: calc(var(--cavernaPlayerBoardScale) * 450px);
+  [data-resource-bar='1'] & {
+    height: calc(var(--cavernaPlayerBoardScale) * 482px);
+  }
 }
 
 .player-board-wrapper {
   width: 625px;
   height: 420px;
+  [data-resource-bar='1'] & {
+    height: 452px;
+  }
   transform: scale(var(--cavernaPlayerBoardScale));
   transform-origin: top left;
 
@@ -29,7 +36,7 @@
     background-size: 200px 40px;
     box-shadow: 2px 2px 10px black;
 
-    .player-resource.resource-dog {
+    .caverna-player-board .player-resource.resource-dog {
       position: absolute;
       background: rgba(255, 255, 255, 0.7);
       border-radius: 7px;
@@ -59,6 +66,11 @@
     .resources-bar-holder {
       position: relative;
       height: 33px;
+      display: flex;
+
+      [data-resource-bar='1'] & {
+        height: 62px;
+      }
 
       .player-board-name {
         position: absolute;

@@ -137,7 +137,7 @@ define([
 
         this._settingsConfig = {
           dwarfAsset: {
-            default: 0,
+            default: 1,
             name: _('Dwarf asset'),
             attribute: 'dwarf',
             type: 'select',
@@ -183,16 +183,16 @@ define([
               },
             },
           },
-          otherPlayerBoard: {
-            default: 0,
-            name: _('Other player boards'),
-            attribute: 'player-boards',
-            type: 'select',
-            values: {
-              0: _('Under the central board'),
-              1: _('Next to the central board'),
-            },
-          },
+          // otherPlayerBoard: {
+          //   default: 0,
+          //   name: _('Other player boards'),
+          //   attribute: 'player-boards',
+          //   type: 'select',
+          //   values: {
+          //     0: _('Under the central board'),
+          //     1: _('Next to the central board'),
+          //   },
+          // },
           playerBoardScale: {
             default: 100,
             name: _('Player board scale'),
@@ -204,6 +204,16 @@ define([
                 min: [20],
                 max: [170],
               },
+            },
+          },
+          resourceBarLocation: {
+            default: 0,
+            name: _('Resources bar location'),
+            attribute: 'resource-bar',
+            type: 'select',
+            values: {
+              0: _('In the top right pannel'),
+              1: _('Next to the player board'),
             },
           },
           confirmMode: { type: 'pref', prefId: 103 },

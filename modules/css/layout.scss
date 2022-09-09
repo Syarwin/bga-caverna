@@ -1,8 +1,14 @@
 #position-wrapper {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  // display: flex;
+  // flex-wrap: wrap;
+  // justify-content: space-between;
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
 }
 
 @import 'layout.central';

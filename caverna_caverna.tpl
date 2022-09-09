@@ -13,7 +13,6 @@
 
 <div id="position-wrapper">
   <div id="central-board-wrapper"><div id="central-board"></div></div>
-  <div id="player-boards"></div>
 </div>
 
 

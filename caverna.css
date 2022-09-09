@@ -637,10 +637,15 @@ html {
     display: flex; }
 
 #position-wrapper {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; }
+  position: relative; }
+  #position-wrapper:after {
+    content: '';
+    display: table;
+    clear: both; }
+
+#central-board-wrapper {
+  float: left;
+  margin-right: 10px; }
 
 #central-board-holder {
   width: calc(var(--cavernaCentralBoardScale) * 915px); }
@@ -1235,15 +1240,20 @@ html {
   width: calc(var(--cavernaPlayerBoardScale) * 625px + 20px); }
 
 .player-board-resizable {
+  float: left;
   margin: 0px 10px 2px;
   width: calc(var(--cavernaPlayerBoardScale) * 625px);
   height: calc(var(--cavernaPlayerBoardScale) * 450px); }
+  [data-resource-bar='1'] .player-board-resizable {
+    height: calc(var(--cavernaPlayerBoardScale) * 482px); }
 
 .player-board-wrapper {
   width: 625px;
   height: 420px;
   transform: scale(var(--cavernaPlayerBoardScale));
   transform-origin: top left; }
+  [data-resource-bar='1'] .player-board-wrapper {
+    height: 452px; }
   .player-board-wrapper.harvest .animals-counters .baby-counter {
     display: inline-block; }
   .player-board-wrapper .player-board-holder {
@@ -1252,7 +1262,7 @@ html {
     background-image: url("img/action_frame_bg.jpg");
     background-size: 200px 40px;
     box-shadow: 2px 2px 10px black; }
-    .player-board-wrapper .player-board-holder .player-resource.resource-dog {
+    .player-board-wrapper .player-board-holder .caverna-player-board .player-resource.resource-dog {
       position: absolute;
       background: rgba(255, 255, 255, 0.7);
       border-radius: 7px;
@@ -1262,19 +1272,22 @@ html {
       font-size: 22px;
       bottom: -14px;
       padding: 2px 3px; }
-      .player-board-wrapper .player-board-holder .player-resource.resource-dog[data-n='0'] {
+      .player-board-wrapper .player-board-holder .caverna-player-board .player-resource.resource-dog[data-n='0'] {
         opacity: 0; }
-      .player-board-wrapper .player-board-holder .player-resource.resource-dog .reserve {
+      .player-board-wrapper .player-board-holder .caverna-player-board .player-resource.resource-dog .reserve {
         position: absolute;
         top: 0%;
         left: 0%;
         width: 100%;
         height: 100%; }
-        .player-board-wrapper .player-board-holder .player-resource.resource-dog .reserve > div.caverna-meeple:not(.moving) {
+        .player-board-wrapper .player-board-holder .caverna-player-board .player-resource.resource-dog .reserve > div.caverna-meeple:not(.moving) {
           display: none; }
     .player-board-wrapper .player-board-holder .resources-bar-holder {
       position: relative;
-      height: 33px; }
+      height: 33px;
+      display: flex; }
+      [data-resource-bar='1'] .player-board-wrapper .player-board-holder .resources-bar-holder {
+        height: 62px; }
       .player-board-wrapper .player-board-holder .resources-bar-holder .player-board-name {
         position: absolute;
         top: 2px;
@@ -1722,12 +1735,12 @@ html {
 
 .meeple-firstPlayer {
   width: 0.4em;
-  height: 0.8em;
+  height: 0.82em;
   font-size: 44px;
   background-image: url("img/meeples.png");
   background-repeat: no-repeat;
   background-position: 0% 0%;
-  background-size: 731.429%; }
+  background-size: 700.429%; }
 
 .switch-wrapper {
   width: 100px;
@@ -1823,6 +1836,8 @@ html {
       margin-left: 3px; }
   .player-board .player_board_inner {
     padding: 13px 10px 0px; }
+    [data-resource-bar='1'] .player-board .player_board_inner {
+      padding: 13px 10px 13px; }
     .player-board .player_board_inner .player-name {
       position: relative; }
   .player-board .caverna-first-player-holder {
@@ -1896,25 +1911,15 @@ html {
           .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .reserve > div.caverna-meeple:not(.moving),
           .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .reserve > div.caverna-meeple:not(.moving) {
             display: none; }
-        .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_dwarf::after,
-        .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_fence::after,
         .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_stable::after,
         .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_food::after,
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_dwarf::after,
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_fence::after,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_stable::after,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_food::after,
-        .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_dwarf::after,
-        .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_fence::after,
         .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_stable::after,
         .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_food::after {
           font-size: 0.7em;
           position: relative;
           top: 5px; }
-        .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_dwarf::after,
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_dwarf::after,
-        .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_dwarf::after {
-          content: '/5'; }
         .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_stable::after,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_stable::after,
         .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_stable::after {
@@ -1924,6 +1929,11 @@ html {
         .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_food::after {
           content: attr(data-harvest);
           font-size: 0.75em; }
+    .player-board .caverna-player-pannel .player-resource.resource-dwarf {
+      flex-basis: 60%;
+      display: flex;
+      height: 16px;
+      margin-top: 29px; }
     .player-board .caverna-player-pannel .player-panel-board-resources {
       padding: 0.25rem 0; }
       .player-board .caverna-player-pannel .player-panel-board-resources .meeple-container {
@@ -1970,85 +1980,74 @@ html {
         flex-basis: 33%; }
       .player-board .caverna-player-pannel .player-panel-personal-resources .resource-stable {
         margin-top: 8px; }
-      .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf {
-        flex-basis: 60%;
-        display: flex;
-        height: 16px;
-        margin-top: 29px; }
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-action,
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-board,
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve {
-          flex-grow: 1;
-          display: flex;
-          justify-content: center;
-          padding: 0px 2px;
-          border: 1px solid rgba(0, 0, 0, 0.6); }
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-action {
-          padding-left: 7px;
-          min-width: 25px;
-          background-image: url("img/background_card.jpg");
-          background-size: 200px;
-          background-position: 100px 183px; }
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-on-board {
-          min-width: 28px;
-          background: #7a6b64;
-          border-right: none;
-          border-left: none; }
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve {
-          opacity: 0.6;
-          border: 1px solid black;
-          border-left: none;
-          background: white;
-          border-top-right-radius: 5px; }
-          .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf {
-            filter: grayscale(0.5);
-            margin-left: -15px; }
-            .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf:first-of-type {
-              margin-left: 0px; }
-        .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf {
-          width: 23px;
-          height: 19px;
-          margin-top: -13px; }
-          .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
-            transform: scale(0.7);
-            transform-origin: -4px 0px; }
-          [data-dwarf='1'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf, [data-dwarf='2'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf {
-            width: 25px;
-            height: 32px;
-            margin-top: -23px; }
-            [data-dwarf='1'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon, [data-dwarf='2'] .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
-              transform: scale(0.63);
-              transform-origin: -2px 10px; }
   .colorblind .player-board .caverna-player-pannel .meeple-dwarf_icon {
     background-image: url("img/dwarfs_colorblind.png"); }
 
-.caverna-player-pannel[data-color='ff0000'] .meeple-dwarf_icon,
 .caverna-player-pannel[data-color='ff0000'] .meeple-barn {
   background-position-x: 0%; }
 
-.caverna-player-pannel[data-color='008000'] .meeple-dwarf_icon,
 .caverna-player-pannel[data-color='008000'] .meeple-barn {
-  background-position-x: 16.6666%; }
+  background-position-x: 14.2857142857%; }
 
-.caverna-player-pannel[data-color='72c3b1'] .meeple-dwarf_icon,
 .caverna-player-pannel[data-color='72c3b1'] .meeple-barn  {
-  background-position-x: 33.3333%; }
+  background-position-x: 28.5714285714%; }
 
-.caverna-player-pannel[data-color='982fff'] .meeple-dwarf_icon,
 .caverna-player-pannel[data-color='982fff'] .meeple-barn  {
-  background-position-x: 50%; }
+  background-position-x: 42.8571428571%; }
 
-.caverna-player-pannel[data-color='aa9702'] .meeple-dwarf_icon,
 .caverna-player-pannel[data-color='aa9702'] .meeple-barn {
-  background-position-x: 66.6666%; }
+  background-position-x: 57.1428571429%; }
 
-.caverna-player-pannel[data-color='df7605'] .meeple-dwarf_icon,
 .caverna-player-pannel[data-color='df7605'] .meeple-barn {
-  background-position-x: 83.3333%; }
+  background-position-x: 71.4285714286%; }
 
-.caverna-player-pannel[data-color='2a05df'] .meeple-dwarf_icon,
 .caverna-player-pannel[data-color='2a05df'] .meeple-barn {
-  background-position-x: 100%; }
+  background-position-x: 85.7142857143%; }
+
+.player-resource.resource-dwarf .dwarf-on-action,
+.player-resource.resource-dwarf .dwarf-on-board,
+.player-resource.resource-dwarf .dwarf-in-reserve {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0px 2px;
+  border: 1px solid rgba(0, 0, 0, 0.6); }
+.player-resource.resource-dwarf .dwarf-on-action {
+  padding-left: 7px;
+  min-width: 25px;
+  background-image: url("img/background_card.jpg");
+  background-size: 200px;
+  background-position: 100px 183px; }
+.player-resource.resource-dwarf .dwarf-on-board {
+  min-width: 28px;
+  background: #7a6b64;
+  border-right: none;
+  border-left: none; }
+.player-resource.resource-dwarf .dwarf-in-reserve {
+  opacity: 0.6;
+  border: 1px solid black;
+  border-left: none;
+  background: white;
+  border-top-right-radius: 5px; }
+  .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf {
+    filter: grayscale(0.5);
+    margin-left: -15px; }
+    .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf:first-of-type {
+      margin-left: 0px; }
+.player-resource.resource-dwarf .meeple-dwarf {
+  width: 23px;
+  height: 19px;
+  margin-top: -13px; }
+  .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
+    transform: scale(0.7);
+    transform-origin: -4px 0px; }
+  [data-dwarf='1'] .player-resource.resource-dwarf .meeple-dwarf, [data-dwarf='2'] .player-resource.resource-dwarf .meeple-dwarf {
+    width: 25px;
+    height: 32px;
+    margin-top: -23px; }
+    [data-dwarf='1'] .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon, [data-dwarf='2'] .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
+      transform: scale(0.63);
+      transform-origin: -2px 10px; }
 
 /****************************************
 *** WHEN PLAYER PANEL IS ON THE BOARD ***
@@ -2057,20 +2056,21 @@ html {
   position: relative;
   /*  data-color="${player.color}"*/ }
   .resources-bar-holder .caverna-player-pannel {
-    display: flex;
-    justify-content: space-around;
-    background-image: url("img/action_frame_bg.jpg");
-    background-size: 33% auto;
-    box-shadow: 1px 2px 4px -2px black;
-    border: 1px solid black;
-    border-radius: 8px !important; }
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    height: 62px; }
     .resources-bar-holder .caverna-player-pannel .caverna-first-player-holder {
       position: absolute;
-      top: -30px;
-      right: 8px; }
+      top: 22px;
+      right: 5px; }
     .resources-bar-holder .caverna-player-pannel .player-panel-resources,
     .resources-bar-holder .caverna-player-pannel .player-panel-board-resources {
-      border-right: 1px solid black; }
+      border-right: 1px solid black;
+      grid-column: 1; }
+    .resources-bar-holder .caverna-player-pannel .player-panel-resources {
+      border-bottom: 1px solid #797777; }
     .resources-bar-holder .caverna-player-pannel .player-panel-resources,
     .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources,
     .resources-bar-holder .caverna-player-pannel .player-panel-board-resources {
@@ -2078,7 +2078,7 @@ html {
       display: flex;
       align-items: center;
       justify-content: space-around;
-      padding: 4px 6px;
+      padding: 2px 4px;
       flex-wrap: wrap;
       font-size: 17px;
       position: relative; }
@@ -2116,29 +2116,15 @@ html {
           .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .reserve > div.caverna-meeple:not(.moving),
           .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .reserve > div.caverna-meeple:not(.moving) {
             display: none; }
-        .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_dwarf::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_fence::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_stable::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_food::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_dwarf::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_fence::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_stable::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_food::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_dwarf::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_fence::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_stable::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_food::after {
           font-size: 0.7em;
           position: relative;
           top: 5px; }
-        .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_dwarf::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_dwarf::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_dwarf::after {
-          content: '/5'; }
-        .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_fence::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_fence::after,
-        .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_fence::after {
-          content: '/15'; }
         .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_stable::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_stable::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_stable::after {
@@ -2148,8 +2134,20 @@ html {
         .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_food::after {
           content: attr(data-harvest);
           font-size: 0.75em; }
-    .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .resource-dwarf {
-      display: none; }
+    .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources {
+      grid-row: 1 / span 2;
+      grid-column: 2;
+      justify-content: space-between;
+      padding: 0px; }
+    .resources-bar-holder .caverna-player-pannel .player-resource.resource-stable {
+      margin-top: 30px;
+      margin-right: 35px; }
+    .resources-bar-holder .caverna-player-pannel .player-resource.resource-dwarf {
+      flex-basis: 60%;
+      display: flex;
+      height: 16px;
+      margin-top: 51px;
+      margin-left: -1px; }
 
 .flip-container {
   background-color: transparent;

@@ -66,7 +66,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       // Add player board and player panel
       orderedPlayers.forEach((player) => {
-        this.place('tplPlayerBoard', player, 'player-boards');
+        this.place('tplPlayerBoard', player, 'position-wrapper');
         this.place('tplPlayerPanel', player, 'overall_player_board_' + player.id);
 
         // Add gold counter
@@ -84,18 +84,18 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       dojo.attr('game_play_area', 'data-players', Object.keys(this.gamedatas.players).length);
     },
 
-    updateCurrentPlayerBoardLocation() {
-      let board = document.querySelector('.player-board-resizable.current');
-      if (this.settings.otherPlayerBoard == 0) {
-        dojo.place(board, 'player-boards', 'before');
-      } else {
-        dojo.place(board, 'player-boards', 'first');
-      }
-    },
-
-    onChangeOtherPlayerBoardSetting() {
-      this.updateCurrentPlayerBoardLocation();
-    },
+    // updateCurrentPlayerBoardLocation() {
+    //   let board = document.querySelector('.player-board-resizable.current');
+    //   if (this.settings.otherPlayerBoard == 0) {
+    //     dojo.place(board, 'player-boards', 'before');
+    //   } else {
+    //     dojo.place(board, 'player-boards', 'first');
+    //   }
+    // },
+    //
+    // onChangeOtherPlayerBoardSetting() {
+    //   this.updateCurrentPlayerBoardLocation();
+    // },
 
     getCell(pos, pId = null) {
       if (pId == null) {
@@ -108,12 +108,15 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.forEachPlayer((player) => {
         dojo.place(
           `caverna-pannel-${player.id}`,
-          (this.prefs[PLAYER_RESOURCES].value == 0 ? 'overall_player_board_' : 'resources-bar-holder-') + player.id
+          (this.settings.resourceBarLocation == 0 ? 'overall_player_board_' : 'resources-bar-holder-') + player.id
         );
         dojo.toggleClass('resources-bar-holder-' + player.id, 'active', this.prefs[PLAYER_RESOURCES].value == 1);
       });
-      this.updatePlayerBoardDimensions();
       this.updateDwarfsPlayerCounters();
+    },
+
+    onChangeResourceBarLocationSetting() {
+      this.updateResourceBarsPositions();
     },
 
     /**
@@ -197,7 +200,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.forEachPlayer((player) => {
         let containers = {
           action: $('central-board-wrapper'),
-          board: $(`board-wrapper-${player.id}`),
+          board: $(`board-${player.id}`),
         };
 
         Object.keys(containers).forEach((location) => {

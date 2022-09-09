@@ -1,3 +1,8 @@
+#central-board-wrapper {
+  float: left;
+  margin-right: 10px;
+}
+
 #central-board-holder {
   width: calc(var(--cavernaCentralBoardScale) * 915px);
 }
