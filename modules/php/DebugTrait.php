@@ -54,17 +54,20 @@ trait DebugTrait
     // Engine::proceed();
 
     // $this->actTakeAtomicAction([null, 25]);
-    $this->stInitHarvestFeedingPhase();
+    // $this->stInitHarvestFeedingPhase();
     // Globals::setHarvestCost(1);
     // $this->checkBuildingListeners('BeforeHarvest', ST_START_HARVEST);
     // Engine::insertAtRoot(
     //   [
     //     'action' => PLACE_TILE,
-    //     'args' => ['tiles' => [\TILE_LARGE_PASTURE]],
+    //     'args' => ['tiles' => [\TILE_FIELD]],
     //   ],
     //   false
     // );
+    // Engine::insertAtRoot(['action' => FURNISH], false);
     // Engine::proceed();
+    // ActionCards::accumulate();
+    $this->actRubyChoice(['ActionLogging']);
   }
   public function tv()
   {

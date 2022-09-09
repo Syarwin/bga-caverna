@@ -141,6 +141,16 @@ $machinestates = [
     'transitions' => [],
   ],
 
+  ST_RUBY_CHOICE => [
+    'name' => 'rubyChoice',
+    'description' => clienttranslate('${actplayer} may use a Ruby to keep goods on accumulation space'),
+    'descriptionmyturn' => clienttranslate('${you} may use a Ruby to keep goods on accumulation space'),
+    'args' => 'argsRubyChoice',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actRubyChoice', 'actPassRuby'],
+    'transitions' => ['preparation' => ST_PREPARATION],
+  ],
+
   ST_GAIN => [
     'name' => 'gainResources',
     'type' => 'game',

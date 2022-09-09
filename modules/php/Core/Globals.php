@@ -23,6 +23,7 @@ class Globals extends \CAV\Helpers\DB_Manager
     'revealStartHarvest' => 'bool',
     'harvestChoice' => 'obj',
 
+    'rubyChoice' => 'obj',
     'gameSeed' => 'str',
 
     // Game options

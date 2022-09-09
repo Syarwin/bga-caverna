@@ -457,6 +457,18 @@ class Notifications
       'resources' => $resources,
     ]);
   }
+
+  public static function clearActionSpaces($resources)
+  {
+    self::notifyAll(
+      'silentKill',
+      clienttranslate('Clearing action spaces with more than 6 goods (not preserved by usage of ruby)'),
+      [
+        'resources' => $resources,
+      ]
+    );
+  }
+
   public static function silentDestroy($resources)
   {
     self::notifyAll('silentDestroy', '', [
