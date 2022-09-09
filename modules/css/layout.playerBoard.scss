@@ -7,7 +7,7 @@
 }
 
 .player-board-resizable {
-  float:left;
+  float: left;
   margin: 0px 10px 2px;
   width: calc(var(--cavernaPlayerBoardScale) * 625px);
   height: calc(var(--cavernaPlayerBoardScale) * 450px);
@@ -129,6 +129,11 @@
             background-color: rgba(255, 0, 0, 0.2);
             &:hover {
               background-color: rgba(255, 0, 0, 0.3);
+            }
+
+            .caverna-building {
+              pointer-events: none;
+              opacity: 0.5;
             }
           }
 

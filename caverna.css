@@ -1335,6 +1335,9 @@ html {
             background-color: rgba(255, 0, 0, 0.2); }
             #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selectable:hover {
               background-color: rgba(255, 0, 0, 0.3); }
+            #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selectable .caverna-building {
+              pointer-events: none;
+              opacity: 0.5; }
           #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selected {
             background-color: rgba(0, 255, 0, 0.5); }
             #ebd-body:not(.help-mode) .player-board-wrapper .player-board-holder .caverna-player-board .player-board-grid .board-cell.selected:hover {

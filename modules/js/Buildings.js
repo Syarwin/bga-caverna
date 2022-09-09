@@ -22,7 +22,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           <div class='building-board-separator'></div>
           <div class='building-board-right'></div>
         </div>`,
-          'buildings-container',
+          'buildings-container'
         );
 
         buildingsBoards[type].forEach((buildingId, i) => {
@@ -30,13 +30,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
           dojo.place(
             `<div class="building-placeholder" data-id="${buildingId}"></div>`,
-            board.querySelector(i < 6 ? '.building-board-left' : '.building-board-right'),
+            board.querySelector(i < 6 ? '.building-board-left' : '.building-board-right')
           );
         });
 
         dojo.place(
           `<div id='show-building-board-${type}' class='building-board-button' data-id='${type}'><i class="fa fa-times" aria-hidden="true"></i></div>`,
-          'floating-building-buttons',
+          'floating-building-buttons'
         );
         $(`show-building-board-${type}`).addEventListener('click', (evt) => this.goToBuildingBoard(type, evt));
       });
@@ -90,8 +90,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         // Move the building if not correct container
         let o = $(`building-${building.id}`);
         let container = this.getBuildingContainer(building);
+        console.log(building, container);
         if (o.parentNode != $(container)) {
-          dojo.place(o, container, "first");
+          dojo.place(o, container, 'first');
         }
         if (building.type == 'G_OfficeRoom' && building.location == 'inPlay') {
           $(`board-${building.pId}`).classList.add('office-room');
@@ -106,41 +107,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           dojo.destroy(oBuilding);
         }
       });
-    },
-
-    /**
-     * Create the modal that holds the major improvements
-     */
-    setupBuildingsModal() {
-      this._buildingsDialog = new customgame.modal('showBuildings', {
-        class: 'caverna_popin',
-        closeIcon: 'fa-times',
-        //        openAnimation: true,
-        //        openAnimationTarget: 'majors-button',
-        contents:
-          `
-          <div id="majors-container">
-            ` +
-          MAJORS.map((id) => `<div class="major-holder" id="Major_${id}_holder"></div>`).join('') +
-          `
-          </div>
-        `,
-        closeAction: 'hide',
-        statusElt: 'majors-button',
-        verticalAlign: 'flex-start',
-        scale: 0.8,
-        breakpoint: 1200,
-      });
-
-      this.addCustomTooltip('buildings-button', _('Display available major improvements'));
-      this.onClick('buildings-button', () => this.openMajorsModal(), false);
-    },
-
-    /**
-     * Open the major improvement modal
-     */
-    openMajorsModal() {
-      this._majorsDialog.show();
     },
 
     /**
@@ -178,7 +144,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       if (container == null) {
         container = this.getBuildingContainer(building);
       }
-      let oBuilding = dojo.place(this.tplBuilding(building), container, "first");
+      let oBuilding = dojo.place(this.tplBuilding(building), container, 'first');
       this.addCustomTooltip(`building-${building.id}`, this.tplBuildingTooltip(building));
       $(`building-${building.id}`).addEventListener('click', () => this.showBuildingDetails(building));
     },
@@ -262,7 +228,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             dialog.destroy();
             this._onSelectBuildingCallback(building.id);
           },
-          `building-${building.id}-details-footer`,
+          `building-${building.id}-details-footer`
         );
       } else if (notif !== null) {
         this.addPrimaryActionButton(
@@ -277,10 +243,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               config.from = $(`floating-building-buttons`);
             }
             this.slide(o, this.getBuildingContainer(building), config).then(() =>
-              this.notifqueue.setSynchronousDuration(10),
+              this.notifqueue.setSynchronousDuration(10)
             );
           },
-          `building-${building.id}-details-footer`,
+          `building-${building.id}-details-footer`
         );
       }
     },
@@ -294,27 +260,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this._selectableBuildings = buildings.map((id) => parseInt(id));
       this._onSelectBuildingCallback = callback;
       buildings.forEach((buildingId) => $(`building-${buildingId}`).classList.add('selectable'));
+      this.goToBuildingBoard('dwellings');
     },
 
-    computeSlidingAnimationFrom(building, newContainer) {
-      let from = 'hand-button';
-      if (!$(building.id)) {
-        this.addBuilding(building, newContainer);
-        from = 'overall_player_board_' + building.pId;
-      } else {
-        dojo.place(building.id, newContainer);
-        if (building.type == 'major') {
-          from = this._majorsDialog.isDisplayed() ? building.id + '_holder' : 'majors-button';
-        } else {
-          from = this._handDialog.isDisplayed() || this.prefs[HAND_CARDS].value != 0 ? 'hand-container' : 'hand-button';
-        }
-      }
-
-      this.updatePlayerBoardDimensions();
-      return from;
-    },
-
-    /**
+    /*
      * Notification when someone bought a building
      */
     notif_furnish(n) {
@@ -326,7 +275,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       if (building.type == 'D_Dwelling' && !$(`building-${building.id}`)) {
         this.addBuilding(
           building,
-          $('buildings-container').querySelector('.building-placeholder[data-id="D_Dwelling"]'),
+          $('buildings-container').querySelector('.building-placeholder[data-id="D_Dwelling"]')
         );
       }
 

@@ -94,7 +94,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     /**
      * Make cards selectable
      */
-    promptPlayerBoardZones(zones, min, max, callback, callbackCheck = null) {
+    promptPlayerBoardZones(zones, min, max, callback, callbackCheck = null, textConfirm = null) {
       let selectedZones = [];
       let select = (pos) => {
         dojo.addClass(this.getCell(pos), 'selected');
@@ -139,9 +139,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           selectedZones.length <= max &&
           (callbackCheck == null || callbackCheck(selectedZones))
         ) {
+          if (textConfirm !== null) {
+            $('pagemaintitletext').innerHTML = textConfirm;
+          }
           this.addPrimaryActionButton('btnConfirmZoneSelection', _('Confirm'), () => {
             callback(selectedZones);
           });
+        } else {
+          this.updatePageTitle();
         }
       };
 

@@ -318,7 +318,7 @@ define([
 
       notif_refreshUI(n) {
         debug('Notif: refreshing UI', n);
-        ['meeples', 'tiles', 'players', 'scores'].forEach((value) => {
+        ['meeples', 'tiles', 'players', 'scores', 'buildings'].forEach((value) => {
           this.gamedatas[value] = n.args.datas[value];
         });
         this.setupMeeples();
@@ -574,9 +574,16 @@ define([
       onEnteringStateFurnishSelectZone(args) {
         this.addCancelStateBtn(_('Cancel building choice'));
         $(`building-${args.buildingId}`).classList.add('selected');
-        this.promptPlayerBoardZones(args.zones, 1, 1, (zones) => {
-          this.takeAtomicAction('actFurnish', [args.buildingId, zones[0]]);
-        });
+        this.promptPlayerBoardZones(
+          args.zones,
+          1,
+          1,
+          (zones) => {
+            this.takeAtomicAction('actFurnish', [args.buildingId, zones[0]]);
+          },
+          null,
+          _('Confirm your building location on your board')
+        );
       },
 
       onEnteringStateHarvestChoice(args) {

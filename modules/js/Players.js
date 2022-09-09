@@ -58,7 +58,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       // Change No so that it fits the current player order view
       let currentNo = Object.values(this.gamedatas.players).reduce(
         (carry, player) => (player.id == this.player_id ? player.no : carry),
-        0
+        1
       );
       let nPlayers = Object.keys(this.gamedatas.players).length;
       this.forEachPlayer((player) => (player.order = (player.no + nPlayers - currentNo) % nPlayers));

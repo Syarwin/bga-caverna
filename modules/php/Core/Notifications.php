@@ -59,6 +59,8 @@ class Notifications
       'id' => $building['id'],
       'location' => $building['location'],
       'pId' => $building['pId'],
+      'x' => $building['x'],
+      'y' => $building['y'],
     ];
   }
   public static function refreshUI($datas)
