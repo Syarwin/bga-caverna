@@ -20,6 +20,7 @@ trait TurnTrait
    */
   function stBeforeStartOfTurn()
   {
+    Globals::setRubyChoice([]);
     // 0) Make children grow up
     $children = Dwarfs::growChildren();
     if (!empty($children)) {
@@ -68,7 +69,51 @@ trait TurnTrait
 
   function stPreparationListener()
   {
+    if (Globals::isSolo() && Players::get(Globals::getFirstPlayer())->hasRuby()) {
+      //Check all accumulations spaces with more than 6 goods
+      if (count(ActionCards::getAccumulationSpacesWith6()) != 0) {
+        $this->initCustomDefaultTurnOrder('soloAccumulation', ST_RUBY_CHOICE, 'stPreparation');
+        return;
+      }
+    }
     $this->checkBuildingListeners('Preparation', 'stPreparation');
+  }
+
+  /**
+   *
+   * Solo Ruby choice
+   */
+  function argsRubyChoice()
+  {
+    $player = Players::getCurrent();
+    return ['cards' => ActionCards::getAccumulationSpacesWith6(), 'rubies' => $player->countReserveResource(RUBY)];
+  }
+
+  function actRubyChoice($cards)
+  {
+    self::checkAction('actRubyChoice');
+    $player = Players::getActive();
+    $args = $this->argsRubyChoice();
+
+    if (count($cards) > $args['rubies']) {
+      throw new \BgaVisibleSystemException('More spaces selected than rubies. Should not happen');
+    }
+
+    foreach ($cards as $cardId) {
+      if (!in_array($cardId, $args['cards'])) {
+        throw new \BgaVisibleSystemException('Invalid space. Should not happen');
+      }
+    }
+    Globals::setRubyChoice($cards);
+    $deleted = $player->useResource(RUBY, count($cards));
+    Notifications::payResources($player, $deleted, clienttranslate('keeping accumulation spaces full'));
+    $this->gamestate->nextState('preparation');
+  }
+
+  function actPassRuby()
+  {
+    self::checkAction('actRubyChoice');
+    $this->gamestate->nextState('preparation');
   }
 
   /**
@@ -76,6 +121,23 @@ trait TurnTrait
    */
   function stPreparation()
   {
+    // Solo: clear all spots with more than 6 goods and not saved by a ruby
+    if (Globals::isSolo()) {
+      $rubyChoice = Globals::getRubyChoice();
+      $deleted = [];
+      foreach (ActionCards::getAccumulationSpacesWith6() as $cardId) {
+        if (!in_array($cardId, $rubyChoice)) {
+          foreach (Meeples::getResourcesOnCard($cardId) as $mId => $m) {
+            $deleted[] = $m;
+            Meeples::DB()->delete($mId);
+          }
+        }
+      }
+      if (!empty($deleted)) {
+        Notifications::clearActionSpaces($deleted);
+      }
+    }
+
     // Fill up accumulation spots
     $resourceIds = ActionCards::accumulate();
     Notifications::accumulate(Meeples::getMany($resourceIds));

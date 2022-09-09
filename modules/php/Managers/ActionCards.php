@@ -2,7 +2,7 @@
 namespace CAV\Managers;
 
 use CAV\Core\Globals;
-use CAV\Core\Meeples;
+use CAV\Managers\Meeples;
 
 /* Class to manage all the cards for Agricola */
 
@@ -181,6 +181,17 @@ class ActionCards extends \CAV\Helpers\Pieces
       });
     }
 
+    return $cards;
+  }
+
+  public static function getAccumulationSpacesWith6()
+  {
+    $cards = [];
+    foreach (self::getAccumulationSpaces() as $cId => $card) {
+      if (Meeples::getResourcesOnCard($cId)->count() > 6) {
+        $cards[] = $cId;
+      }
+    }
     return $cards;
   }
 

@@ -92,6 +92,7 @@ const ST_WEAPON_INCREASE = 43;
 const ST_FURNISH = 44;
 const ST_BREED = 45;
 const ST_HARVEST_CHOICE = 46;
+const ST_RUBY_CHOICE = 47;
 
 const ST_REORGANIZE = 80;
 

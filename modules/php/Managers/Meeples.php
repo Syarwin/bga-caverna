@@ -57,7 +57,7 @@ class Meeples extends \CAV\Helpers\Pieces
     $meeples[] = ['type' => \HARVEST_NORMAL, 'location' => 'turn_5', 'player_id' => 0, 'state' => 1, 'nbr' => 1];
 
     if (count($players) == 1) {
-      for ($i = 6; ($i = 12); $i++) {
+      for ($i = 6; $i < 12; $i++) {
         $meeples[] = ['type' => HARVEST_NORMAL, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 1, 'nbr' => 1];
       }
     } else {
