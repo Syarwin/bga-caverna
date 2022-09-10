@@ -95,24 +95,21 @@ trait TurnTrait
     $player = Players::getActive();
     $args = $this->argsRubyChoice();
 
-    if (count($cards) > $args['rubies']) {
-      throw new \BgaVisibleSystemException('More spaces selected than rubies. Should not happen');
-    }
-
-    foreach ($cards as $cardId) {
-      if (!in_array($cardId, $args['cards'])) {
-        throw new \BgaVisibleSystemException('Invalid space. Should not happen');
+    if(!empty($cards)){
+      if (count($cards) > $args['rubies']) {
+        throw new \BgaVisibleSystemException('More spaces selected than rubies. Should not happen');
       }
-    }
-    Globals::setRubyChoice($cards);
-    $deleted = $player->useResource(RUBY, count($cards));
-    Notifications::payResources($player, $deleted, clienttranslate('keeping accumulation spaces full'));
-    $this->gamestate->nextState('preparation');
-  }
 
-  function actPassRuby()
-  {
-    self::checkAction('actRubyChoice');
+      foreach ($cards as $cardId) {
+        if (!in_array($cardId, $args['cards'])) {
+          throw new \BgaVisibleSystemException('Invalid space. Should not happen');
+        }
+      }
+      Globals::setRubyChoice($cards);
+      $deleted = $player->useResource(RUBY, count($cards));
+      Notifications::payResources($player, $deleted, clienttranslate('keeping accumulation spaces full'));
+    }
+
     $this->gamestate->nextState('preparation');
   }
 

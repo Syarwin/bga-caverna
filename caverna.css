@@ -820,6 +820,7 @@ html {
 .action-card-holder {
   width: 150px;
   height: 180px;
+  margin: 2px;
   box-shadow: 2px 2px 6px -1px black;
   border-radius: 10px;
   position: relative;
@@ -840,6 +841,9 @@ html {
     cursor: not-allowed; }
   #ebd-body:not(.help-mode):not(.mobile_version) .action-card-holder.unselectable .action-card {
     filter: grayscale(75%); }
+  .action-card-holder.selected {
+    border: 2px solid #bdff06;
+    margin: 0; }
   .action-card-holder .dwarf-holder {
     position: absolute;
     top: 0;

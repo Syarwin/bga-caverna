@@ -1125,14 +1125,6 @@ define([
         `;
       },
 
-      //////////////////////////
-      //////// UNCHECKED ////////////
-      //////////////////////////
-
-      onEnteringStateFencing(args) {
-        this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actFence', [zones]));
-      },
-
       onEnteringStateStables(args) {
         this.promptPlayerBoardZones(args.zones, 1, args.max, (zones) => this.takeAtomicAction('actStables', [zones]));
       },
@@ -1166,26 +1158,37 @@ define([
         });
       },
 
-      onEnteringStateRenovation(args) {
-        if (args.combinations.length == 1) {
-          return;
-        }
+      onEnteringStateRubyChoice(args) {
+        let selectedCards = [];
+        args.cards.forEach((cardId) => {
+          this.onClick(cardId, () => {
+            if (selectedCards.includes(cardId) || selectedCards.length >= args.rubies) return;
 
-        args.combinations.forEach((cost, i) => {
-          // Compute desc
-          let log = '',
-            arg = {};
-          if (cost == 'roomClay') {
-            log = _('Renovate to clay');
-          } else if (cost == 'roomStone') {
-            log = _('Renovate to stone');
-          }
+            selectedCards.push(cardId);
+            $(cardId).classList.add('selected');
+            this.addSecondaryActionButton('btnClear', _('Clear'), () => {
+              selectedCards = [];
+              dojo.query('.selected').removeClass('selected');
+              $('btnClear').remove();
+              $('btnConfirm').remove();
+              this.addPrimaryActionButton('btnConfirm', _("Don't use any ruby"), () =>
+                this.takeAction('actRubyChoice', { cards: JSON.stringify(selectedCards) })
+              );
+            });
 
-          // Add button
-          this.addSecondaryActionButton('btnChoiceRenovate' + i, log, () =>
-            this.takeAtomicAction('actRenovation', [cost])
-          );
+            $('btnConfirm').remove();
+            this.addPrimaryActionButton(
+              'btnConfirm',
+              this.formatStringMeeples(
+                this.format_string(_('Confirm and use ${n} <RUBY>'), { n: selectedCards.length })
+              ),
+              () => this.takeAction('actRubyChoice', { cards: JSON.stringify(selectedCards) })
+            );
+          });
         });
+        this.addPrimaryActionButton('btnConfirm', _("Don't use any ruby"), () =>
+          this.takeAction('actRubyChoice', { cards: JSON.stringify(selectedCards) })
+        );
       },
 
       // Generic call for Atomic Action that encode args as a JSON to be decoded by backend

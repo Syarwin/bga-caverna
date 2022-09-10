@@ -114,6 +114,14 @@ class action_caverna extends APP_GameAction
     self::ajaxResponse();
   }
 
+  public function actRubyChoice()
+  {
+    self::setAjaxMode();
+    $cards = self::getArg('cards', AT_json, true);
+    $this->validateJSonAlphaNum($cards, 'cards');
+    $this->game->actRubyChoice($cards);
+    self::ajaxResponse();
+  }
 
   //////////////////
   ///// UTILS  /////

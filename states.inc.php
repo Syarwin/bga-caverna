@@ -100,14 +100,14 @@ $machinestates = [
   ST_IMPOSSIBLE_MANDATORY_ACTION => [
     'name' => 'impossibleAction',
     'description' => clienttranslate(
-      '${actplayer} can\'t take the mandatory action and must restart his turn or exchange/cook'
+      '${actplayer} can\'t take the mandatory action and must restart his turn or exchange/use ruby'
     ),
     'descriptionmyturn' => clienttranslate(
-      '${you} can\'t take the mandatory action. Restart your turn or exchange/cook to make it possible'
+      '${you} can\'t take the mandatory action. Restart your turn or exchange/use ruby to make it possible'
     ),
     'type' => 'activeplayer',
     'args' => 'argsImpossibleAction',
-    'possibleactions' => ['actRestart'],
+    'possibleactions' => ['actRestart', 'actUseRuby'],
   ],
 
   ST_PREPARATION => [
