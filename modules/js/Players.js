@@ -110,7 +110,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           `caverna-pannel-${player.id}`,
           (this.settings.resourceBarLocation == 0 ? 'overall_player_board_' : 'resources-bar-holder-') + player.id
         );
-        dojo.toggleClass('resources-bar-holder-' + player.id, 'active', this.prefs[PLAYER_RESOURCES].value == 1);
       });
       this.updateDwarfsPlayerCounters();
     },

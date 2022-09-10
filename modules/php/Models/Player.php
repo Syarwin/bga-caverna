@@ -229,7 +229,7 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function hasRuby()
   {
-    return $this->countReserveResource(RUBY) != 0;
+    return $this->countReserveResource(RUBY) > 0;
   }
 
   public function createResourceInReserve($type, $nbr = 1)

@@ -90,7 +90,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         // Move the building if not correct container
         let o = $(`building-${building.id}`);
         let container = this.getBuildingContainer(building);
-        console.log(building, container);
+
         if (o.parentNode != $(container)) {
           dojo.place(o, container, 'first');
         }

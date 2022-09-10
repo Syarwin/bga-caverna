@@ -210,7 +210,19 @@ trait HarvestTrait
 
     // If player has enough to breed, creation of a baby in reserve
     if ($player->canBreed() || $player->hasRuby()) {
-      Engine::setup(['action' => BREED, 'args' => ['trigger' => HARVEST]], ['order' => 'harvestBreed']);
+      Engine::setup(
+        [
+          'type' => \NODE_PARALLEL,
+          'childs' => [
+            [
+              'action' => BREED,
+              'args' => ['trigger' => HARVEST],
+              'optional' => !$player->canBreed(),
+            ],
+          ],
+        ],
+        ['order' => 'harvestBreed']
+      );
       Engine::proceed();
     } else {
       $this->nextPlayerCustomOrder('harvestBreed');

@@ -48,6 +48,12 @@ $game_options = [
       ],
     ],
     'default' => OPTION_REVEAL_START,
+    'displaycondition' => [
+      [
+        'type' => 'minplayers',
+        'value' => [2, 3, 4, 5, 6, 7],
+      ],
+    ],
   ],
 
   OPTION_SCORING => [
@@ -85,18 +91,19 @@ $game_preferences = [
     ],
   ],
 
-  OPTION_COLORBLIND => [
-    'name' => totranslate('Colorblind-friendly farmers'),
-    'needReload' => false,
-    'values' => [
-      OPTION_COLORBLIND_OFF => ['name' => totranslate('Disabled')],
-      OPTION_COLORBLIND_ON => ['name' => totranslate('Enabled')],
-    ],
-  ],
+  // OPTION_COLORBLIND => [
+  //   'name' => totranslate('Colorblind-friendly farmers'),
+  //   'needReload' => false,
+  //   'values' => [
+  //     OPTION_COLORBLIND_OFF => ['name' => totranslate('Disabled')],
+  //     OPTION_COLORBLIND_ON => ['name' => totranslate('Enabled')],
+  //   ],
+  // ],
 
   OPTION_FONT_DOMINICAN => [
     'name' => totranslate('Text font'),
     'needReload' => false,
+    'attribute' => 'textFont',
     'values' => [
       OPTION_FONT_DOMINICAN_ON => ['name' => totranslate('Dominican (original)')],
       OPTION_FONT_DOMINICAN_OFF => ['name' => totranslate('Roboto (BGA default)')],
@@ -110,34 +117,6 @@ $game_preferences = [
       OPTION_SMART_REORGANIZE_ON => ['name' => totranslate('Enabled without confirm')],
       OPTION_SMART_REORGANIZE_OFF => ['name' => totranslate('Always manual')],
       OPTION_SMART_REORGANIZE_CONFIRM => ['name' => totranslate('Enabled with confirm')],
-    ],
-  ],
-
-  OPTION_PLAYER_RESOURCES => [
-    'name' => totranslate('Resources bar location'),
-    'needReload' => false,
-    'values' => [
-      OPTION_PLAYER_RESOURCES_PANNEL => ['name' => totranslate('In the top right pannels')],
-      OPTION_PLAYER_RESOURCES_BOARD => ['name' => totranslate('Next to the player boards')],
-    ],
-  ],
-
-  OPTION_PLAYER_BOARDS => [
-    'name' => totranslate('Other player boards'),
-    'needReload' => false,
-    'values' => [
-      OPTION_PLAYER_BOARDS_BOTTOM => ['name' => totranslate('Under the central board')],
-      OPTION_PLAYER_BOARDS_RIGHT => ['name' => totranslate('Next to the central board')],
-    ],
-  ],
-
-  OPTION_DISPLAY_CARDS => [
-    'name' => totranslate('Display hand cards'),
-    'needReload' => false,
-    'values' => [
-      OPTION_DISPLAY_CARDS_MODAL => ['name' => totranslate('In a modal window')],
-      OPTION_DISPLAY_CARDS_BOARD => ['name' => totranslate('Under the board')],
-      OPTION_DISPLAY_CARDS_BOTTOM => ['name' => totranslate('Bottom of the screen')],
     ],
   ],
 ];

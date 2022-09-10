@@ -136,9 +136,13 @@ define([
         this._modalContainerOpen = null;
 
         this._settingsConfig = {
+          confirmMode: { type: 'pref', prefId: 103 },
+          autoPay: { type: 'pref', prefId: 102 },
+          textFont: { type: 'pref', prefId: 105, attribute: 'textFont' },
+
           dwarfAsset: {
             default: 1,
-            name: _('Dwarf asset'),
+            name: _('Dwarfs asset'),
             attribute: 'dwarf',
             type: 'select',
             values: {
@@ -153,8 +157,8 @@ define([
             attribute: 'action-name',
             type: 'select',
             values: {
-              0: _('Hide'),
-              1: _('Display'),
+              0: _('Hidden'),
+              1: _('Displayed'),
             },
           },
           actionBoardColumns: {
@@ -216,7 +220,6 @@ define([
               1: _('Next to the player board'),
             },
           },
-          confirmMode: { type: 'pref', prefId: 103 },
         };
       },
 

@@ -13,6 +13,7 @@ class Breed extends \CAV\Models\Action
   public function __construct($row)
   {
     parent::__construct($row);
+    $this->description = clienttranslate('Breed');
   }
 
   public function getState()

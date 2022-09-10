@@ -38,7 +38,7 @@ html {
   --caverna-font-family: 'Dominican';
 }
 
-.disable-dominican {
+[data-textfont='1'] {
   --caverna-font-family: Roboto, Arial, sans-serif;
 }
 
