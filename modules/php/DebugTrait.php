@@ -25,7 +25,7 @@ trait DebugTrait
   {
     // throw new feException(print_r(Meeples::getRoomsToBuild(2305526)));
     // throw new feException(print_r(ActionCards::getInLocation('turn%', 1)));
-    // ActionCards::accumulate();
+    ActionCards::accumulate();
     // Meeples::createResource('wood', 'reserve', self::getCurrentPlayerId(), 0, 0, 5);
     // Engine::insertAsChild(['action' => 'toto']);
     // throw new feException(Fences::hasAvailable(self::getCurrentPlayerId()));
@@ -40,9 +40,9 @@ trait DebugTrait
     // $seed = Globals::getGameSeed();
     // var_dump($seed);
 
-    $sql = "SELECT * FROM `global_variables` WHERE `name` = 'engine' AND `value` LIKE '%\"trigger\": 3%' ";
-    $row = self::getUniqueValueFromDB($sql);
-    var_dump($row);
+    // $sql = "SELECT * FROM `global_variables` WHERE `name` = 'engine' AND `value` LIKE '%\"trigger\": 3%' ";
+    // $row = self::getUniqueValueFromDB($sql);
+    // var_dump($row);
   }
 
   function vt()

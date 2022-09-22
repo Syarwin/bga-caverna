@@ -182,6 +182,11 @@ $stats_type = [
       'name' => totranslate('Amount of cattles earned from the board'),
       'type' => 'int',
     ],
+    'boardDonkey' => [
+      'id' => STAT_DONKEY_FROM_BOARD,
+      'name' => totranslate('Amount of donkeys earned from the board'),
+      'type' => 'int',
+    ],
 
     'cardsWood' => [
       'id' => STAT_WOOD_FROM_CARDS,
@@ -231,6 +236,11 @@ $stats_type = [
     'cardsCattle' => [
       'id' => STAT_CATTLE_FROM_CARDS,
       'name' => totranslate('Amount of cattles earned from cards'),
+      'type' => 'int',
+    ],
+    'cardsDonkey' => [
+      'id' => STAT_DONKEY_FROM_CARDS,
+      'name' => totranslate('Amount of donkeys earned from cards'),
       'type' => 'int',
     ],
     'cardsBegging' => [
@@ -283,6 +293,11 @@ $stats_type = [
       'name' => totranslate('Number of cattle converted in food'),
       'type' => 'int',
     ],
+    'convertedDonkey' => [
+      'id' => STAT_DONKEY_CONVERTED,
+      'name' => totranslate('Number of donkey converted in food'),
+      'type' => 'int',
+    ],
     'convertedStone' => [
       'id' => STAT_STONE_CONVERTED,
       'name' => totranslate('Number of stone converted in food'),
@@ -332,6 +347,11 @@ $stats_type = [
     'cattleToFood' => [
       'id' => STAT_FOOD_FROM_CATTLE,
       'name' => totranslate('Number of food from cattle'),
+      'type' => 'int',
+    ],
+    'donkeyToFood' => [
+      'id' => STAT_FOOD_FROM_DONKEY,
+      'name' => totranslate('Number of food from donkey'),
       'type' => 'int',
     ],
     'stoneToFood' => [

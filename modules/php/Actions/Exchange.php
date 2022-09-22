@@ -140,7 +140,7 @@ class Exchange extends \CAV\Models\Action
       }
 
       $exchanges = array_filter($args['exchanges'], function ($exchange) use ($type, $amount) {
-        return array_keys($exchange['from']) == [$type] && $exchange['max'] >= $amount;
+        return array_keys($exchange['from']) == [$type] && ($exchange['max'] ?? 99) >= $amount;
       });
       $res[$type] = $exchanges;
     }
