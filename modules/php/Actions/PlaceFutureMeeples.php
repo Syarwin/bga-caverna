@@ -19,7 +19,7 @@ class PlaceFutureMeeples extends \CAV\Models\Action
     return ST_PLACE_FUTURE_MEEPLES;
   }
 
-// TODO: needs exception for "roomStone" and maybe other weird cases
+  // TODO: needs exception for "roomStone" and maybe other weird cases
   public function getDescription($ignoreResources = false)
   {
     $resources = $this->ctx->getArgs()['resources'];
@@ -27,7 +27,7 @@ class PlaceFutureMeeples extends \CAV\Models\Action
 
     foreach ($resources as $resType => $amount) {
       $type = '<' . strtoupper($resType) . '>';
-      $goods = $goods . $type . ", ";
+      $goods = $goods . $type . ', ';
     }
     $goods = substr($goods, 0, -2);
 
@@ -54,6 +54,7 @@ class PlaceFutureMeeples extends \CAV\Models\Action
     $args = $this->ctx->getArgs();
     $resources = $args['resources'];
     $currentTurn = Globals::getTurn();
+    $maxTurn = Players::count() <= 2 ? 11 : 12;
 
     // Compute the turns where we are going to add stuff, if any
     $turns = [];
@@ -64,7 +65,7 @@ class PlaceFutureMeeples extends \CAV\Models\Action
         $turn += $currentTurn;
       }
 
-       if ($turn > $currentTurn && $turn <= 14) {
+      if ($turn > $currentTurn && $turn <= $maxTurn) {
         $turns[] = $turn;
       }
     }
