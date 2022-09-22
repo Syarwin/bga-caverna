@@ -32,6 +32,7 @@ class ActionFamilyLife extends \CAV\Models\ActionCard
       'childs' => [
         [
           'action' => WISHCHILDREN,
+          'args' => ['constraints' => ['freeRoom']],
         ],
         [
           'action' => SOW,

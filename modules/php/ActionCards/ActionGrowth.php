@@ -32,6 +32,7 @@ class ActionGrowth extends \CAV\Models\ActionCard
         ],
         [
           'action' => WISHCHILDREN,
+          'args' => ['constraints' => ['freeRoom']],
         ],
       ],
     ];
