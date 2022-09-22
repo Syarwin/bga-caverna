@@ -99,9 +99,9 @@ class ActionCard extends \CAV\Helpers\DB_Model
   {
     $ids = [];
     if ($this->hasAccumulation()) {
+      $n = Meeples::getResourcesOnCard(self::getId())->count();
       foreach ($this->accumulation as $resource => $amount) {
         if (is_array($amount)) {
-          $n = Meeples::getResourcesOnCard(self::getId())->count();
           $amount = $n == 0 ? $amount[0] : $amount[1];
         }
         if ($amount > 0) {
