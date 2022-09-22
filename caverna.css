@@ -1016,10 +1016,10 @@ html {
   .action-card-holder[data-id='ActionFenceBuilding'] .action-card .action-background {
     background-position-x: 0%;
     background-position-y: 33.3333333333%; }
-  .action-card-holder[data-id='ActionForestExploration3'] .action-card .action-background {
+  .action-card-holder[data-id='ActionForestExploration'] .action-card .action-background {
     background-position-x: 16.6666666667%;
     background-position-y: 33.3333333333%; }
-  .action-card-holder[data-id='ActionForestExploration'] .action-card .action-background {
+  .action-card-holder[data-id='ActionForestExploration4'] .action-card .action-background {
     background-position-x: 33.3333333333%;
     background-position-y: 33.3333333333%; }
   .action-card-holder[data-id='ActionHardwareRental6'] .action-card .action-background {
@@ -1605,7 +1605,7 @@ html {
   .meeple-dwarf[data-color='ff0000'], .player-ff0000 .meeple-dwarf, .meeple-stable[data-color='ff0000'], .player-ff0000 .meeple-stable {
     background-position-x: 0%; }
   .meeple-dwarf[data-color='008000'], .player-008000 .meeple-dwarf, .meeple-stable[data-color='008000'], .player-008000 .meeple-stable {
-    background-position-x: 100%/7; }
+    background-position-x: 14.2857142857%; }
   .meeple-dwarf[data-color='72c3b1'], .player-72c3b1 .meeple-dwarf, .meeple-stable[data-color='72c3b1'], .player-72c3b1 .meeple-stable {
     background-position-x: 28.5714285714%; }
   .meeple-dwarf[data-color='982fff'], .player-982fff .meeple-dwarf, .meeple-stable[data-color='982fff'], .player-982fff .meeple-stable {

@@ -286,7 +286,7 @@
   }
   &[data-color='008000'],
   .player-008000 & {
-    background-position-x: #{100% / 7};
+    background-position-x: #{1 * 100% / 7};
   }
   &[data-color='72c3b1'],
   .player-72c3b1 & {
