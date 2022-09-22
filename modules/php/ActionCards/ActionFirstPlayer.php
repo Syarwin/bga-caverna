@@ -10,7 +10,7 @@ class ActionFirstPlayer extends \CAV\Models\ActionCard
     $this->name = clienttranslate('First Player');
     $this->tooltip = [
       clienttranslate(
-        'Take the Starting player token and all the Food that has accumulated on this Action space. (1 Food will be added to this Action space every round unless there is no Stone on it. Then 2 Stone will be added to it instead.)'
+        'Take the Starting player token and all the Food that has accumulated on this Action space. (1 Food will be added to this Action space every round)'
       ),
       clienttranslate('Additionally, take 2 Ore from the general supply.'),
     ];
