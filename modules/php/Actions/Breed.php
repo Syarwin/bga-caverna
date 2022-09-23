@@ -65,13 +65,13 @@ class Breed extends \CAV\Models\Action
     $args = $this->argsBreed();
     $player = Players::getActive();
     if ($this->isAutomatic()) {
-      $this->actBreed($args['breeds']);
+      $this->actBreed($args['breeds'], true);
     }
   }
 
-  public function actBreed($breeds)
+  public function actBreed($breeds, $isAuto = false)
   {
-    self::checkAction('actBreed');
+    self::checkAction('actBreed', $isAuto);
 
     $player = Players::getCurrent();
     $args = $this->argsBreed();
