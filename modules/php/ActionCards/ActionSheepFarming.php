@@ -24,6 +24,7 @@ class ActionSheepFarming extends \CAV\Models\ActionCard
     $this->stage = 1;
     $this->flow = [
       'type' => NODE_THEN_OR,
+      'optional' => true,
       'childs' => [
         [
           'type' => NODE_OR,
