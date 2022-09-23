@@ -2,6 +2,7 @@
   width: calc(var(--cavernaBuildingScale) * 200px);
   height: calc(var(--cavernaBuildingScale) * 200px);
   position: relative;
+  z-index: 1;
 
   .building-resizable {
     transform: scale(var(--cavernaBuildingScale));
