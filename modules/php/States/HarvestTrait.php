@@ -140,7 +140,7 @@ trait HarvestTrait
 
     // Exchange node
     $costs = $player->getHarvestCost();
-    Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs['costs']);
+    Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs);
     if (Actions::isDoable(EXCHANGE, [], $player)) {
       // Do we have to enter pay ?
       $pref = $player->getPref(OPTION_AUTOPAY_HARVEST);
