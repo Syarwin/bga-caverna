@@ -138,7 +138,7 @@ class Building extends \CAV\Helpers\DB_Model
     // Apply card effects
     $args['card'] = $this;
     $args['costs'] = $costs;
-    Buildings::applyEffects($player, 'ComputeBuildingCosts', $args);
+    Buildings::applyEffects($player, 'ComputeCostsFurnish', $args);
     return $args['costs'];
   }
 
