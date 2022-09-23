@@ -24,10 +24,6 @@ former, you may then carry out a Family growth action. (You may not grow your fa
           'type' => NODE_SEQ,
           'childs' => [
             [
-              'action' => WISHCHILDREN,
-              'args' => ['constraints' => ['freeRoom']],
-            ],
-            [
               'action' => FURNISH,
               'args' => [
                 'types' => [
@@ -39,6 +35,11 @@ former, you may then carry out a Family growth action. (You may not grow your fa
                   'D_SimpleDwelling2',
                 ],
               ],
+            ],
+            [
+              'action' => WISHCHILDREN,
+              'optional' => true,
+              'args' => ['constraints' => ['freeRoom']],
             ],
           ],
         ],
