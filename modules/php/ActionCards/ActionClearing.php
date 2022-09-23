@@ -24,7 +24,7 @@ class ActionClearing extends \CAV\Models\ActionCard
         'The first tile that you place in the game must be placed adjacent to the cave entrance. Subsequent tiles must be placed adjacent to other Fields, Meadows or Pastures.'
       ),
     ];
-    $this->players = [1, 2, 3];
+    $this->players = [2, 3];
 
     $this->accumulation = [WOOD => 1];
     $this->flow = [

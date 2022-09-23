@@ -9,7 +9,7 @@ class ActionSupplies extends \CAV\Models\ActionCard
     $this->id = 'ActionSupplies';
     $this->name = clienttranslate('Supplies');
     $this->tooltip = [clienttranslate('Take 1 Wood, 1 Stone, 1 Ore, 1 Food and 2 Gold from the general supply.')];
-    $this->players = [1, 2, 3];
+    $this->players = [2, 3];
 
     $this->flow = [
       'action' => GAIN,

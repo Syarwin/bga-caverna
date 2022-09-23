@@ -23,7 +23,7 @@ class ActionDriftMining extends \CAV\Models\ActionCard
         'You have to place the twin tile adjacent to an already occupied Mountain space, i.e. you have to extend your cave system.'
       ),
     ];
-    $this->players = [1, 2, 3, 6, 7];
+    $this->players = [2, 3, 6, 7];
 
     $this->accumulation = [STONE => 1];
     $this->flow = [

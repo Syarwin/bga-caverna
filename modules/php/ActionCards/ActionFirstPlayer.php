@@ -14,7 +14,7 @@ class ActionFirstPlayer extends \CAV\Models\ActionCard
       ),
       clienttranslate('Additionally, take 2 Ore from the general supply.'),
     ];
-    $this->players = [1, 2, 3];
+    $this->players = [2, 3];
 
     $this->accumulation = [FOOD => 1];
     $this->flow = [
