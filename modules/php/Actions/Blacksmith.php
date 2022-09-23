@@ -55,7 +55,7 @@ class Blacksmith extends \CAV\Models\Action
       'action' => PAY,
       'args' => [
         'nb' => 1,
-        'costs' => Utils::formatCost([ORE => $force]),
+        'costs' => Utils::formatCost([ORE => $force - ($player->hasPlayedBuilding('G_Blacksmith') ? 2 : 0)]),
         'source' => clienttranslate('forging a weapon'),
       ],
     ]);

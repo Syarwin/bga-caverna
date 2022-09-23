@@ -75,7 +75,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 11,
       'flow' => [
         'action' => FURNISH,
-        'args' => ['types' => ['D_Dwelling'], 'costs' => [STONE => 2, WOOD => 2]],
+        'args' => ['types' => ['D_Dwelling'], 'costs' => [STONE => 2, WOOD => 2, 'max' => 1]],
       ],
     ],
     'field' => [

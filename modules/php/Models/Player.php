@@ -307,7 +307,6 @@ class Player extends \CAV\Helpers\DB_Model
   public function getPossibleExchanges($trigger = ANYTIME, $removeAnytime = false)
   {
     $exchanges = [
-      Utils::formatExchange([DOG => [FOOD => 0]]),
       [
         'from' => [GOLD => 2],
         'to' => [FOOD => 1],
