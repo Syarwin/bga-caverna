@@ -83,7 +83,7 @@ class Furnish extends \CAV\Models\Action
     Notifications::furnish($player, $building);
 
     // Trigger effects
-    $building->actFurnish($player, $zone['x'], $zone['y']);
+    $building->actFurnish($player, $zone['x'], $zone['y'], $this->getCtxArgs() ?? []);
 
     // Listeners for cards
     $eventData = [
