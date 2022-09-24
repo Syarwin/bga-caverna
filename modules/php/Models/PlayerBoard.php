@@ -186,7 +186,7 @@ class PlayerBoard
     $this->tiles[] = $tile;
     // Check bonus under the tile
     $bonus = is_null($this->grid[$pos['x']][$pos['y']]) ? $this->getBonus($pos) : null;
-    if($tileType == TILE_RUBY_MINE && ($this->grid[$pos['x']][$pos['y']]['type'] ?? null) == \TILE_DEEP_TUNNEL){
+    if ($tileType == TILE_RUBY_MINE && ($this->grid[$pos['x']][$pos['y']]['type'] ?? null) == \TILE_DEEP_TUNNEL) {
       $bonus = [FOOD => 1];
     }
     $this->grid[$pos['x']][$pos['y']] = $tile;
@@ -622,15 +622,9 @@ class PlayerBoard
         (($this->isFree($pos) && !$this->checkExtended($pos)) || !$this->isFree($pos));
     });
 
-    // Not in pastures with already a stable
-    $pastureStables = [];
-    foreach ($this->getPastures() as $pasture) {
-      if (count($pasture['stables']) != 0) {
-        $pastureStables = array_merge($pastureStables, $pasture['nodes']);
-      }
-    }
-    Utils::filter($nodes, function ($pos) use ($pastureStables) {
-      return !in_array($pos, $pastureStables);
+    // Not with already a stable
+    Utils::filter($nodes, function ($pos) {
+      return !$this->containsStable($pos);
     });
 
     // cannot place in a field
@@ -935,7 +929,7 @@ class PlayerBoard
     $otherTile = '';
     // Small pasture
     foreach ($tiles as $tId => $tile) {
-      $asset = explode($tile['asset'], '-')[0];
+      $asset = explode('-', $tile['asset'])[0];
       if ($asset == \TILE_PASTURE) {
         $pasture = [
           'nodes' => [$this->extractPos($tile)],
@@ -983,7 +977,7 @@ class PlayerBoard
         }
       }
       if ($this->containsStable($tile)) {
-        $pasture['stables'] = [['x' => $tile['x'], 'y' => $tile['y']]];
+        $pasture['stables'][] = ['x' => $tile['x'], 'y' => $tile['y']];
       }
       if ($asset == TILE_PASTURE) {
         $this->pastures[] = $pasture;

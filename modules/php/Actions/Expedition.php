@@ -44,7 +44,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 9,
       'flow' => [
         'action' => PLACE_TILE,
-        'tiles' => [TILE_TUNNEL],
+        'args' => ['tiles' => [TILE_TUNNEL]],
       ],
     ],
     'smallPasture' => [

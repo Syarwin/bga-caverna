@@ -17,4 +17,14 @@ class D_MixedDwelling extends \CAV\Models\Building
     $this->cost = [WOOD => 5, STONE => 4];
     $this->vp = 4;
   }
+
+  public function onPlayerComputeDropZones($player, &$args)
+  {
+    $args['zones'][] = [
+      'type' => 'room',
+      'card_id' => $this->type,
+      'capacity' => 2,
+      'locations' => [$this->getPos()],
+    ];
+  }
 }
