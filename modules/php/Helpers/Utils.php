@@ -24,7 +24,7 @@ abstract class Utils extends \APP_DbObject
     self::filter($exchanges, function ($exchange) use ($trigger, $removeAnytime) {
       return ((!isset($exchange['triggers']) || is_null($exchange['triggers'])) &&
         ($trigger == ANYTIME || !$removeAnytime)) ||
-        (is_array($exchange['triggers']) && in_array($trigger, $exchange['triggers']));
+        (is_array($exchange['triggers'] ?? null) && in_array($trigger, $exchange['triggers']));
     });
   }
 

@@ -1,6 +1,7 @@
 <?php
 namespace CAV\Buildings\G;
 use CAV\Core\Helpers;
+use CAV\Helpers\Utils;
 
 class G_Builder extends \CAV\Models\Building
 {
