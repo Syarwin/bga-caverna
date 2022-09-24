@@ -186,7 +186,7 @@ class PlayerBoard
     $this->tiles[] = $tile;
     // Check bonus under the tile
     $bonus = is_null($this->grid[$pos['x']][$pos['y']]) ? $this->getBonus($pos) : null;
-    if($tileType == TILE_RUBY_MINE && ($this->grid[$pos['x']][$pos['y']]['type'] ?? null) == \TILE_DEEP_TUNNEL){
+    if ($tileType == TILE_RUBY_MINE && ($this->grid[$pos['x']][$pos['y']]['type'] ?? null) == \TILE_DEEP_TUNNEL) {
       $bonus = [FOOD => 1];
     }
     $this->grid[$pos['x']][$pos['y']] = $tile;
@@ -935,7 +935,7 @@ class PlayerBoard
     $otherTile = '';
     // Small pasture
     foreach ($tiles as $tId => $tile) {
-      $asset = explode($tile['asset'], '-')[0];
+      $asset = explode('-', $tile['asset'])[0];
       if ($asset == \TILE_PASTURE) {
         $pasture = [
           'nodes' => [$this->extractPos($tile)],
