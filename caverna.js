@@ -123,6 +123,7 @@ define([
           ['silentDestroy', 1],
           ['startHarvest', 3200],
           ['endHarvest', null],
+          ['updateHarvestCosts', 1],
           ['seed', 10],
         ];
 
