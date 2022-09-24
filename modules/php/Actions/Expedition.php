@@ -51,7 +51,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 9,
       'flow' => [
         'action' => PLACE_TILE,
-        'args' => ['tiles' => [TILE_PASTURE], 'cost' => [WOOD => 1]],
+        'args' => ['tiles' => [TILE_PASTURE], 'costs' => [WOOD => 1]],
       ],
     ],
     'cattle' => ['lvl' => 10, 'flow' => ['action' => GAIN, 'args' => [\CATTLE => 1]]],
@@ -59,7 +59,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 10,
       'flow' => [
         'action' => PLACE_TILE,
-        'args' => ['tiles' => [TILE_LARGE_PASTURE], 'cost' => [WOOD => 2]],
+        'args' => ['tiles' => [TILE_LARGE_PASTURE], 'costs' => [WOOD => 2]],
       ],
     ],
     'meadow' => [
