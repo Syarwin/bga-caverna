@@ -46,7 +46,7 @@ class Player extends \CAV\Helpers\DB_Model
   {
     $data = parent::jsonSerialize();
     $current = $this->id == $currentPlayerId;
-    $data['harvestCost'] = 4; // TODO
+    $data['harvestCost'] = $this->getHarvestFoodCost();
     $data['board'] = $this->board()->getUiData();
 
     return $data;
@@ -177,38 +177,6 @@ class Player extends \CAV\Helpers\DB_Model
     return $dwellings;
   }
 
-  ////////////////////////////////////////////////////////////
-  //  _   _ _   _  ____ _   _ _____ ____ _  _______ ____
-  // | | | | \ | |/ ___| | | | ____/ ___| |/ / ____|  _ \
-  // | | | |  \| | |   | |_| |  _|| |   | ' /|  _| | | | |
-  // | |_| | |\  | |___|  _  | |__| |___| . \| |___| |_| |
-  //  \___/|_| \_|\____|_| |_|_____\____|_|\_\_____|____/
-  //
-  ////////////////////////////////////////////////////////////
-
-  // public function jsonSerialize($currentPlayerId = null)
-  // {
-  //   $current = $this->id == $currentPlayerId;
-  //   $data = [
-  //     'id' => $this->id,
-  //     'eliminated' => $this->eliminated,
-  //     'no' => $this->no,
-  //     'name' => $this->getName(),
-  //     'color' => $this->color,
-  //     'score' => $this->score,
-  //     'resources' => [],
-  //     'board' => $this->board()->getUiData(),
-  //     'hand' => $current ? $this->getHand()->ui() : [],
-  //     'harvestCost' => $this->getHarvestCost(),
-  //   ];
-  //
-  //   foreach (RESOURCES as $resource) {
-  //     $data['resources'][$resource] = $this->countReserveResource($resource);
-  //   }
-  //
-  //   return $data;
-  // }
-
   public function countReserveAndGrowingResource($type)
   {
     return $this->countReserveResource($type) +
@@ -289,20 +257,6 @@ class Player extends \CAV\Helpers\DB_Model
   {
     return Meeples::getReserveResource($this->id, $type)->first();
   }
-
-  // public function canCook()
-  // {
-  //   return $this->getPlayedBuildings()->reduce(function ($carry, $card) {
-  //     return $carry || $card->canCook();
-  //   }, false);
-  // }
-  //
-  // public function canBake()
-  // {
-  //   return $this->getPlayedBuildings()->reduce(function ($carry, $card) {
-  //     return $carry || $card->canBake();
-  //   }, false);
-  // }
 
   public function getPossibleExchanges($trigger = ANYTIME, $removeAnytime = false)
   {
@@ -578,19 +532,6 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getHarvestCost()
   {
-    // $costs = [
-    //   'nb' => $this->countDwarfs(),
-    //   'costs' => [
-    //     'trades' => [['max' => $this->countDwarfs(ADULT), 'nb' => 1, FOOD => Globals::getHarvestCost()]],
-    //   ],
-    //   'source' => clienttranslate('Harvest'),
-    //   'harvest' => true,
-    // ];
-    //
-    // if ($this->countDwarfs(CHILD) != 0) {
-    //   Utils::addCost($costs, ['max' => $this->countDwarfs(CHILD), 'nb' => 1, FOOD => 1]);
-    // }
-
     $costs = Utils::formatFee([FOOD => $this->getHarvestFoodCost()]);
     return $costs;
   }

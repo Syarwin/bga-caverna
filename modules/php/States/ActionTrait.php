@@ -201,7 +201,7 @@ trait ActionTrait
         [
           'action' => PAY,
           'args' => [
-            'costs' => Utils::formatCost([RUBY => 1]),
+            'costs' => Utils::formatCost($cost),
             'nb' => 1,
             'source' => clienttranslate('ruby conversion'),
           ],

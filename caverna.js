@@ -123,6 +123,7 @@ define([
           ['silentDestroy', 1],
           ['startHarvest', 3200],
           ['endHarvest', null],
+          ['updateHarvestCosts', 1],
           ['seed', 10],
         ];
 
@@ -303,7 +304,7 @@ define([
       },
 
       updateRoundCounter() {
-        let val = Math.min(5, this.gamedatas.round);
+        let val = parseInt(this.gamedatas.round);
         this._roundCounter.toValue(val);
         $('ebd-body').dataset.round = val;
       },
