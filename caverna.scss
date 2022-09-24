@@ -13,7 +13,11 @@
  *
  */
 
-html {
+html[data-background='0'] {
+  background-image: url('img/background_dark.jpg');
+}
+
+html[data-background='1'] {
   background-image: url('img/background.jpg');
 }
 

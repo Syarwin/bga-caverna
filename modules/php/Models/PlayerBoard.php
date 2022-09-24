@@ -306,7 +306,7 @@ class PlayerBoard
       // Add all the unaccomodated animals
       if ($id === 'unaccomodated') {
         foreach ($zone['meeples'] as $meeple) {
-          if ($meeple['type'] != DOG) {
+          if ($meeple['type'] != DOG || $meeple['location'] != 'reserve') {
             $animals[] = $meeple;
           }
         }

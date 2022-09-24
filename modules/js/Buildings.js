@@ -209,6 +209,22 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               building_name: _(building.name),
             });
 
+      let doneCallback =
+        notif == null
+          ? () => {}
+          : () => {
+              dialog.destroy();
+
+              let config = {};
+              let o = $(`building-${building.id}`);
+              if (!this.isFastMode() && !isVisible(o)) {
+                config.from = $(`floating-building-buttons`);
+              }
+              this.slide(o, this.getBuildingContainer(building), config).then(() =>
+                this.notifqueue.setSynchronousDuration(10)
+              );
+            };
+
       let dialog = new customgame.modal('buildingDetail' + building.id, {
         class: 'cavernaBuilding_popin',
         closeIcon: 'fa-times',
@@ -218,6 +234,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         scale: 0.8,
         title: title,
         breakpoint: 600,
+        onHide: doneCallback,
       });
 
       if (selectable) {
@@ -234,19 +251,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this.addPrimaryActionButton(
           `btnDoneReadingDetails`,
           _('Ok'),
-          () => {
-            dialog.destroy();
-
-            let config = {};
-            let o = $(`building-${building.id}`);
-            if (!this.isFastMode() && !isVisible(o)) {
-              config.from = $(`floating-building-buttons`);
-            }
-            this.slide(o, this.getBuildingContainer(building), config).then(() =>
-              this.notifqueue.setSynchronousDuration(10)
-            );
-          },
-          `building-${building.id}-details-footer`
+          `building-${building.id}-details-footer`,
+          doneCallback
         );
       }
     },
