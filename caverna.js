@@ -303,7 +303,7 @@ define([
       },
 
       updateRoundCounter() {
-        let val = Math.min(5, this.gamedatas.round);
+        let val = parseInt(this.gamedatas.round);
         this._roundCounter.toValue(val);
         $('ebd-body').dataset.round = val;
       },
