@@ -622,15 +622,9 @@ class PlayerBoard
         (($this->isFree($pos) && !$this->checkExtended($pos)) || !$this->isFree($pos));
     });
 
-    // Not in pastures with already a stable
-    $pastureStables = [];
-    foreach ($this->getPastures() as $pasture) {
-      if (count($pasture['stables']) != 0) {
-        $pastureStables = array_merge($pastureStables, $pasture['nodes']);
-      }
-    }
-    Utils::filter($nodes, function ($pos) use ($pastureStables) {
-      return !in_array($pos, $pastureStables);
+    // Not with already a stable
+    Utils::filter($nodes, function ($pos) {
+      return !$this->containsStable($pos);
     });
 
     // cannot place in a field
@@ -983,7 +977,7 @@ class PlayerBoard
         }
       }
       if ($this->containsStable($tile)) {
-        $pasture['stables'] = [['x' => $tile['x'], 'y' => $tile['y']]];
+        $pasture['stables'][] = ['x' => $tile['x'], 'y' => $tile['y']];
       }
       if ($asset == TILE_PASTURE) {
         $this->pastures[] = $pasture;
