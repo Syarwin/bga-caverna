@@ -186,6 +186,9 @@ class PlayerBoard
     $this->tiles[] = $tile;
     // Check bonus under the tile
     $bonus = is_null($this->grid[$pos['x']][$pos['y']]) ? $this->getBonus($pos) : null;
+    if($tileType == TILE_RUBY_MINE && ($this->grid[$pos['x']][$pos['y']]['type'] ?? null) == \TILE_DEEP_TUNNEL){
+      $bonus = [FOOD => 1];
+    }
     $this->grid[$pos['x']][$pos['y']] = $tile;
     return [$tile, $bonus];
   }
@@ -712,8 +715,9 @@ class PlayerBoard
       $nodes = $this->getUnbuiltTiles(TILE_TUNNEL);
     } elseif (in_array($tile, [TILE_PASTURE])) {
       $nodes = $this->getUnbuiltTiles(TILE_MEADOW);
+    } elseif (in_array($tile, [TILE_RUBY_MINE])) {
+      $nodes = array_merge($this->getUnbuiltTiles(TILE_TUNNEL), $this->getUnbuiltTiles(TILE_DEEP_TUNNEL));
     } else {
-      return [];
       die('TODO : getPlacableZones : ' . $tile);
     }
 
