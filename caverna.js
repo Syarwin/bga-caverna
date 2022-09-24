@@ -141,6 +141,17 @@ define([
           autoPay: { type: 'pref', prefId: 102 },
           textFont: { type: 'pref', prefId: 105, attribute: 'textFont' },
 
+          background: {
+            default: 0,
+            name: _('Background'),
+            attribute: 'background',
+            type: 'select',
+            values: {
+              0: _('Dark texture'),
+              1: _('Light texture'),
+              2: _('Default BGA'),
+            },
+          },
           dwarfAsset: {
             default: 1,
             name: _('Dwarfs asset'),
