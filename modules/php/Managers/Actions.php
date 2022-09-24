@@ -115,7 +115,7 @@ class Actions
           Game::get()->gamestate->jumpToState(ST_IMPOSSIBLE_MANDATORY_ACTION);
           return;
         } else {
-          throw new \BgaUserException(self::getErrorMessage($actionId));
+          throw new \BgaUserException(self::getErrorMessage($actionId) . ". Active player : " . $player->getId(). ". Debug context : ". \var_export($ctx->toArray(), true));
         }
       } else {
         // Auto pass if optional and not doable
