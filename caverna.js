@@ -142,7 +142,7 @@ define([
           textFont: { type: 'pref', prefId: 105, attribute: 'textFont' },
 
           background: {
-            default: 0,
+            default: 1,
             name: _('Background'),
             attribute: 'background',
             type: 'select',
