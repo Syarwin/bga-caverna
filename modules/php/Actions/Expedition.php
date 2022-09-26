@@ -33,11 +33,7 @@ class Expedition extends \CAV\Models\Action
       'lvl' => 8,
       'flow' => [
         'action' => STABLES,
-        'args' => [
-          'costs' => [
-            'trades' => [[STONE => 1, 'max' => 1]],
-          ],
-        ],
+        'args' => [],
       ],
     ],
     'tunnel' => [

@@ -22,7 +22,7 @@ class Stables extends \CAV\Models\Action
 
   function getCosts($player)
   {
-    $costs = $this->getCtxArgs()['costs'];
+    $costs = $this->getCtxArgs()['costs'] ?? NO_COST;
     $this->checkCostModifiers($costs, $player);
     return $costs;
   }
