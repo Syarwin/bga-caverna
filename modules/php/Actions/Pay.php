@@ -174,10 +174,11 @@ class Pay extends \CAV\Models\Action
   public function getHarvestDescription()
   {
     $player = Players::getActive();
-    // if (!isset($this->getCtxArgs()['costs']['fees'])) {
-    //   throw new \feException(print_r(\debug_print_backtrace()));
-    // }
+
     $cost = $this->getCtxArgs()['costs']['fees'][0];
+    if (isset($this->getCtxArgs()['costs']['trades']) || isset($this->getCtxArgs()['costs']['bonuses'])) {
+      return clienttranslate('Choose resources to feed your family');
+    }
     $begging = 0;
     foreach ($cost as $resource => $amount) {
       if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
