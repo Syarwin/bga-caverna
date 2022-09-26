@@ -24,6 +24,7 @@ class G_SlaughteringCave extends \CAV\Models\Building
       [
         'source' => $this->name,
         'flag' => $this->id,
+        'triggers' => null,
         'from' => [
           \SHEEP => 1,
         ],
@@ -34,6 +35,7 @@ class G_SlaughteringCave extends \CAV\Models\Building
       [
         'source' => $this->name,
         'flag' => $this->id,
+        'triggers' => null,
         'from' => [
           \PIG => 1,
         ],
@@ -44,6 +46,7 @@ class G_SlaughteringCave extends \CAV\Models\Building
       [
         'source' => $this->name,
         'flag' => $this->id,
+        'triggers' => null,
         'from' => [
           \CATTLE => 1,
         ],
@@ -54,6 +57,7 @@ class G_SlaughteringCave extends \CAV\Models\Building
       [
         'source' => $this->name,
         'flag' => $this->id,
+        'triggers' => null,
         'from' => [
           \DONKEY => 1,
         ],
@@ -64,6 +68,7 @@ class G_SlaughteringCave extends \CAV\Models\Building
       [
         'source' => $this->name,
         'flag' => $this->id,
+        'triggers' => null,
         'from' => [
           \DONKEY => 2,
         ],

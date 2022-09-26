@@ -1,6 +1,8 @@
 <?php
 namespace CAV\Buildings\G;
 
+use CAV\Core\Globals;
+
 class G_BreedingCave extends \CAV\Models\Building
 {
   public function __construct($row)
