@@ -1,6 +1,9 @@
 <?php
 namespace CAV\Buildings\D;
 
+use CAV\Core\Notifications;
+use CAV\Managers\Dwarfs;
+
 class D_AddDwelling extends \CAV\Models\Building
 {
   public function __construct($row)
@@ -37,4 +40,14 @@ class D_AddDwelling extends \CAV\Models\Building
   }
 
   // TODO : add a 6th dwarf in reserve
+  public function onBuy($player, $eventData)
+  {
+    $created = Dwarfs::singleCreate([
+      'type' => 'dwarf',
+      'player_id' => $player->getId(),
+      'location' => 'reserve',
+      'nbr' => 1,
+    ]);
+    Notifications::gainDwarf($player, [$created], $this->name);
+  }
 }

@@ -335,6 +335,16 @@ class Notifications
     ]);
   }
 
+  public static function gainDwarf($player, $meeples, $source)
+  {
+    self::notifyAll('gainResources', clienttranslate('${player_name} gains a new dwarf'), [
+      'i18n' => ['source'],
+      'player' => $player,
+      'resources' => $meeples,
+      'source' => $source,
+    ]);
+  }
+
   public static function gainResources($player, $meeples, $cardId = null, $source = null)
   {
     if ($source != null) {
@@ -668,6 +678,7 @@ class Notifications
         PIG => clienttranslate('pig'),
         CATTLE => clienttranslate('cattle'),
         FOOD => clienttranslate('food'),
+        'dwarf' => clienttranslate('dwarf'),
       ];
 
       $data['resource_name'] = $names[$data['resource']];
