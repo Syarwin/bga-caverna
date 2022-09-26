@@ -755,8 +755,23 @@ define([
 
       onEnteringStateBreed(args) {
         if (args.automaticAction) return;
-
         let selected = [];
+
+        if (args.max == 4) {
+          let res = {};
+          args.breeds.forEach((type) => {
+            res[type] = 1;
+            selected.push(type);
+          });
+
+          let msg = this.substranslate(_('Breed ${types}'), { types: this.formatResourceArray(res) });
+          this.addPrimaryActionButton('breedAllButton', msg, () => {
+            this.takeAtomicAction('actBreed', [selected]);
+          });
+
+          return;
+        }
+
         args.breeds.forEach((resource) => {
           this.addPrimaryActionButton(
             resource + '-button',
@@ -1174,7 +1189,7 @@ define([
         let selectedCards = [];
         args.cards.forEach((cardId) => {
           this.onClick(cardId, () => {
-            if (selectedCards.includes(cardId) || selectedCards.length >= args.rubies) return;
+            if (selectedCards.includes(cardId) || selectedCards.length >= args.rubies) return;
 
             selectedCards.push(cardId);
             $(cardId).classList.add('selected');

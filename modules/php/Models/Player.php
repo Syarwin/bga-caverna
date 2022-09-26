@@ -566,7 +566,10 @@ class Player extends \CAV\Helpers\DB_Model
         $reorganize = true; // force confirm of reorganize
       }
       Notifications::breed($this, $meeples, $source);
-      return $reorganize || $this->getAnimals('reserve')->count() > 0;
+
+      $animals = $this->countAnimalsInReserve();
+      $realAnimals = $animals[SHEEP] + $animals[PIG] + $animals[CATTLE] + $animals[DONKEY];
+      return $reorganize || $realAnimals > 0;
     }
     return false;
   }

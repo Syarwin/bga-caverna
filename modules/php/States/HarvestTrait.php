@@ -76,7 +76,7 @@ trait HarvestTrait
     $player = Players::getActive();
     $harvestChoice = Globals::getHarvestChoice();
 
-    if ($harvestChoice != [] && $harvestChoice[$player->getId()] != \FIELD) {
+    if (($harvestChoice[$player->getId()] ?? null) == BREED) {
       $this->nextPlayerCustomOrder('harvestField');
       return;
     }
@@ -200,18 +200,16 @@ trait HarvestTrait
     $player = Players::getActive();
     $harvestChoice = Globals::getHarvestChoice();
 
-    if ($harvestChoice != [] && $harvestChoice[$player->getId()] != \BREED) {
+    if (($harvestChoice[$player->getId()] ?? null) == FIELD) {
       $this->nextPlayerCustomOrder('harvestBreed');
       return;
     }
-
-    // Listen for cards enforcing reorganization on last harvest (eg Organic Farmer)
-    $enforceReorganize = false;
 
     // If player has enough to breed, creation of a baby in reserve
     if ($player->canBreed() || $player->hasRuby()) {
       Engine::setup(
         [
+          'pId' => $player->getId(),
           'type' => \NODE_PARALLEL,
           'childs' => [
             [

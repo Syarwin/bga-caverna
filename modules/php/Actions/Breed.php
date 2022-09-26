@@ -13,8 +13,28 @@ class Breed extends \CAV\Models\Action
   public function __construct($row)
   {
     parent::__construct($row);
-    $this->description = clienttranslate('Breed');
   }
+
+  public function getDescription($ignoreResources = false)
+  {
+    $args = $this->argsBreed();
+    if (count($args['breeds']) > 0) {
+      $res = [];
+      foreach($args['breeds'] as $type){
+        $res[$type] = 1;
+      }
+
+      return [
+        'log' => clienttranslate('Breed ${resources_desc}'),
+        'args' => [
+          'resources_desc' => Utils::resourcesToStr($res),
+        ],
+      ];
+    } else {
+      return clienttranslate('Breed');
+    }
+  }
+
 
   public function getState()
   {
@@ -45,11 +65,12 @@ class Breed extends \CAV\Models\Action
   {
     $player = Players::getActive();
     $args = $this->getCtxArgs();
+    $types = $this->getBreedType($player);
 
     return [
-      'breeds' => $this->getBreedType($player),
+      'breeds' => $types,
       'max' => $args['max'] ?? 4,
-      'descSuffix' => ($args['max'] ?? 4) == 4 ? '' : 'choice',
+      'descSuffix' => ($args['max'] ?? 4) == 4 ? ($player->hasRuby()? 'ruby' : '') : 'choice',
     ];
   }
 
@@ -72,7 +93,6 @@ class Breed extends \CAV\Models\Action
   public function actBreed($breeds, $isAuto = false)
   {
     self::checkAction('actBreed', $isAuto);
-
     $player = Players::getCurrent();
     $args = $this->argsBreed();
     $breeds = array_unique($breeds);
@@ -86,17 +106,18 @@ class Breed extends \CAV\Models\Action
       throw new \BgaVisibleSystemException('Too many animals to breed. Should not happen');
     }
 
-    $created = $player->breed(null, null, $breeds);
-
-    // Inserting leaf REORGANIZE
-    Engine::insertAsChild([
-      'pId' => $player->getId(),
-      'action' => REORGANIZE,
-      'args' => [
-        'trigger' => $this->getCtxArgs()['trigger'] ?? BREED,
-      ],
-    ]);
-    Engine::save();
+    $reorganize = $player->breed(null, null, $breeds);
+    if($reorganize){
+      // Inserting leaf REORGANIZE
+      Engine::insertAsChild([
+        'pId' => $player->getId(),
+        'action' => REORGANIZE,
+        'args' => [
+          'trigger' => $this->getCtxArgs()['trigger'] ?? BREED,
+        ],
+      ]);
+      Engine::save();
+    }
 
     $this->resolveAction();
   }

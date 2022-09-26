@@ -388,7 +388,7 @@ class PlayerBoard
           $this->buildableZones[] = $this->extractPos($tile);
         } elseif (
           $this->player->hasPlayedBuilding('G_WorkRoom') &&
-          (tile['type'] == \TILE_TUNNEL || $tile['type'] == \TILE_DEEP_TUNNEL)
+          ($tile['type'] == \TILE_TUNNEL || $tile['type'] == \TILE_DEEP_TUNNEL)
         ) {
           $this->buildableZones[] = $this->extractPos($tile);
         }
