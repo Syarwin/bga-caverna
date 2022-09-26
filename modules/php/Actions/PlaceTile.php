@@ -171,6 +171,8 @@ class PlaceTile extends \CAV\Models\Action
     ];
     $this->checkAfterListeners($player, $eventData);
 
+    Notifications::updateDropZones($player);
+
     $this->resolveAction();
   }
 }
