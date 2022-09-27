@@ -20,7 +20,7 @@ class Breed extends \CAV\Models\Action
     $args = $this->argsBreed();
     if (count($args['breeds']) > 0) {
       $res = [];
-      foreach($args['breeds'] as $type){
+      foreach ($args['breeds'] as $type) {
         $res[$type] = 1;
       }
 
@@ -34,7 +34,6 @@ class Breed extends \CAV\Models\Action
       return clienttranslate('Breed');
     }
   }
-
 
   public function getState()
   {
@@ -70,7 +69,7 @@ class Breed extends \CAV\Models\Action
     return [
       'breeds' => $types,
       'max' => $args['max'] ?? 4,
-      'descSuffix' => ($args['max'] ?? 4) == 4 ? ($player->hasRuby()? 'ruby' : '') : 'choice',
+      'descSuffix' => ($args['max'] ?? 4) == 4 ? ($player->hasRuby() ? 'ruby' : '') : 'choice',
     ];
   }
 
@@ -78,7 +77,7 @@ class Breed extends \CAV\Models\Action
   {
     $player = $player ?? Players::getActive();
     $args = $this->argsBreed();
-    return count($args['breeds']) == 4 || (!$player->hasRuby() && count($args['breeds']) <= $args['max']);
+    return (!$player->hasRuby() || count($args['breeds']) == 4) && count($args['breeds']) <= $args['max'];
   }
 
   public function stBreed()
@@ -107,7 +106,7 @@ class Breed extends \CAV\Models\Action
     }
 
     $reorganize = $player->breed(null, null, $breeds);
-    if($reorganize){
+    if ($reorganize) {
       // Inserting leaf REORGANIZE
       Engine::insertAsChild([
         'pId' => $player->getId(),
