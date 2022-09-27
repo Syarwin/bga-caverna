@@ -1741,6 +1741,7 @@ html[data-background='1'] {
     margin-left: 1px;
     background-image: url("img/helmet.svg");
     background-size: 100% auto;
+    background-position: top center;
     display: flex;
     justify-content: center;
     align-items: end;
@@ -2052,7 +2053,8 @@ html[data-background='1'] {
       .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource {
         flex-basis: 33%; }
       .player-board .caverna-player-pannel .player-panel-personal-resources .resource-stable {
-        margin-top: 8px; }
+        margin-top: 8px;
+        flex-basis: auto; }
   .colorblind .player-board .caverna-player-pannel .meeple-dwarf_icon {
     background-image: url("img/dwarfs_colorblind.png"); }
 
@@ -2607,6 +2609,7 @@ html[data-background='1'] {
 .cavernaBuilding_popin_container .cavernaBuilding_popin_underlay {
   background: black !important; }
 .cavernaBuilding_popin_container .cavernaBuilding_popin {
+  position: fixed;
   width: 600px;
   --cavernaBuildingScale: 1; }
   .cavernaBuilding_popin_container .cavernaBuilding_popin .building-detail {

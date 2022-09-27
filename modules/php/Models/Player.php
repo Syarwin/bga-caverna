@@ -505,7 +505,7 @@ class Player extends \CAV\Helpers\DB_Model
   public function getDwellings()
   {
     return Buildings::getOfPlayer($this->id)->filter(function ($building) {
-      return $building->isDwelling();
+      return $building->getDwelling() > 0;
     });
   }
 

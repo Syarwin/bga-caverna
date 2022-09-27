@@ -362,6 +362,7 @@
     margin-left: 1px;
     background-image: url('img/helmet.svg');
     background-size: 100% auto;
+    background-position: top center;
     display: flex;
     justify-content: center;
     align-items: end;
@@ -414,7 +415,7 @@
   width: 0.4em;
   height: 0.82em;
   font-size: 44px;
-  background-image: url("img/meeples.png");
+  background-image: url('img/meeples.png');
   background-repeat: no-repeat;
   background-position: 0% 0%;
   background-size: 700.429%;

@@ -195,6 +195,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     showBuildingDetails(building, notif = null) {
+      this.loadSaveBuilding(building);
       let selectable = this._selectableBuildings.includes(building.id);
 
       let footer = '';
@@ -220,10 +221,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               if (!this.isFastMode() && !isVisible(o)) {
                 config.from = $(`floating-building-buttons`);
               }
-              this.slide(o, this.getBuildingContainer(building), config);
-              // .then(() =>
-              //   this.notifqueue.setSynchronousDuration(10)
-              // );
+              this.slide(o, this.getBuildingContainer(building), config).then(() =>
+                this.notifqueue.setSynchronousDuration(10)
+              );
             };
 
       let dialog = new customgame.modal('buildingDetail' + building.id, {
@@ -235,7 +235,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         scale: 0.8,
         title: title,
         breakpoint: 600,
-        onHide: doneCallback,
+        onClose: doneCallback,
       });
 
       if (selectable) {
@@ -252,8 +252,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this.addPrimaryActionButton(
           `btnDoneReadingDetails`,
           _('Ok'),
-          `building-${building.id}-details-footer`,
-          doneCallback
+          doneCallback,
+          `building-${building.id}-details-footer`
         );
       }
     },
@@ -295,7 +295,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         });
       } else {
         this.showBuildingDetails(building, n);
-        this.notifqueue.setSynchronousDuration(1000);
       }
       return null;
     },

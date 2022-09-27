@@ -418,6 +418,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     notif_growChildren(n) {
       debug('Notif: growing children', n);
       n.args.ids.forEach((mId) => dojo.removeClass('meeple-' + mId, 'child'));
+      this.updateDwarfsPlayerCounters();
     },
 
     /**

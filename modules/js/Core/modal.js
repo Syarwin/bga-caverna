@@ -56,6 +56,7 @@ define(['dojo', 'dojo/_base/declare', 'dojo/fx', 'dojox/fx/ext-dojo/complex'], f
 
     onShow: null,
     onHide: null,
+    onClose: null,
 
     statusElt: null, // If specified, will add/remove "opened" class on this element
 
@@ -378,6 +379,10 @@ define(['dojo', 'dojo/_base/declare', 'dojo/fx', 'dojox/fx/ext-dojo/complex'], f
 
       if (this.statusElt !== null) {
         dojo.removeClass(this.statusElt, 'opened');
+      }
+
+      if (this.onClose !== null) {
+        this.onClose();
       }
     },
   });
