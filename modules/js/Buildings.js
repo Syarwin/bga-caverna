@@ -220,9 +220,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               if (!this.isFastMode() && !isVisible(o)) {
                 config.from = $(`floating-building-buttons`);
               }
-              this.slide(o, this.getBuildingContainer(building), config).then(() =>
-                this.notifqueue.setSynchronousDuration(10)
-              );
+              this.slide(o, this.getBuildingContainer(building), config);
+              // .then(() =>
+              //   this.notifqueue.setSynchronousDuration(10)
+              // );
             };
 
       let dialog = new customgame.modal('buildingDetail' + building.id, {
@@ -294,6 +295,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         });
       } else {
         this.showBuildingDetails(building, n);
+        this.notifqueue.setSynchronousDuration(1000);
       }
       return null;
     },
