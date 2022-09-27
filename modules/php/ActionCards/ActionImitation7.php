@@ -38,6 +38,12 @@ class ActionImitation7 extends \CAV\Models\ActionCard
 
   public function getDesc()
   {
-    return ['2 <FOOD>'];
+    $cost = 2;
+    return [
+      [
+        'log' => clienttranslate('Pay ${n}<FOOD> to use an action space occupied by one of your opponent'),
+        'args' => ['n' => $cost]
+      ]
+    ];
   }
 }

@@ -8,6 +8,7 @@ class ActionGrowth extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionGrowth';
     $this->name = clienttranslate('Growth');
+    $this->desc = [clienttranslate("Either"), clienttranslate('or')];
     $this->tooltip = [
       clienttranslate('Take 1 Wood, 1 Stone, 1 Ore, 1 Food and 2 Gold from the general supply.'),
       clienttranslate('Alternatively, carry out a Family growth action.'),

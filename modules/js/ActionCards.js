@@ -107,7 +107,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     formatCardDesc(desc) {
       return desc
-        .map((s) => _(s))
+        .map((s) => this.translate(s))
         .map((s) => s.replace(/__([^_]+)__/g, '<span class="action-card-name-reference">$1</span>'))
         .map((s) => '<div>' + this.formatStringMeeples(s) + '</div>')
         .join('');
