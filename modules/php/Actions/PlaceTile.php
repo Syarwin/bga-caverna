@@ -173,6 +173,6 @@ class PlaceTile extends \CAV\Models\Action
 
     Notifications::updateDropZones($player);
 
-    $this->resolveAction();
+    $this->resolveAction($eventData);
   }
 }

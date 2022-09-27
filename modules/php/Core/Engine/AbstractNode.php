@@ -313,7 +313,7 @@ class AbstractNode
     }
 
     if ($this->isOptional()) {
-      if (count($choices) != 1 || !$choice['optionalAction'] || $choice['automaticAction']) {
+      if (count($choices) != 1 || !$choice['optionalAction'] || $choice['automaticAction'] || $this->getType() == NODE_OR) {
         $choices[PASS] = [
           'id' => PASS,
           'description' => clienttranslate('Pass'),
