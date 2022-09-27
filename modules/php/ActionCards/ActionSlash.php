@@ -26,7 +26,7 @@ class ActionSlash extends \CAV\Models\ActionCard
     ];
 
     $this->flow = [
-      'type' => NODE_SEQ,
+      'type' => NODE_OR,
       'childs' => [
         [
           'action' => PLACE_TILE,
