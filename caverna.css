@@ -916,12 +916,12 @@ html[data-background='1'] {
       position: absolute;
       bottom: -13px;
       right: -13px;
-      background-color: #eeb124;
+      background-color: #dcf07d;
       border-radius: 50%;
       text-align: center;
-      line-height: 20px;
+      line-height: 19px;
       border: 1px solid black;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: bold;
       z-index: 200;
       color: black;
@@ -1229,7 +1229,7 @@ html[data-background='1'] {
   .action-card-holder[data-id='ActionFirstPlayer4'] .resource-holder {
     bottom: 65px;
     left: 91px; }
-  .action-card-holder[data-id='ActionForestExploration4'] .resource-holder {
+  .action-card-holder[data-id='ActionForestExploration'] .resource-holder, .action-card-holder[data-id='ActionForestExploration4'] .resource-holder {
     bottom: 69px;
     left: 105px; }
   .action-card-holder[data-id='ActionGrowth'] .action-desc > div:nth-child(2) {
@@ -1246,6 +1246,12 @@ html[data-background='1'] {
     margin-top: 36px; }
   .action-card-holder[data-id='ActionImitation'] .action-desc, .action-card-holder[data-id='ActionImitation5'] .action-desc, .action-card-holder[data-id='ActionImitation7'] .action-desc {
     margin: 5px 7px 0px; }
+  .action-card-holder[data-id='ActionStripMining'] .resource-holder {
+    bottom: 66px;
+    left: 96px; }
+  .action-card-holder[data-id='ActionWoodGathering'] .resource-holder {
+    bottom: 16px;
+    left: 96px; }
 
 [data-actionCardName='0'] #central-board .action-card-holder {
   height: 144px; }
