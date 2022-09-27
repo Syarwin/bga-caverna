@@ -10,7 +10,7 @@ class ActionExtension extends \CAV\Models\ActionCard
     parent::__construct($row);
     $this->id = 'ActionExtension';
     $this->name = clienttranslate('Extension');
-    $this->desc = [clienttranslate('either')];
+    $this->desc = [clienttranslate('or')];
     $this->tooltip = [
       clienttranslate(
         'You may either place a Meadow/Field twin tile on adjacent Forest spaces and take 1 Wood from the general supply'

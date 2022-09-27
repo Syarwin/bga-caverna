@@ -743,7 +743,7 @@ class PlayerBoard
           foreach ($neighbours as $pos2) {
             // We cannot place 2 tiles outside of the board
             if (
-              !in_array($tile, [TILE_MINE_DEEP_TUNNEL, TILE_LARGE_PASTURE, TILE_MINE_DEEP_TUNNEL]) &&
+              !in_array($tile, [TILE_ORE_MINE, TILE_LARGE_PASTURE, TILE_MINE_DEEP_TUNNEL]) &&
               $this->checkExtended($pos) &&
               $this->checkExtended($pos2)
             ) {

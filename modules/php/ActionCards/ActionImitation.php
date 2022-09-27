@@ -42,6 +42,12 @@ class ActionImitation extends \CAV\Models\ActionCard
   public function getDesc()
   {
     $playersMap = [3 => 4, 4 => 2, 5 => 2, 6 => 1, 7 => 0];
-    return [($playersMap[Players::count()] ?? 0) . ' <FOOD>'];
+    $cost = ($playersMap[Players::count()] ?? 0);
+    return [
+      [
+        'log' => clienttranslate('Pay ${n}<FOOD> to use an action space occupied by one of your opponent'),
+        'args' => ['n' => $cost]
+      ]
+    ];
   }
 }

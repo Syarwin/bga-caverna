@@ -9,7 +9,7 @@ class G_RubySupplier extends \CAV\Models\Building
     $this->type = 'G_RubySupplier';
     $this->category = 'material';
     $this->name = clienttranslate('Ruby Supplier');
-    $this->desc = [clienttranslate('at the beginning of the next 4 rounds')];
+    $this->desc = [clienttranslate('+1<RUBY> at the beginning of the next 4 rounds')];
     $this->tooltip = [
       clienttranslate(
         'When building the Ruby supplier, place 1 Ruby from the general supply on the next 4 Round spaces.'

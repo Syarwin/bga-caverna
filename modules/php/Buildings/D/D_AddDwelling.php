@@ -32,7 +32,7 @@ class D_AddDwelling extends \CAV\Models\Building
     if (
       $this->getPlayer()
         ->getAllDwarfs()
-        ->count() != 5
+        ->count() < 5
     ) {
       return 0;
     }

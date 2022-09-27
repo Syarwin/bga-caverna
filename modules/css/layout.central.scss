@@ -558,6 +558,12 @@
       left: 99px;
     }
   }
+  &[data-id='ActionSustenance4'] {
+    .action-desc {
+      margin-top: 63px;
+    }
+  }
+
   &[data-id='ActionWishChildren'] {
     .action-desc {
       margin-top: 56px;
@@ -566,6 +572,73 @@
   &[data-id='ActionUrgentWishChildren'] {
     .action-desc {
       margin-top: 85px;
+    }
+  }
+
+  &[data-id='ActionExtension'] {
+    .action-desc {
+      margin-top: 65px;
+      font-size: 10px;
+    }
+  }
+  &[data-id='ActionDepot'] {
+    .resource-holder {
+      bottom: 36px;
+      left: 91px;
+    }
+  }
+  &[data-id='ActionFenceBuilding6'] {
+    .action-desc {
+      margin-top: 54px;
+    }
+    .resource-holder {
+      bottom: 89px;
+      left: 107px;
+    }
+  }
+  &[data-id='ActionFirstPlayer4'] {
+    .resource-holder {
+      bottom: 65px;
+      left: 91px;
+    }
+  }
+  &[data-id='ActionForestExploration4'] {
+    .resource-holder {
+      bottom: 69px;
+      left: 105px;
+    }
+  }
+  &[data-id='ActionGrowth'] {
+    .action-desc > div:nth-child(2) {
+      margin-top: 54px;
+    }
+  }
+  &[data-id='ActionLargeDepot'] {
+    .resource-holder {
+      bottom: 16px;
+      left: 96px;
+    }
+  }
+  &[data-id='ActionHardwareRental6'] {
+    .action-desc {
+      margin-top: 23px;
+      font-size: 10px;
+      & > div:nth-child(2) {
+        margin-top: 40px;
+      }
+    }
+  }
+  &[data-id='ActionWeeklyMarket'] {
+    .action-desc {
+      margin-top: 36px;
+    }
+  }
+
+  &[data-id='ActionImitation'],
+  &[data-id='ActionImitation5'],
+  &[data-id='ActionImitation7'] {
+    .action-desc {
+      margin: 5px 7px 0px;
     }
   }
 }

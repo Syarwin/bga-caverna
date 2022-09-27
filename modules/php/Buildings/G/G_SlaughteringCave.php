@@ -9,7 +9,7 @@ class G_SlaughteringCave extends \CAV\Models\Building
     $this->type = 'G_SlaughteringCave';
     $this->category = 'food';
     $this->name = clienttranslate('Slaughtering Cave');
-    $this->desc = [clienttranslate('for each animal that you convert into food')];
+    $this->desc = [clienttranslate('+1<FOOD> for each animal that you convert into food')];
     $this->tooltip = [
       clienttranslate('You get 1 more Food from the general supply for each Farm animal that you convert into Food.'),
       clienttranslate(
