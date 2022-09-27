@@ -95,7 +95,7 @@ trait TurnTrait
     $player = Players::getActive();
     $args = $this->argsRubyChoice();
 
-    if(!empty($cards)){
+    if (!empty($cards)) {
       if (count($cards) > $args['rubies']) {
         throw new \BgaVisibleSystemException('More spaces selected than rubies. Should not happen');
       }
@@ -314,6 +314,7 @@ trait TurnTrait
     // Next turn or harvest
     $turn = Globals::getTurn();
     Globals::setHarvestCost(2);
+    Notifications::updateHarvestCosts();
     if (Globals::isRevealStartHarvest()) {
       Meeples::revealHarvestToken();
     }
