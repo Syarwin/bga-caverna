@@ -26,7 +26,7 @@ class G_Builder extends \CAV\Models\Building
 
   public function onPlayerComputeCostsFurnish($player, &$args)
   {
-    Utils::addBonus($args['costs'], [WOOD => -1, ORE => 1], $this->id);
-    Utils::addBonus($args['costs'], [STONE => -1, ORE => 1], $this->id);
+    Utils::addBonus($args['costs'], [WOOD => -1, ORE => 1], $this->id, true);
+    Utils::addBonus($args['costs'], [STONE => -1, ORE => 1], $this->id, true);
   }
 }
