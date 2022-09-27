@@ -39,7 +39,6 @@ class D_AddDwelling extends \CAV\Models\Building
     return 1;
   }
 
-  // TODO : add a 6th dwarf in reserve
   public function onBuy($player, $eventData)
   {
     $created = Dwarfs::singleCreate([

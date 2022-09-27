@@ -17,7 +17,7 @@ class Y_SuppliesStorage extends \CAV\Models\Building
         '__(The Weapon strength does not matter. The fewer Dwarfs you have, the easier it is to accomplish that. The Supplies storage can be combined with the Weapon storage.)__'
       ),
     ];
-    $this->cost = [WOOD => 3, FOOD => 1];
+    $this->cost = [FOOD => 3, WOOD => 1];
   }
 
   public function computeBonusScore()
