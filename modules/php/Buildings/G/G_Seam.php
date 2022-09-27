@@ -9,7 +9,7 @@ class G_Seam extends \CAV\Models\Building
     $this->type = 'G_Seam';
     $this->category = 'material';
     $this->name = clienttranslate('Seam');
-    $this->desc = [clienttranslate('for each new <STONE>')];
+    $this->desc = [clienttranslate('+1<ORE> for each new <STONE>')];
     $this->tooltip = [
       clienttranslate(
         'From now on, you will immediately get 1 Ore from the general supply on top of each Stone you get (regardless of how you got the Stone).'

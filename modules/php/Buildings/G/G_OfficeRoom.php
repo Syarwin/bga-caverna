@@ -9,7 +9,7 @@ class G_OfficeRoom extends \CAV\Models\Building
     $this->type = 'G_OfficeRoom';
     $this->category = 'dwelling';
     $this->name = clienttranslate('Office room');
-    $this->desc = [clienttranslate('twin tiles may overhang;'), clienttranslate('every time you do so:')];
+    $this->desc = [clienttranslate('twin tiles may overhang;'), clienttranslate('every time you do so, take 2<GOLD>')];
     $this->tooltip = [
       clienttranslate(
         'When placing twin tiles, you only need to place half of the tile on your Home board, the other half may overhang.'

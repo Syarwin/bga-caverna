@@ -9,7 +9,7 @@ class G_StoneSupplier extends \CAV\Models\Building
     $this->type = 'G_StoneSupplier';
     $this->category = 'material';
     $this->name = clienttranslate('Stone Supplier');
-    $this->desc = [clienttranslate('at the beginning of the next 5 rounds')];
+    $this->desc = [clienttranslate('+1<STONE> at the beginning of the next 5 rounds')];
     $this->tooltip = [
       clienttranslate(
         'When building the Stone supplier, place 1 Stone from the general supply on the next 5 Round spaces.'

@@ -9,7 +9,7 @@ class G_WoodSupplier extends \CAV\Models\Building
     $this->type = 'G_WoodSupplier';
     $this->category = 'material';
     $this->name = clienttranslate('Wood Supplier');
-    $this->desc = [clienttranslate('at the beginning of the next 7 rounds')];
+    $this->desc = [clienttranslate('+1<WOOD> at the beginning of the next 7 rounds')];
     $this->tooltip = [
       clienttranslate(
         'When building the Wood supplier, place 1 Wood from the general supply on the next 7 Round spaces.'
