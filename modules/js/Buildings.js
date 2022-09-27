@@ -285,7 +285,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         );
       }
 
-      if (n.args.player_id == this.player_id) {
+      if (n.args.player_id == this.player_id || this.isFastMode()) {
         this.slide(`building-${building.id}`, this.getBuildingContainer(building)).then(() => {
           if (building.type == 'G_OfficeRoom') {
             $(`board-${this.player_id}`).classList.add('office-room');

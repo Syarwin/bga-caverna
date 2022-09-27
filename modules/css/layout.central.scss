@@ -283,12 +283,12 @@
       position: absolute;
       bottom: -13px;
       right: -13px;
-      background-color: #eeb124;
+      background-color: #dcf07d;
       border-radius: 50%;
       text-align: center;
-      line-height: 20px;
+      line-height: 19px;
       border: 1px solid black;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: bold;
       z-index: 200;
       color: black;
@@ -602,6 +602,7 @@
       left: 91px;
     }
   }
+  &[data-id='ActionForestExploration'],
   &[data-id='ActionForestExploration4'] {
     .resource-holder {
       bottom: 69px;
@@ -639,6 +640,18 @@
   &[data-id='ActionImitation7'] {
     .action-desc {
       margin: 5px 7px 0px;
+    }
+  }
+  &[data-id='ActionStripMining'] {
+    .resource-holder {
+      bottom: 66px;
+      left: 96px;
+    }
+  }
+  &[data-id='ActionWoodGathering'] {
+    .resource-holder {
+      bottom: 16px;
+      left: 96px;
     }
   }
 }
