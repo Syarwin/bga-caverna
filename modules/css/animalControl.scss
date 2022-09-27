@@ -49,11 +49,13 @@
   top: 0;
   left: 0;
   z-index: 200;
+  pointer-events: none;
 
   .animals-control {
     position: absolute;
     left: calc(100% - 53px);
     bottom: calc(100% - 36px);
+    pointer-events: all;
 
     transition: margin 0.6s;
     margin-bottom: 24px;
