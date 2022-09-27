@@ -858,7 +858,7 @@ class PlayerBoard
     }
 
     foreach ($this->getGrowingCrops($keepOnlyThisType) as $crop) {
-      $uid = $crop['x'] < 0 || $crop['y'] < 0 ? $crop['location'] : $crop['x'] . '_' . $crop['y'];
+      $uid = is_null($crop['x']) || is_null($crop['y']) ? $crop['location'] : $crop['x'] . '_' . $crop['y'];
       $fields[$uid]['crops'][] = $crop;
       $fields[$uid]['fieldType'] = $crop['type'];
     }
