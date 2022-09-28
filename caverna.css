@@ -1264,13 +1264,15 @@ html[data-background='1'] {
  * TOOLTIPS
  */
 .action-card-help-tooltip {
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px; }
 
 .action-card-tooltip {
   display: flex; }
   .action-card-tooltip .action-holder {
     height: 280px;
-    width: 250px;
+    width: 245px;
     flex-shrink: 0;
     margin-right: 5px; }
     .action-card-tooltip .action-holder .action-card-holder {

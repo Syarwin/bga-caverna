@@ -20,12 +20,10 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     setupActionCardsHelpers() {
-      return; // TODO
-      // Tooltip on future rounds
       this.gamedatas.cards.help.forEach((card) => {
         card.description = this.formatCardDesc(card.desc);
         card.tooltipText = '';
-        card.tooltipDescription = this.formatCardDesc(card.tooltipDesc);
+        card.tooltipDescription = card.description;
       });
       this.updateActionCardsHelp();
     },
@@ -36,9 +34,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     updateActionCardsHelp() {
-      return; // TODO
-
-      let bounds = [1, 5, 8, 10, 12, 14, 15];
+      let nPlayers = Object.keys(this.gamedatas.players).length;
+      let bounds =
+        nPlayers == 1
+          ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+          : nPlayers <= 2
+          ? [1, 4, 5, 7, 9, 12]
+          : [1, 4, 5, 7, 10, 13];
       for (var i = 0; i < bounds.length - 1; i++) {
         let lower = bounds[i],
           upper = bounds[i + 1];
@@ -49,7 +51,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             if ($(card.id)) return html;
 
             let turn = card.location.split('_')[1];
-            return html + (lower <= turn && turn < upper ? this.tplActionCardTooltip(card) : '');
+            return html + (turn == i + 1 ? this.tplActionCardTooltip(card) : '');
           }, '') +
           '</div>';
 
@@ -69,7 +71,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       // Add extra info
       card.description = this.formatCardDesc(card.desc);
       card.tooltipText = card.tooltip.map((s) => _(s)).join('<br />');
-      card.tooltipDescription = card.description; // TODO : this.formatCardDesc(card.tooltipDesc);
+      card.tooltipDescription = card.description;
 
       // Place it
       let addTooltip = () => {
@@ -152,7 +154,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         Object.values(this.gamedatas.players)
           .map(
             (player) =>
-              `<div data-pid="${player.id}" data-color="${player.color}" class='resource-holder-update'></div>`,
+              `<div data-pid="${player.id}" data-color="${player.color}" class='resource-holder-update'></div>`
           )
           .join('') +
         `
