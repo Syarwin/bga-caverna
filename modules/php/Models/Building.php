@@ -155,6 +155,9 @@ class Building extends \CAV\Helpers\DB_Model
       throw new \BgaVisibleSystemException('Cannot be bought. Should not happen');
     }
 
+    // get Costs before placing the building
+    $cost = $this->getCosts($player, $args);
+
     // Update stat
     // TODO
     //Stats::setCardPlayed($player->getId(), $this->getCode(), Globals::getTurn());
@@ -165,8 +168,6 @@ class Building extends \CAV\Helpers\DB_Model
     $this->setX($x);
     $this->setY($y);
 
-    // Trigger of Pay if needed
-    $cost = $this->getCosts($player, $args);
     if ($cost != NO_COST) {
       $player->pay(1, $cost, $this->name);
     }
