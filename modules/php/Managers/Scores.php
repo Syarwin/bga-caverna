@@ -188,7 +188,7 @@ class Scores extends \CAV\Helpers\DB_Manager
   {
     $score = 0;
     foreach ($player->board()->getPastures() as $pasture) {
-      $score += $pasture['type'] == 'small' ? 2 : 4;
+      $score += count($pasture['nodes']) == 1 ? 2 : 4;
     }
     self::addEntry($player, SCORING_PASTURES, $score);
     Stats::setScorePastures($player, $score);
