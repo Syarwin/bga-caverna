@@ -729,7 +729,10 @@ class PlayerBoard
     // Get buildable zone
     $zones = [];
     if (count($tiles) == 1) {
-      $this->isExtended = false;
+      // we authorize single tiles like mine & pastures
+      if (!in_array($tile, [TILE_RUBY_MINE, TILE_ORE_MINE, TILE_PASTURE])) {
+        $this->isExtended = false;
+      }
       foreach ($this->getPlacableZones($tiles[0]) as $pos) {
         $zones[] = [
           'pos1' => $pos,
