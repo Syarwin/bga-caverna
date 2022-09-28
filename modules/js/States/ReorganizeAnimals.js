@@ -47,7 +47,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         (acc, location) => {
           return location.x < acc.x || (location.x == acc.x && location.y > acc.y) ? acc : location;
         },
-        { x: 0, y: 10 }
+        { x: -1, y: 10 }
       );
     },
 
