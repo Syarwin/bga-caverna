@@ -313,11 +313,13 @@ class Meeples extends \CAV\Helpers\Pieces
       self::DB()->update(['meeple_state' => 1], $harvest['id']);
       $hToken = self::get($harvest['id']);
       Notifications::revealHarvestToken($hToken);
-      if ($hToken['type'] == \HARVEST_1FOOD) {
-        Globals::setHarvestCost(1);
-        Notifications::updateHarvestCosts();
-      }
     }
+    if ($harvest != null && $harvest['type'] == \HARVEST_1FOOD) {
+      Globals::setHarvestCost(1);
+    } else {
+      Globals::setHarvestCost(2);
+    }
+    Notifications::updateHarvestCosts();
   }
 
   public function collectResourcesOnCard($player, $cId, $pId = null)

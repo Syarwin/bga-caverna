@@ -221,6 +221,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     notif_updateHarvestCosts(n) {
+      debug('Notif updateHarvestCost', n);
       this.forEachPlayer((player) => {
         player.harvestCost = n.args.costs[player.id];
       });

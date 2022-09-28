@@ -527,7 +527,11 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getHarvestFoodCost()
   {
-    return $this->countDwarfs(ADULT) * Globals::getHarvestCost() + $this->countDwarfs(CHILD);
+    $nb = $this->countDwarfs(ADULT) * Globals::getHarvestCost() + $this->countDwarfs(CHILD);
+    if ($this->hasPlayedBuilding('G_MiningCave')) {
+      $nb -= $this->countDonkeyInMines();
+    }
+    return $nb;
   }
 
   public function getHarvestCost()
