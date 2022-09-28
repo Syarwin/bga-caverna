@@ -104,6 +104,10 @@ class Reorganize extends \CAV\Models\Action
       'trigger' => $trigger,
     ]);
 
+    if ($player->hasPlayedBuilding('G_MiningCave')) {
+      Notifications::updateHarvestCosts();
+    }
+
     $this->resolveAction();
   }
 
