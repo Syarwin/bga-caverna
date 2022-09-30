@@ -43,9 +43,7 @@ trait HarvestTrait
   function stHarvestChoice()
   {
     $player = Players::getActive();
-    $reaction['childs'][] =
-      // Inserting into engine
-      self::giveExtraTime($player->getId());
+    self::giveExtraTime($player->getId());
     Engine::setup(
       [
         'action' => HARVEST_CHOICE,
@@ -201,7 +199,7 @@ trait HarvestTrait
     $player = Players::getActive();
     $harvestChoice = Globals::getHarvestChoice();
 
-    if (($harvestChoice[$player->getId()] ?? null) == FIELD) {
+    if (($harvestChoice[$player->getId()] ?? null) == REAP) {
       $this->nextPlayerCustomOrder('harvestBreed');
       return;
     }
