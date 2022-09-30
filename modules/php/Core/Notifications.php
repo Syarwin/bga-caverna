@@ -240,6 +240,7 @@ class Notifications
     self::notifyAll('furnish', clienttranslate('${player_name} furnishes its cavern with ${building_name}'), [
       'player' => $player,
       'building' => $building,
+      'dwellingCapacity' => $player->countDwellings(),
     ]);
   }
 
@@ -289,8 +290,7 @@ class Notifications
       'squares' => $squares,
     ]);
 
-    // TODO ?? Update drop zones of player
-    // self::updateDropZones($player);
+    self::updateDropZones($player);
   }
 
   public static function stables($player, $stables)
@@ -599,6 +599,16 @@ class Notifications
       'costs' => $data,
     ]);
   }
+
+
+  public static function updateDwellingCapacity($player)
+  {
+    self::notifyAll('updateDwellingCapacity', '', [
+      'player' => $player,
+      'dwellingCapacity' => $player->countDwellings(),
+    ]);
+  }
+
 
   public static function addCardToDraftSelection($player, $card, $pos)
   {

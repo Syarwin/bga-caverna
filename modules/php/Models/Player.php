@@ -47,6 +47,7 @@ class Player extends \CAV\Helpers\DB_Model
     $data = parent::jsonSerialize();
     $current = $this->id == $currentPlayerId;
     $data['harvestCost'] = $this->getHarvestFoodCost();
+    $data['dwellingCapacity'] = $this->countDwellings();
     $data['board'] = $this->board()->getUiData();
 
     return $data;

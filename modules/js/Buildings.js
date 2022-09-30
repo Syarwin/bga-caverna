@@ -278,6 +278,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let building = n.args.building;
       this.loadSaveBuilding(building);
       this._selectableBuildings = [];
+      this.gamedatas.players[n.args.player_id].dwellingCapacity = n.args.dwellingCapacity;
+      this.updateDwarfsPlayerCounters();
 
       if (building.type == 'D_Dwelling' && !$(`building-${building.id}`)) {
         this.addBuilding(

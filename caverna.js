@@ -124,6 +124,7 @@ define([
           ['startHarvest', 3200],
           ['endHarvest', null],
           ['updateHarvestCosts', 1],
+          ['updateDwellingCapacity', 1],
           ['seed', 10],
         ];
 

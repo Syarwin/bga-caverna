@@ -202,6 +202,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           board: $(`board-${player.id}`),
         };
 
+        let totalDwarfs = 0;
         Object.keys(containers).forEach((location) => {
           let summaryContainer = $(`board_resource_${player.id}_dwarf`).querySelector(`.dwarf-on-${location}`);
           summaryContainer.innerHTML = '';
@@ -209,9 +210,21 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             let o = dojo.clone(dwarf);
             o.id += '_summary';
             dojo.place(o, summaryContainer);
+            let order = o.dataset.force || 0;
+            o.style.order = order;
+            totalDwarfs++;
           });
         });
+
+        $(`board_resource_${player.id}_dwarf`).querySelector(`.dwarf-in-reserve`).dataset.potentialGrowth =
+          player.dwellingCapacity - totalDwarfs;
       });
+    },
+
+    notif_updateDwellingCapacity(n) {
+      debug('Notif: update dwelling capacity', n);
+      this.gamedatas.players[n.args.player_id].dwellingCapacity = n.args.dwellingCapacity;
+      this.updateDwarfsPlayerCounters();
     },
 
     updatePlayersHarvestCosts() {

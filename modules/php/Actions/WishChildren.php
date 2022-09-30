@@ -52,6 +52,9 @@ class WishChildren extends \CAV\Models\Action
 
     Notifications::growFamily($player, $meep);
     Notifications::updateHarvestCosts();
+    if($player->countDwarfs() == 5){
+      Notifications::updateDwellingCapacity($player);
+    }
 
     // Listeners for cards
     $eventData = [

@@ -104,7 +104,7 @@
       .player-resource {
         margin: 4px 0px;
         position: relative;
-        flex-basis: 20%;
+        flex-basis: 24%;
         text-align: center;
 
         &.resource-grain,
@@ -150,6 +150,12 @@
           content: attr(data-harvest);
           font-size: 0.75em;
         }
+      }
+    }
+
+    .player-panel-board-resources {
+      .player-resource {
+        flex-basis: 20%;
       }
     }
 
@@ -280,10 +286,21 @@
     border-top-right-radius: 5px;
     .meeple-dwarf {
       filter: grayscale(0.5);
-      margin-left: -15px;
+      transform: scale(0.7);
+      margin-left: -17px;
 
       &:first-of-type {
         margin-left: 0px;
+      }
+    }
+
+    &[data-potential-growth='0'] .meeple-dwarf {
+      display: none;
+    }
+
+    @for $i from 1 to 5 {
+      &[data-potential-growth='#{$i}'] .meeple-dwarf:nth-child(#{$i}) ~ .meeple-dwarf {
+        display: none;
       }
     }
   }

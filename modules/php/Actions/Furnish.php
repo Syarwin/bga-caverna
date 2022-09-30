@@ -80,10 +80,9 @@ class Furnish extends \CAV\Models\Action
 
     // Replace cavern with the new building
     $building = $player->board()->addBuilding($buildingId, $zone);
-    Notifications::furnish($player, $building);
-
     // Trigger effects
     $building->actFurnish($player, $zone['x'], $zone['y'], $this->getCtxArgs() ?? []);
+    Notifications::furnish($player, $building);
 
     // Listeners for cards
     $eventData = [
