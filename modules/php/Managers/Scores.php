@@ -139,7 +139,7 @@ class Scores extends \CAV\Helpers\DB_Manager
     $reserve = $player->getExchangeResources();
     foreach (ANIMALS as $type) {
       $n = $reserve[$type];
-      $score = $n == 0 ? -2 : $n;
+      $score = ($n == 0 && $type != DOG) ? -2 : $n;
       self::addEntry($player, $type, $score, $n);
       $statName = 'setScore' . \ucfirst($type);
       Stats::$statName($player, $score);
