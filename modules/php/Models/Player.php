@@ -133,11 +133,15 @@ class Player extends \CAV\Helpers\DB_Model
     return $this->getBuildings($type, true);
   }
 
-  public function hasPlayedBuilding($buildingType)
+  public function hasPlayedBuilding($buildingType, $returnBoolean = true)
   {
-    return $this->getPlayedBuildings()->reduce(function ($carry, $building) use ($buildingType) {
-      return $carry || $building->getType() == $buildingType;
-    }, false);
+    foreach ($this->getPlayedBuildings() as $building) {
+      if ($building->getType() == $buildingType) {
+        return $returnBoolean? true: $building;
+      }
+    }
+
+    return $returnBoolean? false : null;
   }
 
   public function countOreMines()
