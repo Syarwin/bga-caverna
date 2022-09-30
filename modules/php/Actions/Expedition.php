@@ -121,7 +121,6 @@ class Expedition extends \CAV\Models\Action
     return [
       'n' => $args['lvl'],
       'max' => $this->getDwarf()['weapon'] ?? 0,
-      // TODO: add doable actions only
     ];
   }
 

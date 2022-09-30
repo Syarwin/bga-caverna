@@ -57,8 +57,6 @@ class PlaceDwarf extends \CAV\Models\Action
       $dwarf = Dwarfs::get($dwarf);
     }
 
-    // TODO: manage ruby possibility to use another dwarf
-
     $weapon = $dwarf['weapon'] ?? 0;
     $args = [
       'i18n' => ['dwarfDesc'],

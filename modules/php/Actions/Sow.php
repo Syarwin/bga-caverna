@@ -28,7 +28,7 @@ class Sow extends \CAV\Models\Action
   {
     $player = Players::getActive();
     $reserve = $player->getAllReserveResources();
-    // TODO : handle Sow action without a 2/2 max if that exists ??
+
     return [
       VEGETABLE => min(2, $reserve[VEGETABLE]),
       GRAIN => min(2, $reserve[GRAIN]),

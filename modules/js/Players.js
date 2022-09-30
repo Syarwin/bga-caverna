@@ -80,7 +80,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       this.setupPlayersCounters();
       this.setupPlayersScores();
-      // TODO ?? this.updateResourceBarsPositions();
       dojo.attr('game_play_area', 'data-players', Object.keys(this.gamedatas.players).length);
     },
 

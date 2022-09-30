@@ -90,7 +90,7 @@ class Building extends \CAV\Helpers\DB_Model
   public function isSupported($players, $options)
   {
     // Check banlist
-    // $checkBanlist = !$this->banned; // TODO reenable? || $options[OPTION_COMPETITIVE_LEVEL] != OPTION_COMPETITIVE_BANLIST;
+    // $checkBanlist = !$this->banned || $options[OPTION_COMPETITIVE_LEVEL] != OPTION_COMPETITIVE_BANLIST;
 
     if ($options[OPTION_COMPETITIVE_LEVEL] == OPTION_COMPETITIVE_BEGINNER) {
       return $this->implemented && $this->beginner;

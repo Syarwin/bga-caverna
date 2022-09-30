@@ -729,14 +729,6 @@ class Notifications
       $data['resources2_desc'] = Utils::resourcesToStr($resources2);
     }
   }
-
-  /*********************
-   **********************
-   *********************/
-  public static function updateCounters()
-  {
-    // TODO
-  }
 }
 
 ?>

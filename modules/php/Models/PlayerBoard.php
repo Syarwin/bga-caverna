@@ -65,7 +65,7 @@ class PlayerBoard
   protected $pastures = null; // Array of all current pastures
   protected $arePasturesUpToDate = false;
 
-  private $isExtended = false; // TODO : handle building
+  private $isExtended = false;
   public function __construct($player)
   {
     $this->player = $player;
@@ -239,7 +239,6 @@ class PlayerBoard
       return true;
     }
 
-    // TODO
     // Check adjacency of pastures
     $marks = $this->getPasturesMarks();
     if (!$this->isConnex($marks)) {
@@ -713,7 +712,7 @@ class PlayerBoard
     } elseif (in_array($tile, [TILE_RUBY_MINE])) {
       $nodes = array_merge($this->getUnbuiltTiles(TILE_TUNNEL), $this->getUnbuiltTiles(TILE_DEEP_TUNNEL));
     } else {
-      die('TODO : getPlacableZones : ' . $tile);
+      die('getPlacableZones : ' . $tile);
     }
 
     return $checkAdjacency ? $this->getAdjacentZones($nodes) : $nodes;
@@ -761,8 +760,7 @@ class PlayerBoard
         }
       }
     } else {
-      return [];
-      die('TODO : getPlacementOptions');
+      die('getPlacementOptions: error');
     }
 
     return $zones;
@@ -994,14 +992,6 @@ class PlayerBoard
     $this->pastures = array_merge($this->pastures, array_values($largePastures));
   }
 
-  /**
-   * Check wether a player can create a pasture with at most X fences
-   */
-  public function canCreateNewPasture()
-  {
-    // TODO
-    return false;
-  }
 
   /////////////////////////////////////////////////
   //   ____      _     _   _   _ _   _ _

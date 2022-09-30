@@ -105,7 +105,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       let onClickZone = (pos) => {
         // Specific case where asked to only point out one zone
-        // TODO : might add a "confirm" boolean param to overwrite this behavior when needed
         if (min == 1 && max == null) {
           callback(pos);
           return;
@@ -166,61 +165,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     flipOnCell(meeple) {
       let target = this.getCell(meeple).querySelector('.node-background').firstChild;
       return this.flipAndReplace(target, this.tplMeeple(meeple));
-    },
-
-    /**
-     * Adding a field to the board
-     */
-    notif_plow(n) {
-      debug('Notif: adding a field ', n);
-      let meeple = n.args.field;
-      this.flipOnCell(meeple);
-    },
-
-    /**
-     * Adding rooms to the board
-     */
-    notif_construct(n) {
-      debug('Notif: adding rooms ', n);
-      n.args.rooms.forEach((meeple) => {
-        this.flipOnCell(meeple);
-        this.getCell(meeple).querySelector('.node-background').classList.add('containsRoom');
-      });
-    },
-
-    notif_furnish(n) {
-      debug('Notif: furnishing ', n);
-      // TODO
-    },
-
-    /**
-     * Renovating rooms on the board
-     */
-    notif_renovate(n) {
-      debug('Notif: renovating rooms', n);
-      n.args.rooms.forEach((meeple) => {
-        this.flipAndReplace('meeple-' + meeple.oldId, this.tplMeeple(meeple));
-      });
-    },
-
-    /**
-     * Adding fences to the board
-     */
-    notif_addFences(n) {
-      debug('Notif: adding fences ', n);
-
-      // Update directions of fence
-      n.args.fences.forEach((fence, i) => {
-        let className = 'fence-' + (fence.x % 2 == 1 ? 'hor' : 'ver');
-        dojo.removeClass('meeple-' + fence.id, 'fence-hor fence-ver');
-        dojo.addClass('meeple-' + fence.id, className);
-      });
-
-      // Slide them
-      this.slideResources(n.args.fences, (fence, i) => ({
-        target: this.getCell(fence),
-        delay: 200 * i,
-      }));
     },
 
     /**

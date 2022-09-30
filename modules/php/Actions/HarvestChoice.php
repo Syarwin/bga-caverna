@@ -136,10 +136,16 @@ class HarvestChoice extends \CAV\Models\Action
 
     $choices[$player->getId()] = $choice;
     Globals::setHarvestChoice($choices);
-    // TODO: manage translation
+
+    $phases = [
+      REAP => clienttranslate("the Field phase"),
+      BREED => clienttranslate("the Breeding phase"),
+    ];
+    
     Notifications::message(clienttranslate('${player_name} chooses to do ${phase} for this harvest'), [
+      'i18n' => ['phase'],
       'player' => $player,
-      'phase' => $choice,
+      'phase' => $phases[$choice],
     ]);
     $this->resolveAction();
   }

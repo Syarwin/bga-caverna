@@ -130,8 +130,7 @@ class Scores extends \CAV\Helpers\DB_Manager
   protected function computeAuxScore($player)
   {
     $aux = 0;
-    // TODO
-    self::DB()->update(['player_score_aux' => $aux], $player->getId());
+//    self::DB()->update(['player_score_aux' => $aux], $player->getId());
   }
 
   protected function computeAnimals($player)

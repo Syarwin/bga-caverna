@@ -188,85 +188,70 @@ $stats_type = [
       'type' => 'int',
     ],
 
-    'cardsWood' => [
-      'id' => STAT_WOOD_FROM_CARDS,
-      'name' => totranslate('Amount of wood earned from cards'),
+    'buildingsWood' => [
+      'id' => STAT_WOOD_FROM_BUILDINGS,
+      'name' => totranslate('Amount of wood earned from buildings'),
       'type' => 'int',
     ],
-    'cardsStone' => [
-      'id' => STAT_STONE_FROM_CARDS,
-      'name' => totranslate('Amount of stone earned from cards'),
+    'buildingsStone' => [
+      'id' => STAT_STONE_FROM_BUILDINGS,
+      'name' => totranslate('Amount of stone earned from buildings'),
       'type' => 'int',
     ],
-    'cardsOre' => [
-      'id' => STAT_ORE_FROM_CARDS,
-      'name' => totranslate('Amount of ore earned from cards'),
+    'buildingsOre' => [
+      'id' => STAT_ORE_FROM_BUILDINGS,
+      'name' => totranslate('Amount of ore earned from buildings'),
       'type' => 'int',
     ],
-    'cardsRuby' => [
-      'id' => STAT_RUBY_FROM_CARDS,
-      'name' => totranslate('Amount of ruby earned from cards'),
+    'buildingsRuby' => [
+      'id' => STAT_RUBY_FROM_BUILDINGS,
+      'name' => totranslate('Amount of ruby earned from buildings'),
       'type' => 'int',
     ],
-    'cardsGrain' => [
-      'id' => STAT_GRAIN_FROM_CARDS,
-      'name' => totranslate('Amount of grains earned from cards'),
+    'buildingsGrain' => [
+      'id' => STAT_GRAIN_FROM_BUILDINGS,
+      'name' => totranslate('Amount of grains earned from buildings'),
       'type' => 'int',
     ],
-    'cardsVegetable' => [
-      'id' => STAT_VEGETABLE_FROM_CARDS,
-      'name' => totranslate('Amount of vegetables earned from cards'),
+    'buildingsVegetable' => [
+      'id' => STAT_VEGETABLE_FROM_BUILDINGS,
+      'name' => totranslate('Amount of vegetables earned from buildings'),
       'type' => 'int',
     ],
-    'cardsFood' => [
-      'id' => STAT_FOOD_FROM_CARDS,
-      'name' => totranslate('Amount of food earned from cards'),
+    'buildingsFood' => [
+      'id' => STAT_FOOD_FROM_BUILDINGS,
+      'name' => totranslate('Amount of food earned from buildings'),
       'type' => 'int',
     ],
-    'cardsSheep' => [
-      'id' => STAT_SHEEP_FROM_CARDS,
-      'name' => totranslate('Amount of sheeps earned from cards'),
+    'buildingsSheep' => [
+      'id' => STAT_SHEEP_FROM_BUILDINGS,
+      'name' => totranslate('Amount of sheeps earned from buildings'),
       'type' => 'int',
     ],
-    'cardsPig' => [
-      'id' => STAT_PIG_FROM_CARDS,
-      'name' => totranslate('Amount of wild card earned from cards'),
+    'buildingsPig' => [
+      'id' => STAT_PIG_FROM_BUILDINGS,
+      'name' => totranslate('Amount of wild card earned from buildings'),
       'type' => 'int',
     ],
-    'cardsCattle' => [
-      'id' => STAT_CATTLE_FROM_CARDS,
-      'name' => totranslate('Amount of cattles earned from cards'),
+    'buildingsCattle' => [
+      'id' => STAT_CATTLE_FROM_BUILDINGS,
+      'name' => totranslate('Amount of cattles earned from buildings'),
       'type' => 'int',
     ],
-    'cardsDonkey' => [
-      'id' => STAT_DONKEY_FROM_CARDS,
-      'name' => totranslate('Amount of donkeys earned from cards'),
+    'buildingsDonkey' => [
+      'id' => STAT_DONKEY_FROM_BUILDINGS,
+      'name' => totranslate('Amount of donkeys earned from buildings'),
       'type' => 'int',
     ],
-    'cardsBegging' => [
-      'id' => STAT_BEGGING_FROM_CARDS,
-      'name' => totranslate('Amount of beggings earned from cards'),
+    'buildingsBegging' => [
+      'id' => STAT_BEGGING_FROM_BUILDINGS,
+      'name' => totranslate('Amount of beggings earned from buildings'),
       'type' => 'int',
     ],
-    'totalMajorBuilt' => [
-      'id' => STAT_MAJOR_BUILT,
-      'name' => totranslate('Number of Major improvement built'),
-      'type' => 'int', // done
-    ],
-    'totalMinorBuilt' => [
-      'id' => STAT_MINOR_BUILT,
-      'name' => totranslate('Number of Minor improvement built'),
-      'type' => 'int', // done
-    ],
-    'totalOccupationBuilt' => [
-      'id' => STAT_OCCUPATION_BUILT,
-      'name' => totranslate('Number of Occupation built'),
-      'type' => 'int', // done
-    ],
-    'totalRoomsBuilt' => [
-      'id' => STAT_ROOMS_BUILT,
-      'name' => totranslate('Number of rooms built'),
-      'type' => 'int', // done
+    'totalBuildingsBuilt' => [
+      'id' => STAT_BUILDINGS_BUILT,
+      'name' => totranslate('Number of buildings built'),
+      'type' => 'int', 
     ],
     'convertedGrain' => [
       'id' => STAT_GRAIN_CONVERTED,

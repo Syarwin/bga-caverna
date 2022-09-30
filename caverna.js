@@ -260,14 +260,6 @@ define([
         // Overlay for harvest animation
         dojo.place("<div id='harvest-overlay'></div>", 'ebd-body');
 
-        // // Add Harvest Icons
-        // [4, 7, 9, 11, 13, 14].forEach((turn) => {
-        //   if (turn >= gamedatas.turn) {
-        //     dojo.place(`<div id="harvest-${turn}" class="harvest-icon"></div>`, 'harvest-slot-' + turn);
-        //     this.addCustomTooltip('harvest-' + turn, _('Harvest will take place at the end of that turn'));
-        //   }
-        // });
-        //
         dojo.attr('game_play_area', 'data-turn', gamedatas.round);
         this.setupInfoPanel();
         this.setupScoresModal();
@@ -279,6 +271,7 @@ define([
         this.setupBuildings();
         this.setupMeeples();
         this.setupAnimalsDropZones();
+        this.setupTour();
         // if (gamedatas.seed != false) this.showSeed(gamedatas.seed);
 
         this.inherited(arguments);
@@ -289,30 +282,17 @@ define([
       },
 
       onLoadingComplete() {
-        // TODO
-        // if (localStorage.getItem('cavernaTour') != 1) {
-        //   if (!this.isReadOnly) this.showTour();
-        // } else {
-        //   dojo.style('tour-slide-footer', 'display', 'none');
-        //   $('neverShowMe').checked = true;
-        // }
+        if (localStorage.getItem('cavernaTour') != 1) {
+          if (!this.isReadOnly) this.showTour();
+        } else {
+          dojo.style('tour-slide-footer', 'display', 'none');
+          $('neverShowMe').checked = true;
+        }
 
         this.inherited(arguments);
       },
 
       onScreenWidthChange() {
-        // if (this.prefs[HAND_CARDS].value != 0 && this.prefs[PLAYER_BOARDS].value == 1) {
-        //   dojo.style('player-boards', 'min-height', $('player-boards-left-column').offsetHeight + 'px');
-        // }
-        //
-        // dojo.toggleClass('player-boards', 'player-boards-right', this.prefs[PLAYER_BOARDS].value == 1);
-        // if (this.prefs[PLAYER_BOARDS].value == 1) {
-        //   let gamePlaySize = $('game_play_area').offsetWidth;
-        //   let playerBoard = document.querySelector('.player-board-wrapper');
-        //   if (playerBoard == null) return;
-        //   let playerBoardSize = playerBoard.offsetWidth + playerBoard.offsetLeft;
-        //   dojo.toggleClass('player-boards', 'player-boards-right', playerBoardSize < gamePlaySize);
-        // }
       },
 
       updateRoundCounter() {
@@ -1403,49 +1383,6 @@ define([
         $('central-board-wrapper').style.height = (($('central-board').offsetHeight + 30) * scale) / 100 + 'px';
       },
 
-      // setCardScale(scale) {
-      //   this._cardScale = scale;
-      //
-      //   let applyScale = (elt, scale) => {
-      //     elt.style.setProperty('--cavernaCardWidth', (235 * scale) / 100 + 'px');
-      //     elt.style.setProperty('--cavernaCardHeight', (374 * scale) / 100 + 'px');
-      //     elt.style.setProperty('--cavernaCardScale', scale / 100);
-      //   };
-      //
-      //   applyScale(document.documentElement, scale);
-      //   document.querySelectorAll('.player-board-wrapper').forEach((board) => applyScale(board, 0.8 * scale));
-      //
-      //   localStorage.setItem('cavernaCardScale', scale);
-      // },
-      //
-      // setCardAnimationSpeed(speed) {
-      //   this._cardAnimationSpeed = speed;
-      //   localStorage.setItem('cavernaCardAnimationSpeed', speed);
-      // },
-      //
-      // setCentralBoardScale(scale) {
-      //   this._centralBoardScale = scale;
-      //   document.documentElement.style.setProperty('--cavernaCentralBoardScale', scale / 100);
-      //   localStorage.setItem('cavernaCentralBoardScale', scale);
-      // },
-      //
-      // setPlayerBoardScale(scale) {
-      //   this._playerBoardScale = scale;
-      //   document.documentElement.style.setProperty('--cavernaPlayerBoardScale', scale / 100);
-      //   localStorage.setItem('cavernaPlayerBoardScale', scale);
-      //   this.updatePlayerBoardDimensions();
-      // },
-      //
-      // updatePlayerBoardDimensions(pId = null) {
-      //   let ids = pId == null ? Object.keys(this.gamedatas.players) : [pId];
-      //   ids.forEach((pId) => {
-      //     let holder = $('board-wrapper-' + pId);
-      //     dojo.style('player-board-resizable-' + pId, {
-      //       width: (holder.offsetWidth * this._playerBoardScale) / 100 + 'px',
-      //       height: (holder.offsetHeight * this._playerBoardScale) / 100 + 'px',
-      //     });
-      //   });
-      // },
 
       /*
        * Display a helper with global scoring

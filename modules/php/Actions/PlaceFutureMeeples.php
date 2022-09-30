@@ -19,7 +19,6 @@ class PlaceFutureMeeples extends \CAV\Models\Action
     return ST_PLACE_FUTURE_MEEPLES;
   }
 
-  // TODO: needs exception for "roomStone" and maybe other weird cases
   public function getDescription($ignoreResources = false)
   {
     $resources = $this->ctx->getArgs()['resources'];

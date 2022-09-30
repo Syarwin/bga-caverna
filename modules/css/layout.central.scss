@@ -131,10 +131,15 @@
         &[data-color='982fff'] {
           background-color: #982fff7d;
         }
-        &[data-color='7b7b7b'] {
-          background-color: #b3acac7d;
+        &[data-color='aa9702'] {
+          background-color: #aa97027d;
         }
-        // TODO
+        &[data-color='df7605'] {
+          background-color: #df76057d;
+        }
+        &[data-color='2a05df'] {
+          background-color: #2a05df7d;
+        }
       }
     }
 
@@ -244,7 +249,6 @@
   .resource-holder {
     position: absolute;
     z-index: 20;
-    // TODO : remove
     bottom: 30px;
     left: 30px;
     padding: 4px;

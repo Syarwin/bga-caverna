@@ -118,8 +118,6 @@ class ActionCards extends \CAV\Helpers\Pieces
           }
         }
       }
-    } else {
-      // TODO solo mode
     }
   }
 

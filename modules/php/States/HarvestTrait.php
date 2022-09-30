@@ -172,12 +172,6 @@ trait HarvestTrait
     Engine::proceed();
   }
 
-  // // TODO : remove
-  // function stHarvestEndOfFeed()
-  // {
-  //   $this->checkBuildingListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);
-  // }
-
   function stEndHarvestFeedingPhase()
   {
     $this->checkBuildingListeners('EndHarvestFeedingPhase', 'stHarvestPrepareBreed', [], \HARVEST);

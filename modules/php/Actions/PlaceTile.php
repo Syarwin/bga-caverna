@@ -29,8 +29,7 @@ class PlaceTile extends \CAV\Models\Action
 
   public function getTiles()
   {
-    // TODO : ?? should be useless
-    return $this->getCtxArgs()['tiles'] ?? [];
+    return $this->getCtxArgs()['tiles'];
   }
 
   public static function getTileName($tile)
@@ -83,7 +82,6 @@ class PlaceTile extends \CAV\Models\Action
   public function isDoable($player, $ignoreResources = false)
   {
     // The player must be able place one of the tiles
-    // TODO : handle the cost
     return $player->board()->canPlace($this->getTiles());
   }
 

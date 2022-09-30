@@ -421,38 +421,6 @@ class Meeples extends \CAV\Helpers\Pieces
       ->orderBy('meeple_location', 'DESC');
 
     return $query->get();
-
-    /*
-TODO : smart choice for animals
-public function getNextSheep()
-{
-  // Try to find a sheep on the player board
-  $zones = $this->getPlayer()->board()->getAnimalsDropZonesWithAnimals();
-
-  // Sort rooms first, then stable, then pasture
-  usort($zones, function ($a, $b) {
-    $map = [
-      'D148_special' => 3,
-      'room' => 2,
-      'stable' => 1,
-      'pasture' => 0,
-    ];
-    return $map[$b['type']] - $map[$a['type']];
-  });
-
-  foreach ($zones as &$zone) {
-    if ($zone[SHEEP] > 0) {
-      foreach ($zone['meeples'] as $meeple) {
-        if ($meeple['type'] == SHEEP) {
-          return $meeple;
-        }
-      }
-    }
-  }
-
-  return null;
-}
-*/
   }
 
   public function countReserveResource($pId, $type = null)
