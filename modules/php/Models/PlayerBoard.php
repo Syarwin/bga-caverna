@@ -384,11 +384,12 @@ class PlayerBoard
       // Compute all caverns (+ tunnel if player played the G_WorkRoom building)
       $this->buildableZones = [];
       foreach ($this->tiles as $tile) {
-        if ($tile['type'] == TILE_CAVERN) {
+        $type = $this->grid[$tile['x']][$tile['y']]['type'];
+        if ($type == TILE_CAVERN) {
           $this->buildableZones[] = $this->extractPos($tile);
         } elseif (
           $this->player->hasPlayedBuilding('G_WorkRoom') &&
-          ($tile['type'] == \TILE_TUNNEL || $tile['type'] == \TILE_DEEP_TUNNEL)
+          ($type == \TILE_TUNNEL || $type == \TILE_DEEP_TUNNEL)
         ) {
           $this->buildableZones[] = $this->extractPos($tile);
         }
