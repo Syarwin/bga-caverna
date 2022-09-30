@@ -559,7 +559,7 @@ class Player extends \CAV\Helpers\DB_Model
         continue;
       }
 
-      $created[] = $animalType;
+      $created[] = $animal;
       array_push($meeples, ...$this->createResourceInReserve($animal, 1));
     }
 
