@@ -187,6 +187,16 @@ $stats_type = [
       'name' => totranslate('Amount of donkeys earned from the board'),
       'type' => 'int',
     ],
+    'boardDog' => [
+      'id' => STAT_DOG_FROM_BOARD,
+      'name' => totranslate('Amount of dogs earned from the board'),
+      'type' => 'int',
+    ],
+    'boardGold' => [
+      'id' => STAT_GOLD_FROM_BOARD,
+      'name' => totranslate('Amount of gold earned from the board'),
+      'type' => 'int',
+    ],
 
     'buildingsWood' => [
       'id' => STAT_WOOD_FROM_BUILDINGS,
@@ -243,6 +253,16 @@ $stats_type = [
       'name' => totranslate('Amount of donkeys earned from buildings'),
       'type' => 'int',
     ],
+    'buildingsDog' => [
+      'id' => STAT_DOG_FROM_BUILDINGS,
+      'name' => totranslate('Amount of dogs earned from buildings'),
+      'type' => 'int',
+    ],
+    'buildingsGold' => [
+      'id' => STAT_GOLD_FROM_BUILDINGS,
+      'name' => totranslate('Amount of gold earned from buildings'),
+      'type' => 'int',
+    ],
     'buildingsBegging' => [
       'id' => STAT_BEGGING_FROM_BUILDINGS,
       'name' => totranslate('Amount of beggings earned from buildings'),
@@ -251,7 +271,7 @@ $stats_type = [
     'totalBuildingsBuilt' => [
       'id' => STAT_BUILDINGS_BUILT,
       'name' => totranslate('Number of buildings built'),
-      'type' => 'int', 
+      'type' => 'int',
     ],
     'convertedGrain' => [
       'id' => STAT_GRAIN_CONVERTED,

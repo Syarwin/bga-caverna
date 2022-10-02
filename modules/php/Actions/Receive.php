@@ -50,8 +50,8 @@ class Receive extends \CAV\Models\Action
     $meeple = $this->getMeeple();
     $player = Players::getActive();
     Meeples::receiveResource($player, $meeple);
-    if (!in_array($meeple['type'], ['field','roomStone'])) {
-      $statName = 'incCards' . ucfirst($meeple['type']);
+    if (!in_array($meeple['type'], ['field', 'roomStone'])) {
+      $statName = 'incBuildings' . ucfirst($meeple['type']);
       Stats::$statName($player);
     }
 
