@@ -65,6 +65,11 @@ class Pay extends \CAV\Models\Action
     $player = $player ?? Players::getActive();
     $args = $this->getCtxArgs();
     $nb = $args['nb'] ?? 0;
+    if (($args['calculate'] ?? false) === true) {
+      $costs = $player->getHarvestCost();
+      Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs);
+      $args['costs'] = $costs;
+    }
     $combinations = self::computeAllBuyableCombinations($player, $args['costs'], $nb, $ignoreResources);
     $combinations = self::keepOnlyOptimals($combinations);
 
