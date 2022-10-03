@@ -52,7 +52,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let pref = 0; // TODO
       if (pref == 0) {
         // Floating container
-        if (this._floatingContainerOpen == type) {
+        if (this._floatingContainerOpen == type && evt !== null) {
           delete $('floating-building-boards-wrapper').dataset.open;
           this._floatingContainerOpen = null;
         } else {
