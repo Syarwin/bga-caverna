@@ -1,3 +1,23 @@
+.spectator-mode {
+  .roundedbox_top,
+  .roundedbox_bottom {
+    display: none;
+  }
+  .roundedbox_main {
+    background: transparent !important;
+  }
+  .roundedboxinner {
+    padding: 8px;
+    box-sizing: border-box;
+  }
+}
+
+.player-board#spectatorbox {
+  .player_board_inner {
+    padding: 5px 10px;
+  }
+}
+
 .player-board {
   padding: 7px 3px 5px;
 
