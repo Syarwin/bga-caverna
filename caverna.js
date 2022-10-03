@@ -283,7 +283,7 @@ define([
 
       onLoadingComplete() {
         if (localStorage.getItem('cavernaTour') != 1) {
-          if (!this.isReadOnly) this.showTour();
+          if (!this.isReadOnly()) this.showTour();
         } else {
           dojo.style('tour-slide-footer', 'display', 'none');
           $('neverShowMe').checked = true;
