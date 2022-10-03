@@ -52,7 +52,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let pref = 0; // TODO
       if (pref == 0) {
         // Floating container
-        if (this._floatingContainerOpen == type && evt !== null) {
+        if (this._floatingContainerOpen == type) {
           delete $('floating-building-boards-wrapper').dataset.open;
           this._floatingContainerOpen = null;
         } else {
@@ -267,7 +267,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this._selectableBuildings = buildings.map((id) => parseInt(id));
       this._onSelectBuildingCallback = callback;
       buildings.forEach((buildingId) => $(`building-${buildingId}`).classList.add('selectable'));
-      this.goToBuildingBoard('dwellings');
+      if (this._floatingContainerOpen == null) {
+        this.goToBuildingBoard('dwellings');
+      }
     },
 
     /*
