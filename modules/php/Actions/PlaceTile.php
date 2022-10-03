@@ -29,7 +29,7 @@ class PlaceTile extends \CAV\Models\Action
 
   public function getTiles()
   {
-    return $this->getCtxArgs()['tiles'];
+    return $this->getCtxArgs()['tiles'] ?? [];
   }
 
   public static function getTileName($tile)
