@@ -2849,15 +2849,26 @@ html[data-background='1'] {
       flex-grow: 1;
       padding: 10px 20px; }
       #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid {
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        grid-row-gap: 7px;
+        display: flex;
+        flex-wrap: wrap;
         font-size: 25px; }
+        #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-item {
+          flex-basis: 48%;
+          margin: 3px;
+          height: 36px; }
+          #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-item.exchange-with-source {
+            flex-basis: 97%;
+            display: flex; }
+            #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-item.exchange-with-source .exchange-source {
+              flex-basis: 50%; }
+            #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-item.exchange-with-source button.exchange-desc {
+              flex-basis: 50%; }
         #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid .exchange-source {
           font-family: var(--caverna-font-family);
           font-size: 20px;
           text-align: center; }
         #popin_showExchanges.caverna_popin #popin_showExchanges_contents #exchanges-container #exchanges-grid button.exchange-desc {
+          height: 36px;
           font-size: 22px;
           letter-spacing: 3px;
           cursor: pointer;
@@ -3125,6 +3136,8 @@ html[data-background='1'] {
         border-radius: 5px;
         border: 1px solid gray;
         font-size: 15px; }
+      #popin_showTour.caverna_popin #tour-slider-container .slide .tour-remark + .tour-remark {
+        margin-top: 8px; }
       #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img {
         background-size: contain;
         background-repeat: no-repeat;
@@ -3135,36 +3148,39 @@ html[data-background='1'] {
           height: 200px;
           background-image: url("img/help/panel-info.png"); }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-centralBoard {
-          width: 400px;
-          height: 400px;
+          width: 500px;
+          height: 320px;
           background-image: url("img/help/central-board.jpg"); }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-harvest {
-          width: 100px;
-          height: 100px;
+          width: 200px;
+          height: 80px;
           margin: 5px auto;
-          background-position: 8.62866% 21.8543%;
-          background-size: 2027.72%;
-          background-image: url("img/meeples.png"); }
-        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-cardsBtn {
-          width: 173px;
-          height: 100px;
-          margin: 50px 10px auto 20px;
-          background-image: url("img/help/cardsBtn.png"); }
+          background-image: url("img/help/harvest.png"); }
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-buildingsBtn {
+          width: 230px;
+          height: 65px;
+          margin: 10px auto;
+          background-image: url("img/help/buildings-buttons.png"); }
+        #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-buildings {
+          width: 470px;
+          height: 172px;
+          margin: 0px 0px 10px;
+          background-image: url("img/help/buildings.png"); }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-player-board {
-          width: 300px;
-          height: 200px;
+          width: 360px;
+          height: 230px;
           background-image: url("img/help/player-board.jpg");
           margin: 0px auto 10px; }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-player-panel {
           width: 200px;
-          height: 200px;
+          height: 230px;
           background-image: url("img/help/player-panel.png"); }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-cook {
-          width: 257px;
-          height: 283px;
+          width: 360px;
+          height: 290px;
           background-image: url("img/help/exchange-modal.png"); }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-cook-btn {
-          width: 100px;
+          width: 140px;
           height: 56px;
           background-image: url("img/help/cook-btn.jpg");
           margin: 8px auto 10px; }
@@ -3174,13 +3190,13 @@ html[data-background='1'] {
           background-image: url("img/help/accomodate.jpg");
           margin-left: 20px; }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-reorganize-btn {
-          width: 100px;
+          width: 120px;
           height: 56px;
           background-image: url("img/help/reorganize-btn.jpg");
           margin: 8px auto 10px; }
         #popin_showTour.caverna_popin #tour-slider-container .slide .tour-img#img-reorganize-controls {
           width: 157px;
-          height: 150px;
+          height: 160px;
           background-image: url("img/help/accomodate-controls.jpg");
           margin-right: 20px; }
       #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-intro button {
@@ -3189,13 +3205,13 @@ html[data-background='1'] {
       #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-panelInfo {
         width: 700px; }
       #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-centralBoard {
-        width: 800px; }
-      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-centralBoard {
-        width: 800px; }
+        width: 900px; }
       #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-boardPanel {
-        width: 600px; }
-      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-cook .tour-remark {
-        text-align: center; }
+        width: 650px; }
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-boardPanel {
+        width: 650px; }
+      #popin_showTour.caverna_popin #tour-slider-container .slide#tour-slide-cook {
+        width: 580px; }
   #popin_showTour.caverna_popin #tour-slide-footer {
     min-height: 30px;
     background-color: #e6e6e6d1;

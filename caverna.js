@@ -1119,7 +1119,7 @@ define([
        * Exchange row template : basically a button
        */
       tplExchangeRow(exchange) {
-        let source = exchange.source ? _(exchange.source) : '';
+        let source = exchange.source ? `<div class='exchange-source'>${_(exchange.source)}</div>` : '';
         let arrowN = exchange.max && exchange.max != 9999 ? '-' + exchange.max + 'X' : '';
         let desc = this.formatStringMeeples(
           this.formatResourceArray(exchange.from, false) +
@@ -1127,10 +1127,10 @@ define([
             this.formatResourceArray(exchange.to, false)
         );
 
-        return `
-            <div class='exchange-source'>${source}</div>
+        return `<div class='exchange-item ${source != ''? 'exchange-with-source' : ''}'>
+            ${source}
             <button class='exchange-desc' id="exchange-${exchange.id}">${desc}</button>
-        `;
+          </div>`;
       },
 
       onEnteringStateStables(args) {
@@ -1472,7 +1472,7 @@ define([
           closeIcon: 'fa-times',
           openAnimation: true,
           openAnimationTarget: 'uwe-help',
-          title: _('Agricola Tour'),
+          title: _('Caverna Tour'),
           contents: this.tplTourContent(),
           closeAction: 'hide',
           verticalAlign: 'flex-start',
@@ -1492,7 +1492,6 @@ define([
       },
 
       showTour() {
-        return;
         this._tourModal.show();
         this.setTourSlide('intro');
       },
@@ -1509,7 +1508,7 @@ define([
           }</button></div>`;
 
         let introBubble = _(
-          "Welcome to Agricola on BGA. I'm here to give you a tour of the interface, to make sure you'll enjoy your games to the fullest."
+          "Welcome to Caverna on BGA. I'm here to give you a tour of the interface, to make sure you'll enjoy your games to the fullest."
         );
         let introSectionUI = _('Global interface overview');
         let introSectionScoring = _('Scoring');
@@ -1518,15 +1517,18 @@ define([
 
         let panelInfoBubble = _("Let's start with this panel next to your name: a very handy toolbox.");
         let panelInfoItems = [
+          _('round number: the last revealed action card is also highlighted in yellow on the board'),
           _('my face: open this tour if you need it later'),
           _(
             "the switch will allow to toggle the safe/help mode: when enabled, clicking will do nothing, and instead will open tooltips on any elements with a question mark on it, making it sure you won't misclick"
           ),
-          _('the star calendar: details of live scores (only if corresponding game option was enabled)'),
-          _('the star: a breakdown of the endgame scoring'),
           _(
             "settings: this implementation comes with a lot of ways to customize your experience to your needs. Take some time to play with them until you're comfortable"
           ),
+          _('the star calendar: details of live scores (only if corresponding game option was enabled)'),
+          _('the ruby helper: a reminder of all the possible exchanges using ruby in Caverna'),
+          _('the loot helper: an helpsheet of all the possible loots during an expedition'),
+          _('special harvest tracker: keep track of the passed and future harvest events. Hover on the red token to have a reminder of the event behavior')
         ];
 
         let centralBoardBubble = _(
@@ -1534,79 +1536,79 @@ define([
         );
         let centralBoardItems = [
           _(
-            'Primary action spaces: available at the start of the game, the left column may vary or disappear based on the number of players'
+            'Primary action card spaces: available at the start of the game, depends on the number of players'
           ),
           _(
-            'Action space cards: one card is revealed at the start of each round. They are organized in 6 stages, randomized within each stage (the question mark on the round numbers preview the possible action space cards.) Each stage ends with a harvest:'
-          ),
-          _(
-            'Additional tile: this is only present if you enable the corresponding game option. It provides additional actions that are linked together: if a player places a farmer on one of the actions, all the other linked actions also become unavailable.'
-          ),
-          _(
-            'You may notice this section is adapted to be tablet/mobile-friendly (less wide than real components). It is publisher-approved and affected cards will be adapted or omitted.'
+            'Action space cards: one card is revealed at the start of each round. They are organized in 4 stages, randomized within each stage (the question mark on the round numbers preview the possible action space cards.) On the right of each card, an havest token is here to remind you what will happen at the end of that round: hover on the token to have some precision.'
           ),
         ];
 
-        let cardsBtnBubble = _('Where are all the cards?');
+        let cardsBtnBubble = _('Where are all the buildings?');
         let cardsBtnItems = [
-          _('Clicking the Fireplace icon brings up the Major Improvements board.'),
+          _('On the very bottom left on your screen, you will find these buttons.'),
+          _('Click on any of them to open the buildings tabs:'),
           _(
-            'The other icon (with mixed card types) brings up your hand of Occupations and Minor Improvements. It will not appear if you are in Beginner Mode, or if you have customized the setting to move it elsewhere.'
+            'Buildings are organized into four board, following physical components. Click on another button to navigate from one category to another, and click the X to close that tab once you are done.'
           ),
+          _('You can always check a building details by hovering on it to see the tooltip, or by clicking on it to display a little modal with building details. This also work for buildings on player boards.')
         ];
 
         let playerBoardBubble = _(
-          'This is your personal farmyard board. Here you can build rooms, build fences, build stables, or plow fields.'
+          'This is your personal board. Here you can build tunnels, caverns, mines, meadow, pastures, stables, plow field or furnish buildings.'
         );
         let playerPanelBubble = _('These player panels contain a lot of useful information!');
         let playerPanelItems = [
           _('Top section: resources and food in personal supply.'),
           _('Middle section: animals currently on farm, and actions remaining.'),
           _(
-            'Bottom section: a reminder that each player can only have up to 5 farmers, 15 fence pieces, and 4 stables!'
+            'Bottom section: on the right, a reminder that each player can only have up to 3 stables! On the left, a summary of current status for the player\'s dwarfs, details below.'
           ),
+          _('Dwarfs on the left are placed on action board already; dwarfs in the middle are on the player\'s board, waiting to be placed, dwarfs on the right are potential children (according to player\'s current dwellings capacity) you might get if you take a "With for Children" action. Don\'t forgot that each player can only have 5 dwarfs at maximum (except by playing a special dwelling)!'),
           _(
-            'The number after the / in your food reserve is a reminder of how much food the player currently needs for the next harvest.'
+            'The number after the / in your food reserve is a reminder of how much food the player currently needs for the next harvest, based on current public information.'
           ),
         ];
 
         let cookBubble = _(
-          'In Agricola, cooking animals and seed can be a crucial step to provide the food you need to feed your people.'
+          'In Caverna, cooking animals and seed can be a crucial step to provide the food you need to feed your people.'
         );
         let cookItems = [
           _(
             'All resource conversions happens in this window: just click on the exchanges you want to make before hitting "Confirm".'
           ),
           _(
-            'If you need to make an exchange, just click on this button to open the previous modal (button is only present if you can do at least one exchange).'
+            'If you need to make an exchange, just click on the left button to open the previous modal (button is only present if you can do at least one exchange).'
+          ),
+          _(
+            'Similarly, if you have at least one ruby, the button on the right will be displayed. Click on it to open the ruby modal and click on the exchange you want to make with your ruby(ies)'
           ),
         ];
 
         let reorganizeBubble = _(
-          'Whenever you obtain animals, you must immediately accomodate them in your farm, otherwise they will be discarded (or cooked if you have the proper improvement.)'
+          'Whenever you obtain animals, you must immediately accomodate them in your farm or cook them (except for dogs that can wander around)'
         );
         let reorganizeItems = [
           _(
             'Most of the time, the game will automatically accommodate your animals in the best spot ever. However, you may also arrange them manually by either changing the "automatic" setting or by clicking this button:'
           ),
           _(
-            'Click on the small arrows that pop up in your pastures, stables, and rooms to choose how your animals should be arranged.'
+            'Click on the small arrows that pop up in your pastures, stables, buildings, meadows (if you have dogs) to choose how your animals should be arranged.'
           ),
           _(
-            'These controls will clear all, decrease, increase, or maximize a specific animal type in each of your pastures/stables/rooms.'
+            'These controls will clear all, decrease, increase, or maximize a specific animal type in each of your pastures/stables/buildings/meadows.'
           ),
         ];
 
         let bugBubble = _('No code is error-free. Before reporting a bug, please follow the following steps.');
         let bugItems = [
           _(
-            'If the issue is related to a card, please use the unique identifier (deck + number, e.g. A001) instead of the name.'
+            'If the issue is related to a building, please use the english name.'
           ),
           _(
-            'If your language is not English, please check the English card description using the unique identifier. If there is an incorrect translation to your language, please do not report a bug and use the translation module (Community > Translation) to fix it directly.'
+            'If your language is not English, please check the English building description. If there is an incorrect translation to your language, please do not report a bug and use the translation module (Community > Translation) to fix it directly.'
           ),
           _(
-            'For rules-related bugs, please double-check the rulebook before reporting to make sure you have it correct. The majority of rules-related bugs submitted so far... have not actually been bugs :/'
+            'For rules-related bugs, please double-check the rulebook before reporting to make sure you have it correct.'
           ),
           _(
             'When you encounter a bug, please refresh your page to see if the bug goes away. Knowing whether or not a bug is persisting through refresh or not will help us find and fix it, so please include that in the bug report!'
@@ -1640,6 +1642,8 @@ define([
                       <li>${panelInfoItems[2]}</li>
                       <li>${panelInfoItems[3]}</li>
                       <li>${panelInfoItems[4]}</li>
+                      <li>${panelInfoItems[5]}</li>
+                      <li>${panelInfoItems[6]}</li>
                     </ul>
                   </div>
                 </div>
@@ -1659,27 +1663,22 @@ define([
                         ${centralBoardItems[1]}
                         <div class="tour-img" id="img-harvest"></div>
                       </li>
-                      <li>${centralBoardItems[2]}</li>
                     </ul>
                   </div>
                 </div>
-                <div class="tour-remark">${centralBoardItems[3]}</div>
                 ${nextBtn('cardsBtn')}
               </div>
 
               <div id="tour-slide-cardsBtn" class="slide">
                 <div class="bubble">${cardsBtnBubble}</div>
-                <div class="split-hor">
-                  <div>
-                    <ul>
-                      <li>${cardsBtnItems[0]}</li>
-                      <li>${cardsBtnItems[1]}</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <div class="tour-img" id="img-cardsBtn"></div>
-                  </div>
-                </div>
+
+                ${cardsBtnItems[0]}
+                <div class="tour-img" id="img-buildingsBtn"></div>
+                ${cardsBtnItems[1]}
+                <div class="tour-img" id="img-buildings"></div>
+                ${cardsBtnItems[2]}
+                <div class="tour-remark">${cardsBtnItems[3]}</div>
+
                 ${nextBtn('boardPanel')}
               </div>
 
@@ -1702,6 +1701,7 @@ define([
                   </div>
                 </div>
                 <div class="tour-remark">${playerPanelItems[3]}</div>
+                <div class="tour-remark">${playerPanelItems[4]}</div>
 
                 ${nextBtn('cook')}
               </div>
@@ -1723,6 +1723,8 @@ define([
                   ${cookItems[1]}
 
                   <div class="tour-img" id="img-cook-btn"></div>
+
+                  ${cookItems[2]}
                 </div>
 
                 ${nextBtn('reorganize')}

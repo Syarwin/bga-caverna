@@ -18,7 +18,8 @@ trait DebugTrait
   function tp()
   {
     $player = Players::getCurrent();
-    Buildings::setupNewGame(Players::getAll(), []);
+    var_dump($player->getPlayedBuildings());
+//    Buildings::setupNewGame(Players::getAll(), []);
   }
 
   function dv()

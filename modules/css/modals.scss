@@ -416,10 +416,26 @@
       padding: 10px 20px;
 
       #exchanges-grid {
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        grid-row-gap: 7px;
+        display: flex;
+        flex-wrap: wrap;
         font-size: 25px;
+
+        .exchange-item {
+          flex-basis: 48%;
+          margin: 3px;
+          height: 36px;
+
+          &.exchange-with-source {
+            flex-basis: 97%;
+            display: flex;
+            .exchange-source {
+              flex-basis: 50%;
+            }
+            button.exchange-desc {
+              flex-basis: 50%;
+            }
+          }
+        }
 
         .exchange-source {
           font-family: var(--caverna-font-family);
@@ -427,6 +443,7 @@
           text-align: center;
         }
         button.exchange-desc {
+          height: 36px;
           font-size: 22px;
           letter-spacing: 3px;
           cursor: pointer;
@@ -798,6 +815,9 @@
         border: 1px solid gray;
         font-size: 15px;
       }
+      .tour-remark + .tour-remark {
+        margin-top: 8px;
+      }
 
       .tour-img {
         background-size: contain;
@@ -812,48 +832,52 @@
         }
 
         &#img-centralBoard {
-          width: 400px;
-          height: 400px;
+          width: 500px;
+          height: 320px;
           background-image: url('img/help/central-board.jpg');
         }
 
         &#img-harvest {
-          width: 100px;
-          height: 100px;
+          width: 200px;
+          height: 80px;
           margin: 5px auto;
-          background-position: 8.62866% 21.8543%;
-          background-size: 2027.72%;
-          background-image: url('img/meeples.png');
+          background-image: url('img/help/harvest.png');
         }
 
-        &#img-cardsBtn {
-          width: 173px;
-          height: 100px;
-          margin: 50px 10px auto 20px;
-          background-image: url('img/help/cardsBtn.png');
+        &#img-buildingsBtn {
+          width: 230px;
+          height: 65px;
+          margin: 10px auto;
+          background-image: url('img/help/buildings-buttons.png');
+        }
+        &#img-buildings {
+          width: 470px;
+          height: 172px;
+          margin: 0px 0px 10px;
+          background-image: url('img/help/buildings.png');
         }
 
         &#img-player-board {
-          width: 300px;
-          height: 200px;
+          width: 360px;
+          height: 230px;
           background-image: url('img/help/player-board.jpg');
           margin: 0px auto 10px;
         }
 
         &#img-player-panel {
           width: 200px;
-          height: 200px;
+          height: 230px;
           background-image: url('img/help/player-panel.png');
         }
 
         &#img-cook {
-          width: 257px;
-          height: 283px;
+          width: 360px;
+          height: 290px;
           background-image: url('img/help/exchange-modal.png');
         }
 
         &#img-cook-btn {
-          width: 100px;
+          width: 140px;
           height: 56px;
           background-image: url('img/help/cook-btn.jpg');
           margin: 8px auto 10px;
@@ -867,7 +891,7 @@
         }
 
         &#img-reorganize-btn {
-          width: 100px;
+          width: 120px;
           height: 56px;
           background-image: url('img/help/reorganize-btn.jpg');
           margin: 8px auto 10px;
@@ -875,7 +899,7 @@
 
         &#img-reorganize-controls {
           width: 157px;
-          height: 150px;
+          height: 160px;
           background-image: url('img/help/accomodate-controls.jpg');
           margin-right: 20px;
         }
@@ -892,18 +916,16 @@
         width: 700px;
       }
       &#tour-slide-centralBoard {
-        width: 800px;
-      }
-      &#tour-slide-centralBoard {
-        width: 800px;
+        width: 900px;
       }
       &#tour-slide-boardPanel {
-        width: 600px;
+        width: 650px;
+      }
+      &#tour-slide-boardPanel {
+        width: 650px;
       }
       &#tour-slide-cook {
-        .tour-remark {
-          text-align: center;
-        }
+        width: 580px;
       }
     }
   }
