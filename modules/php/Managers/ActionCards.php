@@ -186,7 +186,7 @@ class ActionCards extends \CAV\Helpers\Pieces
   {
     $cards = [];
     foreach (self::getAccumulationSpaces() as $cId => $card) {
-      if (Meeples::getResourcesOnCard($cId)->count() > 6) {
+      if (Meeples::getResourcesOnCard($cId)->count() >= 6) {
         $cards[] = $cId;
       }
     }
