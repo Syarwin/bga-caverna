@@ -753,8 +753,12 @@ html[data-background='1'] {
           background-color: #72c3b17d; }
         #central-board .turn-action-container .future-resources-holder .resource-holder-update[data-color='982fff'] {
           background-color: #982fff7d; }
-        #central-board .turn-action-container .future-resources-holder .resource-holder-update[data-color='7b7b7b'] {
-          background-color: #b3acac7d; }
+        #central-board .turn-action-container .future-resources-holder .resource-holder-update[data-color='aa9702'] {
+          background-color: #aa97027d; }
+        #central-board .turn-action-container .future-resources-holder .resource-holder-update[data-color='df7605'] {
+          background-color: #df76057d; }
+        #central-board .turn-action-container .future-resources-holder .resource-holder-update[data-color='2a05df'] {
+          background-color: #2a05df7d; }
     [data-turn='1'] #central-board .turn-action-container#turn_1 .action-card-holder {
       border: 2px solid #fffb00;
       margin: 0; }

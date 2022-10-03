@@ -1492,6 +1492,7 @@ define([
       },
 
       showTour() {
+        return;
         this._tourModal.show();
         this.setTourSlide('intro');
       },

@@ -22,6 +22,7 @@ trait HarvestTrait
     Globals::setSkipHarvest(Globals::getPassHarvest());
     Globals::setPassHarvest([]);
     Globals::setExchangeFlags([]);
+    Globals::setHarvestChoice([]);
 
     $harvestToken = Meeples::startHarvest();
     Notifications::startHarvest($harvestToken);
