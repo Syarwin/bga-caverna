@@ -64,15 +64,22 @@ class Pay extends \CAV\Models\Action
   {
     $player = $player ?? Players::getActive();
     $args = $this->getCtxArgs();
-    $nb = $args['nb'] ?? 0;
+    $nb = $args['nb'] ?? null;
     if (($args['calculate'] ?? false) === true) {
       $costs = $player->getHarvestCost();
       Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs);
       $args['costs'] = $costs;
     }
-    $combinations = self::computeAllBuyableCombinations($player, $args['costs'], $nb, $ignoreResources);
-    $combinations = self::keepOnlyOptimals($combinations);
 
+    $combinations = self::computeAllBuyableCombinations(
+      $player,
+      $args['costs'],
+      $nb,
+      $ignoreResources,
+      $this->isHarvest()
+    );
+    $combinations = self::keepOnlyOptimals($combinations);
+    // throw new \feException(print_r($combinations));
     // Remove NB and fetch card names for UI
     $cardNames = [];
     foreach ($combinations as &$combination) {
@@ -108,6 +115,7 @@ class Pay extends \CAV\Models\Action
     } elseif (empty($args['combinations'])) {
       // if we are in harvest we process harvest pay
       if ($this->isHarvest() && $harvestFlag) {
+        // throw new \feException('toto');
         $this->actPayHarvest();
       } else {
         throw new \BgaVisibleSystemException('No option to pay');
@@ -154,13 +162,18 @@ class Pay extends \CAV\Models\Action
       // Delete meeples and notify
       $deleted = [];
       foreach ($cost as $resource => $amount) {
-        if ($resource == 'sources') {
+        if ($resource == 'sources' || $resource == BEGGING) {
           continue;
         }
         $deleted = array_merge($deleted, $player->useResource($resource, $amount));
       }
       if (!empty($deleted)) {
         Notifications::payResources($player, $deleted, $args['source'], $cost['sources'] ?? [], $args['cardNames']);
+      }
+
+      if (($cost[BEGGING] ?? 0) != 0) {
+        $created = $player->createResourceInReserve(BEGGING, $cost[BEGGING]);
+        Notifications::begging($player, $created);
       }
     }
 
@@ -181,9 +194,16 @@ class Pay extends \CAV\Models\Action
     $player = Players::getActive();
 
     $cost = $this->getCtxArgs()['costs']['fees'][0];
-    if (isset($this->getCtxArgs()['costs']['trades']) || isset($this->getCtxArgs()['costs']['bonuses'])) {
+    $argsPay = $this->argsPay();
+
+    if (
+      isset($this->getCtxArgs()['costs']['trades']) ||
+      isset($this->getCtxArgs()['costs']['bonuses']) ||
+      count($argsPay['combinations']) > 0
+    ) {
       return clienttranslate('Choose resources to feed your family');
     }
+
     $begging = 0;
     foreach ($cost as $resource => $amount) {
       if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
@@ -330,8 +350,13 @@ class Pay extends \CAV\Models\Action
    * Compute all the possibles combinations that a player can buy
    * @param $target (opt) : keep only combinations with nb == target
    */
-  protected static function computeAllBuyableCombinations($player, $costs, $target = null, $ignoreResources = false)
-  {
+  protected static function computeAllBuyableCombinations(
+    $player,
+    $costs,
+    $target = null,
+    $ignoreResources = false,
+    $harvest = false
+  ) {
     $reserve = $player->getExchangeResources();
 
     // Compute an artifical maxReserve to reduce computations by applying all potentially available bonuses
@@ -412,7 +437,17 @@ class Pay extends \CAV\Models\Action
     // Keep only combinations with >= 0 resource amount that fit inside RESERVE (and not maxReserve)
     $oldCombinations = $combinations;
     $combinations = [];
-    foreach ($oldCombinations as $combination) {
+    foreach ($oldCombinations as &$combination) {
+      if ($harvest && isset($combination[FOOD]) && $combination[FOOD] != 0 && $combination[FOOD] > $reserve[FOOD]) {
+        $combination[BEGGING] = $combination[FOOD] - $reserve[FOOD];
+        $combination[FOOD] = $reserve[FOOD];
+        if ($reserve[FOOD] == 0) {
+          unset($combination[FOOD]);
+        }
+      } elseif ($harvest && $reserve[FOOD] == 0) {
+        $combination[BEGGING] = $combination[FOOD];
+        unset($combination[FOOD]);
+      }
       self::pushAux($combination, $combinations, $reserve, true, $ignoreResources);
     }
 
