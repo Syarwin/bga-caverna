@@ -63,10 +63,10 @@ class Action
   /**
    * Syntaxic sugar
    */
-  public function resolveAction($args = [])
+  public function resolveAction($args = [], $automatic = null)
   {
     $player = Players::getActive();
-    $args['automatic'] = $this->isAutomatic($player);
+    $args['automatic'] = $automatic ?? $this->isAutomatic($player);
     Engine::resolveAction($args);
     Engine::proceed();
   }
