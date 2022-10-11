@@ -2387,10 +2387,8 @@ html[data-background='1'] {
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    visibility: hidden; }
+    align-items: center; }
     #player_config .harvest-indicator:empty, #player_config .harvest-indicator[data-type="harvest_red"] {
-      visibility: visible;
       background: #aaa; }
       #player_config .harvest-indicator:empty::before, #player_config .harvest-indicator[data-type="harvest_red"]::before {
         content: "";
@@ -2402,6 +2400,8 @@ html[data-background='1'] {
         background-image: url("img/harvest_tokens.png");
         background-size: 100% 600%;
         opacity: 0.3; }
+    #player_config .harvest-indicator .caverna-meeple {
+      background-position-y: 100%; }
     #player_config .harvest-indicator[data-type="harvest_choice"]::before {
       background-position-y: 0%; }
     #player_config .harvest-indicator[data-type="harvest_none"]::before {

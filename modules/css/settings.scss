@@ -138,11 +138,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    visibility: hidden;
 
     &:empty,
     &[data-type="harvest_red"] {
-      visibility: visible;
       background: #aaa;
       &::before {
         content: "";
@@ -155,6 +153,10 @@
         background-size: 100% 600%;
         opacity: 0.3;
       }
+    }
+
+    .caverna-meeple {
+      background-position-y: 100%;
     }
 
     &[data-type="harvest_choice"]::before {
