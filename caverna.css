@@ -2378,6 +2378,8 @@ html[data-background='1'] {
     transition: transform 1s; }
   #player_config #show-settings:hover .fa-primary {
     transform: rotate(180deg); }
+  #player_config #harvest-indicators {
+    position: relative; }
   #player_config .harvest-indicator {
     width: 35px;
     height: 35px;
@@ -2385,11 +2387,13 @@ html[data-background='1'] {
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center; }
-    #player_config .harvest-indicator:empty, #player_config .harvest-indicator[data-type='harvest_red'] {
+    align-items: center;
+    visibility: hidden; }
+    #player_config .harvest-indicator:empty, #player_config .harvest-indicator[data-type="harvest_red"] {
+      visibility: visible;
       background: #aaa; }
-      #player_config .harvest-indicator:empty::before, #player_config .harvest-indicator[data-type='harvest_red']::before {
-        content: '';
+      #player_config .harvest-indicator:empty::before, #player_config .harvest-indicator[data-type="harvest_red"]::before {
+        content: "";
         position: absolute;
         left: 10%;
         right: 10%;
@@ -2397,21 +2401,21 @@ html[data-background='1'] {
         bottom: 10%;
         background-image: url("img/harvest_tokens.png");
         background-size: 100% 600%;
-        opacity: 0.5; }
-    #player_config .harvest-indicator[data-type='harvest_choice']::before {
+        opacity: 0.3; }
+    #player_config .harvest-indicator[data-type="harvest_choice"]::before {
       background-position-y: 0%; }
-    #player_config .harvest-indicator[data-type='harvest_none']::before {
+    #player_config .harvest-indicator[data-type="harvest_none"]::before {
       background-position-y: 60%; }
-    #player_config .harvest-indicator[data-type='harvest_1food']::before {
+    #player_config .harvest-indicator[data-type="harvest_1food"]::before {
       background-position-y: 80%; }
-    #player_config .harvest-indicator[data-type='harvest_red'] {
+    #player_config .harvest-indicator[data-type="harvest_red"] {
       width: 25px;
       height: 25px;
       background: none; }
-      #player_config .harvest-indicator[data-type='harvest_red'] .help-marker {
+      #player_config .harvest-indicator[data-type="harvest_red"] .help-marker {
         top: -7px;
         left: 15px; }
-      #player_config .harvest-indicator[data-type='harvest_red']::before {
+      #player_config .harvest-indicator[data-type="harvest_red"]::before {
         background-position-y: 100%;
         left: 0;
         right: 0;
@@ -2449,7 +2453,7 @@ html[data-background='1'] {
     #popin_showSettings .barrage_popin_closeicon i {
       margin-top: -2px; }
   #popin_showSettings h2 {
-    font-family: 'Oranienbaum';
+    font-family: "Oranienbaum";
     text-align: center;
     font-size: 23px;
     margin: 0px;
@@ -2524,7 +2528,7 @@ html[data-background='1'] {
         transition: 0.4s;
         border-radius: 34px; }
         #settings-controls-container .row-data label.switch .slider::before {
-          content: '';
+          content: "";
           position: absolute;
           background-color: #fff;
           bottom: 4px;

@@ -40,7 +40,7 @@
   #uwe-help {
     width: 32px;
     height: 32px;
-    background: url('img/help/uwe.png');
+    background: url("img/help/uwe.png");
     background-size: 80%;
     background-repeat: no-repeat;
     background-color: #fbfbfb;
@@ -126,6 +126,10 @@
     }
   }
 
+  #harvest-indicators {
+    position: relative;
+  }
+
   .harvest-indicator {
     width: 35px;
     height: 35px;
@@ -134,34 +138,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    visibility: hidden;
 
     &:empty,
-    &[data-type='harvest_red'] {
+    &[data-type="harvest_red"] {
+      visibility: visible;
       background: #aaa;
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         left: 10%;
         right: 10%;
         top: 10%;
         bottom: 10%;
-        background-image: url('img/harvest_tokens.png');
+        background-image: url("img/harvest_tokens.png");
         background-size: 100% 600%;
-        opacity: 0.5;
+        opacity: 0.3;
       }
     }
 
-    &[data-type='harvest_choice']::before {
+    &[data-type="harvest_choice"]::before {
       background-position-y: 0%;
     }
-    &[data-type='harvest_none']::before {
+    &[data-type="harvest_none"]::before {
       background-position-y: 60%;
     }
-    &[data-type='harvest_1food']::before {
+    &[data-type="harvest_1food"]::before {
       background-position-y: 80%;
     }
 
-    &[data-type='harvest_red'] {
+    &[data-type="harvest_red"] {
       width: 25px;
       height: 25px;
       background: none;
@@ -224,7 +230,7 @@
   }
 
   h2 {
-    font-family: 'Oranienbaum';
+    font-family: "Oranienbaum";
     text-align: center;
     font-size: 23px;
     margin: 0px;
@@ -329,7 +335,7 @@
         border-radius: 34px;
 
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           background-color: #fff;
           bottom: 4px;
