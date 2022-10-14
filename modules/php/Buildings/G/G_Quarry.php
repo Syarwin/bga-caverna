@@ -30,7 +30,7 @@ class G_Quarry extends \CAV\Models\Building
     $createdAnimals = Globals::getBreed();
     $donkeys = 0;
     foreach ($createdAnimals as $animal) {
-      if ($animal['type'] == DONKEY) {
+      if ($animal == DONKEY) {
         $donkeys++;
       }
     }
