@@ -416,7 +416,7 @@ class PlayerBoard
       $zones = [['x' => $b->getX(), 'y' => $b->getY()]];
     }
 
-    return $zones;
+    return Utils::uniqueZones($zones);
   }
 
   /**
@@ -991,7 +991,6 @@ class PlayerBoard
     }
     $this->pastures = array_merge($this->pastures, array_values($largePastures));
   }
-
 
   /////////////////////////////////////////////////
   //   ____      _     _   _   _ _   _ _

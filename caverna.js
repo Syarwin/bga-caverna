@@ -834,6 +834,7 @@ define([
         addUsage(1, 'grain', '<GRAIN>');
         addUsage(1, 'vegetable', '<VEGETABLE>');
 
+        addUsage(1, 'gold', '<GOLD>');
         addUsage(1, 'sheep', '<SHEEP>');
         addUsage(1, 'pig', '<PIG>');
         addUsage(1, 'dog', '<DOG>');
