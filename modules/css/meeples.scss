@@ -16,7 +16,7 @@
 }
 
 .caverna-meeple {
-  background-image: url('img/meeples.png');
+  background-image: url("img/meeples.png");
   background-repeat: no-repeat;
 
   &.meeple-score {
@@ -192,14 +192,14 @@
   }
 
   &.meeple-barn {
-    background-image: url('img/stables.png');
+    background-image: url("img/stables.png");
     background-size: 800% 100%;
     background-position-x: 100%;
     width: 0.8em;
     height: 1.1em;
   }
   &.meeple-dwarf_icon {
-    background-image: url('img/dwarves.png');
+    background-image: url("img/dwarves.png");
     background-size: 800% 100%;
     background-position-x: 100%;
     width: 1.1em;
@@ -216,7 +216,7 @@
   &.meeple-tunnel {
     width: 2.37em;
     height: 1.82em;
-    background-image: url('img/loot.png');
+    background-image: url("img/loot.png");
   }
 
   &.meeple-cavern {
@@ -263,13 +263,13 @@
 .meeple-stable {
   width: 35px;
   height: 29px;
-  background-image: url('img/dwarves.png');
+  background-image: url("img/dwarves.png");
   background-size: 800% 100%;
-  [data-dwarf='1'] & {
-    background-image: url('img/dwarves_alt.png');
+  [data-dwarf="1"] & {
+    background-image: url("img/dwarves_alt.png");
   }
-  [data-dwarf='2'] & {
-    background-image: url('img/dwarves_colorblind.png');
+  [data-dwarf="2"] & {
+    background-image: url("img/dwarves_colorblind.png");
   }
   position: relative;
   z-index: 100;
@@ -277,34 +277,34 @@
   &.meeple-stable {
     width: 24px;
     height: 31px;
-    background-image: url('img/stables.png');
+    background-image: url("img/stables.png");
   }
 
-  &[data-color='ff0000'],
+  &[data-color="ff0000"],
   .player-ff0000 & {
     background-position-x: 0%;
   }
-  &[data-color='008000'],
+  &[data-color="008000"],
   .player-008000 & {
     background-position-x: #{1 * 100% / 7};
   }
-  &[data-color='72c3b1'],
+  &[data-color="72c3b1"],
   .player-72c3b1 & {
     background-position-x: #{2 * 100% / 7};
   }
-  &[data-color='982fff'],
+  &[data-color="982fff"],
   .player-982fff & {
     background-position-x: #{3 * 100% / 7};
   }
-  &[data-color='aa9702'],
+  &[data-color="aa9702"],
   .player-aa9702 & {
     background-position-x: #{4 * 100% / 7};
   }
-  &[data-color='df7605'],
+  &[data-color="df7605"],
   .player-df7605 & {
     background-position-x: #{5 * 100% / 7};
   }
-  &[data-color='2a05df'],
+  &[data-color="2a05df"],
   .player-2a05df & {
     background-position-x: #{6 * 100% / 7};
   }
@@ -313,8 +313,8 @@
 .meeple-dwarf {
   width: 35px;
   height: 29px;
-  [data-dwarf='1'] &,
-  [data-dwarf='2'] & {
+  [data-dwarf="1"] &,
+  [data-dwarf="2"] & {
     width: 40px;
     height: 52px;
   }
@@ -330,8 +330,8 @@
   }
 }
 
-[data-dwarf='1'],
-[data-dwarf='2'] {
+[data-dwarf="1"],
+[data-dwarf="2"] {
   .player-board-grid .meeple-dwarf {
     transform: scale(0.8);
   }
@@ -340,27 +340,29 @@
 .meeple-weapon {
   width: 31px;
   height: 21px;
-  background-image: url('img/weapons.png');
+  background-image: url("img/weapons.png");
   background-size: 700% 200%;
 
-  @for $i from 1 through 7 {
-    &[data-force='#{$i}'] {
-      background-position: ($i - 1) * 100% / 6 0%;
+  [data-dwarf="0"] & {
+    @for $i from 1 through 7 {
+      &[data-force="#{$i}"] {
+        background-position: ($i - 1) * 100% / 6 0%;
+      }
     }
-  }
-  @for $i from 8 through 14 {
-    &[data-force='#{$i}'] {
-      background-position: ($i - 8) * 100% / 6 100%;
+    @for $i from 8 through 14 {
+      &[data-force="#{$i}"] {
+        background-position: ($i - 8) * 100% / 6 100%;
+      }
     }
   }
 
-  [data-dwarf='1'] &,
-  [data-dwarf='2'] & {
+  [data-dwarf="1"] &,
+  [data-dwarf="2"] & {
     width: 30px;
     height: 53px;
     margin-top: -10px;
     margin-left: 1px;
-    background-image: url('img/helmet.svg');
+    background-image: url("img/helmet.svg");
     background-size: 100% auto;
     background-position: top center;
     display: flex;
@@ -383,7 +385,7 @@
 .meeple-harvest_grey,
 .meeple-harvest_1food,
 .meeple-harvest_red {
-  background-image: url('img/harvest_tokens.png');
+  background-image: url("img/harvest_tokens.png");
   background-size: 100% 600%;
   width: 2rem;
   height: 2rem;
@@ -415,7 +417,7 @@
   width: 0.4em;
   height: 0.82em;
   font-size: 44px;
-  background-image: url('img/meeples.png');
+  background-image: url("img/meeples.png");
   background-repeat: no-repeat;
   background-position: 0% 0%;
   background-size: 700.429%;
@@ -454,7 +456,7 @@
     width: 50%;
   }
 
-  input[type='radio'] {
+  input[type="radio"] {
     display: none;
 
     &:disabled + label {
