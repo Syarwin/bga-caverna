@@ -389,10 +389,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         }
 
         if (selectableCells.length == 1) {
-          ['mouseover', 'mouseenter', 'click'].forEach((e) => {
-            const ev = new Event(e);
-            selectableCells[0].dispatchEvent(ev);
-          });
+          setTimeout(() => {
+            ['mouseover', 'mouseenter', 'click'].forEach((e) => {
+              const ev = new Event(e);
+              selectableCells[0].dispatchEvent(ev);
+              console.log(e, selectableCells[0]);
+            });
+          }, 1);
         }
       };
 
