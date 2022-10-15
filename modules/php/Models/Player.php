@@ -137,11 +137,11 @@ class Player extends \CAV\Helpers\DB_Model
   {
     foreach ($this->getPlayedBuildings() as $building) {
       if ($building->getType() == $buildingType) {
-        return $returnBoolean? true: $building;
+        return $returnBoolean ? true : $building;
       }
     }
 
-    return $returnBoolean? false : null;
+    return $returnBoolean ? false : null;
   }
 
   public function countOreMines()
@@ -265,14 +265,16 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getPossibleExchanges($trigger = ANYTIME, $removeAnytime = false)
   {
+    $b = $this->hasPlayedBuilding('G_SlaughteringCave') ? 1 : 0;
+
     $exchanges = [
       [
         'from' => [GOLD => 2],
         'to' => [FOOD => 1],
         'triggers' => null,
       ],
-      Utils::formatExchange([DONKEY => [FOOD => 1]]),
-      Utils::formatExchange([SHEEP => [FOOD => 1]]),
+      Utils::formatExchange([DONKEY => [FOOD => 1 + $b]]),
+      Utils::formatExchange([SHEEP => [FOOD => 1 + $b]]),
       Utils::formatExchange([GRAIN => [FOOD => 1]]),
 
       [
@@ -280,7 +282,7 @@ class Player extends \CAV\Helpers\DB_Model
         'to' => [FOOD => 2],
         'triggers' => null,
       ],
-      Utils::formatExchange([PIG => [FOOD => 2]]),
+      Utils::formatExchange([PIG => [FOOD => 2 + $b]]),
       Utils::formatExchange([VEGETABLE => [FOOD => 2]]),
       Utils::formatExchange([RUBY => [FOOD => 2]]),
 
@@ -291,10 +293,10 @@ class Player extends \CAV\Helpers\DB_Model
       ],
       [
         'from' => [DONKEY => 2],
-        'to' => [FOOD => 3],
+        'to' => [FOOD => 3 + 2 * $b],
         'triggers' => null,
       ],
-      Utils::formatExchange([CATTLE => [FOOD => 3]]),
+      Utils::formatExchange([CATTLE => [FOOD => 3 + $b]]),
     ];
 
     foreach ($this->getPlayedBuildings() as $building) {

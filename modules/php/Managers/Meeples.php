@@ -61,12 +61,16 @@ class Meeples extends \CAV\Helpers\Pieces
         $meeples[] = ['type' => HARVEST_NORMAL, 'location' => 'turn_' . $i, 'player_id' => 0, 'state' => 1, 'nbr' => 1];
       }
     } else {
+      $twoPlayers = count($players) == 2;
       $harvestTokens = ['red', 'red', 'red', HARVEST_NORMAL, HARVEST_NORMAL, HARVEST_NORMAL, HARVEST_NORMAL];
+      if ($twoPlayers) {
+        array_pop($harvestTokens);
+      }
       shuffle($harvestTokens);
       $i = 6;
       $red = 0;
       foreach ($harvestTokens as $tok) {
-        if (count($players) <= 2 && $i == 12) {
+        if ($twoPlayers && $i == 12) {
           continue;
         }
         if ($tok == 'red') {

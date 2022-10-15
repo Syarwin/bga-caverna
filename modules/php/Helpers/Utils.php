@@ -91,6 +91,15 @@ abstract class Utils extends \APP_DbObject
     );
   }
 
+  public static function uniqueZones($arr1)
+  {
+    return array_values(
+      array_uunique($arr1, function ($a, $b) {
+        return $a['x'] == $b['x'] ? $a['y'] - $b['y'] : $a['x'] - $b['x'];
+      })
+    );
+  }
+
   public static function formatCost($cost)
   {
     return [
@@ -225,4 +234,17 @@ abstract class Utils extends \APP_DbObject
     }
     return $t;
   }
+}
+
+function array_uunique($array, $comparator)
+{
+  $unique_array = [];
+  do {
+    $element = array_shift($array);
+    $unique_array[] = $element;
+
+    $array = array_udiff($array, [$element], $comparator);
+  } while (count($array) > 0);
+
+  return $unique_array;
 }

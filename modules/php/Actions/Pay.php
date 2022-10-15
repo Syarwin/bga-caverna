@@ -115,8 +115,7 @@ class Pay extends \CAV\Models\Action
     } elseif (empty($args['combinations'])) {
       // if we are in harvest we process harvest pay
       if ($this->isHarvest() && $harvestFlag) {
-        // throw new \feException('toto');
-        $this->actPayHarvest();
+        $this->actPayHarvest(true);
       } else {
         throw new \BgaVisibleSystemException('No option to pay');
       }
@@ -230,10 +229,10 @@ class Pay extends \CAV\Models\Action
     return $desc;
   }
 
-  public function actPayHarvest()
+  public function actPayHarvest($auto = false)
   {
     // Sanity checks
-    self::checkAction('actPay', true);
+    self::checkAction('actPay', $auto);
     $cost = $this->getCtxArgs()['costs']['fees'][0];
 
     $player = Players::getActive();
@@ -259,7 +258,7 @@ class Pay extends \CAV\Models\Action
     }
 
     // Resolve the node
-    $this->resolveAction($cost);
+    $this->resolveAction($cost, $auto);
   }
 
   /***************************************

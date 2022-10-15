@@ -416,7 +416,7 @@ class PlayerBoard
       $zones = [['x' => $b->getX(), 'y' => $b->getY()]];
     }
 
-    return $zones;
+    return Utils::uniqueZones($zones);
   }
 
   /**
@@ -691,7 +691,7 @@ class PlayerBoard
   /**
    * Return all nodes that could receive a single tile
    */
-  public function getPlacableZones($tile, $checkAdjacency = true)
+  public function getPlacableZones($tile, $checkAdjacency = true, $constraint = null)
   {
     $nodes = [];
     if ($tile == TILE_MEADOW) {
@@ -710,7 +710,11 @@ class PlayerBoard
     } elseif (in_array($tile, [TILE_PASTURE])) {
       $nodes = $this->getUnbuiltTiles(TILE_MEADOW);
     } elseif (in_array($tile, [TILE_RUBY_MINE])) {
-      $nodes = array_merge($this->getUnbuiltTiles(TILE_TUNNEL), $this->getUnbuiltTiles(TILE_DEEP_TUNNEL));
+      if (!is_null($constraint)) {
+        $nodes = $this->getUnbuiltTiles($constraint);
+      } else {
+        $nodes = array_merge($this->getUnbuiltTiles(TILE_TUNNEL), $this->getUnbuiltTiles(TILE_DEEP_TUNNEL));
+      }
     } else {
       die('getPlacableZones : ' . $tile);
     }
@@ -721,7 +725,7 @@ class PlayerBoard
   /**
    * Return all placement option for a tile
    */
-  public function getPlacementOptions($tile)
+  public function getPlacementOptions($tile, $constraint = null)
   {
     // Decompose any twin tile into two squares
     $tiles = TILE_SQUARES_MAPPING[$tile];
@@ -733,7 +737,7 @@ class PlayerBoard
       if (!in_array($tile, [TILE_RUBY_MINE, TILE_ORE_MINE, TILE_PASTURE])) {
         $this->isExtended = false;
       }
-      foreach ($this->getPlacableZones($tiles[0]) as $pos) {
+      foreach ($this->getPlacableZones($tiles[0], true, $constraint) as $pos) {
         $zones[] = [
           'pos1' => $pos,
         ];
@@ -741,8 +745,8 @@ class PlayerBoard
     } elseif (count($tiles) == 2) {
       $zones = [];
       for ($i = 0; $i <= 1; $i++) {
-        foreach ($this->getPlacableZones($tiles[$i]) as $pos) {
-          $neighbours = $this->getAdjacentZones($this->getPlacableZones($tiles[1 - $i], false), [$pos]);
+        foreach ($this->getPlacableZones($tiles[$i], true, $constraint) as $pos) {
+          $neighbours = $this->getAdjacentZones($this->getPlacableZones($tiles[1 - $i], false, $constraint), [$pos]);
           foreach ($neighbours as $pos2) {
             // We cannot place 2 tiles outside of the board
             if (
@@ -991,7 +995,6 @@ class PlayerBoard
     }
     $this->pastures = array_merge($this->pastures, array_values($largePastures));
   }
-
 
   /////////////////////////////////////////////////
   //   ____      _     _   _   _ _   _ _

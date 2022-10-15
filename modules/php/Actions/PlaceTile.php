@@ -32,6 +32,11 @@ class PlaceTile extends \CAV\Models\Action
     return $this->getCtxArgs()['tiles'] ?? [];
   }
 
+  public function getConstraint()
+  {
+    return $this->getCtxArgs()['constraint'] ?? null;
+  }
+
   public static function getTileName($tile)
   {
     $tileNames = [
@@ -54,7 +59,14 @@ class PlaceTile extends \CAV\Models\Action
   {
     $tiles = $this->getTiles();
     if (count($tiles) == 1) {
-      return self::getTileName($tiles[0]);
+      $constraint = $this->getConstraint();
+      if (is_null($constraint)) {
+        return self::getTileName($tiles[0]);
+      } else {
+        return $constraint == \TILE_TUNNEL
+          ? clienttranslate('a Ruby Mine tile on a Tunnel')
+          : clienttranslate('a Ruby Mine tile on a Deep Tunnel');
+      }
     } elseif (count($tiles) == 2) {
       return [
         'log' => clienttranslate('${tile1} or ${tile2}'),
@@ -90,7 +102,7 @@ class PlaceTile extends \CAV\Models\Action
     $player = Players::getActive();
     $zones = [];
     foreach ($this->getTiles() as $tile) {
-      $zones[$tile] = $player->board()->getPlacementOptions($tile);
+      $zones[$tile] = $player->board()->getPlacementOptions($tile, $this->getConstraint());
     }
 
     return [

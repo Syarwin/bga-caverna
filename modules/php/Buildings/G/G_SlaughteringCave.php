@@ -20,62 +20,62 @@ class G_SlaughteringCave extends \CAV\Models\Building
     $this->vp = 2;
     $this->beginner = true;
 
-    $this->exchanges = [
-      [
-        'source' => $this->name,
-        'flag' => $this->id,
-        'triggers' => null,
-        'from' => [
-          \SHEEP => 1,
-        ],
-        'to' => [
-          FOOD => 2,
-        ],
-      ],
-      [
-        'source' => $this->name,
-        'flag' => $this->id,
-        'triggers' => null,
-        'from' => [
-          \PIG => 1,
-        ],
-        'to' => [
-          FOOD => 3,
-        ],
-      ],
-      [
-        'source' => $this->name,
-        'flag' => $this->id,
-        'triggers' => null,
-        'from' => [
-          \CATTLE => 1,
-        ],
-        'to' => [
-          FOOD => 4,
-        ],
-      ],
-      [
-        'source' => $this->name,
-        'flag' => $this->id,
-        'triggers' => null,
-        'from' => [
-          \DONKEY => 1,
-        ],
-        'to' => [
-          FOOD => 2,
-        ],
-      ],
-      [
-        'source' => $this->name,
-        'flag' => $this->id,
-        'triggers' => null,
-        'from' => [
-          \DONKEY => 2,
-        ],
-        'to' => [
-          FOOD => 5,
-        ],
-      ],
-    ];
+    // $this->exchanges = [
+    //   [
+    //     'source' => $this->name,
+    //     'flag' => $this->id,
+    //     'triggers' => null,
+    //     'from' => [
+    //       \SHEEP => 1,
+    //     ],
+    //     'to' => [
+    //       FOOD => 2,
+    //     ],
+    //   ],
+    //   [
+    //     'source' => $this->name,
+    //     'flag' => $this->id,
+    //     'triggers' => null,
+    //     'from' => [
+    //       \PIG => 1,
+    //     ],
+    //     'to' => [
+    //       FOOD => 3,
+    //     ],
+    //   ],
+    //   [
+    //     'source' => $this->name,
+    //     'flag' => $this->id,
+    //     'triggers' => null,
+    //     'from' => [
+    //       \CATTLE => 1,
+    //     ],
+    //     'to' => [
+    //       FOOD => 4,
+    //     ],
+    //   ],
+    //   [
+    //     'source' => $this->name,
+    //     'flag' => $this->id,
+    //     'triggers' => null,
+    //     'from' => [
+    //       \DONKEY => 1,
+    //     ],
+    //     'to' => [
+    //       FOOD => 2,
+    //     ],
+    //   ],
+    //   [
+    //     'source' => $this->name,
+    //     'flag' => $this->id,
+    //     'triggers' => null,
+    //     'from' => [
+    //       \DONKEY => 2,
+    //     ],
+    //     'to' => [
+    //       FOOD => 5,
+    //     ],
+    //   ],
+    // ];
   }
 }

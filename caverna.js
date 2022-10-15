@@ -292,8 +292,7 @@ define([
         this.inherited(arguments);
       },
 
-      onScreenWidthChange() {
-      },
+      onScreenWidthChange() {},
 
       updateRoundCounter() {
         let val = parseInt(this.gamedatas.round);
@@ -835,6 +834,7 @@ define([
         addUsage(1, 'grain', '<GRAIN>');
         addUsage(1, 'vegetable', '<VEGETABLE>');
 
+        addUsage(1, 'gold', '<GOLD>');
         addUsage(1, 'sheep', '<SHEEP>');
         addUsage(1, 'pig', '<PIG>');
         addUsage(1, 'dog', '<DOG>');
@@ -1127,7 +1127,7 @@ define([
             this.formatResourceArray(exchange.to, false)
         );
 
-        return `<div class='exchange-item ${source != ''? 'exchange-with-source' : ''}'>
+        return `<div class='exchange-item ${source != '' ? 'exchange-with-source' : ''}'>
             ${source}
             <button class='exchange-desc' id="exchange-${exchange.id}">${desc}</button>
           </div>`;
@@ -1237,7 +1237,8 @@ define([
         // Red harvest tooltips
         if ($('harvest-indicator-harvest_red')) {
           this.addCustomTooltip(
-            'harvest-indicator-harvest_red',
+            'harvest-indicators',
+            // 'harvest-indicator-harvest_red',
             _(
               'This section concerns harvest events that might take place after round 4. During all the remaining rounds, a normal harvest will take place except for 3 of them.'
             ) +
@@ -1342,7 +1343,7 @@ define([
        </div>` +
           (nPlayers == 1
             ? ''
-            : `<div class="player_config_row">
+            : `<div class="player_config_row" id="harvest-indicators">
             <div class='harvest-indicator' id="harvest-indicator-harvest_red" data-type='harvest_red'></div>
             <div class='harvest-indicator' data-type='harvest_none'></div>
             <div class='harvest-indicator' data-type='harvest_1food'></div>
@@ -1382,7 +1383,6 @@ define([
         $('central-board-wrapper').style.width = ($('central-board').offsetWidth * scale) / 100 + 'px';
         $('central-board-wrapper').style.height = (($('central-board').offsetHeight + 30) * scale) / 100 + 'px';
       },
-
 
       /*
        * Display a helper with global scoring
@@ -1511,8 +1511,6 @@ define([
           "Welcome to Caverna on BGA. I'm here to give you a tour of the interface, to make sure you'll enjoy your games to the fullest."
         );
         let introSectionUI = _('Global interface overview');
-        let introSectionScoring = _('Scoring');
-        let introSectionCards = _('Cards FAQ');
         let introSectionBugs = _('Report a bug');
 
         let panelInfoBubble = _("Let's start with this panel next to your name: a very handy toolbox.");
@@ -1528,16 +1526,16 @@ define([
           _('the star calendar: details of live scores (only if corresponding game option was enabled)'),
           _('the ruby helper: a reminder of all the possible exchanges using ruby in Caverna'),
           _('the loot helper: an helpsheet of all the possible loots during an expedition'),
-          _('special harvest tracker: keep track of the passed and future harvest events. Hover on the red token to have a reminder of the event behavior')
+          _(
+            'special harvest tracker: keep track of the passed and future harvest events. Hover on the red token to have a reminder of the event behavior'
+          ),
         ];
 
         let centralBoardBubble = _(
           'This is the central board where you take your actions. It consists of these parts:'
         );
         let centralBoardItems = [
-          _(
-            'Primary action card spaces: available at the start of the game, depends on the number of players'
-          ),
+          _('Primary action card spaces: available at the start of the game, depends on the number of players'),
           _(
             'Action space cards: one card is revealed at the start of each round. They are organized in 4 stages, randomized within each stage (the question mark on the round numbers preview the possible action space cards.) On the right of each card, an havest token is here to remind you what will happen at the end of that round: hover on the token to have some precision.'
           ),
@@ -1550,7 +1548,9 @@ define([
           _(
             'Buildings are organized into four board, following physical components. Click on another button to navigate from one category to another, and click the X to close that tab once you are done.'
           ),
-          _('You can always check a building details by hovering on it to see the tooltip, or by clicking on it to display a little modal with building details. This also work for buildings on player boards.')
+          _(
+            'You can always check a building details by hovering on it to see the tooltip, or by clicking on it to display a little modal with building details. This also work for buildings on player boards.'
+          ),
         ];
 
         let playerBoardBubble = _(
@@ -1561,9 +1561,11 @@ define([
           _('Top section: resources and food in personal supply.'),
           _('Middle section: animals currently on farm, and actions remaining.'),
           _(
-            'Bottom section: on the right, a reminder that each player can only have up to 3 stables! On the left, a summary of current status for the player\'s dwarfs, details below.'
+            "Bottom section: on the right, a reminder that each player can only have up to 3 stables! On the left, a summary of current status for the player's dwarfs, details below."
           ),
-          _('Dwarfs on the left are placed on action board already; dwarfs in the middle are on the player\'s board, waiting to be placed, dwarfs on the right are potential children (according to player\'s current dwellings capacity) you might get if you take a "With for Children" action. Don\'t forgot that each player can only have 5 dwarfs at maximum (except by playing a special dwelling)!'),
+          _(
+            "Dwarfs on the left are placed on action board already; dwarfs in the middle are on the player's board, waiting to be placed, dwarfs on the right are potential children (according to player's current dwellings capacity) you might get if you take a \"With for Children\" action. Don't forgot that each player can only have 5 dwarfs at maximum (except by playing a special dwelling)!"
+          ),
           _(
             'The number after the / in your food reserve is a reminder of how much food the player currently needs for the next harvest, based on current public information.'
           ),
@@ -1601,9 +1603,7 @@ define([
 
         let bugBubble = _('No code is error-free. Before reporting a bug, please follow the following steps.');
         let bugItems = [
-          _(
-            'If the issue is related to a building, please use the english name.'
-          ),
+          _('If the issue is related to a building, please use the english name.'),
           _(
             'If your language is not English, please check the English building description. If there is an incorrect translation to your language, please do not report a bug and use the translation module (Community > Translation) to fix it directly.'
           ),
@@ -1644,6 +1644,7 @@ define([
                       <li>${panelInfoItems[4]}</li>
                       <li>${panelInfoItems[5]}</li>
                       <li>${panelInfoItems[6]}</li>
+                      <li>${panelInfoItems[7]}</li>
                     </ul>
                   </div>
                 </div>

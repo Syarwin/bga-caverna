@@ -53,7 +53,6 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         this.instantaneousMode = false;
         dojo.style('leftright_page_wrapper', 'display', 'block');
         dojo.style('loader_mask', 'display', 'none');
-        this.updatePlayerBoardDimensions();
       }
     },
 
@@ -396,7 +395,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         var newValue = e.target.value;
         this.prefs[pref].value = newValue;
         if (this.prefs[pref].attribute) {
-          let container = this.prefs[pref].attribute == 'background'? document.documentElement : $('ebd-body');
+          let container = this.prefs[pref].attribute == 'background' ? document.documentElement : $('ebd-body');
           container.setAttribute('data-' + this.prefs[pref].attribute, newValue);
         }
 
@@ -428,7 +427,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       Object.keys(this.prefs).forEach((prefId) => {
         let pref = this.prefs[prefId];
         if (pref.attribute) {
-          let container = pref.attribute == 'background'? document.documentElement : $('ebd-body');
+          let container = pref.attribute == 'background' ? document.documentElement : $('ebd-body');
           container.setAttribute('data-' + pref.attribute, pref.value);
         }
       });
@@ -442,7 +441,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
           pref.value = selectedValue;
           this.prefs[prefId] = pref;
           if (pref.attribute) {
-            let container = pref.attribute == 'background'? document.documentElement : $('ebd-body');
+            let container = pref.attribute == 'background' ? document.documentElement : $('ebd-body');
             container.setAttribute('data-' + pref.attribute, selectedValue);
           }
           this.place('tplPreferenceSelect', pref, 'local-prefs-container');
@@ -558,7 +557,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
             let newValue = $('setting-' + settingName).value;
             this.changeSetting(settingName, newValue);
             if (config.attribute) {
-              let container = config.attribute == 'background'? document.documentElement : $('ebd-body');
+              let container = config.attribute == 'background' ? document.documentElement : $('ebd-body');
               container.setAttribute('data-' + config.attribute, newValue);
             }
           });
@@ -571,14 +570,14 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
             let newValue = $('setting-' + settingName).checked ? 1 : 0;
             this.changeSetting(settingName, newValue);
             if (config.attribute) {
-              let container = config.attribute == 'background'? document.documentElement : $('ebd-body');
+              let container = config.attribute == 'background' ? document.documentElement : $('ebd-body');
               container.setAttribute('data-' + config.attribute, newValue);
             }
           });
         }
 
         if (config.attribute) {
-          let container = config.attribute == 'background'? document.documentElement : $('ebd-body');
+          let container = config.attribute == 'background' ? document.documentElement : $('ebd-body');
           container.setAttribute('data-' + config.attribute, value);
         }
         this.changeSetting(settingName, value);

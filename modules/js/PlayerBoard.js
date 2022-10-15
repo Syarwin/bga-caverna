@@ -313,11 +313,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           if (TILES_MAPPING[selectedTile].length == 1 || (selectedPos[0] && selectedPos[1])) {
             selectedIndex = null;
             $('subtitle-text').innerHTML = _('Confirm your placement');
-            this.addPrimaryActionButton(
-              'btnConfirmPlace',
-              _('Confirm'),
-              () => this.takeAtomicAction('actPlaceTile', [selectedTile, selectedPos]),
-              'subtitle-text'
+            this.addPrimaryActionButton('btnConfirmPlace', _('Confirm'), () =>
+              this.takeAtomicAction('actPlaceTile', [selectedTile, selectedPos])
             );
           }
           // Otherwise, auto select other square
@@ -392,10 +389,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         }
 
         if (selectableCells.length == 1) {
-          ['mouseover', 'mouseenter', 'click'].forEach((e) => {
-            const ev = new Event(e);
-            selectableCells[0].dispatchEvent(ev);
-          });
+          setTimeout(() => {
+            ['mouseover', 'mouseenter', 'click'].forEach((e) => {
+              const ev = new Event(e);
+              selectableCells[0].dispatchEvent(ev);
+              console.log(e, selectableCells[0]);
+            });
+          }, 1);
         }
       };
 

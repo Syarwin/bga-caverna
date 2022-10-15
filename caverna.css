@@ -1664,28 +1664,28 @@ html[data-background='1'] {
   background-size: 800% 100%;
   position: relative;
   z-index: 100; }
-  [data-dwarf='1'] .meeple-dwarf,
-  [data-dwarf='1'] .meeple-stable {
+  [data-dwarf="1"] .meeple-dwarf,
+  [data-dwarf="1"] .meeple-stable {
     background-image: url("img/dwarves_alt.png"); }
-  [data-dwarf='2'] .meeple-dwarf, [data-dwarf='2'] .meeple-stable {
+  [data-dwarf="2"] .meeple-dwarf, [data-dwarf="2"] .meeple-stable {
     background-image: url("img/dwarves_colorblind.png"); }
   .meeple-dwarf.meeple-stable, .meeple-stable.meeple-stable {
     width: 24px;
     height: 31px;
     background-image: url("img/stables.png"); }
-  .meeple-dwarf[data-color='ff0000'], .player-ff0000 .meeple-dwarf, .meeple-stable[data-color='ff0000'], .player-ff0000 .meeple-stable {
+  .meeple-dwarf[data-color="ff0000"], .player-ff0000 .meeple-dwarf, .meeple-stable[data-color="ff0000"], .player-ff0000 .meeple-stable {
     background-position-x: 0%; }
-  .meeple-dwarf[data-color='008000'], .player-008000 .meeple-dwarf, .meeple-stable[data-color='008000'], .player-008000 .meeple-stable {
+  .meeple-dwarf[data-color="008000"], .player-008000 .meeple-dwarf, .meeple-stable[data-color="008000"], .player-008000 .meeple-stable {
     background-position-x: 14.2857142857%; }
-  .meeple-dwarf[data-color='72c3b1'], .player-72c3b1 .meeple-dwarf, .meeple-stable[data-color='72c3b1'], .player-72c3b1 .meeple-stable {
+  .meeple-dwarf[data-color="72c3b1"], .player-72c3b1 .meeple-dwarf, .meeple-stable[data-color="72c3b1"], .player-72c3b1 .meeple-stable {
     background-position-x: 28.5714285714%; }
-  .meeple-dwarf[data-color='982fff'], .player-982fff .meeple-dwarf, .meeple-stable[data-color='982fff'], .player-982fff .meeple-stable {
+  .meeple-dwarf[data-color="982fff"], .player-982fff .meeple-dwarf, .meeple-stable[data-color="982fff"], .player-982fff .meeple-stable {
     background-position-x: 42.8571428571%; }
-  .meeple-dwarf[data-color='aa9702'], .player-aa9702 .meeple-dwarf, .meeple-stable[data-color='aa9702'], .player-aa9702 .meeple-stable {
+  .meeple-dwarf[data-color="aa9702"], .player-aa9702 .meeple-dwarf, .meeple-stable[data-color="aa9702"], .player-aa9702 .meeple-stable {
     background-position-x: 57.1428571429%; }
-  .meeple-dwarf[data-color='df7605'], .player-df7605 .meeple-dwarf, .meeple-stable[data-color='df7605'], .player-df7605 .meeple-stable {
+  .meeple-dwarf[data-color="df7605"], .player-df7605 .meeple-dwarf, .meeple-stable[data-color="df7605"], .player-df7605 .meeple-stable {
     background-position-x: 71.4285714286%; }
-  .meeple-dwarf[data-color='2a05df'], .player-2a05df .meeple-dwarf, .meeple-stable[data-color='2a05df'], .player-2a05df .meeple-stable {
+  .meeple-dwarf[data-color="2a05df"], .player-2a05df .meeple-dwarf, .meeple-stable[data-color="2a05df"], .player-2a05df .meeple-stable {
     background-position-x: 85.7142857143%; }
 
 .meeple-dwarf {
@@ -1697,14 +1697,14 @@ html[data-background='1'] {
   position: relative;
   padding: 1px 2px;
   box-sizing: border-box; }
-  [data-dwarf='1'] .meeple-dwarf, [data-dwarf='2'] .meeple-dwarf {
+  [data-dwarf="1"] .meeple-dwarf, [data-dwarf="2"] .meeple-dwarf {
     width: 40px;
     height: 52px; }
   .meeple-dwarf.child {
     transform: scale(0.7); }
 
-[data-dwarf='1'] .player-board-grid .meeple-dwarf,
-[data-dwarf='2'] .player-board-grid .meeple-dwarf {
+[data-dwarf="1"] .player-board-grid .meeple-dwarf,
+[data-dwarf="2"] .player-board-grid .meeple-dwarf {
   transform: scale(0.8); }
 
 .meeple-weapon {
@@ -1712,35 +1712,35 @@ html[data-background='1'] {
   height: 21px;
   background-image: url("img/weapons.png");
   background-size: 700% 200%; }
-  .meeple-weapon[data-force='1'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="1"] {
     background-position: 0% 0%; }
-  .meeple-weapon[data-force='2'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="2"] {
     background-position: 16.6666666667% 0%; }
-  .meeple-weapon[data-force='3'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="3"] {
     background-position: 33.3333333333% 0%; }
-  .meeple-weapon[data-force='4'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="4"] {
     background-position: 50% 0%; }
-  .meeple-weapon[data-force='5'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="5"] {
     background-position: 66.6666666667% 0%; }
-  .meeple-weapon[data-force='6'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="6"] {
     background-position: 83.3333333333% 0%; }
-  .meeple-weapon[data-force='7'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="7"] {
     background-position: 100% 0%; }
-  .meeple-weapon[data-force='8'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="8"] {
     background-position: 0% 100%; }
-  .meeple-weapon[data-force='9'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="9"] {
     background-position: 16.6666666667% 100%; }
-  .meeple-weapon[data-force='10'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="10"] {
     background-position: 33.3333333333% 100%; }
-  .meeple-weapon[data-force='11'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="11"] {
     background-position: 50% 100%; }
-  .meeple-weapon[data-force='12'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="12"] {
     background-position: 66.6666666667% 100%; }
-  .meeple-weapon[data-force='13'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="13"] {
     background-position: 83.3333333333% 100%; }
-  .meeple-weapon[data-force='14'] {
+  [data-dwarf="0"] .meeple-weapon[data-force="14"] {
     background-position: 100% 100%; }
-  [data-dwarf='1'] .meeple-weapon, [data-dwarf='2'] .meeple-weapon {
+  [data-dwarf="1"] .meeple-weapon, [data-dwarf="2"] .meeple-weapon {
     width: 30px;
     height: 53px;
     margin-top: -10px;
@@ -1752,7 +1752,7 @@ html[data-background='1'] {
     justify-content: center;
     align-items: end;
     font-size: 24px; }
-    [data-dwarf='1'] .meeple-weapon::before, [data-dwarf='2'] .meeple-weapon::before {
+    [data-dwarf="1"] .meeple-weapon::before, [data-dwarf="2"] .meeple-weapon::before {
       content: attr(data-force);
       color: black;
       text-shadow: 2px 2px 8px white, 2px 0px 8px white, 2px -2px 8px white, 0px -2px 8px white, -2px -2px 8px white, -2px 0px 8px white, -2px 2px 8px white, 0px 2px 8px white; }
@@ -1847,9 +1847,9 @@ html[data-background='1'] {
     transition: opacity 0.5s; }
   .switch-wrapper.wood-switch label {
     width: 50%; }
-  .switch-wrapper input[type='radio'] {
+  .switch-wrapper input[type="radio"] {
     display: none; }
-    .switch-wrapper input[type='radio']:disabled + label {
+    .switch-wrapper input[type="radio"]:disabled + label {
       filter: grayscale(1);
       cursor: not-allowed;
       opacity: 0.4; }
@@ -2378,6 +2378,8 @@ html[data-background='1'] {
     transition: transform 1s; }
   #player_config #show-settings:hover .fa-primary {
     transform: rotate(180deg); }
+  #player_config #harvest-indicators {
+    position: relative; }
   #player_config .harvest-indicator {
     width: 35px;
     height: 35px;
@@ -2386,10 +2388,10 @@ html[data-background='1'] {
     display: flex;
     justify-content: center;
     align-items: center; }
-    #player_config .harvest-indicator:empty, #player_config .harvest-indicator[data-type='harvest_red'] {
+    #player_config .harvest-indicator:empty, #player_config .harvest-indicator[data-type="harvest_red"] {
       background: #aaa; }
-      #player_config .harvest-indicator:empty::before, #player_config .harvest-indicator[data-type='harvest_red']::before {
-        content: '';
+      #player_config .harvest-indicator:empty::before, #player_config .harvest-indicator[data-type="harvest_red"]::before {
+        content: "";
         position: absolute;
         left: 10%;
         right: 10%;
@@ -2397,21 +2399,23 @@ html[data-background='1'] {
         bottom: 10%;
         background-image: url("img/harvest_tokens.png");
         background-size: 100% 600%;
-        opacity: 0.5; }
-    #player_config .harvest-indicator[data-type='harvest_choice']::before {
+        opacity: 0.3; }
+    #player_config .harvest-indicator .caverna-meeple {
+      background-position-y: 100%; }
+    #player_config .harvest-indicator[data-type="harvest_choice"]::before {
       background-position-y: 0%; }
-    #player_config .harvest-indicator[data-type='harvest_none']::before {
+    #player_config .harvest-indicator[data-type="harvest_none"]::before {
       background-position-y: 60%; }
-    #player_config .harvest-indicator[data-type='harvest_1food']::before {
+    #player_config .harvest-indicator[data-type="harvest_1food"]::before {
       background-position-y: 80%; }
-    #player_config .harvest-indicator[data-type='harvest_red'] {
+    #player_config .harvest-indicator[data-type="harvest_red"] {
       width: 25px;
       height: 25px;
       background: none; }
-      #player_config .harvest-indicator[data-type='harvest_red'] .help-marker {
+      #player_config .harvest-indicator[data-type="harvest_red"] .help-marker {
         top: -7px;
         left: 15px; }
-      #player_config .harvest-indicator[data-type='harvest_red']::before {
+      #player_config .harvest-indicator[data-type="harvest_red"]::before {
         background-position-y: 100%;
         left: 0;
         right: 0;
@@ -2449,7 +2453,7 @@ html[data-background='1'] {
     #popin_showSettings .barrage_popin_closeicon i {
       margin-top: -2px; }
   #popin_showSettings h2 {
-    font-family: 'Oranienbaum';
+    font-family: "Oranienbaum";
     text-align: center;
     font-size: 23px;
     margin: 0px;
@@ -2524,7 +2528,7 @@ html[data-background='1'] {
         transition: 0.4s;
         border-radius: 34px; }
         #settings-controls-container .row-data label.switch .slider::before {
-          content: '';
+          content: "";
           position: absolute;
           background-color: #fff;
           bottom: 4px;
