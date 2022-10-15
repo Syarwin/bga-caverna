@@ -7,6 +7,7 @@ use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Helpers\Utils;
 use CAV\Core\Stats;
+use CAV\Core\Globals;
 
 class Breed extends \CAV\Models\Action
 {
@@ -77,7 +78,9 @@ class Breed extends \CAV\Models\Action
   {
     $player = $player ?? Players::getActive();
     $args = $this->argsBreed();
-    return (!$player->hasRuby() || count($args['breeds']) == 4) && count($args['breeds']) <= $args['max'];
+    $lastTurn =
+      (Players::count() <= 2 && Globals::getTurn() >= 11) || (Players::count() > 3 && Globals::getTurn() == 12);
+    return (!$player->hasRuby() || count($args['breeds']) == 4) && count($args['breeds']) <= $args['max'] && !$lastTurn;
   }
 
   public function stBreed()
