@@ -437,6 +437,8 @@ class Pay extends \CAV\Models\Action
     // Keep only combinations with >= 0 resource amount that fit inside RESERVE (and not maxReserve)
     $oldCombinations = $combinations;
     $combinations = [];
+    // throw new \feException(print_r($oldCombinations));
+
     foreach ($oldCombinations as &$combination) {
       if ($harvest && isset($combination[FOOD]) && $combination[FOOD] != 0 && $combination[FOOD] > $reserve[FOOD]) {
         $combination[BEGGING] = $combination[FOOD] - $reserve[FOOD];
@@ -448,6 +450,7 @@ class Pay extends \CAV\Models\Action
         $combination[BEGGING] = $combination[FOOD];
         unset($combination[FOOD]);
       }
+
       self::pushAux($combination, $combinations, $reserve, true, $ignoreResources);
     }
 
@@ -461,6 +464,7 @@ class Pay extends \CAV\Models\Action
       }
     }
 
+    // throw new \feException(print_r($combinations));
     return $combinations;
   }
 
@@ -531,7 +535,7 @@ class Pay extends \CAV\Models\Action
     // Then check reserve
     if (!$ignoreResources) {
       foreach ($combination as $res => $n) {
-        if ($res == 'nb' || $res == 'sources') {
+        if ($res == 'nb' || $res == 'sources' || $res == BEGGING) {
           continue;
         }
 
