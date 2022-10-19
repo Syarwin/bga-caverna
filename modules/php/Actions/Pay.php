@@ -195,11 +195,7 @@ class Pay extends \CAV\Models\Action
     $cost = $this->getCtxArgs()['costs']['fees'][0];
     $argsPay = $this->argsPay();
 
-    if (
-      isset($this->getCtxArgs()['costs']['trades']) ||
-      isset($this->getCtxArgs()['costs']['bonuses']) ||
-      count($argsPay['combinations']) > 0
-    ) {
+    if (count($argsPay['combinations']) > 1) {
       return clienttranslate('Choose resources to feed your family');
     }
 
