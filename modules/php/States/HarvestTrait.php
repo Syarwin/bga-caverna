@@ -145,7 +145,8 @@ trait HarvestTrait
       // Do we have to enter pay ?
       $pref = $player->getPref(OPTION_AUTOPAY_HARVEST);
       $cantPay = !Actions::isDoable(PAY, ['costs' => $costs, 'calculate' => true], $player);
-      $hasSpecialExchange = Actions::isDoable(EXCHANGE, ['exclusive' => true], $player);
+      $hasSpecialExchange =
+        Actions::isDoable(EXCHANGE, ['exclusive' => true], $player) || $player->hasPlayedBuilding('G_PeacefulCave');
       if ($pref != OPTION_AUTOPAY_HARVEST_ENABLED || $cantPay || $hasSpecialExchange) {
         $reaction['childs'][] = [
           'action' => EXCHANGE,
