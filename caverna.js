@@ -136,8 +136,10 @@ define([
 
         this._floatingContainerOpen = null;
         this._modalContainerOpen = null;
+      },
 
-        this._settingsConfig = {
+      getSettingsConfig() {
+        return {
           confirmMode: { type: 'pref', prefId: 103 },
           autoPay: { type: 'pref', prefId: 102 },
           textFont: { type: 'pref', prefId: 105, attribute: 'textFont' },
@@ -1235,10 +1237,9 @@ define([
         });
 
         // Red harvest tooltips
-        if ($('harvest-indicator-harvest_red')) {
+        if ($('harvest-indicators')) {
           this.addCustomTooltip(
             'harvest-indicators',
-            // 'harvest-indicator-harvest_red',
             _(
               'This section concerns harvest events that might take place after round 4. During all the remaining rounds, a normal harvest will take place except for 3 of them.'
             ) +
@@ -1344,7 +1345,6 @@ define([
           (nPlayers == 1
             ? ''
             : `<div class="player_config_row" id="harvest-indicators">
-            <div class='harvest-indicator' id="harvest-indicator-harvest_red" data-type='harvest_red'></div>
             <div class='harvest-indicator' data-type='harvest_none'></div>
             <div class='harvest-indicator' data-type='harvest_1food'></div>
             <div class='harvest-indicator' data-type='harvest_choice'></div>

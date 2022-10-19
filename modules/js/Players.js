@@ -121,12 +121,36 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Create all the counters for player panels
      */
     setupPlayersCounters() {
+      let tooltips = {
+        wood: _('Wood in reserve'),
+        stone: _('Stone in reserve'),
+        ore: _('Ore in reserve'),
+        ruby: _('Ruby in reserve'),
+        grain: _('Grain in reserve'),
+        vegetable: _('Vegetable in reserve'),
+        food: _('Food in reserve'),
+        begging: _(
+          "Begging markers obtained because you didn't have enough food to feed your dwarfs. Each markers is worth -3 Gold points"
+        ),
+        dog: _('Dog on board'),
+        sheep: _('Sheep on board'),
+        cattle: _('Cattle on board'),
+        pig: _('Wild board on board'),
+        donkey: _('Donkey on board'),
+        gold: _('Gold in reserve'),
+      };
+
       this._playerCounters = {};
       this._scoreCounters = {};
       this.forEachPlayer((player) => {
         this._playerCounters[player.id] = {};
         ALL_RESOURCES.forEach((res) => {
-          this._playerCounters[player.id][res] = this.createCounter('resource_' + player.id + '_' + res);
+          this._playerCounters[player.id][res] = this.createCounter(`resource_${player.id}_${res}`);
+
+          let id = ANIMALS.includes(res) ? `board_reserve_${player.id}_${res}` : `reserve_${player.id}_${res}`;
+          if (tooltips[res] && $(id)) {
+            this.addTooltip(id, tooltips[res], '');
+          }
         });
         this._scoreCounters[player.id] = this.createCounter('player_score_' + player.id);
       });

@@ -514,8 +514,8 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       }
 
       this.settings = {};
-      Object.keys(this._settingsConfig).forEach((settingName) => {
-        let config = this._settingsConfig[settingName];
+      Object.keys(this.getSettingsConfig()).forEach((settingName) => {
+        let config = this.getSettingsConfig()[settingName];
         let localContainer = container;
         if (config.section) {
           localContainer = $(`settings-section-${config.section}`);
