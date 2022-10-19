@@ -219,7 +219,18 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     tplTile(tile) {
       let t = tile.asset.split('_');
       let rotation = t.length == 2 ? t[1] : 0;
-      return `<div class="caverna-tile" id="tile-${tile.id}" data-id="${tile.id}" data-tile="${t[0]}" data-rotation="${rotation}"></div>`;
+      let overlay = '';
+      if (['tilePasture-0', 'tileLargePasture-0', 'tileLargePasture-1'].includes(t[0])) {
+        overlay = '<div class="caverna-tile-overlay"></div>';
+      }
+      if (t[0] == 'tileRubyMine-0') {
+        overlay = `<div class="caverna-tile-overlay">${_('Ruby Mine')}</div>`;
+      }
+      if (t[0] == 'tileMineDeepTunnel-1') {
+        overlay = `<div class="caverna-tile-overlay">${_('Ore Mine')}</div>`;
+      }
+
+      return `<div class="caverna-tile" id="tile-${tile.id}" data-id="${tile.id}" data-tile="${t[0]}" data-rotation="${rotation}">${overlay}</div>`;
     },
 
     getTileContainer(tile) {

@@ -76,7 +76,7 @@ html[data-background='1'] {
       #tiles-selector .tile-selector .tile-selector-cell.done {
         border: 2px solid yellow; }
         #tiles-selector .tile-selector .tile-selector-cell.done::before {
-          content: '✓';
+          content: "✓";
           color: yellow;
           font-size: 70px; }
 
@@ -96,34 +96,76 @@ html[data-background='1'] {
   display: flex;
   justify-content: center;
   align-items: center; }
-  .board-cell.cell-node .square-selector:not([data-tile]), .board-cell.cell-node .square-selector[data-tile=''],
+  .board-cell.cell-node .square-selector .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile .caverna-tile-overlay {
+    width: 94px;
+    height: 94px;
+    pointer-events: none; }
+  .board-cell.cell-node .square-selector[data-tile="tilePasture-0"] .caverna-tile-overlay, .board-cell.cell-node .square-selector[data-tile="tileLargePasture-0"] .caverna-tile-overlay, .board-cell.cell-node .square-selector[data-tile="tileLargePasture-1"] .caverna-tile-overlay, .board-cell.cell-node .square-selector[data-tile="tileMineDeepTunnel-1"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tilePasture-0"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-0"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-1"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileMineDeepTunnel-1"] .caverna-tile-overlay {
+    background-image: url("img/tiles-overlay.png");
+    background-size: 300% 100%; }
+  .board-cell.cell-node .square-selector[data-tile="tileMineDeepTunnel-1"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileMineDeepTunnel-1"] .caverna-tile-overlay {
+    background-position-x: 50%; }
+  .board-cell.cell-node .square-selector[data-tile="tilePasture-0"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tilePasture-0"] .caverna-tile-overlay {
+    background-position-x: 100%; }
+  .board-cell.cell-node .square-selector[data-tile="tileRubyMine-0"] .caverna-tile-overlay, .board-cell.cell-node .square-selector[data-tile="tileMineDeepTunnel-1"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileRubyMine-0"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileMineDeepTunnel-1"] .caverna-tile-overlay {
+    padding: 11px 13px;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: var(--caverna-font-family);
+    font-size: 10px;
+    line-height: 17px; }
+  .board-cell.cell-node .square-selector[data-rotation="1"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation="1"] .caverna-tile-overlay {
+    transform: rotate(90deg); }
+  .board-cell.cell-node .square-selector[data-rotation="2"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation="2"] .caverna-tile-overlay {
+    transform: rotate(180deg); }
+  .board-cell.cell-node .square-selector[data-rotation="3"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation="3"] .caverna-tile-overlay {
+    transform: rotate(-90deg); }
+  .board-cell.cell-node .square-selector[data-tile="tileLargePasture-0"][data-rotation="0"] .caverna-tile-overlay, .board-cell.cell-node .square-selector[data-tile="tileLargePasture-0"][data-rotation="1"] .caverna-tile-overlay, .board-cell.cell-node .square-selector[data-tile="tileLargePasture-1"][data-rotation="2"] .caverna-tile-overlay, .board-cell.cell-node .square-selector[data-tile="tileLargePasture-1"][data-rotation="3"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-0"][data-rotation="0"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-0"][data-rotation="1"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-1"][data-rotation="2"] .caverna-tile-overlay,
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-1"][data-rotation="3"] .caverna-tile-overlay {
+    background: none; }
+  .board-cell.cell-node .square-selector:not([data-tile]), .board-cell.cell-node .square-selector[data-tile=""],
   .caverna-player-board .player-board-grid .board-cell .caverna-tile:not([data-tile]),
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile=''] {
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile=""] {
     background: none;
     border: none;
     display: none; }
-  .board-cell.cell-node .square-selector[data-rotation='1'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation='1'] {
+  .board-cell.cell-node .square-selector[data-rotation="1"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation="1"] {
     transform: rotate(-90deg); }
-  .board-cell.cell-node .square-selector[data-rotation='2'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation='2'] {
+  .board-cell.cell-node .square-selector[data-rotation="2"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation="2"] {
     transform: rotate(180deg); }
-  .board-cell.cell-node .square-selector[data-rotation='3'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation='3'] {
+  .board-cell.cell-node .square-selector[data-rotation="3"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-rotation="3"] {
     transform: rotate(90deg); }
-  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-0'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-0'], .board-cell.cell-node .square-selector[data-tile='tileLargePasture-0'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-0'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileTunnelCavern-0'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileCavernCavern-0'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMeadowField-0'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileLargePasture-0'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-0'] {
+  .board-cell.cell-node .square-selector[data-tile="tileTunnelCavern-0"], .board-cell.cell-node .square-selector[data-tile="tileCavernCavern-0"], .board-cell.cell-node .square-selector[data-tile="tileMeadowField-0"], .board-cell.cell-node .square-selector[data-tile="tileLargePasture-0"], .board-cell.cell-node .square-selector[data-tile="tileMineDeepTunnel-0"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileTunnelCavern-0"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileCavernCavern-0"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileMeadowField-0"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-0"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileMineDeepTunnel-0"] {
     border-right: none; }
-  .board-cell.cell-node .square-selector[data-tile='tileTunnelCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileCavernCavern-1'], .board-cell.cell-node .square-selector[data-tile='tileMeadowField-1'], .board-cell.cell-node .square-selector[data-tile='tileLargePasture-1'], .board-cell.cell-node .square-selector[data-tile='tileMineDeepTunnel-1'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileTunnelCavern-1'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileCavernCavern-1'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMeadowField-1'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileLargePasture-1'],
-  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile='tileMineDeepTunnel-1'] {
+  .board-cell.cell-node .square-selector[data-tile="tileTunnelCavern-1"], .board-cell.cell-node .square-selector[data-tile="tileCavernCavern-1"], .board-cell.cell-node .square-selector[data-tile="tileMeadowField-1"], .board-cell.cell-node .square-selector[data-tile="tileLargePasture-1"], .board-cell.cell-node .square-selector[data-tile="tileMineDeepTunnel-1"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileTunnelCavern-1"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileCavernCavern-1"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileMeadowField-1"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileLargePasture-1"],
+  .caverna-player-board .player-board-grid .board-cell .caverna-tile[data-tile="tileMineDeepTunnel-1"] {
     border-left: none; }
 
 .seed-holder {
@@ -157,85 +199,85 @@ html[data-background='1'] {
   .board-cell.cell-node.selectable .square-selector:hover {
     background-color: rgba(255, 0, 0, 0.3); }
 
-[data-tile=''] {
+[data-tile=""] {
   display: none; }
 
-[data-tile='tileTunnelCavern-0'] {
+[data-tile="tileTunnelCavern-0"] {
   background-position-x: 33.3333333333%;
   background-position-y: 100%;
   border-radius: 5px 0px 0px 5px; }
 
-[data-tile='tileTunnelCavern-1'] {
+[data-tile="tileTunnelCavern-1"] {
   background-position-x: 66.6666666667%;
   background-position-y: 100%;
   border-radius: 0px 5px 5px 0px; }
 
-[data-tile='tileCavernCavern-0'] {
+[data-tile="tileCavernCavern-0"] {
   background-position-x: 0%;
   background-position-y: 0%;
   border-radius: 5px 0px 0px 5px; }
 
-[data-tile='tileCavernCavern-1'] {
+[data-tile="tileCavernCavern-1"] {
   background-position-x: 33.3333333333%;
   background-position-y: 0%;
   border-radius: 0px 5px 5px 0px; }
 
-[data-tile='tileMeadowField-0'] {
+[data-tile="tileMeadowField-0"] {
   background-position-x: 0%;
   background-position-y: 66.6666666667%;
   border-radius: 5px 0px 0px 5px; }
 
-[data-tile='tileMeadowField-1'] {
+[data-tile="tileMeadowField-1"] {
   background-position-x: 33.3333333333%;
   background-position-y: 66.6666666667%;
   border-radius: 0px 5px 5px 0px; }
 
-[data-tile='tileMineDeepTunnel-0'] {
+[data-tile="tileMineDeepTunnel-0"] {
   background-position-x: 66.6666666667%;
   background-position-y: 0%;
   border-radius: 5px 0px 0px 5px; }
 
-[data-tile='tileMineDeepTunnel-1'] {
+[data-tile="tileMineDeepTunnel-1"] {
   background-position-x: 100%;
   background-position-y: 0%;
   border-radius: 0px 5px 5px 0px; }
 
-[data-tile='tileLargePasture-0'] {
+[data-tile="tileLargePasture-0"] {
   background-position-x: 66.6666666667%;
   background-position-y: 33.3333333333%;
   border-radius: 5px 0px 0px 5px; }
 
-[data-tile='tileLargePasture-1'] {
+[data-tile="tileLargePasture-1"] {
   background-position-x: 100%;
   background-position-y: 33.3333333333%;
   border-radius: 0px 5px 5px 0px; }
 
-[data-tile='tileRubyMine-0'] {
+[data-tile="tileRubyMine-0"] {
   background-position-x: 100%;
   background-position-y: 66.6666666667%;
   border-radius: 5px; }
 
-[data-tile='tileMeadow-0'] {
+[data-tile="tileMeadow-0"] {
   background-position-x: 66.6666666667%;
   background-position-y: 66.6666666667%;
   border-radius: 5px; }
 
-[data-tile='tileField-0'] {
+[data-tile="tileField-0"] {
   background-position-x: 33.3333333333%;
   background-position-y: 33.3333333333%;
   border-radius: 5px; }
 
-[data-tile='tileCavern-0'] {
+[data-tile="tileCavern-0"] {
   background-position-x: 0%;
   background-position-y: 33.3333333333%;
   border-radius: 5px; }
 
-[data-tile='tileTunnel-0'] {
+[data-tile="tileTunnel-0"] {
   background-position-x: 100%;
   background-position-y: 100%;
   border-radius: 5px; }
 
-[data-tile='tilePasture-0'] {
+[data-tile="tilePasture-0"] {
   background-position-x: 0%;
   background-position-y: 100%;
   border-radius: 5px; }

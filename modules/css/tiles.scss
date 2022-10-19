@@ -12,7 +12,7 @@
     .tile-selector-cell {
       width: 90px;
       height: 90px;
-      background-image: url('img/tiles.jpg');
+      background-image: url("img/tiles.jpg");
       background-size: 400% 400%;
       box-sizing: border-box;
       background-origin: border-box;
@@ -35,7 +35,7 @@
       &.done {
         border: 2px solid yellow;
         &::before {
-          content: '✓';
+          content: "✓";
           color: yellow;
           font-size: 70px;
         }
@@ -53,7 +53,7 @@
   width: 94px;
   height: 94px;
   margin: -2px;
-  background-image: url('img/tiles.jpg');
+  background-image: url("img/tiles.jpg");
   background-size: 400% 400%;
   box-sizing: border-box;
   background-origin: border-box;
@@ -63,35 +63,87 @@
   justify-content: center;
   align-items: center;
 
+  // Overlays
+  .caverna-tile-overlay {
+    width: 94px;
+    height: 94px;
+    pointer-events: none;
+  }
+  &[data-tile="tilePasture-0"],
+  &[data-tile="tileLargePasture-0"],
+  &[data-tile="tileLargePasture-1"],
+  &[data-tile="tileMineDeepTunnel-1"] {
+    .caverna-tile-overlay {
+      background-image: url("img/tiles-overlay.png");
+      background-size: 300% 100%;
+    }
+  }
+  &[data-tile="tileMineDeepTunnel-1"] .caverna-tile-overlay {
+    background-position-x: 50%;
+  }
+  &[data-tile="tilePasture-0"] .caverna-tile-overlay {
+    background-position-x: 100%;
+  }
+  &[data-tile="tileRubyMine-0"],
+  &[data-tile="tileMineDeepTunnel-1"] {
+    .caverna-tile-overlay {
+      padding: 11px 13px;
+      box-sizing: border-box;
+      text-align: center;
+      font-family: var(--caverna-font-family);
+      font-size: 10px;
+      line-height: 17px;
+    }
+  }
+
+  &[data-rotation="1"] .caverna-tile-overlay {
+    transform: rotate(90deg);
+  }
+  &[data-rotation="2"] .caverna-tile-overlay {
+    transform: rotate(180deg);
+  }
+  &[data-rotation="3"] .caverna-tile-overlay {
+    transform: rotate(-90deg);
+  }
+
+  &[data-tile="tileLargePasture-0"][data-rotation="0"],
+  &[data-tile="tileLargePasture-0"][data-rotation="1"],
+  &[data-tile="tileLargePasture-1"][data-rotation="2"],
+  &[data-tile="tileLargePasture-1"][data-rotation="3"] {
+    .caverna-tile-overlay {
+      background: none;
+    }
+  }
+
   &:not([data-tile]),
-  &[data-tile=''] {
+  &[data-tile=""] {
     background: none;
     border: none;
     display: none;
   }
 
-  &[data-rotation='1'] {
+  &[data-rotation="1"] {
     transform: rotate(-90deg);
   }
-  &[data-rotation='2'] {
+  &[data-rotation="2"] {
     transform: rotate(180deg);
   }
-  &[data-rotation='3'] {
+  &[data-rotation="3"] {
     transform: rotate(90deg);
   }
 
-  &[data-tile='tileTunnelCavern-0'],
-  &[data-tile='tileCavernCavern-0'],
-  &[data-tile='tileMeadowField-0'],
-  &[data-tile='tileLargePasture-0'],
-  &[data-tile='tileMineDeepTunnel-0'] {
+  &[data-tile="tileTunnelCavern-0"],
+  &[data-tile="tileCavernCavern-0"],
+  &[data-tile="tileMeadowField-0"],
+  &[data-tile="tileLargePasture-0"],
+  &[data-tile="tileMineDeepTunnel-0"] {
     border-right: none;
   }
-  &[data-tile='tileTunnelCavern-1'],
-  &[data-tile='tileCavernCavern-1'],
-  &[data-tile='tileMeadowField-1'],
-  &[data-tile='tileLargePasture-1'],
-  &[data-tile='tileMineDeepTunnel-1'] {
+  &[data-tile="tileTunnelCavern-1"],
+  &[data-tile="tileCavernCavern-1"],
+  &[data-tile="tileMeadowField-1"],
+  &[data-tile="tileLargePasture-1"],
+  &[data-tile="tileMineDeepTunnel-1"] {
     border-left: none;
   }
 }
@@ -101,7 +153,7 @@
   flex-flow: column-reverse;
   position: relative;
   z-index: 2;
-  
+
   .caverna-meeple {
     margin: 0 auto -0.3em;
     #ebd-body:not(.mobile_version) & {
@@ -137,95 +189,95 @@
   }
 }
 
-[data-tile=''] {
+[data-tile=""] {
   display: none;
 }
-[data-tile='tileTunnelCavern-0'] {
+[data-tile="tileTunnelCavern-0"] {
   background-position-x: 1 * 100% / 3;
   background-position-y: 3 * 100% / 3;
   border-radius: 5px 0px 0px 5px;
 }
-[data-tile='tileTunnelCavern-1'] {
+[data-tile="tileTunnelCavern-1"] {
   background-position-x: 2 * 100% / 3;
   background-position-y: 3 * 100% / 3;
   border-radius: 0px 5px 5px 0px;
 }
 
-[data-tile='tileCavernCavern-0'] {
+[data-tile="tileCavernCavern-0"] {
   background-position-x: 0 * 100% / 3;
   background-position-y: 0 * 100% / 3;
   border-radius: 5px 0px 0px 5px;
 }
-[data-tile='tileCavernCavern-1'] {
+[data-tile="tileCavernCavern-1"] {
   background-position-x: 1 * 100% / 3;
   background-position-y: 0 * 100% / 3;
   border-radius: 0px 5px 5px 0px;
 }
 
-[data-tile='tileMeadowField-0'] {
+[data-tile="tileMeadowField-0"] {
   background-position-x: 0 * 100% / 3;
   background-position-y: 2 * 100% / 3;
   border-radius: 5px 0px 0px 5px;
 }
-[data-tile='tileMeadowField-1'] {
+[data-tile="tileMeadowField-1"] {
   background-position-x: 1 * 100% / 3;
   background-position-y: 2 * 100% / 3;
   border-radius: 0px 5px 5px 0px;
 }
 
-[data-tile='tileMineDeepTunnel-0'] {
+[data-tile="tileMineDeepTunnel-0"] {
   background-position-x: 2 * 100% / 3;
   background-position-y: 0 * 100% / 3;
   border-radius: 5px 0px 0px 5px;
 }
-[data-tile='tileMineDeepTunnel-1'] {
+[data-tile="tileMineDeepTunnel-1"] {
   background-position-x: 3 * 100% / 3;
   background-position-y: 0 * 100% / 3;
   border-radius: 0px 5px 5px 0px;
 }
 
-[data-tile='tileLargePasture-0'] {
+[data-tile="tileLargePasture-0"] {
   background-position-x: 2 * 100% / 3;
   background-position-y: 1 * 100% / 3;
   border-radius: 5px 0px 0px 5px;
 }
-[data-tile='tileLargePasture-1'] {
+[data-tile="tileLargePasture-1"] {
   background-position-x: 3 * 100% / 3;
   background-position-y: 1 * 100% / 3;
   border-radius: 0px 5px 5px 0px;
 }
 
-[data-tile='tileRubyMine-0'] {
+[data-tile="tileRubyMine-0"] {
   background-position-x: 3 * 100% / 3;
   background-position-y: 2 * 100% / 3;
   border-radius: 5px;
 }
 
-[data-tile='tileMeadow-0'] {
+[data-tile="tileMeadow-0"] {
   background-position-x: 2 * 100% / 3;
   background-position-y: 2 * 100% / 3;
   border-radius: 5px;
 }
 
-[data-tile='tileField-0'] {
+[data-tile="tileField-0"] {
   background-position-x: 1 * 100% / 3;
   background-position-y: 1 * 100% / 3;
   border-radius: 5px;
 }
 
-[data-tile='tileCavern-0'] {
+[data-tile="tileCavern-0"] {
   background-position-x: 0 * 100% / 3;
   background-position-y: 1 * 100% / 3;
   border-radius: 5px;
 }
 
-[data-tile='tileTunnel-0'] {
+[data-tile="tileTunnel-0"] {
   background-position-x: 3 * 100% / 3;
   background-position-y: 3 * 100% / 3;
   border-radius: 5px;
 }
 
-[data-tile='tilePasture-0'] {
+[data-tile="tilePasture-0"] {
   background-position-x: 0 * 100% / 3;
   background-position-y: 3 * 100% / 3;
   border-radius: 5px;
