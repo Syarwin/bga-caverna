@@ -194,6 +194,8 @@ trait HarvestTrait
   {
     $player = Players::getActive();
     $harvestChoice = Globals::getHarvestChoice();
+    $lastTurn =
+      (Players::count() <= 2 && Globals::getTurn() >= 11) || (Players::count() > 3 && Globals::getTurn() == 12);
 
     if (($harvestChoice[$player->getId()] ?? null) == REAP) {
       $this->nextPlayerCustomOrder('harvestBreed');
@@ -201,7 +203,7 @@ trait HarvestTrait
     }
 
     // If player has enough to breed, creation of a baby in reserve
-    if ($player->canBreed() || $player->hasRuby()) {
+    if ($player->canBreed() || $player->hasRuby() || $lastTurn) {
       Engine::setup(
         [
           'pId' => $player->getId(),

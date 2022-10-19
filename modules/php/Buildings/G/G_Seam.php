@@ -29,6 +29,14 @@ class G_Seam extends \CAV\Models\Building
       }
     }
 
+    if ($this->isActionEvent($event, 'Exchange')) {
+      foreach ($event['created'] as $m) {
+        if ($m['type'] == STONE) {
+          return true;
+        }
+      }
+    }
+
     if ($this->isCollectEvent($event)) {
       foreach ($event['meeples'] as $m) {
         if ($m['type'] == STONE) {
@@ -42,7 +50,13 @@ class G_Seam extends \CAV\Models\Building
   public function gainOre($event)
   {
     $stone = 0;
-    foreach ($event['meeples'] as $m) {
+    foreach ($event['meeples'] ?? [] as $m) {
+      if ($m['type'] == STONE) {
+        $stone++;
+      }
+    }
+
+    foreach ($event['created'] ?? [] as $m) {
       if ($m['type'] == STONE) {
         $stone++;
       }
@@ -59,6 +73,11 @@ class G_Seam extends \CAV\Models\Building
   }
 
   public function onPlayerAfterGain($player, $event)
+  {
+    return $this->gainOre($event);
+  }
+
+  public function onPlayerAfterExchange($player, $event)
   {
     return $this->gainOre($event);
   }
