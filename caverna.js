@@ -1534,9 +1534,9 @@ define([
           ),
           _('the star calendar: details of live scores (only if corresponding game option was enabled)'),
           _('the ruby helper: a reminder of all the possible exchanges using ruby in Caverna'),
-          _('the loot helper: an helpsheet of all the possible loots during an expedition'),
+          _('the loot helper: a helpsheet of all the possible loots during an expedition'),
           _(
-            'special harvest tracker: keep track of the passed and future harvest events. Hover on the red token to have a reminder of the event behavior'
+            'special harvest tracker: keep track of the passed and future harvest events. Hover on this line to have a reminder of the event behavior'
           ),
         ];
 
@@ -1546,7 +1546,7 @@ define([
         let centralBoardItems = [
           _('Primary action card spaces: available at the start of the game, depends on the number of players'),
           _(
-            'Action space cards: one card is revealed at the start of each round. They are organized in 4 stages, randomized within each stage (the question mark on the round numbers preview the possible action space cards.) On the right of each card, an havest token is here to remind you what will happen at the end of that round: hover on the token to have some precision.'
+            'Action space cards: one card is revealed at the start of each round. They are organized in 4 stages, randomized within each stage (the question mark on the round numbers preview the possible action space cards.) On the right of each card, a harvest token is here to remind you what will happen at the end of that round: hover on the token to have some precision.'
           ),
         ];
 
@@ -1573,7 +1573,7 @@ define([
             "Bottom section: on the right, a reminder that each player can only have up to 3 stables! On the left, a summary of current status for the player's dwarfs, details below."
           ),
           _(
-            "Dwarfs on the left are placed on action board already; dwarfs in the middle are on the player's board, waiting to be placed, dwarfs on the right are potential children (according to player's current dwellings capacity) you might get if you take a \"With for Children\" action. Don't forgot that each player can only have 5 dwarfs at maximum (except by playing a special dwelling)!"
+            "Dwarfs on the left are placed on action board already; dwarfs in the middle are on the player's board, waiting to be placed, dwarfs on the right are potential children (according to player's current dwellings capacity) you might get if you take a \"Wish for Children\" action. Don't forget that each player can only have 5 dwarfs at maximum (except by playing a special dwelling)!"
           ),
           _(
             'The number after the / in your food reserve is a reminder of how much food the player currently needs for the next harvest, based on current public information.'
