@@ -21,7 +21,7 @@ class WishChildren extends \CAV\Models\Action
 
   public function isAutomatic($player = null)
   {
-    return true;
+    return !$this->isOptional();
   }
 
   public function isDoable($player, $ignoreResources = false)
@@ -41,9 +41,27 @@ class WishChildren extends \CAV\Models\Action
     return true;
   }
 
+  public function isOptional()
+  {
+    return $this->ctx->getInfos()['optional'] ?? false;
+  }
+
+  public function argsWishChildren()
+  {
+    return [];
+  }
+
   public function stWishChildren()
   {
-    $args = $this->ctx->getArgs();
+    if ($this->isAutomatic()) {
+      $this->actWishChildren(true);
+    }
+  }
+
+  public function actWishChildren($auto = false)
+  {
+    $this->checkAction('actWishChildren', $auto);
+    $args = $this->getCtxArgs();
 
     $type = $args['type'] ?? null;
     $player = Players::getActive();
@@ -52,7 +70,7 @@ class WishChildren extends \CAV\Models\Action
 
     Notifications::growFamily($player, $meep);
     Notifications::updateHarvestCosts();
-    if($player->countDwarfs() == 5){
+    if ($player->countDwarfs() == 5) {
       Notifications::updateDwellingCapacity($player);
     }
 

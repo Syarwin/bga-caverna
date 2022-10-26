@@ -21,6 +21,11 @@ class AbstractNode
     }
   }
 
+  public function getInfos()
+  {
+    return $this->infos;
+  }
+
   /**********************
    *** Tree utilities ***
    **********************/
@@ -313,7 +318,12 @@ class AbstractNode
     }
 
     if ($this->isOptional()) {
-      if (count($choices) != 1 || !$choice['optionalAction'] || $choice['automaticAction'] || $this->getType() == NODE_OR) {
+      if (
+        count($choices) != 1 ||
+        !$choice['optionalAction'] ||
+        $choice['automaticAction'] ||
+        $this->getType() == NODE_OR
+      ) {
         $choices[PASS] = [
           'id' => PASS,
           'description' => clienttranslate('Pass'),

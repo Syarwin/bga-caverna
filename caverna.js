@@ -90,6 +90,7 @@ define([
           'sow',
           'stables',
           'harvestChoice',
+          'wishForChildren',
         ];
         this._notifications = [
           ['startNewRound', 1],
@@ -785,6 +786,14 @@ define([
             }
           );
         });
+      },
+
+      onEnteringStateWishForChildren(args) {
+        if (!args.automaticAction) {
+          this.addPrimaryActionButton('btnGrow', _('Grow my family'), () =>
+            this.takeAtomicAction('actWishChildren', [])
+          );
+        }
       },
 
       ///////////////////////////////

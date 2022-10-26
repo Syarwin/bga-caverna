@@ -1942,7 +1942,7 @@ html[data-background='1'] {
   #ebd-body:not(.mobile_version) .player-board {
     width: 242px !important; }
   .player-board::before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     top: 0;
@@ -1971,7 +1971,7 @@ html[data-background='1'] {
       margin-left: 3px; }
   .player-board .player_board_inner {
     padding: 13px 10px 0px; }
-    [data-resource-bar='1'] .player-board .player_board_inner {
+    [data-resource-bar="1"] .player-board .player_board_inner {
       padding: 13px 10px 13px; }
     .player-board .player_board_inner .player-name {
       position: relative; }
@@ -2030,9 +2030,9 @@ html[data-background='1'] {
         .player-board .caverna-player-pannel .player-panel-board-resources .player-resource.resource-begging {
           transition: opacity 0.5s;
           opacity: 1; }
-          .player-board .caverna-player-pannel .player-panel-resources .player-resource.resource-begging[data-n='0'],
-          .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-begging[data-n='0'],
-          .player-board .caverna-player-pannel .player-panel-board-resources .player-resource.resource-begging[data-n='0'] {
+          .player-board .caverna-player-pannel .player-panel-resources .player-resource.resource-begging[data-n="0"],
+          .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-begging[data-n="0"],
+          .player-board .caverna-player-pannel .player-panel-board-resources .player-resource.resource-begging[data-n="0"] {
             opacity: 0; }
         .player-board .caverna-player-pannel .player-panel-resources .player-resource .reserve,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .reserve,
@@ -2058,7 +2058,7 @@ html[data-background='1'] {
         .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_stable::after,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_stable::after,
         .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_stable::after {
-          content: '/3'; }
+          content: "/3"; }
         .player-board .caverna-player-pannel .player-panel-resources .player-resource .resource_food::after,
         .player-board .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_food::after,
         .player-board .caverna-player-pannel .player-panel-board-resources .player-resource .resource_food::after {
@@ -2080,35 +2080,35 @@ html[data-background='1'] {
         margin-left: -0.6em; }
         .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf .meeple-container:first-of-type {
           margin-left: 0; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='1'] .meeple-container:nth-child(1) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="1"] .meeple-container:nth-child(1) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='2'] .meeple-container:nth-child(1) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="2"] .meeple-container:nth-child(1) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='2'] .meeple-container:nth-child(2) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="2"] .meeple-container:nth-child(2) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='3'] .meeple-container:nth-child(1) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="3"] .meeple-container:nth-child(1) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='3'] .meeple-container:nth-child(2) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="3"] .meeple-container:nth-child(2) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='3'] .meeple-container:nth-child(3) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="3"] .meeple-container:nth-child(3) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='4'] .meeple-container:nth-child(1) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="4"] .meeple-container:nth-child(1) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='4'] .meeple-container:nth-child(2) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="4"] .meeple-container:nth-child(2) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='4'] .meeple-container:nth-child(3) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="4"] .meeple-container:nth-child(3) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='4'] .meeple-container:nth-child(4) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="4"] .meeple-container:nth-child(4) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='5'] .meeple-container:nth-child(1) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="5"] .meeple-container:nth-child(1) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='5'] .meeple-container:nth-child(2) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="5"] .meeple-container:nth-child(2) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='5'] .meeple-container:nth-child(3) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="5"] .meeple-container:nth-child(3) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='5'] .meeple-container:nth-child(4) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="5"] .meeple-container:nth-child(4) {
         display: inline-block; }
-      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n='5'] .meeple-container:nth-child(5) {
+      .player-board .caverna-player-pannel .player-panel-board-resources .resource-dwarf[data-n="5"] .meeple-container:nth-child(5) {
         display: inline-block; }
     .player-board .caverna-player-pannel .player-panel-personal-resources {
       border-top: 1px solid #80502e;
@@ -2121,25 +2121,25 @@ html[data-background='1'] {
   .colorblind .player-board .caverna-player-pannel .meeple-dwarf_icon {
     background-image: url("img/dwarfs_colorblind.png"); }
 
-.caverna-player-pannel[data-color='ff0000'] .meeple-barn {
+.caverna-player-pannel[data-color="ff0000"] .meeple-barn {
   background-position-x: 0%; }
 
-.caverna-player-pannel[data-color='008000'] .meeple-barn {
+.caverna-player-pannel[data-color="008000"] .meeple-barn {
   background-position-x: 14.2857142857%; }
 
-.caverna-player-pannel[data-color='72c3b1'] .meeple-barn  {
+.caverna-player-pannel[data-color="72c3b1"] .meeple-barn  {
   background-position-x: 28.5714285714%; }
 
-.caverna-player-pannel[data-color='982fff'] .meeple-barn  {
+.caverna-player-pannel[data-color="982fff"] .meeple-barn  {
   background-position-x: 42.8571428571%; }
 
-.caverna-player-pannel[data-color='aa9702'] .meeple-barn {
+.caverna-player-pannel[data-color="aa9702"] .meeple-barn {
   background-position-x: 57.1428571429%; }
 
-.caverna-player-pannel[data-color='df7605'] .meeple-barn {
+.caverna-player-pannel[data-color="df7605"] .meeple-barn {
   background-position-x: 71.4285714286%; }
 
-.caverna-player-pannel[data-color='2a05df'] .meeple-barn {
+.caverna-player-pannel[data-color="2a05df"] .meeple-barn {
   background-position-x: 85.7142857143%; }
 
 .player-resource.resource-dwarf .dwarf-on-action,
@@ -2173,15 +2173,15 @@ html[data-background='1'] {
     margin-left: -17px; }
     .player-resource.resource-dwarf .dwarf-in-reserve .meeple-dwarf:first-of-type {
       margin-left: 0px; }
-  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth='0'] .meeple-dwarf {
+  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth="0"] .meeple-dwarf {
     display: none; }
-  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth='1'] .meeple-dwarf:nth-child(1) ~ .meeple-dwarf {
+  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth="1"] .meeple-dwarf:nth-child(1) ~ .meeple-dwarf {
     display: none; }
-  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth='2'] .meeple-dwarf:nth-child(2) ~ .meeple-dwarf {
+  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth="2"] .meeple-dwarf:nth-child(2) ~ .meeple-dwarf {
     display: none; }
-  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth='3'] .meeple-dwarf:nth-child(3) ~ .meeple-dwarf {
+  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth="3"] .meeple-dwarf:nth-child(3) ~ .meeple-dwarf {
     display: none; }
-  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth='4'] .meeple-dwarf:nth-child(4) ~ .meeple-dwarf {
+  .player-resource.resource-dwarf .dwarf-in-reserve[data-potential-growth="4"] .meeple-dwarf:nth-child(4) ~ .meeple-dwarf {
     display: none; }
 .player-resource.resource-dwarf .meeple-dwarf {
   width: 23px;
@@ -2190,11 +2190,11 @@ html[data-background='1'] {
   .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
     transform: scale(0.7);
     transform-origin: -4px 0px; }
-  [data-dwarf='1'] .player-resource.resource-dwarf .meeple-dwarf, [data-dwarf='2'] .player-resource.resource-dwarf .meeple-dwarf {
+  [data-dwarf="1"] .player-resource.resource-dwarf .meeple-dwarf, [data-dwarf="2"] .player-resource.resource-dwarf .meeple-dwarf {
     width: 25px;
     height: 32px;
     margin-top: -23px; }
-    [data-dwarf='1'] .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon, [data-dwarf='2'] .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
+    [data-dwarf="1"] .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon, [data-dwarf="2"] .player-resource.resource-dwarf .meeple-dwarf .meeple-weapon {
       transform: scale(0.63);
       transform-origin: -2px 10px; }
 
@@ -2249,9 +2249,9 @@ html[data-background='1'] {
         margin: 0px 4px 0px 0px;
         position: relative;
         text-align: center; }
-        .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource.resource-begging[data-n='0'],
-        .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-begging[data-n='0'],
-        .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource.resource-begging[data-n='0'] {
+        .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource.resource-begging[data-n="0"],
+        .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource.resource-begging[data-n="0"],
+        .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource.resource-begging[data-n="0"] {
           display: none; }
         .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .reserve,
         .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .reserve,
@@ -2277,7 +2277,7 @@ html[data-background='1'] {
         .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_stable::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_stable::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_stable::after {
-          content: '/4'; }
+          content: "/3"; }
         .resources-bar-holder .caverna-player-pannel .player-panel-resources .player-resource .resource_food::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-personal-resources .player-resource .resource_food::after,
         .resources-bar-holder .caverna-player-pannel .player-panel-board-resources .player-resource .resource_food::after {

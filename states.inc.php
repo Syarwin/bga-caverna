@@ -322,8 +322,12 @@ $machinestates = [
     'name' => 'wishForChildren',
     'description' => '',
     'descriptionmyturn' => '',
+    'descriptionskippable' => clienttranslate('${actplayer} may grow their family'),
+    'descriptionmyturnskippable' => clienttranslate('You may grow your family'),
     'action' => 'stAtomicAction',
-    'type' => 'game',
+    'args' => 'argsAtomicAction',
+    'type' => 'activeplayer',
+    'possibleactions' => ['actWishChildren', 'actPassOptionalAction', 'actRestart'],
   ],
 
   ST_EXCHANGE => [
