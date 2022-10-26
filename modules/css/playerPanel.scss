@@ -25,7 +25,7 @@
     width: 242px !important;
   }
 
-  background-image: url('img/action_frame_bg.jpg');
+  background-image: url("img/action_frame_bg.jpg");
   background-size: 100% 40px;
   border: 1px solid transparent !important;
   background-clip: content-box;
@@ -35,7 +35,7 @@
   background-color: transparent !important;
   border-radius: 20px !important;
   &::before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     top: 0;
@@ -47,7 +47,7 @@
     border-image-width: 34px 82px 34px 77px;
     border-image-outset: 0px 0px 0px 0px;
     border-image-repeat: repeat repeat;
-    border-image-source: url('img/action_frame_panel.png');
+    border-image-source: url("img/action_frame_panel.png");
     z-index: 2;
     box-shadow: none;
     background-color: transparent;
@@ -72,7 +72,7 @@
 
   .player_board_inner {
     padding: 13px 10px 0px;
-    [data-resource-bar='1'] & {
+    [data-resource-bar="1"] & {
       padding: 13px 10px 13px;
     }
 
@@ -141,7 +141,7 @@
         &.resource-begging {
           transition: opacity 0.5s;
           opacity: 1;
-          &[data-n='0'] {
+          &[data-n="0"] {
             opacity: 0;
           }
         }
@@ -164,7 +164,7 @@
           top: 5px;
         }
         .resource_stable::after {
-          content: '/3';
+          content: "/3";
         }
 
         .resource_food::after {
@@ -205,7 +205,7 @@
         }
 
         @for $i from 1 to 6 {
-          &[data-n='#{$i}'] {
+          &[data-n="#{$i}"] {
             @for $j from 0 to $i {
               .meeple-container:nth-child(#{$j + 1}) {
                 display: inline-block;
@@ -231,41 +231,41 @@
   }
 
   .colorblind & .caverna-player-pannel .meeple-dwarf_icon {
-    background-image: url('img/dwarfs_colorblind.png');
+    background-image: url("img/dwarfs_colorblind.png");
   }
 }
 
-.caverna-player-pannel[data-color='ff0000'] {
+.caverna-player-pannel[data-color="ff0000"] {
   .meeple-barn {
     background-position-x: #{0 * 100% / 7};
   }
 }
-.caverna-player-pannel[data-color='008000'] {
+.caverna-player-pannel[data-color="008000"] {
   .meeple-barn {
     background-position-x: #{1 * 100% / 7};
   }
 }
-.caverna-player-pannel[data-color='72c3b1'] {
+.caverna-player-pannel[data-color="72c3b1"] {
   .meeple-barn  {
     background-position-x: #{2 * 100% / 7};
   }
 }
-.caverna-player-pannel[data-color='982fff'] {
+.caverna-player-pannel[data-color="982fff"] {
   .meeple-barn  {
     background-position-x: #{3 * 100% / 7};
   }
 }
-.caverna-player-pannel[data-color='aa9702'] {
+.caverna-player-pannel[data-color="aa9702"] {
   .meeple-barn {
     background-position-x: #{4 * 100% / 7};
   }
 }
-.caverna-player-pannel[data-color='df7605'] {
+.caverna-player-pannel[data-color="df7605"] {
   .meeple-barn {
     background-position-x: #{5 * 100% / 7};
   }
 }
-.caverna-player-pannel[data-color='2a05df'] {
+.caverna-player-pannel[data-color="2a05df"] {
   .meeple-barn {
     background-position-x: #{6 * 100% / 7};
   }
@@ -287,7 +287,7 @@
   .dwarf-on-action {
     padding-left: 7px;
     min-width: 25px;
-    background-image: url('img/background_card.jpg');
+    background-image: url("img/background_card.jpg");
     background-size: 200px;
     background-position: 100px 183px;
   }
@@ -315,12 +315,12 @@
       }
     }
 
-    &[data-potential-growth='0'] .meeple-dwarf {
+    &[data-potential-growth="0"] .meeple-dwarf {
       display: none;
     }
 
     @for $i from 1 to 5 {
-      &[data-potential-growth='#{$i}'] .meeple-dwarf:nth-child(#{$i}) ~ .meeple-dwarf {
+      &[data-potential-growth="#{$i}"] .meeple-dwarf:nth-child(#{$i}) ~ .meeple-dwarf {
         display: none;
       }
     }
@@ -336,8 +336,8 @@
       transform-origin: -4px 0px;
     }
 
-    [data-dwarf='1'] &,
-    [data-dwarf='2'] & {
+    [data-dwarf="1"] &,
+    [data-dwarf="2"] & {
       width: 25px;
       height: 32px;
       margin-top: -23px;
@@ -408,7 +408,7 @@
         position: relative;
         text-align: center;
 
-        &.resource-begging[data-n='0'] {
+        &.resource-begging[data-n="0"] {
           display: none;
         }
 
@@ -431,7 +431,7 @@
         }
 
         .resource_stable::after {
-          content: '/4';
+          content: "/3";
         }
 
         .resource_food::after {
