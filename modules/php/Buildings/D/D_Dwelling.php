@@ -15,7 +15,7 @@ class D_Dwelling extends \CAV\Models\Building
       clienttranslate('The number of these ordinary Dwelling tiles is unlimited.'),
       clienttranslate('They provide room for exactly 1 Dwarf.'),
       clienttranslate(
-        'If you use the "Furnish an ordinary dwelling for 2 Wood and 2 Stone" Expedition loot item (requires strength 12 or more), you can only build one of these Dwellings*.'
+        'If you use the "Furnish an ordinary dwelling for 2 Wood and 2 Stone" Expedition loot item (requires strength 11 or more), you can only build one of these Dwellings*.'
       ),
     ];
     $this->cost = [WOOD => 4, STONE => 3];
