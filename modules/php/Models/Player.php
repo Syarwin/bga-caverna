@@ -268,29 +268,14 @@ class Player extends \CAV\Helpers\DB_Model
     $b = $this->hasPlayedBuilding('G_SlaughteringCave') ? 1 : 0;
 
     $exchanges = [
-      [
-        'from' => [GOLD => 2],
-        'to' => [FOOD => 1],
-        'triggers' => null,
-      ],
       Utils::formatExchange([DONKEY => [FOOD => 1 + $b]]),
       Utils::formatExchange([SHEEP => [FOOD => 1 + $b]]),
       Utils::formatExchange([GRAIN => [FOOD => 1]]),
 
-      [
-        'from' => [GOLD => 3],
-        'to' => [FOOD => 2],
-        'triggers' => null,
-      ],
       Utils::formatExchange([PIG => [FOOD => 2 + $b]]),
       Utils::formatExchange([VEGETABLE => [FOOD => 2]]),
       Utils::formatExchange([RUBY => [FOOD => 2]]),
 
-      [
-        'from' => [GOLD => 4],
-        'to' => [FOOD => 3],
-        'triggers' => null,
-      ],
       [
         'from' => [DONKEY => 2],
         'to' => [FOOD => 3 + 2 * $b],
@@ -301,6 +286,10 @@ class Player extends \CAV\Helpers\DB_Model
 
     foreach ($this->getPlayedBuildings() as $building) {
       $exchanges = array_merge($exchanges, $building->getExchanges());
+    }
+
+    for ($i = 2; $i <= $this->getAllReserveResources()[GOLD]; $i++) {
+      $exchanges[] = ['from' => [GOLD => $i], 'to' => [FOOD => $i - 1], 'triggers' => null];
     }
 
     // Filter according to trigger
@@ -532,10 +521,10 @@ class Player extends \CAV\Helpers\DB_Model
     }
   }
 
-  public function getHarvestFoodCost()
+  public function getHarvestFoodCost($harvest = false)
   {
     $nb = $this->countDwarfs(ADULT) * Globals::getHarvestCost() + $this->countDwarfs(CHILD);
-    if ($this->hasPlayedBuilding('G_MiningCave')) {
+    if (!$harvest && $this->hasPlayedBuilding('G_MiningCave')) {
       $nb -= $this->countDonkeyInMines();
     }
     return $nb;
@@ -543,7 +532,7 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getHarvestCost()
   {
-    $costs = Utils::formatFee([FOOD => $this->getHarvestFoodCost()]);
+    $costs = Utils::formatFee([FOOD => $this->getHarvestFoodCost(true)]);
     return $costs;
   }
 
