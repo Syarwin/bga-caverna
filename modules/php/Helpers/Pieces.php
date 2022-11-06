@@ -201,7 +201,7 @@ class Pieces extends DB_Manager
       throw new \BgaVisibleSystemException('Class Pieces: state cannot be null');
     }
 
-    if (!is_null($state) && preg_match("/^-*[0-9]+$/", $state) == 0) {
+    if (!is_null($state) && preg_match('/^-*[0-9]+$/', $state) == 0) {
       throw new \BgaVisibleSystemException('Class Pieces: state must be integer number');
     }
   }
@@ -211,7 +211,7 @@ class Pieces extends DB_Manager
    */
   final static function checkPosInt($n)
   {
-    if ($n && preg_match("/^[0-9]+$/", $n) == 0) {
+    if ($n && preg_match('/^[0-9]+$/', $n) == 0) {
       throw new \BgaVisibleSystemException('Class Pieces: number of pieces must be integer number');
     }
   }
@@ -243,6 +243,8 @@ class Pieces extends DB_Manager
   {
     if (!is_array($ids)) {
       $ids = [$ids];
+    } else {
+      $ids = array_unique($ids);
     }
 
     self::checkIdArray($ids);

@@ -53,6 +53,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         if (o.parentNode != $(container)) {
           dojo.place(o, container);
         }
+        if (meeple.type == 'weapon') {
+          o.dataset.force = meeple.state;
+        }
 
         return meeple.id;
       });
