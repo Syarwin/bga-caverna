@@ -441,9 +441,6 @@ class Pay extends \CAV\Models\Action
         if ($reserve[FOOD] == 0) {
           unset($combination[FOOD]);
         }
-      } elseif ($harvest && $reserve[FOOD] == 0) {
-        $combination[BEGGING] = $combination[FOOD];
-        unset($combination[FOOD]);
       }
 
       self::pushAux($combination, $combinations, $reserve, true, $ignoreResources);
