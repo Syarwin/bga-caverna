@@ -527,7 +527,7 @@ class Player extends \CAV\Helpers\DB_Model
     if (!$harvest && $this->hasPlayedBuilding('G_MiningCave')) {
       $nb -= $this->countDonkeyInMines();
     }
-    return $nb;
+    return max(0, $nb);
   }
 
   public function getHarvestCost()
