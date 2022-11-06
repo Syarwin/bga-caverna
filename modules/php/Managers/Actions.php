@@ -75,7 +75,7 @@ class Actions
     $actionId = ucfirst(mb_strtolower($actionId));
     $msg = sprintf(
       Game::get()::translate(
-        'Attempting to take an action (%s) that is not possible. Either another card erroneously flagged this action as possible, or this action was possible until another card interfered.'
+        'Attempting to take an action (%s) that is not possible. If you are in an expedition, take care of the order of the loot or make sure the loot is doable.'
       ),
       $actionId
     );
@@ -115,7 +115,7 @@ class Actions
           Game::get()->gamestate->jumpToState(ST_IMPOSSIBLE_MANDATORY_ACTION);
           return;
         } else {
-          throw new \BgaUserException(self::getErrorMessage($actionId) . ". Active player : " . $player->getId(). ". Debug context : ". \var_export($ctx->toArray(), true));
+          throw new \BgaUserException(self::getErrorMessage($actionId));
         }
       } else {
         // Auto pass if optional and not doable
