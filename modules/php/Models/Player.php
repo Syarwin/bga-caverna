@@ -532,10 +532,10 @@ class Player extends \CAV\Helpers\DB_Model
     }
   }
 
-  public function getHarvestFoodCost()
+  public function getHarvestFoodCost($harvest = false)
   {
     $nb = $this->countDwarfs(ADULT) * Globals::getHarvestCost() + $this->countDwarfs(CHILD);
-    if ($this->hasPlayedBuilding('G_MiningCave')) {
+    if (!$harvest && $this->hasPlayedBuilding('G_MiningCave')) {
       $nb -= $this->countDonkeyInMines();
     }
     return $nb;
@@ -543,7 +543,7 @@ class Player extends \CAV\Helpers\DB_Model
 
   public function getHarvestCost()
   {
-    $costs = Utils::formatFee([FOOD => $this->getHarvestFoodCost()]);
+    $costs = Utils::formatFee([FOOD => $this->getHarvestFoodCost(true)]);
     return $costs;
   }
 
