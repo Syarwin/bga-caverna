@@ -200,11 +200,12 @@ class Pay extends \CAV\Models\Action
     }
 
     $begging = 0;
-    foreach ($cost as $resource => $amount) {
+    foreach ($argsPay['combinations'][0] as $resource => $amount) {
       if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
         continue;
       }
       $reserve = $player->countReserveResource($resource);
+
       if ($reserve < $amount) {
         $cost[$resource] = $reserve;
         $begging += $amount - $reserve;
@@ -214,7 +215,7 @@ class Pay extends \CAV\Models\Action
     $desc = [
       'log' => clienttranslate('Pay ${resources_desc} to feed your family'),
       'args' => [
-        'resources_desc' => Utils::resourcesToStr($cost),
+        'resources_desc' => Utils::resourcesToStr($argsPay['combinations'][0]),
       ],
     ];
     if ($begging > 0) {
