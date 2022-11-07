@@ -93,6 +93,7 @@ class PlayerBoard
    */
   protected function fetchDatas()
   {
+    $this->buildableZones = null;
     $this->grid = $this->createEmptyGrid();
     $this->stablesGrid = $this->createEmptyGrid();
 

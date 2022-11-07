@@ -239,6 +239,9 @@ abstract class Utils extends \APP_DbObject
 function array_uunique($array, $comparator)
 {
   $unique_array = [];
+  if (empty($array)) {
+    return $unique_array;
+  }
   do {
     $element = array_shift($array);
     $unique_array[] = $element;
