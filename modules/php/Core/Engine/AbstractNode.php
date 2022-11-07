@@ -127,6 +127,10 @@ class AbstractNode
    */
   public function getDescription($ignoreResources = false)
   {
+    if (isset($this->getArgs()['desc'])) {
+      return $this->getArgs()['desc'];
+    }
+
     $i = 0;
     $desc = [];
     $args = [];

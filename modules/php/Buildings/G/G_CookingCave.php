@@ -21,7 +21,8 @@ class G_CookingCave extends \CAV\Models\Building
     $this->exchanges = [
       [
         'source' => $this->name,
-        'flag' => $this->id,
+        'triggers' => null,
+        'flag' => null,
         'from' => [
           GRAIN => 1,
           VEGETABLE => 1,

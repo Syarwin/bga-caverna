@@ -222,7 +222,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         location: n.args.card.id,
         type: 'dwarf',
       };
-      return this.slideResources([meeple], {
+      this.slideResources([meeple], {
         duration: 1000,
       });
     },
@@ -306,7 +306,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_accumulation(n) {
       debug('Notif: accumulation', n);
-      return this.slideResources(n.args.resources, (meeple) => ({
+      this.slideResources(n.args.resources, (meeple) => ({
         from: document.querySelector('#' + meeple.location + ' .action-desc'),
       }));
     },
@@ -316,7 +316,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_collectResources(n) {
       debug('Notif: collecting resoures', n);
-      return this.slideResources(n.args.resources, {});
+      this.slideResources(n.args.resources, {});
     },
 
     /**
@@ -324,7 +324,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_gainResources(n) {
       debug('Notif: gain resoures', n);
-      return this.slideResources(n.args.resources, {
+      this.slideResources(n.args.resources, {
         from: n.args.cardId ? n.args.cardId : 'page-title',
       });
     },
@@ -334,7 +334,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_payResources(n) {
       debug('Notif: paying resoures', n);
-      return this.slideResources(n.args.resources, (meeple) => ({
+      this.slideResources(n.args.resources, (meeple) => ({
         target: 'page-title',
         destroy: true,
       }));
@@ -345,7 +345,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_silentKill(n) {
       debug('Notif: silenKill', n);
-      return this.slideResources(n.args.resources, (meeple) => ({
+      this.slideResources(n.args.resources, (meeple) => ({
         //target: 'pagemaintitletext',
         duration: 10,
         destroy: true,
@@ -395,13 +395,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           from: 'page-title',
         });
         this.updateDwarfsPlayerCounters();
-        return null;
+        return;
       }
 
       this.slideResources([n.args.weapon], {
         from: 'page-title',
       }).then(() => this.updateDwarfsPlayerCounters());
-      return null;
     },
 
     /**
@@ -439,7 +438,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_placeMeeplesForFuture(n) {
       debug('Notif: placing meeples for future', n);
-      return this.slideResources(n.args.meeples, {
+      this.slideResources(n.args.meeples, {
         from: 'page-title',
       });
     },
@@ -449,7 +448,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     notif_harvestCrop(n) {
       debug('Notif: harvesting crops', n);
-      return this.slideResources(n.args.resources, {});
+      this.slideResources(n.args.resources, {});
     },
 
     /**

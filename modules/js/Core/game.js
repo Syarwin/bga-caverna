@@ -250,7 +250,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
               fetchNextUrl();
             } else {
               console.log('Done, reloading page');
-              window.location.reload();
+              //              window.location.reload();
             }
           },
         });

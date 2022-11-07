@@ -207,15 +207,15 @@ class Engine
   public function resolveAction($args = [])
   {
     $node = self::$tree->getNextUnresolved();
-    if(!$node->isReUsable()){
+    if (!$node->isReUsable()) {
       $node->resolveAction($args);
-      if($node->isResolvingParent()){
+      if ($node->isResolvingParent()) {
         $node->getParent()->resolve([]);
       }
     } else {
       // TODO : remove
       $node->resolveAction($args);
-      if(!$node->getParent()->isResolved()){
+      if (!$node->getParent()->isResolved()) {
         $node->unresolveAction();
         $node->getParent()->unchoose(); // TODO : add sanity checks ??
       }
@@ -324,6 +324,8 @@ class Engine
 
     // Force to clear cached informations
     Globals::fetch();
+    $player = Players::getActive();
+    $player->board()->refresh();
     self::boot();
     self::proceed();
   }

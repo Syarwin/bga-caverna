@@ -17,9 +17,10 @@ trait DebugTrait
 {
   function tp()
   {
-    $player = Players::getCurrent();
-    var_dump($player->getPlayedBuildings());
-//    Buildings::setupNewGame(Players::getAll(), []);
+    self::reloadPlayersBasicInfos();
+    // $player = Players::getCurrent();
+    // var_dump($player->getPlayedBuildings());
+    //    Buildings::setupNewGame(Players::getAll(), []);
   }
 
   function dv()
@@ -242,7 +243,8 @@ trait DebugTrait
 
       // Add game-specific SQL update the tables for your game
       $sql[] = "UPDATE meeples SET player_id=$studioPlayer WHERE player_id=$pId";
-      $sql[] = "UPDATE cards SET player_id=$studioPlayer WHERE player_id=$pId";
+      $sql[] = "UPDATE tiles SET player_id=$studioPlayer WHERE player_id=$pId";
+      $sql[] = "UPDATE buildings SET player_id=$studioPlayer WHERE player_id=$pId";
       $sql[] = "UPDATE user_preferences SET player_id=$studioPlayer WHERE player_id=$pId";
 
       // This could be improved, it assumes you had sequential studio accounts before loading

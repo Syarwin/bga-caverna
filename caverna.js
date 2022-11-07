@@ -470,6 +470,8 @@ define([
             ? _(choice.description)
             : this.format_string_recursive(_(choice.description.log), choice.description.args);
 
+        desc = this.formatStringMeeples(desc);
+
         this.addSecondaryActionButton(
           'btnChoice' + choice.id,
           desc,
