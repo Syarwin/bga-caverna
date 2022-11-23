@@ -42,8 +42,15 @@ class Pay extends \CAV\Models\Action
   public function isDoable($player, $ignoreResources = false)
   {
     $args = $this->argsPay($player);
+    $combinations = $args['combinations'];
+    foreach ($combinations as $key => &$combination) {
+      if (isset($combination[BEGGING])) {
+        unset($combinations[$key]);
+        continue;
+      }
+    }
     $harvestFlag = $this->getCtxArgs()['harvest'] ?? false;
-    return $ignoreResources || ($this->isHarvest() && $harvestFlag) || !empty($args['combinations']);
+    return $ignoreResources || ($this->isHarvest() && $harvestFlag) || !empty($combinations);
   }
 
   public function isAutomatic($player = null)
@@ -200,7 +207,7 @@ class Pay extends \CAV\Models\Action
     }
 
     $begging = 0;
-    foreach ($argsPay['combinations'][0] as $resource => $amount) {
+    foreach ($argsPay['combinations'][0] ?? [] as $resource => $amount) {
       if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
         continue;
       }
@@ -211,11 +218,22 @@ class Pay extends \CAV\Models\Action
         $begging += $amount - $reserve;
       }
     }
+    // if the combination is empty, display begging only
+    if (!isset($argsPay['combinations'][0])) {
+      $begging = $cost[FOOD];
+      $desc = [
+        'log' => clienttranslate('Take ${n} beggar markers to feed your family'),
+        'args' => [
+          'n' => $begging,
+        ],
+      ];
+      return $desc;
+    }
 
     $desc = [
       'log' => clienttranslate('Pay ${resources_desc} to feed your family'),
       'args' => [
-        'resources_desc' => Utils::resourcesToStr($argsPay['combinations'][0]),
+        'resources_desc' => Utils::resourcesToStr($argsPay['combinations'][0] ?? []),
       ],
     ];
     if ($begging > 0) {
