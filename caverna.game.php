@@ -251,7 +251,7 @@ class caverna extends Table
 
     $stateName = $state['name'];
     if ($state['type'] === 'activeplayer') {
-      if ($stateName == 'confirmPartialTurn') {
+      if ($stateName == 'confirmTurn') {
         $this->actConfirmTurn();
       } elseif ($stateName == 'confirmPartialTurn') {
         $this->actConfirmPartialTurn();
