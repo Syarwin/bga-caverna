@@ -91,6 +91,10 @@ class Exchange extends \CAV\Models\Action
       }
     }
 
+    if ($this->getCtxArgs()['force'] ?? false === true) {
+      return false;
+    }
+
     return true;
   }
 

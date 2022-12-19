@@ -333,7 +333,10 @@ trait TurnTrait
 
     Globals::setHarvest(false);
     if (Globals::getTurn() == 12 || (Players::count() <= 2 && Globals::getTurn() == 11)) {
-      $this->gamestate->nextState('end');
+      Globals::setSkippedPlayers([]);
+      // $this->gamestate->nextState('end');
+      $this->initCustomDefaultTurnOrder('endOfGame', ST_PRE_END_OF_GAME, 'stLaunchEndOfGame', true);
+
       return;
     }
 
@@ -342,7 +345,37 @@ trait TurnTrait
 
   function stPreEndOfGame()
   {
-    $this->checkBuildingListeners('BeforeEndOfGame', 'stLaunchEndOfGame');
+    $player = Players::getActive();
+
+    // Already out of round ? => Go to the next player if one is left
+    $skipped = Globals::getSkippedPlayers();
+    if (in_array($player->getId(), $skipped)) {
+      // Everyone is out of round => end it
+      $remaining = array_diff(Players::getAll()->getIds(), $skipped);
+      if (empty($remaining)) {
+        $this->endCustomOrder('endOfGame');
+      } else {
+        $this->nextPlayerCustomOrder('endOfGame');
+      }
+
+      return;
+    }
+
+    $skipped[] = $player->getId();
+    Globals::setSkippedPlayers($skipped);
+    self::giveExtraTime($player->getId());
+
+    $node = [
+      'action' => EXCHANGE,
+      'args' => ['force' => true],
+      'pId' => $player->getId(),
+    ];
+
+    // Inserting leaf of Exchange
+    Engine::setup($node, ['order' => 'endOfGame']);
+    Engine::proceed();
+
+    // $this->checkBuildingListeners('BeforeEndOfGame', 'stLaunchEndOfGame');
   }
 
   function stLaunchEndOfGame()
