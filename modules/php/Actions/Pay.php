@@ -207,6 +207,8 @@ class Pay extends \CAV\Models\Action
     }
 
     $begging = 0;
+    $toPay = [];
+
     foreach ($argsPay['combinations'][0] ?? [] as $resource => $amount) {
       if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
         continue;
@@ -220,20 +222,35 @@ class Pay extends \CAV\Models\Action
     }
     // if the combination is empty, display begging only
     if (!isset($argsPay['combinations'][0])) {
-      $begging = $cost[FOOD];
-      $desc = [
-        'log' => clienttranslate('Take ${n} beggar markers to feed your family'),
-        'args' => [
-          'n' => $begging,
-        ],
-      ];
-      return $desc;
+      foreach ($cost as $resource => $amount) {
+        if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
+          continue;
+        }
+        $reserve = $player->countReserveResource($resource);
+        if ($reserve < $amount) {
+          $begging += $amount - $reserve;
+          $amount = $reserve;
+        }
+
+        $toPay[$resource] = $amount;
+      }
+
+      // $begging = $cost[FOOD];
+      if ($begging == $cost[FOOD]) {
+        $desc = [
+          'log' => clienttranslate('Take ${n} beggar markers to feed your family'),
+          'args' => [
+            'n' => $begging,
+          ],
+        ];
+        return $desc;
+      }
     }
 
     $desc = [
       'log' => clienttranslate('Pay ${resources_desc} to feed your family'),
       'args' => [
-        'resources_desc' => Utils::resourcesToStr($argsPay['combinations'][0] ?? []),
+        'resources_desc' => Utils::resourcesToStr($argsPay['combinations'][0] ?? $toPay),
       ],
     ];
     if ($begging > 0) {
