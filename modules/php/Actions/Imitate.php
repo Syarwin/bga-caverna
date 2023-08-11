@@ -25,7 +25,7 @@ class Imitate extends \CAV\Models\Action
 
   public function isDoable($player, $ignoreResources = false)
   {
-    return !empty($this->getCopiableCards($player, null, $ignoreResources));
+    return !empty($this->getCopiableCards($player, $this->getDwarf(), $ignoreResources));
   }
 
   function getCopiableCards($player, $dwarf, $ignoreResources = false)
@@ -69,7 +69,7 @@ class Imitate extends \CAV\Models\Action
     ];
 
     Notifications::imitate($player, $card);
-    
+
     // Copy action card
     $flow = $card->getTaggedFlow($player, $dwarf);
     $this->checkModifiers('computePlaceDwarfFlow', $flow, 'flow', $player, $eventData);
