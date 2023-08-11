@@ -7,6 +7,7 @@ class D_Dwelling extends \CAV\Models\Building
   {
     parent::__construct($row);
     $this->type = 'D_Dwelling';
+    $this->category = 'dwelling';
     $this->name = clienttranslate('Dwelling');
     $this->dwelling = 1;
     $this->nbInBox = 99;

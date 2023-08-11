@@ -54,16 +54,18 @@ class ActionExtension extends \CAV\Models\ActionCard
       ],
     ];
 
-
     $building = $player->hasPlayedBuilding('G_GuestRoom', false);
-    if (
-      !is_null($building) && $building->getExtraDatas('extension') != true
-    ) {
-      $flow['type'] = NODE_SEQ;
-      $flow['childs'][] = [
+    if (!is_null($building) && $building->getExtraDatas('extension') != true) {
+      $f = [
+        'type' => NODE_XOR,
+        'childs' => [$flow, $flow],
+      ];
+      $f['childs'][0]['type'] = NODE_SEQ;
+      $f['childs'][0]['childs'][] = [
         'action' => \SPECIAL_EFFECT,
         'args' => ['cardType' => 'G_GuestRoom', 'method' => 'useExtension'],
       ];
+      $flow = $f;
     }
 
     return $flow;

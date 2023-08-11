@@ -45,7 +45,7 @@ class Y_StateParlor extends \CAV\Models\Building
         ->where([['x', $tile['x']], ['y', $tile['y']]])
         ->get(true);
 
-      if (!is_null($b) && $b->getDwelling() > 0) {
+      if (!is_null($b) && $b->getCategory() == 'dwelling') {
         $adj++;
       }
     }

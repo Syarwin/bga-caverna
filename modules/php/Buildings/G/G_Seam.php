@@ -21,6 +21,14 @@ class G_Seam extends \CAV\Models\Building
 
   public function isListeningTo($event)
   {
+    if ($this->isActionEvent($event, 'Receive')) {
+      foreach ($event['meeples'] as $m) {
+        if ($m['type'] == STONE) {
+          return true;
+        }
+      }
+    }
+
     if ($this->isActionEvent($event, 'Gain')) {
       foreach ($event['meeples'] as $m) {
         if ($m['type'] == STONE) {
@@ -78,6 +86,11 @@ class G_Seam extends \CAV\Models\Building
   }
 
   public function onPlayerAfterExchange($player, $event)
+  {
+    return $this->gainOre($event);
+  }
+
+  public function onPlayerAfterReceive($player, $event)
   {
     return $this->gainOre($event);
   }
