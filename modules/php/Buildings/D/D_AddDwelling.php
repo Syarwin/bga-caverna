@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Buildings\D;
 
 use CAV\Core\Notifications;
@@ -26,13 +27,18 @@ class D_AddDwelling extends \CAV\Models\Building
     $this->vp = 5;
   }
 
+  public function isConsideredDwelling()
+  {
+    return true;
+  }
+
   public function getDwelling()
   {
     // provides room only if 5 others dwarfs are placed
     if (
       $this->getPlayer()
-        ->getAllDwarfs()
-        ->count() < 5
+      ->getAllDwarfs()
+      ->count() < 5
     ) {
       return 0;
     }

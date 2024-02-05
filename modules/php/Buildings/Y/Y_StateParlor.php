@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Buildings\Y;
 
 use CAV\Managers\Buildings;
@@ -35,17 +36,15 @@ class Y_StateParlor extends \CAV\Models\Building
   {
     $adj = 0;
 
-    foreach (
-      $this->getPlayer()
+    foreach ($this->getPlayer()
         ->board()
         ->getAdjacentTiles($this->x, $this->y)
-      as $tile
-    ) {
+      as $tile) {
       $b = Buildings::getFilteredQuery($this->getPId(), null, null)
         ->where([['x', $tile['x']], ['y', $tile['y']]])
         ->get(true);
 
-      if (!is_null($b) && $b->getCategory() == 'dwelling') {
+      if (!is_null($b) && $b->isConsideredDwelling()) {
         $adj++;
       }
     }

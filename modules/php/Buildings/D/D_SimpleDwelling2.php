@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Buildings\D;
 
 class D_SimpleDwelling2 extends \CAV\Models\Building
@@ -19,5 +20,10 @@ class D_SimpleDwelling2 extends \CAV\Models\Building
     $this->dwelling = 1;
     $this->cost = [WOOD => 3, STONE => 3];
     $this->beginner = true;
+  }
+
+  public function isConsideredDwelling()
+  {
+    return true;
   }
 }

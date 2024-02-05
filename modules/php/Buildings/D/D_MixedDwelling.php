@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Buildings\D;
 
 class D_MixedDwelling extends \CAV\Models\Building
@@ -26,5 +27,10 @@ class D_MixedDwelling extends \CAV\Models\Building
       'capacity' => 2,
       'locations' => [$this->getPos()],
     ];
+  }
+
+  public function isConsideredDwelling()
+  {
+    return true;
   }
 }

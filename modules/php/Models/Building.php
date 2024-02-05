@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Models;
 
 use CAV\Core\Notifications;
@@ -71,6 +72,11 @@ class Building extends \CAV\Helpers\DB_Model
   }
 
   public function enforceReorganizeOnLastHarvest()
+  {
+    return false;
+  }
+
+  public function isConsideredDwelling()
   {
     return false;
   }

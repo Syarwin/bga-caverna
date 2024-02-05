@@ -171,10 +171,18 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               isHidden = false;
             }
 
+            if (type == 'dog' && zone['type'] != 'meadow') isHidden = true;
+
             dojo.toggleClass(row, 'hidden', isHidden);
             nHidden += isHidden ? 1 : 0;
           } else {
             dojo.removeClass(row, 'hidden');
+
+            if (type == 'dog' && zone['type'] != 'meadow') {
+              isHidden = true;
+              dojo.addClass(row, 'hidden');
+              nHidden++;
+            }
           }
 
           // Disable - buttons

@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Buildings\D;
 
 class D_StartDwelling extends \CAV\Models\Building
@@ -28,5 +29,10 @@ class D_StartDwelling extends \CAV\Models\Building
       'capacity' => 2,
       'locations' => [$this->getPos()],
     ];
+  }
+
+  public function isConsideredDwelling()
+  {
+    return true;
   }
 }

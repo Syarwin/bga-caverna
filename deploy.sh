@@ -10,7 +10,7 @@ TMPNEW=/tmp/bgarewrite-$NEW/
 sass caverna.scss caverna.css
 
 # Copy
-rsync -r --delete --exclude=.git --exclude=misc --exclude=.sass-cache --exclude=node_modules/ $SRC $TMP
+rsync -r --delete --exclude=.git --exclude=misc --exclude=.sass-cache --exclude=node_modules/ --exclude=.vscode $SRC $TMP
 
 # Rewrite contents
 find $TMP -type f -not -name '*.png' -not -name '*.jpg' \
