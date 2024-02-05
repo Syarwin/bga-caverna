@@ -171,14 +171,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
               isHidden = false;
             }
 
-            if (type == 'dog' && zone['type'] != 'meadow') isHidden = true;
+            if (type == 'dog' && !['meadow', 'stable', 'pasture'].includes(zone['type'])) isHidden = true;
 
             dojo.toggleClass(row, 'hidden', isHidden);
             nHidden += isHidden ? 1 : 0;
           } else {
             dojo.removeClass(row, 'hidden');
 
-            if (type == 'dog' && zone['type'] != 'meadow') {
+            if (type == 'dog' && !['meadow', 'stable', 'pasture'].includes(zone['type'])) {
               isHidden = true;
               dojo.addClass(row, 'hidden');
               nHidden++;
