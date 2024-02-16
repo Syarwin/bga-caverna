@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\ActionCards;
+
 use CAV\Helpers\Utils;
 
 class ActionFenceBuilding6 extends \CAV\Models\ActionCard
@@ -31,7 +33,7 @@ class ActionFenceBuilding6 extends \CAV\Models\ActionCard
       'childs' => [
         ['action' => COLLECT],
         [
-          'type' => NODE_THEN_OR,
+          'type' => NODE_OR,
           'optional' => true,
           'childs' => [
             [
