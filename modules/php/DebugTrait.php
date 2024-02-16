@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV;
+
 use CAV\Core\Globals;
 use CAV\Managers\Players;
 use CAV\Managers\Meeples;
@@ -17,8 +19,11 @@ trait DebugTrait
 {
   function tp()
   {
-    self::reloadPlayersBasicInfos();
-    // $player = Players::getCurrent();
+    // self::reloadPlayersBasicInfos();
+    $player = Players::getCurrent();
+    $costs = $player->getHarvestCost();
+    Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs);
+    var_dump($costs);
     // var_dump($player->getPlayedBuildings());
     //    Buildings::setupNewGame(Players::getAll(), []);
   }

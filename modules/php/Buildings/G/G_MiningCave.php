@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Buildings\G;
 
 use CAV\Helpers\Utils;

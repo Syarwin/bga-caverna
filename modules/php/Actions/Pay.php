@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Actions;
+
 use CAV\Core\Notifications;
 use CAV\Core\Engine;
 use CAV\Core\Game;
@@ -222,29 +224,45 @@ class Pay extends \CAV\Models\Action
     }
     // if the combination is empty, display begging only
     if (!isset($argsPay['combinations'][0])) {
-      foreach ($cost as $resource => $amount) {
-        if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
-          continue;
-        }
-        $reserve = $player->countReserveResource($resource);
-        if ($reserve < $amount) {
-          $begging += $amount - $reserve;
-          $amount = $reserve;
-        }
+      $args = $this->getCtxArgs();
+      $nb = $args['nb'] ?? null;
+      $costs = $player->getHarvestCost();
+      Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs);
 
-        $toPay[$resource] = $amount;
-      }
+      $combinations = self::computeAllBuyableCombinations(
+        $player,
+        $costs,
+        $nb,
+        true,
+        true
+      );
+      $combinations = self::keepOnlyOptimals($combinations);
+      $combination = $combinations[0];
+      $begging = $combination[BEGGING];
 
-      // $begging = $cost[FOOD];
-      if ($begging == $cost[FOOD]) {
-        $desc = [
-          'log' => clienttranslate('Take ${n} beggar markers to feed your family'),
-          'args' => [
-            'n' => $begging,
-          ],
-        ];
-        return $desc;
-      }
+      // foreach ($cost as $resource => $amount) {
+      //   if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
+      //     continue;
+      //   }
+      //   $reserve = $player->countReserveResource($resource);
+      //   if ($reserve < $amount) {
+      //     $begging += $amount - $reserve;
+      //     $amount = $reserve;
+      //   }
+
+      //   $toPay[$resource] = $amount;
+      // }
+
+      // // $begging = $cost[FOOD];
+      // if ($begging == $cost[FOOD]) {
+      $desc = [
+        'log' => clienttranslate('Take ${n} beggar markers to feed your family'),
+        'args' => [
+          'n' => $begging,
+        ],
+      ];
+      return $desc;
+      // }
     }
 
     $desc = [
@@ -265,18 +283,37 @@ class Pay extends \CAV\Models\Action
   {
     // Sanity checks
     self::checkAction('actPay', $auto);
-    $cost = $this->getCtxArgs()['costs']['fees'][0];
 
     $player = Players::getActive();
+    $argsPay = $this->argsPay();
+    $combination = null;
+
+    if (count($argsPay['combinations']) >= 1) {
+      $combination = $argsPay['combinations'][0];
+    } else {
+      $args = $this->getCtxArgs();
+      $nb = $args['nb'] ?? null;
+      $costs = $player->getHarvestCost();
+      Buildings::applyEffects($player, 'ComputeHarvestCosts', $costs);
+
+      $combinations = self::computeAllBuyableCombinations(
+        $player,
+        $costs,
+        $nb,
+        true,
+        true
+      );
+      $combinations = self::keepOnlyOptimals($combinations);
+      $combination = $combinations[0];
+    }
+
     $deleted = [];
-    $begging = 0;
-    foreach ($cost as $resource => $amount) {
-      if (in_array($resource, ['nb', 'sources', 'sourcesDesc'])) {
+    foreach ($combination as $resource => $amount) {
+      if (in_array($resource, ['nb', 'sources', 'sourcesDesc', BEGGING])) {
         continue;
       }
       $reserve = $player->countReserveResource($resource);
       if ($reserve < $amount) {
-        $begging += $amount - $reserve;
         $amount = $reserve;
       }
 
@@ -284,13 +321,14 @@ class Pay extends \CAV\Models\Action
     }
 
     Notifications::payResources($player, $deleted, clienttranslate('Harvest'));
+    $begging = $combination[BEGGING];
     if ($begging != 0) {
       $created = $player->createResourceInReserve(BEGGING, $begging);
       Notifications::begging($player, $created);
     }
 
     // Resolve the node
-    $this->resolveAction($cost, $auto);
+    $this->resolveAction($combination, $auto);
   }
 
   /***************************************
