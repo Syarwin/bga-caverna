@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Managers;
+
 use CAV\Helpers\Utils;
 
 /* Class to manage all the tiles (cavern, tunnel, mines, meadow) for Caverna */
@@ -78,7 +80,7 @@ class Tiles extends \CAV\Helpers\Pieces
   /**
    * Generic base query
    */
-  public function getFilteredQuery($pId, $location, $type)
+  public static function getFilteredQuery($pId, $location, $type)
   {
     $query = self::getSelectQuery()->wherePlayer($pId);
     if ($location != null) {

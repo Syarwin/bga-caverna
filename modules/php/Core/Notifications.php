@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Core;
+
 use CAV\Managers\Players;
 use CAV\Helpers\Utils;
 use CAV\Core\Globals;
@@ -53,7 +55,7 @@ class Notifications
   }
 
   // Remove extra information from cards
-  protected function filterBuildingdDatas($building)
+  protected static function filterBuildingdDatas($building)
   {
     return [
       'id' => $building['id'],
@@ -222,8 +224,8 @@ class Notifications
   {
     $msg =
       count($fences) == 1
-        ? clienttranslate('${player_name} constructs one fence')
-        : clienttranslate('${player_name} constructs ${nb} fences');
+      ? clienttranslate('${player_name} constructs one fence')
+      : clienttranslate('${player_name} constructs ${nb} fences');
 
     self::notifyAll('addFences', $msg, [
       'nb' => count($fences),
@@ -297,8 +299,8 @@ class Notifications
   {
     $msg =
       count($stables) == 1
-        ? clienttranslate('${player_name} constructs one stable')
-        : clienttranslate('${player_name} constructs ${nb} stables');
+      ? clienttranslate('${player_name} constructs one stable')
+      : clienttranslate('${player_name} constructs ${nb} stables');
 
     self::notifyAll('addStables', $msg, [
       'nb' => count($stables),
@@ -546,8 +548,8 @@ class Notifications
   {
     $msg =
       count($turns) == 1
-        ? clienttranslate('${player_name} puts ${resources_desc} on the action card of turn n°${turns}')
-        : clienttranslate('${player_name} puts ${resources_desc} on the action cards of turns n°${turns}');
+      ? clienttranslate('${player_name} puts ${resources_desc} on the action card of turn n°${turns}')
+      : clienttranslate('${player_name} puts ${resources_desc} on the action cards of turns n°${turns}');
 
     self::notifyAll('placeMeeplesForFuture', $msg, [
       'player' => $player,
@@ -561,8 +563,8 @@ class Notifications
   {
     $msg =
       $source == ''
-        ? clienttranslate('${player_name} converts ${resources_desc} into ${resources2_desc}')
-        : clienttranslate('${player_name} converts ${resources_desc} into ${resources2_desc} (${source})');
+      ? clienttranslate('${player_name} converts ${resources_desc} into ${resources2_desc}')
+      : clienttranslate('${player_name} converts ${resources_desc} into ${resources2_desc} (${source})');
 
     self::notifyAll('exchange', $msg, [
       'i18n' => ['source'],
@@ -730,5 +732,3 @@ class Notifications
     }
   }
 }
-
-?>

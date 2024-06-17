@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Managers;
 
 /* Class to manage all the stables for Agricola */
@@ -17,7 +18,7 @@ class Stables extends Meeples
   }
 
   /* Partial query for a given player */
-  public function qPlayer($pId, $location = null)
+  public static function qPlayer($pId, $location = null)
   {
     $query = self::getSelectQuery()
       ->wherePlayer($pId)
@@ -35,7 +36,7 @@ class Stables extends Meeples
    * @return boolean true if has one available, else false
    * @param number $pId Id of player
    */
-  public function hasAvailable($pId)
+  public static function hasAvailable($pId)
   {
     return self::qPlayer($pId, 'reserve')->count() > 0;
   }
@@ -45,7 +46,7 @@ class Stables extends Meeples
    * @param number $pId
    * @return array meeple
    */
-  public function getNextAvailable($pId)
+  public static function getNextAvailable($pId)
   {
     return self::qPlayer($pId, 'reserve')->getSingle();
   }
@@ -57,7 +58,7 @@ class Stables extends Meeples
    * @param array $coord X & Y position
    * CAUTION : don't use 'move' as it's already taken by parent
    **/
-  public function moveNextAvailable($pId, $location, $coords = null)
+  public static function moveNextAvailable($pId, $location, $coords = null)
   {
     $stable = self::getNextAvailable($pId);
     if ($stable == null) {
@@ -72,14 +73,14 @@ class Stables extends Meeples
    * @param number $pId
    * @return int number of farmers
    **/
-  public function count($pId)
+  public static function count($pId)
   {
     return self::qPlayer($pId)
       ->where('meeple_location', '<>', 'reserve')
       ->count();
   }
 
-  public function countAvailable($pId)
+  public static function countAvailable($pId)
   {
     return self::qPlayer($pId)
       ->where('meeple_location', 'reserve')
@@ -91,7 +92,7 @@ class Stables extends Meeples
    * @param number $pId
    * @return array meeples
    */
-  public function getOnBoard($pId)
+  public static function getOnBoard($pId)
   {
     return self::qPlayer($pId, 'board')->get();
   }

@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Managers;
+
 use CAV\Core\Game;
 use CAV\Core\Globals;
 use CAV\Core\Stats;
@@ -9,6 +11,7 @@ use CAV\Helpers\Utils;
  * Players manager : allows to easily access players ...
  *  a player is an instance of Player class
  */
+
 class Players extends \CAV\Helpers\DB_Manager
 {
   protected static $table = 'player';
@@ -18,7 +21,7 @@ class Players extends \CAV\Helpers\DB_Manager
     return new \CAV\Models\Player($row);
   }
 
-  public function setupNewGame($players, $options)
+  public static function setupNewGame($players, $options)
   {
     // Create players
     $gameInfos = Game::get()->getGameinfos();
@@ -43,17 +46,17 @@ class Players extends \CAV\Helpers\DB_Manager
     Game::get()->reloadPlayersBasicInfos();
   }
 
-  public function getActiveId()
+  public static function getActiveId()
   {
     return Game::get()->getActivePlayerId();
   }
 
-  public function getCurrentId()
+  public static function getCurrentId()
   {
     return Game::get()->getCurrentPId();
   }
 
-  public function getAll()
+  public static function getAll()
   {
     return self::DB()->get(false);
   }
@@ -61,7 +64,7 @@ class Players extends \CAV\Helpers\DB_Manager
   /*
    * get : returns the Player object for the given player ID
    */
-  public function get($pId = null)
+  public static function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
     return self::DB()
@@ -69,17 +72,17 @@ class Players extends \CAV\Helpers\DB_Manager
       ->getSingle();
   }
 
-  public function getActive()
+  public static function getActive()
   {
     return self::get();
   }
 
-  public function getCurrent()
+  public static function getCurrent()
   {
     return self::get(self::getCurrentId());
   }
 
-  public function getNextId($player)
+  public static function getNextId($player)
   {
     $pId = is_int($player) ? $player : $player->getId();
     $table = Game::get()->getNextPlayerTable();
@@ -89,12 +92,12 @@ class Players extends \CAV\Helpers\DB_Manager
   /*
    * Return the number of players
    */
-  public function count()
+  public static function count()
   {
     return self::DB()->count();
   }
 
-  public function countUnallocatedDwarfs()
+  public static function countUnallocatedDwarfs()
   {
     // Get zombie players ids
     $zombies = self::getAll()
@@ -111,7 +114,7 @@ class Players extends \CAV\Helpers\DB_Manager
       ->count();
   }
 
-  public function returnHome()
+  public static function returnHome()
   {
     foreach (self::getAll() as $player) {
       $player->returnHomeDwarfs();
@@ -121,7 +124,7 @@ class Players extends \CAV\Helpers\DB_Manager
   /*
    * getUiData : get all ui data of all players
    */
-  public function getUiData($pId)
+  public static function getUiData($pId)
   {
     return self::getAll()->map(function ($player) use ($pId) {
       return $player->jsonSerialize($pId);
@@ -131,7 +134,7 @@ class Players extends \CAV\Helpers\DB_Manager
   /*
    * Get current turn order according to first player variable
    */
-  public function getTurnOrder($firstPlayer = null)
+  public static function getTurnOrder($firstPlayer = null)
   {
     $firstPlayer = $firstPlayer ?? Globals::getFirstPlayer();
     $order = [];
@@ -146,7 +149,7 @@ class Players extends \CAV\Helpers\DB_Manager
   /**
    * Get current turn order for harvest by removing skipped players
    */
-  public function getHarvestTurnOrder($firstPlayer = null)
+  public static function getHarvestTurnOrder($firstPlayer = null)
   {
     $order = self::getTurnOrder($firstPlayer);
     $skipped = Globals::getSkipHarvest();

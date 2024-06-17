@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Managers;
+
 use CAV\Core\Globals;
 
 /* Class to manage all the famers for Agricola */
@@ -28,7 +30,7 @@ class Dwarfs extends Meeples
   }
 
   /* Add the weapons to a collection of dwarfs */
-  protected function addWeapons(&$dwarfs, $pId = null)
+  protected static function addWeapons(&$dwarfs, $pId = null)
   {
     $weapons = Meeples::getFilteredQuery($pId, null, 'weapon')->get();
     foreach ($weapons as $w) {
@@ -49,7 +51,7 @@ class Dwarfs extends Meeples
   }
 
   /* Partial query for a given player */
-  public function qPlayer($pId, $location = null)
+  public static function qPlayer($pId, $location = null)
   {
     return self::getFilteredQuery($pId, $location, 'dwarf');
   }
@@ -59,7 +61,7 @@ class Dwarfs extends Meeples
    * @return Collection of dwarfs
    * @param number $pId Id of player
    */
-  public function getAllOfPlayer($pId)
+  public static function getAllOfPlayer($pId)
   {
     $dwarfs = self::qPlayer($pId, null)
       ->where('meeple_location', '<>', 'reserve')
@@ -73,12 +75,12 @@ class Dwarfs extends Meeples
    * @return boolean true if has one available, else false
    * @param number $pId Id of player
    */
-  public function hasAvailable($pId)
+  public static function hasAvailable($pId)
   {
     return self::qPlayer($pId, 'board')->count() > 0;
   }
 
-  public function getAllAvailable($pId = null)
+  public static function getAllAvailable($pId = null)
   {
     $dwarfs = self::qPlayer($pId, 'board')->get();
     self::addWeapons($dwarfs, $pId);
@@ -89,7 +91,7 @@ class Dwarfs extends Meeples
    * @param number $pId
    * @return int number of dwarfs
    **/
-  public function count($pId, $type = null)
+  public static function count($pId, $type = null)
   {
     $query = self::qPlayer($pId)->where('meeple_location', '<>', 'reserve');
 
@@ -105,7 +107,7 @@ class Dwarfs extends Meeples
    * @param number $pId
    * @return boolean true if it's possible
    */
-  public function hasInReserve($pId)
+  public static function hasInReserve($pId)
   {
     return self::qPlayer($pId, 'reserve')->count() > 0;
   }
@@ -115,7 +117,7 @@ class Dwarfs extends Meeples
    * @param number $pId
    * @return a meeple
    */
-  public function getNextInReserve($pId)
+  public static function getNextInReserve($pId)
   {
     return self::qPlayer($pId, 'reserve')->getSingle();
   }

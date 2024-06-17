@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Managers;
+
 use caverna;
 use CAV\Core\Stats;
 use CAV\Helpers\UserException;
@@ -99,7 +101,7 @@ class Meeples extends \CAV\Helpers\Pieces
    * @param varchar $location place on which we put the meeple
    * @param array $coord X & Y position
    **/
-  public function moveToCoords($mId, $location, $coord = null)
+  public static function moveToCoords($mId, $location, $coord = null)
   {
     $x = null;
     $y = null;
@@ -129,7 +131,7 @@ class Meeples extends \CAV\Helpers\Pieces
   /**
    * Generic base query
    */
-  public function getFilteredQuery($pId, $location, $type)
+  public static function getFilteredQuery($pId, $location, $type)
   {
     $query = self::getSelectQuery()->wherePlayer($pId);
     if ($location != null) {
@@ -146,17 +148,17 @@ class Meeples extends \CAV\Helpers\Pieces
   }
 
   /**************************** Animals *****************************************/
-  public function getAnimals($pId, $location = null)
+  public static function getAnimals($pId, $location = null)
   {
     return self::getFilteredQuery($pId, $location, [DOG, SHEEP, DONKEY, PIG, CATTLE])->get();
   }
 
-  public function getAnimal($pId, $location = null, $animal)
+  public static function getAnimal($pId, $location = null, $animal)
   {
     return self::getFilteredQuery($pId, $location, [$animal])->get();
   }
 
-  public function countAnimalsInZoneLocation($pId, $location = null)
+  public static function countAnimalsInZoneLocation($pId, $location = null)
   {
     return self::getFilteredQuery($pId, 'board', [SHEEP, PIG, CATTLE, DONKEY])
       ->where('x', $location['x'])
@@ -164,7 +166,7 @@ class Meeples extends \CAV\Helpers\Pieces
       ->count();
   }
 
-  public function countAnimalInZoneLocation($pId, $animal, $location = null)
+  public static function countAnimalInZoneLocation($pId, $animal, $location = null)
   {
     return self::getFilteredQuery($pId, 'board', [$animal])
       ->where('x', $location['x'])
@@ -172,19 +174,19 @@ class Meeples extends \CAV\Helpers\Pieces
       ->count();
   }
 
-  public function countAnimalsInZoneCard($pId, $location = null)
+  public static function countAnimalsInZoneCard($pId, $location = null)
   {
     return self::getFilteredQuery($pId, $location['card_id'], [SHEEP, PIG, CATTLE])->count();
   }
 
   /**************************** Field *****************************************/
-  public function getFields($pId)
+  public static function getFields($pId)
   {
     return self::getFilteredQuery($pId, 'board', 'field')->get();
   }
 
   /*************************** Resource management ***********************/
-  public function useResource($player_id, $resourceType, $amount)
+  public static function useResource($player_id, $resourceType, $amount)
   {
     $deleted = [];
     if ($amount == 0) {
@@ -210,7 +212,7 @@ class Meeples extends \CAV\Helpers\Pieces
     return $deleted;
   }
 
-  public function payResourceTo($player_id, $resourceType, $amount, $otherPlayer)
+  public static function payResourceTo($player_id, $resourceType, $amount, $otherPlayer)
   {
     $moved = [];
     if ($amount == 0) {
@@ -243,7 +245,7 @@ class Meeples extends \CAV\Helpers\Pieces
     return $moved;
   }
 
-  public function createResourceInLocation($type, $location, $player_id, $x, $y, $nbr = 1, $state = null)
+  public static function createResourceInLocation($type, $location, $player_id, $x, $y, $nbr = 1, $state = null)
   {
     $meeples = [
       [
@@ -261,13 +263,13 @@ class Meeples extends \CAV\Helpers\Pieces
     return $ids;
   }
 
-  public function createResourceOnCard($type, $location, $nbr = 1, $state = null)
+  public static function createResourceOnCard($type, $location, $nbr = 1, $state = null)
   {
     return self::createResourceInLocation($type, $location, 0, null, null, $nbr, $state);
   }
 
   // Default function to create a resource in reserve
-  public function createResourceInReserve($pId, $type, $nbr = 1)
+  public static function createResourceInReserve($pId, $type, $nbr = 1)
   {
     return self::createResourceInLocation($type, 'reserve', $pId, null, null, $nbr);
   }
@@ -277,7 +279,7 @@ class Meeples extends \CAV\Helpers\Pieces
     return self::getFilteredQuery($pId, $cId, $type);
   }
 
-  public function getResourcesOnCard($cId, $pId = null, $type = null)
+  public static function getResourcesOnCard($cId, $pId = null, $type = null)
   {
     return self::getOnCardQ($cId, $pId, $type)
       ->where('type', '<>', 'dwarf')
@@ -285,19 +287,19 @@ class Meeples extends \CAV\Helpers\Pieces
   }
 
   /************* Harvest tokens *******************/
-  public function getHarvestToken()
+  public static function getHarvestToken()
   {
     return self::getFilteredQuery(null, 'turn_' . Globals::getTurn(), 'harvest%')->get(true);
   }
 
-  public function startHarvest()
+  public static function startHarvest()
   {
     $token = self::getHarvestToken();
     self::move($token['id'], 'harvest', 1);
     return self::get($token['id']);
   }
 
-  public function endHarvest()
+  public static function endHarvest()
   {
     $token = self::getInLocation('harvest')->first();
     if (Globals::getTurn() >= 5 && $token['type'] != \HARVEST_NORMAL) {
@@ -309,7 +311,7 @@ class Meeples extends \CAV\Helpers\Pieces
     }
   }
 
-  public function revealHarvestToken()
+  public static function revealHarvestToken()
   {
     // Reveal harvest token if needed
     $harvest = self::getHarvestToken();
@@ -326,7 +328,7 @@ class Meeples extends \CAV\Helpers\Pieces
     Notifications::updateHarvestCosts();
   }
 
-  public function collectResourcesOnCard($player, $cId, $pId = null)
+  public static function collectResourcesOnCard($player, $cId, $pId = null)
   {
     // collect all resources on the card
     $resources = self::getResourcesOnCard($cId, $pId);
@@ -347,7 +349,7 @@ class Meeples extends \CAV\Helpers\Pieces
     return $resources->toArray();
   }
 
-  public function receiveResource($player, &$meeple)
+  public static function receiveResource($player, &$meeple)
   {
     self::DB()->update(
       [
@@ -362,7 +364,7 @@ class Meeples extends \CAV\Helpers\Pieces
   /**
    * Return seeds on fields
    */
-  public function getGrowingCrops($pId)
+  public static function getGrowingCrops($pId)
   {
     $type = [VEGETABLE, GRAIN];
     return self::getSelectQuery()
@@ -372,7 +374,7 @@ class Meeples extends \CAV\Helpers\Pieces
       ->get();
   }
 
-  public function collectFirstPlayerToken($pId)
+  public static function collectFirstPlayerToken($pId)
   {
     $tokenId = self::getSelectQuery()
       ->where('type', 'firstPlayer')
@@ -393,9 +395,9 @@ class Meeples extends \CAV\Helpers\Pieces
    * @return true if adjacent
    *
    **/
-  public function isAdjacent($x, $y, $posX, $posY)
+  public static function isAdjacent($x, $y, $posX, $posY)
   {
-    if (abs($x - $posX) == 1 && abs($y - $poxY) == 0) {
+    if (abs($x - $posX) == 1 && abs($y - $posY) == 0) {
       return true;
     } elseif (abs($x - $posX) == 0 && abs($y - $posY) == 1) {
       return true;
@@ -404,7 +406,7 @@ class Meeples extends \CAV\Helpers\Pieces
     return false;
   }
 
-  public function getReserveResource($pId, $type = null)
+  public static function getReserveResource($pId, $type = null)
   {
     $query = self::getSelectQuery()
       ->wherePlayer($pId)
@@ -416,7 +418,7 @@ class Meeples extends \CAV\Helpers\Pieces
     return $query->get();
   }
 
-  public function getResourceOfType($pId, $type)
+  public static function getResourceOfType($pId, $type)
   {
     $query = self::getSelectQuery()
       ->wherePlayer($pId)
@@ -427,12 +429,12 @@ class Meeples extends \CAV\Helpers\Pieces
     return $query->get();
   }
 
-  public function countReserveResource($pId, $type = null)
+  public static function countReserveResource($pId, $type = null)
   {
     return self::getReserveResource($pId, $type)->count();
   }
 
-  public function countAllResource($pId, $type)
+  public static function countAllResource($pId, $type)
   {
     $query = self::getSelectQuery()
       ->wherePlayer($pId)

@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\States;
+
 use CAV\Core\Globals;
 use CAV\Managers\Players;
 use CAV\Managers\Meeples;

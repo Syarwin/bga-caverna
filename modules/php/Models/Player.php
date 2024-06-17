@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Models;
+
 use CAV\Managers\Dwarfs;
 use CAV\Managers\Actions;
 use CAV\Managers\Meeples;
@@ -186,8 +188,8 @@ class Player extends \CAV\Helpers\DB_Model
   {
     return $this->countReserveResource($type) +
       $this->board()
-        ->getGrowingCrops($type)
-        ->count();
+      ->getGrowingCrops($type)
+      ->count();
   }
 
   public function countReserveResource($type)

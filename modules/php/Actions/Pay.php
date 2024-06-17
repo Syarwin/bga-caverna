@@ -537,7 +537,7 @@ class Pay extends \CAV\Models\Action
   /**
    * Sum two assoc arrays of resources (multiplied by a coefficient)
    */
-  protected function addCostAux(&$combination, $unitCost, $times = 1)
+  protected static function addCostAux(&$combination, $unitCost, $times = 1)
   {
     $combination['sources'] = array_unique(array_merge($combination['sources'] ?? [], $unitCost['sources'] ?? []));
     foreach ($unitCost as $resource => $cost) {
@@ -555,7 +555,7 @@ class Pay extends \CAV\Models\Action
   /**
    * Check if a bonus can be applied
    */
-  protected function canApplyBonus($combination, $bonus)
+  protected static function canApplyBonus($combination, $bonus)
   {
     foreach ($bonus as $resource => $amount) {
       if (

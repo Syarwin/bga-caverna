@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Helpers;
+
 use CAV\Managers\Buildings;
 use CAV\Managers\ActionCards;
 
@@ -12,13 +14,10 @@ abstract class Utils extends \APP_DbObject
 
   public static function die($args = null)
   {
-    if (is_null($args)) {
-      throw new \BgaVisibleSystemException(implode('<br>', self::$logmsg));
-    }
     throw new \BgaVisibleSystemException(json_encode($args));
   }
 
-  public function filterExchanges(&$exchanges, $trigger = ANYTIME, $removeAnytime = false)
+  public static function filterExchanges(&$exchanges, $trigger = ANYTIME, $removeAnytime = false)
   {
     // throw new \feException(print_r($exchanges));
     self::filter($exchanges, function ($exchange) use ($trigger, $removeAnytime) {

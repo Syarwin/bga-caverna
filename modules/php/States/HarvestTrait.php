@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\States;
+
 use CAV\Core\Globals;
 use CAV\Core\Notifications;
 use CAV\Core\Engine;

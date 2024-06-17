@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Managers;
+
 use CAV\Core\Globals;
 use CAV\Core\Stats;
 use CAV\Core\Notifications;
@@ -9,6 +11,7 @@ use CAV\Managers\Buildings;
  * Scores manager : allows to easily update/notify scores
  *   -> could have been inside Players.php but better structure this way
  */
+
 class Scores extends \CAV\Helpers\DB_Manager
 {
   protected static $table = 'player';
@@ -64,7 +67,7 @@ class Scores extends \CAV\Helpers\DB_Manager
   /**
    * Update every player score in DB and on UI
    */
-  public function update($bypassCheck = false)
+  public static function update($bypassCheck = false)
   {
     if (!$bypassCheck && !Globals::isLiveScoring()) {
       return;
@@ -81,7 +84,7 @@ class Scores extends \CAV\Helpers\DB_Manager
   /**
    * Compute the scores and return them
    */
-  public function compute()
+  public static function compute()
   {
     self::init();
     foreach (Players::getAll() as $pId => $player) {
@@ -105,7 +108,7 @@ class Scores extends \CAV\Helpers\DB_Manager
   /**
    * Compute the score of an individual player
    */
-  public function computePlayer($player)
+  public static function computePlayer($player)
   {
     self::computeAnimals($player);
 
@@ -127,13 +130,13 @@ class Scores extends \CAV\Helpers\DB_Manager
     self::computeAuxScore($player);
   }
 
-  protected function computeAuxScore($player)
+  protected static function computeAuxScore($player)
   {
     $aux = 0;
-//    self::DB()->update(['player_score_aux' => $aux], $player->getId());
+    //    self::DB()->update(['player_score_aux' => $aux], $player->getId());
   }
 
-  protected function computeAnimals($player)
+  protected static function computeAnimals($player)
   {
     $reserve = $player->getExchangeResources();
     foreach (ANIMALS as $type) {
@@ -145,7 +148,7 @@ class Scores extends \CAV\Helpers\DB_Manager
     }
   }
 
-  protected function computeGrains($player)
+  protected static function computeGrains($player)
   {
     $n = $player->countReserveAndGrowingResource(GRAIN);
     $score = ceil($n / 2);
@@ -153,7 +156,7 @@ class Scores extends \CAV\Helpers\DB_Manager
     self::addEntry($player, SCORING_GRAINS, $score, $n);
     Stats::setScoreGrains($player, $score);
   }
-  protected function computeVegetables($player)
+  protected static function computeVegetables($player)
   {
     $n = $player->countReserveAndGrowingResource(VEGETABLE);
     $score = $n;
@@ -161,14 +164,14 @@ class Scores extends \CAV\Helpers\DB_Manager
     Stats::setScoreVegetables($player, $score);
   }
 
-  protected function computeRuby($player)
+  protected static function computeRuby($player)
   {
     $n = $player->countReserveResource(RUBY);
     $score = $n;
     self::addEntry($player, SCORING_RUBIES, $score, $n);
     Stats::setScoreRubies($player, $score);
   }
-  protected function computeDwarfs($player)
+  protected static function computeDwarfs($player)
   {
     $n = $player->countDwarfs();
     $score = $n;
@@ -176,14 +179,14 @@ class Scores extends \CAV\Helpers\DB_Manager
     Stats::setScoreDwarfs($player, $score);
   }
 
-  protected function computeEmptyCells($player)
+  protected static function computeEmptyCells($player)
   {
     $n = $player->board()->countEmptyCell();
     $score = $n * -1;
     self::addEntry($player, SCORING_EMPTY, $score, $n);
     Stats::setScoreUnused($player, -$score);
   }
-  protected function computePastures($player)
+  protected static function computePastures($player)
   {
     $score = 0;
     foreach ($player->board()->getPastures() as $pasture) {
@@ -192,14 +195,14 @@ class Scores extends \CAV\Helpers\DB_Manager
     self::addEntry($player, SCORING_PASTURES, $score);
     Stats::setScorePastures($player, $score);
   }
-  protected function computeMines($player)
+  protected static function computeMines($player)
   {
     $score = 3 * $player->countOreMines() + 4 * $player->countRubyMines();
     self::addEntry($player, SCORING_MINES, $score);
     Stats::setScoreMines($player, $score);
   }
 
-  protected function computeBuildings($player)
+  protected static function computeBuildings($player)
   {
     foreach ($player->getBuildings() as $building) {
       $building->computeScore();
@@ -208,14 +211,14 @@ class Scores extends \CAV\Helpers\DB_Manager
     Stats::setScoreBuildingsBonus($player, self::$scores[$player->getId()][SCORING_BUILDINGS_BONUS]['total']);
   }
 
-  protected function computeGold($player)
+  protected static function computeGold($player)
   {
     $n = $player->countReserveResource(GOLD);
     $score = $n;
     self::addEntry($player, SCORING_GOLD, $score);
     Stats::setScoreGold($player, $score);
   }
-  protected function computeBeggings($player)
+  protected static function computeBeggings($player)
   {
     $n = $player->countReserveResource(BEGGING);
     $score = -3 * $n;

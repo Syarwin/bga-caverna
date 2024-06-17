@@ -1,4 +1,5 @@
 <?php
+
 namespace CAV\Managers;
 
 use CAV\Core\Globals;

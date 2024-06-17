@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\States;
+
 use CAV\Managers\ActionCards;
 use CAV\Managers\Buildings;
 use CAV\Managers\Tiles;
@@ -45,45 +47,5 @@ trait SetupTrait
       //      $this->saveSeed();
       $this->gamestate->nextState('noDraft');
     }
-  }
-
-  /**
-   * Save/load seed
-   */
-  public function saveSeed()
-  {
-    $raw = Players::count() . '|' . ActionCards::getSeed() . '|' . Buildings::getSeed();
-    $encoded = rtrim(strtr(base64_encode(addslashes(gzcompress($raw, 9))), '+/', '-_'), '=');
-    Globals::setGameSeed($encoded);
-  }
-
-  public function actLoadSeed($seed)
-  {
-    $raw = gzuncompress(
-      stripslashes(base64_decode(str_pad(strtr($seed, '-_', '+/'), strlen($seed) % 4, '=', STR_PAD_RIGHT)))
-    );
-    $data = explode('|', $raw);
-    if ($data[0] != Players::count()) {
-      throw new \BgaUserException(
-        'Trying to load a ' . $data[0] . ' players seed in your ' . Players::count() . ' players game'
-      );
-    }
-
-    // Load action cards
-    ActionCards::setSeed($data[1]);
-
-    // Load player cards
-    $i = 2;
-    Buildings::preSeedClear();
-    foreach (Players::getAll() as $player) {
-      Buildings::setSeed($player, $data[$i++]);
-    }
-
-    // Refresh UI
-    $datas = $this->getAllDatas();
-    Notifications::refreshUI($datas);
-
-    // Start game
-    $this->gamestate->nextState('start');
   }
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace CAV\Managers;
+
 use CAV\Core\Globals;
 use CAV\Helpers\Utils;
 
@@ -77,7 +79,7 @@ class Buildings extends \CAV\Helpers\Pieces
   /**
    * Generic base query
    */
-  public function getFilteredQuery($pId, $location, $type)
+  public static function getFilteredQuery($pId, $location, $type)
   {
     $query = self::getSelectQuery()->wherePlayer($pId);
     if ($location != null) {
@@ -99,23 +101,14 @@ class Buildings extends \CAV\Helpers\Pieces
   }
 
   /**************************** Dwellings *****************************************/
-  protected function getDwellingsQ($pId)
+  protected static function getDwellingsQ($pId)
   {
     return self::getFilteredQuery($pId, 'board', 'D_%');
   }
 
-  public function getDwellings($pId)
+  public static function getDwellings($pId)
   {
     return self::getDwellingsQ($pId)->get();
-  }
-
-  // countRooms
-  public function countDwelings($pId)
-  {
-    $room = 0;
-    return self::getDwellingsQ($pId)->accumulate($room, function ($b) {
-      return $b->getDwellingCapacity();
-    });
   }
 
   public static function getAvailables($types = null)
@@ -128,7 +121,7 @@ class Buildings extends \CAV\Helpers\Pieces
   /**
    * Get all the cards triggered by an event
    */
-  public function getListeningBuildings($event)
+  public static function getListeningBuildings($event)
   {
     return self::getInLocation('inPlay')
       ->merge(self::getInLocation('hand'))
@@ -141,7 +134,7 @@ class Buildings extends \CAV\Helpers\Pieces
   /**
    * Get reaction in form of a PARALLEL node with all the activated card
    */
-  public function getReaction($event, $returnNullIfEmpty = true)
+  public static function getReaction($event, $returnNullIfEmpty = true)
   {
     $listeningBuildings = self::getListeningBuildings($event);
     if (empty($listeningBuildings) && $returnNullIfEmpty) {
@@ -186,7 +179,7 @@ class Buildings extends \CAV\Helpers\Pieces
   /**
    * Go trough all played cards to apply effects
    */
-  public function getAllBuildingsWithMethod($methodName)
+  public static function getAllBuildingsWithMethod($methodName)
   {
     return self::getInLocation('inPlay')->filter(function ($building) use ($methodName) {
       return \method_exists($building, 'on' . $methodName) ||
@@ -195,7 +188,7 @@ class Buildings extends \CAV\Helpers\Pieces
     });
   }
 
-  public function applyEffects($player, $methodName, &$args)
+  public static function applyEffects($player, $methodName, &$args)
   {
     // Compute a specific ordering if needed
     $buildings = self::getAllBuildingsWithMethod($methodName)->toAssoc();
@@ -234,7 +227,7 @@ class Buildings extends \CAV\Helpers\Pieces
     return $result;
   }
 
-  public function applyEffect($building, $player, $methodName, &$args, $throwErrorIfNone = false)
+  public static function applyEffect($building, $player, $methodName, &$args, $throwErrorIfNone = false)
   {
     $building = $building instanceof \CAV\Models\Building ? $building : self::get($building);
     $res = null;
@@ -272,58 +265,4 @@ class Buildings extends \CAV\Helpers\Pieces
 
     return $res;
   }
-
-  // /**
-  //  * Generate/load seed
-  //  */
-  // public static function getSeed()
-  // {
-  //   $res = '';
-  //   // TODO
-  //   // foreach (Players::getAll() as $player) {
-  //   //   $ids = $player
-  //   //     ->getHand()
-  //   //     ->map(function ($building) {
-  //   //       return $building->getDeck() . dechex($building->getNumber());
-  //   //     })
-  //   //     ->toArray();
-  //   //   $res .= ($res != '' ? '|' : '') . implode('', $ids);
-  //   // }
-  //   return $res;
-  // }
-  //
-  // public static function preSeedClear()
-  // {
-  //   self::DB()
-  //     ->delete()
-  //     ->whereNotNull('player_id')
-  //     ->run();
-  // }
-  //
-  // public static function setSeed($player, $seed)
-  // {
-  //   // Extract the list of (deck, number) identifiers
-  //   preg_match_all('/([ABCD][0-9a-f]+)/', $seed, $out, PREG_PATTERN_ORDER);
-  //   $buildings = [];
-  //   foreach ($out[1] as $building) {
-  //     $deck = $building[0];
-  //     $number = hexdec(\substr($building, 1));
-  //     $buildings[] = $deck . $number;
-  //   }
-  //
-  //   // Create the cards
-  //   $values = [];
-  //   include dirname(__FILE__) . '/../Cards/list.inc.php';
-  //   foreach ($buildingIds as $cId) {
-  //     $building = self::getCardInstance($cId);
-  //     if (in_array($building->getDeck() . $building->getNumber(), $buildings)) {
-  //       $values[] = [
-  //         'id' => $building->getId(),
-  //         'location' => 'hand',
-  //         'player_id' => $player->getId(),
-  //       ];
-  //     }
-  //   }
-  //   self::create($values, null);
-  // }
 }
